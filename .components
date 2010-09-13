@@ -1,0 +1,7 @@
+--- 
+:orm: datamapper
+:test: none
+:mock: none
+:script: mootools
+:renderer: erb
+:stylesheet: none

@@ -1,0 +1,17 @@
+*.pbxuser
+*.perspectivev3
+*.perspective
+*.mode1
+*.mode1v3
+*~.nib
+.DS*
+*.pyc
+
+.cache
+cache
+
+*.swp
+
+log/*
+db/*.db
+public/photos/*
