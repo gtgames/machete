@@ -1,0 +1,11 @@
+<% @products.each do |p| %>
+  <article>
+    <h1><%=p.title %></h1>
+    <% @products.product_photos.first do |i| %>
+      <img src="<%=i.image.url(:thumb) %>">
+    <% end %>
+  </article>
+<% end %>
+
+<% content_for :scripts do %>
+<% end %>

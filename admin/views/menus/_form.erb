@@ -1,0 +1,41 @@
+<div class="tabs">
+  <ul>
+    <li><a href="#it"><span>Italiano</span></a></li>
+    <li><a href="#en"><span>Inglese</span></a></li>
+  </ul>
+
+  <% ['it','en'].each do |lc| %>
+    <div id="<%= lc %>">
+      <div class="group">
+        <%= f.label "title_#{lc}".to_sym %><%= f.error_message_on "title_#{lc}".to_sym %>
+        <%= f.text_field "title_#{lc}".to_sym, :class => :text_field %>
+        <span class="description">Titolo del link, visualizzato nel bottone</span>
+      </div>
+      <div class="group">
+        <%= f.label "alt_#{lc}".to_sym %><%= f.error_message_on "alt_#{lc}".to_sym %>
+        <%= f.text_field "alt_#{lc}".to_sym, :class => :text_field %>
+        <span class="description">Testo alternativo del link, visualizzato al passagio del mouse</span>
+      </div>
+
+
+    </div>
+  <%end%>
+</div>
+
+<div class="group">
+  <%= f.label :url %><%= f.error_message_on :url %>
+  <%= f.text_field :url, :class => :text_field %>
+  <span class="description">Link alla pagina interna</span>
+</div>
+
+<div class="group">
+  <%= f.label :weigth %><%= f.error_message_on :weigth %>
+  <%= f.text_field :weigth, :class => :slide_text_field %>
+  <div id="weigth_slider"></div>
+  <span class="description">Peso dell'oggetto nella pila (10 &egrave; il valore predefinito)</span>
+</div>
+
+<div class="group navform wat-cf">
+  <%= f.submit pat(:save), :class => :button %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:menus, :index)}';return false", :class => :button %>
+</div>

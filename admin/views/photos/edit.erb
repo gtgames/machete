@@ -1,0 +1,18 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li class="first"><%= link_to pat(:list), url(:photos, :index) %></li>
+      <li><%= link_to pat(:new), url(:photos, :new) %></li>
+      <li class="active"><%= link_to pat(:edit), url(:photos, :edit, :id => @image.id) %></li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title"><%= pat(:edit) %> <% mt(:photo) %></h2>
+    <div class="inner">
+      <% form_for :photo, url(:photos, :update, :id => @photo.id), :multipart => true, :method => :put, :class => :form do |f| %>
+        <%= partial "photos/form", :locals => { :f => f, :photo => @photo.photo.url(:thumb), :tags => @photo.tag_list.join(', ') } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar, partial("base/sidebar") %>

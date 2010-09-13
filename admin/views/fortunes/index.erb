@@ -1,0 +1,34 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li class="first active"><%= link_to pat(:list), url(:fortunes, :index) %></li>
+      <li><%= link_to pat(:new), url(:fortunes, :new) %></li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="fortune"><%= pat(:all) %> <% mt(:fortune) %></h2>
+    <div class="inner">
+      <table class="table">
+        <tr>
+          <th class="first"><%= mat(:fortune, :id) %></th>
+          <th><%= mat(:fortune, :fortune) %></th>
+          <th class="last">&nbsp;</th>
+        </tr>
+        <% @fortunes.each do |fortune| %>
+        <tr>
+          <td class="first"><%= fortune.id %></td>
+          <td><%= fortune.fortune %></td>
+          <td class="last">
+            <%= button_to pat(:edit), url(:fortunes, :edit, :id => fortune.id), :method => :get, :class => :button_to %> |
+            <%= button_to pat(:delete), url(:fortunes, :destroy, :id => fortune.id), :method => :delete, :class => :button_to %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <div class="actions-bar wat-cf">
+        <div class="actions"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar, partial("base/sidebar") %>

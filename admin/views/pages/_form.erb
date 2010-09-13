@@ -1,0 +1,42 @@
+<div class="tabs">
+  <ul>
+    <li><a href="#it"><span>Italiano</span></a></li>
+    <li><a href="#en"><span>Inglese</span></a></li>
+  </ul>
+
+  <% ['it','en'].each do |lc| %>
+    <div id="<%= lc %>">
+      <div class="group">
+        <%= f.label "title_#{lc}".to_sym %><%= f.error_message_on "title_#{lc}".to_sym %>
+        <%= f.text_field "title_#{lc}".to_sym, :class => :text_field %>
+      </div>
+
+      <div class="group">
+        <%= f.label "text_#{lc}".to_sym %><%= f.error_message_on "text_#{lc}".to_sym %>
+        <%= f.text_area "text_#{lc}".to_sym, :class => :text_area, :rows => 10 %>
+        <span class="description">Ex: a simple text</span>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="group">
+  <label for="tag_list">Tags</label><%= f.error_message_on :tag_list %>
+  <%=f.text_field :tag_list, :value => tags, :class => :text_field %>
+  <span class="description">Lista <em>tag</em> divisi da virgola<br/>Formato: 'Montagna, Storia, ...'</span>
+</div>
+
+<div class="group">
+  <%= f.label :parent_id %><%= f.error_message_on :parent_id %>
+  <%= f.select :parent_id, :options => options_tree(my_id), :selected => :parent_id, :class => :slide_text_field %>
+</div>
+
+<div class="group">
+  <%= f.label :is_home_page %><%= f.error_message_on :parent_id %>
+  <%= f.check_box :is_home_page, :value => '1', :class => :slide_text_field %>
+</div>
+
+<div class="group navform wat-cf">
+  <%= f.submit pat(:save), :class => :button %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+</div>

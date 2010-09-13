@@ -1,0 +1,2 @@
+Shoppy.helpers do
+end

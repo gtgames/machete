@@ -1,0 +1,30 @@
+<% @photos.each do |p| %>
+  <div>
+    <h1><%=p.title %></h1>
+    <img src="<%=p.photo.url(:original) %>">
+    <span class="tags">
+      <% p.tag_list.each do |t|%>
+        <%= link_to t, url( :index, :tag, :tag => t) %>
+      <% end %>
+    </span>
+  </div>
+<% end %>
+
+<% content_for :scripts do %>
+  <script type="text/javascript" charset="utf-8">
+    Galleria.loadTheme('/javascripts/galleria/frenz.js');
+    
+    $('#photos').galleria({
+      image_crop: false,
+      transition: 'slide',
+      show_info: true,
+      thumbnails: true,
+      data_config: function(img) {
+        return {
+          title: $(img).parent().find('h1').html(),
+          description: $(img).parent().find('span').html()
+        };
+      }
+    });
+  </script>
+<% end %>

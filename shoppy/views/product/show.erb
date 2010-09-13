@@ -1,0 +1,6 @@
+<article>
+  <h1><%=@product.title %></h1>
+  <% @product.product_photos.each do |i| %>
+    <img src="<%=i.image.url(:thumb) %>">
+  <% end %>
+</article>
