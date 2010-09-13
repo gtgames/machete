@@ -10,6 +10,8 @@ if RACK_ENV != 'development'
   require 'dm-tags'
   require 'dm-is-tree'
 
+  require 'dm-accepts_nested_attributes'
+
   require 'dm-paperclip'
 
   require 'rdiscount'

@@ -9,7 +9,7 @@ gem 'dm-sqlite-adapter'
 # gem 'dm-mysql-adapter'
 gem 'data_mapper'
 gem 'dm-tags'
-gem 'dm-is-localizable'
+gem 'dm-accepts_nested_attributes'
 gem 'dm-paperclip'
 
 gem 'rdiscount'
