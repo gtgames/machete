@@ -24,7 +24,7 @@ class Page
 
 
   def self.get_slug(data)
-    first :slug => data
+    first :page_translations => [:slug => data]
   end
 
   def is_home_page=(b)
@@ -38,5 +38,4 @@ class Page
 
   is :tree
   has_tags_on :tags
-
 end

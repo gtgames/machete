@@ -1,0 +1,11 @@
+<div class="block">
+  <div class="content">
+    <div class="inner">
+      <div class="actions-bar wat-cf">
+        <%= link_to "Categorie", url(:shop, :categories)%>
+        <%= link_to "Prodotti", url(:shop, :products)%>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar, partial("shop/sidebar") %>

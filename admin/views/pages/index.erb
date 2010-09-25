@@ -12,7 +12,6 @@
       <table class="table">
         <tr>
           <th class="first"><%= mat(:page, :id) %></th>
-          <th><%= mat(:page, :weigth) %></th>
           <th><%= mat(:page, :title) %></th>
           <th><%= mat(:page, :updated_at) %></th>
           <th><%= mat(:page, :created_at) %></th>
@@ -22,7 +21,6 @@
         <% @pages.each do |page| %>
         <tr>
           <td class="first"><%= page.id %></td>
-          <td><%= page.weigth %></td>
           <td><%= page.title %> url:<%= page_url_for page%></td>
           <td><%= page.updated_at %></td>
           <td><%= page.created_at %></td>

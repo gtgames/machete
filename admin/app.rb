@@ -15,10 +15,10 @@ class Admin < Padrino::Application
   # disable :flash              # Disables rack-flash (enabled by default if sessions)
   # layout  :my_layout          # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
   #
+  helpers Frenz::AutoLocale::Helpers
+  
   set :charset, "utf8"
-  unless MULTILANGUAGE_APP.nil?
-    set :locales, MULTILANGUAGE_APP
-  end
+  set :locales, Language.all.map {|x| x.code.to_sym }
 
   set :login_page, "/sessions/new"
   disable :store_location
@@ -34,11 +34,13 @@ class Admin < Padrino::Application
       role.project_module :menus, "/menus"
       role.project_module :pages, "/pages"
       role.project_module :photos, "/photos"
-      role.project_module :fortune, "/fortunes"
+      role.project_module :aphorisms, "/aphorisms"
       role.project_module :accounts, "/accounts"
   end
 
   before do
+    I18n.locale = get_browser_locale
+    
     FileUtils::touch("#{PADRINO_ROOT}/.cache") if request.env['REQUEST_METHOD'] != "GET"
     headers 'Cache-Control' => "private, max-age=0, no-cache, must-revalidate"
     headers 'Last-Modified' => Time.now.httpdate

@@ -1,0 +1,20 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li class="first"><%= link_to pat(:list), url(:shop, :categories) %></li>
+      <li class="active"><%= link_to pat(:new), url(:shop, :new_category) %></li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title"><%= pat(:new) %> <% mt(:product) %></h2>
+    <div class="inner">
+      <% form_for :category, url(:shop, :update_category, :id => @category.id), :method => :put, :class => :form do |f| %>
+        <% languages.each do |l| %>
+          <input type='hidden' name="category[category_translations_attributes][<%=l.code%>][id]" value='<%= f.object.translate('id', l.code) %>'>
+        <% end %>
+        <%= partial "shop/categories/form", :locals => { :f => f } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar, partial("shop/sidebar") %>

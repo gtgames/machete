@@ -4,19 +4,12 @@ class Menu
   include DataMapper::Resource
 
   property :id, Serial
-
-  property :title_en, String
-  property :title_es, String
-  property :title_it, String
-  property :title_fr, String
-
-  property :alt_en, String
-  property :alt_es, String
-  property :alt_it, String
-  property :alt_fr, String
-
-  property :url, String, :length => 1..255
-  property :weigth, Integer, :default => 10
+  is :localizable do
+    property :title,  String, :length => 1..255
+    property :alt,    String, :length => 1..255
+  end
+  property :url,    String,   :length => 1..255
+  property :weigth, Integer,  :default => 10
 
   def iurl
     url = attribute_get(:url)
@@ -36,14 +29,6 @@ class Menu
       data = "/#{data}"
     end
     attribute_set(:url, data)
-  end
-
-  def title
-    attribute_get "title_#{I18n.locale}".to_sym
-  end
-
-  def alt
-    attribute_get "title_#{I18n.locale}".to_sym
   end
 
 end

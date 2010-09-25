@@ -4,14 +4,9 @@ class Shoppy < Padrino::Application
 
   use Frenz::XUaCompatible
 
-  unless MULTILANGUAGE_APP.nil?
-    set :localized, true
-    set :locales, MULTILANGUAGE_APP
-    register Frenz::AutoLocale
-  else
-    set :localized, true
-  end
-  
+  set :locales, Language.all.map {|x| x.code.to_sym }
+  register Frenz::AutoLocale
+
   register Frenz::RackCache if CACHING
 
   enable :logger

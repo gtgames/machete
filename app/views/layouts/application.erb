@@ -11,7 +11,7 @@
   <script src="/javascripts/modernizr-1.5.min.js"></script>
   
   
-  <title><%= config.base_title %> <%= yield_content :title %></title>
+  <title><%= options.base_title %> <%= yield_content :title %></title>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -34,7 +34,7 @@
         </nav>
       </header>
       <section class="column grid_9 content">
-        <div id="fortune"><%=h fortune%></div>
+        <div id="aphorisms"><%=h aphorisms%></div>
         <%= yield %>
       </section>
     </div>

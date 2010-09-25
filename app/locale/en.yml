@@ -1,0 +1,22 @@
+en:
+  pages:
+    search:
+      results: "Results:"
+    tags:
+      list: "Tag list"
+  
+  routes:
+    pages:
+      index: 'pages'
+      search: 'search'
+      
+  admin:
+    create:
+      success: 'New item created'
+      failure: "Error while performing the requested action!"
+    edit:
+      success: 'Item saved'
+      failure: "Error while performing the requested action!"
+    destroy:
+      success: 'Item destroyed'
+      failure: "Error while performing the requested action!"

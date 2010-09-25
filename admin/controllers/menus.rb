@@ -1,4 +1,10 @@
+require 'pp'
+
 Admin.controllers :menus do
+  before do
+    logger.debug params[:menu].inspect
+    logger.error params[:menu].class
+  end
 
   get :index do
     @menus = Menu.all
@@ -31,13 +37,14 @@ Admin.controllers :menus do
       flash[:notice] = t 'admin.update.success'
       redirect url(:menus, :edit, :id => @menu.id)
     else
+      flash[:debug] = t 'admin.update.failure'
       render 'menus/edit'
     end
   end
 
   delete :destroy, :with => :id do
     menu = Menu.get(params[:id])
-    if menu.destroy
+    if menu.translations.destroy! && menu.destroy!
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:error] = t 'admin.destroy.failure'

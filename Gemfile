@@ -9,6 +9,7 @@ gem 'dm-sqlite-adapter'
 # gem 'dm-mysql-adapter'
 gem 'data_mapper'
 gem 'dm-tags'
+gem 'dm-is-remixable'
 gem 'dm-accepts_nested_attributes'
 gem 'dm-paperclip'
 

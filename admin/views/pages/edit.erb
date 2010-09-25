@@ -11,6 +11,9 @@
     <h2 class="title"><%= pat(:edit) %> <% mt(:page) %></h2>
     <div class="inner">
       <% form_for :page, url(:pages, :update, :id => @page.id), :charset => 'utf8', :method => :put, :class => :form do |f| %>
+        <% languages.each do |l| %>
+          <input type='hidden' name="page[page_translations_attributes][<%=l.code%>][id]" value='<%= f.object.translate('id', l.code) %>'>
+        <% end %>
         <%= partial "pages/form", :locals => { :f => f, :my_id => @page.id, :parent_id => @page.parent_id, :tags => @page.tag_list.join(', ') } %>
       <% end %>
     </div>

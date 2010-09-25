@@ -184,8 +184,7 @@ button {  width: auto; overflow: visible; }
 .grid_7 { width:540px; } .grid_8 { width:620px; } .grid_9 { width:700px; } .grid_10 { width:780px; } .grid_11 { width:860px; } .grid_12 { width:940px; }
 
 .column { margin: 0 10px; overflow: hidden; float: left; display: inline; }
-/*.row { width: 960px; margin: 0 auto; overflow: hidden; }*/
-.row { width: 960px; overflow: hidden; }
+.row { width: 960px; margin: 0 auto; overflow: hidden; }
 .row .row { margin: 0 -10px; width: auto; display: inline-block; }
 
 /* Typography Baseline */
@@ -254,7 +253,9 @@ textarea { width: 99%; line-height: 18px; margin-bottom: -2px; display: block; c
   h2, h3{ page-break-after: avoid; }
 }
 
-/* Style */
+/* ************************
+** Style
+** ***********************/
 html { font-family: 'Hoefler Text', 'Baskerville old face', Garamond, 'Times New Roman', serif; }
 
 img.bg {
@@ -274,9 +275,6 @@ img.bg {
   -webkit-user-select: none;
   user-select:none;
 }
-
-header.column { line-height: 1px; margin:0 20px 0 0;  /*hack per il logo*/ }
-header {background: url('/images/nav_left_bottom.png') bottom center no-repeat; padding-bottom:40px;}
 
 nav.top {
 }
@@ -298,18 +296,17 @@ nav.top a{
   text-shadow: 0 1px 0 rgba(255,255,255,0.5);
 }
 nav.left {
-  margin-top: -5px;
-  background-color: #411112;
-  color: #B09D53;
+  font-size: 120%;
+  color: #000;
   display: inline-block;
 }
 nav.left a{
-  color: #B09D53;
+  color: #000;
 }
 nav.left a:hover{
-  color: #DDBA56;
+  color: #333;
 }
-#fortune {
+#aphorisms {
   margin-top: 100px;
   height: 80px;
   color: #411112;
@@ -321,7 +318,7 @@ nav.left a:hover{
   text-decoration: none;
   text-shadow: white 0px 1px 1px;
   text-transform: none;
-  background: url('/images/fortune.png') top left no-repeat;
+  background: url('/images/aphorism.png') top left no-repeat;
 }
 h1.title {
   font-family: 'CrimsonTextRoman', serif;
@@ -350,13 +347,14 @@ article {
   -webkit-box-shadow: #666 0px 1px 3px;
 }
 footer {
-  width: 960px;
-  background: url('/images/footer.png') top left no-repeat;
+  font-weight:bold;
+  font-variant: small-caps;
+  background: #000;
+  text-align: center;
+  margin: 0;
   color: #fff;
   padding: 18px 10px;
-  -moz-border-radius-topright:5px;
-  -webkit-border-top-right-radius:5px;
-  border-top-right-radius:5px;
+  text-shadow: 0 -1px 1px rgba(255,255,255,.4);
 }
 
 @media screen and (max-width: 1024px){ img.bg { left: 50%; margin-left: -512px; } }

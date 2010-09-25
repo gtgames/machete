@@ -1,23 +1,20 @@
 RACK_ENV = 'production'
 
 if RACK_ENV != 'development'
-  require 'rake'
-  require 'rack/flash'
-  require 'rack/cache'
-
-  require 'do_sqlite3'
-  require 'data_mapper'
-  require 'dm-tags'
-  require 'dm-is-tree'
-
-  require 'dm-accepts_nested_attributes'
-
-  require 'dm-paperclip'
-
-  require 'rdiscount'
-  require 'unidecode'
-
-  require 'padrino'
+  %w( rake
+    rack/flash
+    rack/cache
+    do_sqlite3
+    data_mapper
+    dm-tags
+    dm-is-tree
+    dm-is-remixable
+    dm-accepts_nested_attributes
+    dm-paperclip
+    rdiscount
+    unidecode
+    padrino
+  ).each {|l| require l }
 end
 
 $_ROOT = ::File.dirname(__FILE__)

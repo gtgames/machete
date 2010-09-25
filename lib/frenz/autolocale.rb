@@ -46,14 +46,13 @@ module Frenz
 
     def self.registered(app)
       app.helpers Frenz::AutoLocale::Helpers
-      #app.set :locales, [:en]
       app.before do
         if request.env['REQUEST_URI'] == '/'
-          redirect "/#{get_browser_locale}/"
+          redirect url(:index, :lang => get_browser_locale)
         elsif request.path_info =~ /^\/(#{options.locales.join('|')})\/?/
           I18n.locale = $1.to_sym
         else
-          redirect request.env['REQUEST_URI'].sub /^\/(\w{2})\//, '/en/'
+          redirect url(:index, :lang => 'en')
         end
       end
     end # self.registered

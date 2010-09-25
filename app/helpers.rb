@@ -3,12 +3,12 @@ Frontend.helpers do
     I18n.locale
   end
 
-  def fortune
-    f = Fortune.random
+  def aphorisms
+    f = Aphorism.random
     unless f.nil?
-      "#{f.get_fortune}"
+      "#{f.aphorism}"
     else
-      "Non esiste alcun aforisma"
+      "..."
     end
   end
 
@@ -21,7 +21,7 @@ Frontend.helpers do
     unless r.empty?
       html += "<ul>"
       r.each do |p|
-        html += "<li><a href='#{ url(:pages, :show, :id => p.id, :slug => p.slug) }'>#{p.title}</a>"
+        html += "<li><a href='#{ url(:page_show, :slug => p.slug(I18n.locale) ) }'>#{p.title}</a>"
         html += tree(p.children) unless p.children.empty?
         html << "</li>"
       end

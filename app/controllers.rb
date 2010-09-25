@@ -1,6 +1,4 @@
-Frontend.controllers  do
-
-
+Frontend.controllers :lang => I18n.locale do
   ###############################################
   ## Welcome                                    #
   ###############################################
@@ -13,7 +11,7 @@ Frontend.controllers  do
     end
   end
 
-  get :index, :map => "/sitemap", :provides => [:html, :json] do
+  get :sitemap, :map => "/sitemap", :provides => [:html, :json] do
     @pages = Pages.all(:order => [:title.desc])
     render 'sitemap/index'
   end
@@ -22,18 +20,17 @@ Frontend.controllers  do
   ###############################################
   ## Pages                                      #
   ###############################################
-  #get :index, :map => "/:lang/#{I18n.t 'routes.pages.index'}/" do
-  get :index, :map => "/:lang/pages/" do
+  get :pages, :map => "/:lang/#{I18n.t 'routes.pages.index'}/" do
     render 'pages/index'
   end
 
-  get :show, :map => "/:lang/:slug" do
+  get :page_show, :map => "/:lang/:slug" do
     @page = Page.get_slug params[:slug]
     halt 404 if @page.nil?
     render 'pages/show'
   end
 
-  get :text, :map => "/:lang/#{I18n.t 'routes.page_search.text'}" do
+  get :page_search, :map => "/:lang/#{I18n.t 'routes.page.search'}" do
     @s = params[:q]
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
       render 'page_search/index'
@@ -43,7 +40,7 @@ Frontend.controllers  do
     end
   end
 
-  get :tags, :map => "/:lang/tag/:tags" do
+  get :page_tags, :map => "/:lang/tag/:tags" do
     @tags = params[:tags]
     if (/(\w+,?)+/i =~ @tags).nil?
       redirect url(:page_search, :text)
@@ -60,11 +57,11 @@ Frontend.controllers  do
   ###############################################
   ## Contact us                                 #
   ###############################################
-  get :form, :map => "/contattaci" do
+  get :contact_form, :map => "/contattaci" do
     render 'mail'
   end
   
-  post :new, :map => "/contattaci" do
+  post :contact_new, :map => "/contattaci" do
     #params[:text] == //
     #params[:email] == /[a-z0-9!#\$\%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\b/
     email do

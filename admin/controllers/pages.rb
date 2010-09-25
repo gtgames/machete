@@ -1,5 +1,6 @@
-Admin.controllers :pages do
+require 'pp'
 
+Admin.controllers :pages do
   before do
     unless params[:page].nil?
       params[:page][:parent_id] = nil if params[:page][:parent_id] == '0'
@@ -24,9 +25,10 @@ Admin.controllers :pages do
   post :create do
     @page = Page.new(params[:page])
     if @page.save
-      flash[:notice] = 'Page was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:pages, :edit, :id => @page.id)
     else
+      flash[:error] = t 'admin.create.failure'
       render 'pages/new'
     end
   end
@@ -39,19 +41,22 @@ Admin.controllers :pages do
   put :update, :with => :id do
     @page = Page.get(params[:id])
     if @page.update(params[:page])
-      flash[:notice] = 'Page was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:pages, :edit, :id => @page.id)
     else
+      logger.error @page.errors.each{|e| e + '  |||  '}
+      flash[:error] = t 'admin.create.failure'
       render 'pages/edit'
     end
   end
 
   delete :destroy, :with => :id do
     page = Page.get(params[:id])
-    if page.destroy!
-      flash[:notice] = 'Page was successfully destroyed.'
+    if page.translations.destroy! && page.destroy!
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Page!'
+      flash[:error] = t 'admin.create.failure'
+      page.errors.each{|e| logger.error e}
     end
     redirect url(:pages, :index)
   end

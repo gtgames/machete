@@ -4,7 +4,7 @@ class Order
 
   # property <name>, <type>
   property :id, Serial
-  property :name, String, :lenght => 0..255
+  property :name, String, :length => 0..255
   
 
   has n, :items

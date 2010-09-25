@@ -1,68 +1,60 @@
-Shoppy.controllers :index do
+Shoppy.controllers :lang => I18n.locale do
 
-  get :index, :provides => [:any, :json] do
-    @photos = Product.all
-    case content_type
-    when :json then
-      content_type 'application/json'
-      @photos.to_json
-    else
-      render 'index'
-    end
+  ###############################################
+  ## Showcase                                   #
+  ###############################################
+  get :index, :map => "/:lang/" do
+    @categories = (params[:c].nil?)? Category.all : Category.get(params[:c])
+    render 'index'
   end
 
-  get :show, :with => :id, :provides => [:any, :json] do
+  get :category, :map => "/:lang/:id" do
+    @category = Category.get(params[:id])
+    render 'category'
+  end
+
+  get :show, :map => "/:lang/p/:id" do
     @product = Product.get(:id => params[:id])
-    case content_type
-    when :json then
-      content_type 'application/json'
-      @products.to_json
-    else
-      render 'product/show'
-    end
+    render 'product/show'
   end
 
-  get :tag, :with => :tag, :provides => [:any, :json] do
-    @products = Product.tagged_with params[:tag]
-    case content_type
-    when :json then
-      content_type 'application/json'
-      @products.to_json
-    else
-      render 'index'
-    end
+  post :search, :map => "/:lang/search" do
+    @products = Product.all(:name.like => "%#{params[:term]}%")
+    render 'product/index'
   end
 
   ###############################################
   ## Cart                                       #
   ###############################################
   #TODO use redis for cart crap
-  get :index, :provides => [:any, :json] do
-    @photos = Product.all
+  get :cart, :provides => [:any, :json], :map => "/:lang/cart/" do
+    cookie = request.cookies["cart"]
+    
     case content_type
     when :json then
-      content_type 'application/json'
+      content_type :json
       @photos.to_json
     else
       render 'index'
     end
   end
 
-  get :get, :with => :id, :provides => [:any, :json] do
+  get :cart_product, :provides => [:any, :json], :map => "/:lang/cart/:id" do
     @product = Product.get(:id => params[:id])
     case content_type
     when :json then
-      content_type 'application/json'
+      content_type :json
       @products.to_json
     else
       render 'product/show'
     end
   end
 
-  post :add, :provides => [:any, :json] do
+  post :cart_add, :provides => [:any, :json], :map => "/:lang/cart/" do
+    cookie = request.cookies["cart"]
     case content_type
     when :json then
-      content_type 'application/json'
+      content_type :json
       @products.to_json
     else
       render 'product/show'

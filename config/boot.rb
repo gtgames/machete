@@ -1,11 +1,14 @@
-MULTILANGUAGE_APP = nil # [:it, :en, :de ...]
-CACHING = false
-DOMAIN_NAME = "frenz.fr"
-
-
 #########################################################################################################
 PADRINO_ENV  = ENV["PADRINO_ENV"] ||= ENV["RACK_ENV"] ||= "development"  unless defined?(PADRINO_ENV)
 PADRINO_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..')) unless defined?(PADRINO_ROOT)
+
+
+APP_LANGUAGES = [:it, :en]
+CACHING = false
+DOMAIN_NAME = (PADRINO_ENV == "development" )? "frenz.fr" : "frenz.fr"
+
+
+require "#{PADRINO_ROOT}/lib/dm-is-localizable"
 
 if PADRINO_ENV == "development"
   begin

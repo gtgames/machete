@@ -2,8 +2,8 @@
 DataMapper.logger = logger
 
 case Padrino.env
-  when :development then DataMapper.setup( :default, :adapter => 'sqlite3', :database => Padrino.root('db', 'development.db'), :encoding => 'utf8' )
-  when :test then DataMapper.setup( :default, :adapter => 'sqlite3', :database => Padrino.root('db', 'test.db'), :encoding => 'utf8' )
+  when :development then DataMapper.setup( :default, "sqlite3://#{Padrino.root('db', 'development.db')}")
+  when :test then DataMapper.setup( :default, "sqlite3://#{Padrino.root('db', 'test.db')}")
   when :production then DataMapper.setup(:default,
     :adapter => 'postgresql',
     :host => 'localhost',

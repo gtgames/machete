@@ -1,26 +1,28 @@
-<div class="tabs">
-  <ul>
-    <li><a href="#it"><span>Italiano</span></a></li>
-    <li><a href="#en"><span>Inglese</span></a></li>
-  </ul>
+<%= f.error_messages %>
+<formset>
+  <% languages.each do |l| %>
+    <input type='hidden' name="menu[menu_translations_attributes][<%=l.code%>][language_id]" value='<%= l.id %>'>
 
-  <% ['it','en'].each do |lc| %>
-    <div id="<%= lc %>">
-      <div class="group">
-        <%= f.label "title_#{lc}".to_sym %><%= f.error_message_on "title_#{lc}".to_sym %>
-        <%= f.text_field "title_#{lc}".to_sym, :class => :text_field %>
-        <span class="description">Titolo del link, visualizzato nel bottone</span>
-      </div>
-      <div class="group">
-        <%= f.label "alt_#{lc}".to_sym %><%= f.error_message_on "alt_#{lc}".to_sym %>
-        <%= f.text_field "alt_#{lc}".to_sym, :class => :text_field %>
-        <span class="description">Testo alternativo del link, visualizzato al passagio del mouse</span>
-      </div>
-
-
+    <div class="group">
+      <%= f.error_message_on :title %>
+      <label> Titolo (<%= l.name %>)
+        <input type="text" name="menu[menu_translations_attributes][<%=l.code%>][title]" class="text_field" value="<%= f.object.title l.code%>">
+      </label>
+      <span class="description">Titolo del link, visualizzato nel bottone</span>
     </div>
-  <%end%>
-</div>
+  <% end %>
+</formset>
+<formset>
+  <% languages.each do |l| %>
+    <div class="group">
+      <%= f.error_message_on :title %>
+      <label> Testo alternativo (<%= l.name %>)
+        <input type="text" name="menu[menu_translations_attributes][<%=l.code%>][alt]" class="text_field" value="<%= f.object.alt l.code%>">
+      </label>
+      <span class="description">Testo alternativo del link, visualizzato al passagio del mouse</span>
+    </div>
+  <% end %>
+</formset>
 
 <div class="group">
   <%= f.label :url %><%= f.error_message_on :url %>

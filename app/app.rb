@@ -4,15 +4,10 @@ class Frontend < Padrino::Application
 
   use Frenz::XUaCompatible
 
-  unless MULTILANGUAGE_APP.nil?
-    set :localized, true
-    set :locales, MULTILANGUAGE_APP
-    register Frenz::AutoLocale
-  else
-    set :localized, true
-  end
-  
-  register Frenz::RackCache if CACHING
+  set :locales, Language.all.map {|x| x.code.to_sym }
+  register Frenz::AutoLocale
+
+  register Frenz::RackCache
 
   enable :logger
   enable :sessions
@@ -31,4 +26,5 @@ class Frontend < Padrino::Application
   error 404 do
     render 'errors/404'
   end
+
 end

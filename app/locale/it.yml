@@ -16,17 +16,19 @@ it:
       results: "Risultati ricerca"
     tags:
       list: "Lista Tag"
+  
   routes:
     pages:
-      index: "pagine"
+      index: 'pagine'
+      search: 'ricerca'
   
   admin:
     create:
-      success: "Creato con successo"
-      failure: "Errore di creazione!"
+      success: 'Creato con successo'
+      failure: 'Errore di creazione!'
     edit:
-      success: "Modificato con successo"
-      failure: "Errore durante la modifica!"
+      success: 'Modificato con successo'
+      failure: 'Errore durante la modifica!'
     destroy:
-      success: "Eliminato con successo"
+      success: 'Eliminato con successo'
       failure: "Errore durante l'eliminazione!"

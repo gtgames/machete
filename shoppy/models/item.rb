@@ -3,7 +3,7 @@ class Item
   include DataMapper::Validate
 
   property :id, Serial
-  property :name, String, :lenght => 0..255
+  property :name, String, :length => 0..255
   property :quantity, Integer
 
   belongs_to :order
