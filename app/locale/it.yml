@@ -23,10 +23,12 @@ it:
       search: 'ricerca'
   
   admin:
+    login:
+      failure: 'Password o Login errato'
     create:
       success: 'Creato con successo'
       failure: 'Errore di creazione!'
-    edit:
+    update:
       success: 'Modificato con successo'
       failure: 'Errore durante la modifica!'
     destroy:

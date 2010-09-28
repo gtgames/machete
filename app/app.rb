@@ -1,9 +1,7 @@
 class Frontend < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
-
-  use Frenz::XUaCompatible
-
+  
   set :locales, Language.all.map {|x| x.code.to_sym }
   register Frenz::AutoLocale
 
@@ -20,6 +18,7 @@ class Frontend < Padrino::Application
   layout :application
 
   before do
+    headers "X-UA-Compatible" => "IE=edge,chrome=1"
     content_type :html, 'charset' => 'utf-8'
   end
 

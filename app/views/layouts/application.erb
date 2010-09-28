@@ -26,18 +26,23 @@
         <% end %>
       </ul>
     </nav>
-    <div class="row">
-      <header class="column grid_3">
-        <img class="grid_3" id="logo" src="/images/logo.png">
-        <nav class="grid_3 left">
-          <%= tree %>
-        </nav>
-      </header>
-      <section class="column grid_9 content">
-        <div id="aphorisms"><%=h aphorisms%></div>
+
+    <header class="row">
+      <div class="column grid_4" id="logo"></div>
+      <div class="grid_8">
+        <h1><%= options.base_title %></h1>
+      </div>
+    </header>
+    
+    <section class="row">
+      <nav class="column grid_3 left">
+        <%= tree %>
+      </nav>
+      <div class="column grid_9 content">
         <%= yield %>
-      </section>
-    </div>
+      </div>
+    </section>
+    
     <footer>
       <div>
         <p>via Roma snc, 67020 Fontecchio AQ</p>
@@ -50,6 +55,8 @@
   
   <script src='/javascripts/mootools-core.js' type='text/javascript' charset='utf-8'></script>
   <script src='/javascripts/application.js' type='text/javascript' charset='utf-8'></script>
+  <script src="http://github.com/DmitryBaranovskiy/raphael/blob/master/raphael-min.js?raw=true" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/logo.js" type="text/javascript" charset="utf-8"></script>
   <!--[if lt IE 7 ]>
     <script src="js/dd_belatedpng.js?v=1"></script>
   <![endif]--><!--[if lt IE 9 ]>

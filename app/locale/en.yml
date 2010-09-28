@@ -11,10 +11,12 @@ en:
       search: 'search'
       
   admin:
+    login:
+      failure: 'Please check your password/login'
     create:
       success: 'New item created'
       failure: "Error while performing the requested action!"
-    edit:
+    update:
       success: 'Item saved'
       failure: "Error while performing the requested action!"
     destroy:
