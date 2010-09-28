@@ -8,25 +8,27 @@ CACHING = false
 DOMAIN_NAME = (PADRINO_ENV == "development" )? "frenz.fr" : "frenz.fr"
 
 
-require "#{PADRINO_ROOT}/lib/dm-is-localizable"
-
-if PADRINO_ENV == "development"
-  begin
-    # Require the preresolved locked set of gems.
-    require File.expand_path('../../.bundle/environment', __FILE__)
-  rescue LoadError
-    # Fallback on doing the resolve at runtime.
-    require 'rubygems'
-    require 'bundler'
-    Bundler.setup
-  end
-
-  Bundler.require(:default, PADRINO_ENV.to_sym)
-  puts "=> Located #{Padrino.bundle} Gemfile for #{Padrino.env}"
+begin
+  # Require the preresolved locked set of gems.
+  require File.expand_path('../../.bundle/environment', __FILE__)
+rescue LoadError
+  # Fallback on doing the resolve at runtime.
+  require 'rubygems'
+  require 'bundler'
+  Bundler.setup
 end
 
-Paperclip.configure do |config|
-  config.root = PADRINO_ROOT
+Bundler.require(:default, PADRINO_ENV.to_sym)
+puts "=> Located #{Padrino.bundle} Gemfile for #{Padrino.env}"
+
+
+Padrino.before_load do
+end
+
+Padrino.after_load do
+  Paperclip.configure do |config|
+    config.root = PADRINO_ROOT
+  end
 end
 
 Padrino.load!
