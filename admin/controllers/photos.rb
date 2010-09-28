@@ -13,9 +13,10 @@ Admin.controllers :photos do
   post :create do
     @photo = Photo.new(params[:photo])
     if @photo.save
-      flash[:notice] = 'Photo was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:photos, :edit, :id => @photo.id)
     else
+      flash[:error] = t 'admin.create.failure'
       render 'photos/new'
     end
   end
@@ -28,9 +29,10 @@ Admin.controllers :photos do
   put :update, :with => :id do
     @photo = Photo.get(params[:id])
     if @photo.update(params[:photo])
-      flash[:notice] = 'Photo was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:photos, :edit, :id => @photo.id)
     else
+      flash[:error] = t 'admin.update.failure'
       render 'photos/edit'
     end
   end
@@ -38,9 +40,9 @@ Admin.controllers :photos do
   delete :destroy, :with => :id do
     image = Photo.get(params[:id])
     if image.destroy
-      flash[:notice] = 'Photo was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Photo!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:photos, :index)
   end

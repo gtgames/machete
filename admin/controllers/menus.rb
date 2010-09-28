@@ -22,6 +22,7 @@ Admin.controllers :menus do
       flash[:notice] = t 'admin.create.success'
       redirect url(:menus, :edit, :id => @menu.id)
     else
+      flash[:error] = t 'admin.create.failure'
       render 'menus/new'
     end
   end
@@ -37,7 +38,7 @@ Admin.controllers :menus do
       flash[:notice] = t 'admin.update.success'
       redirect url(:menus, :edit, :id => @menu.id)
     else
-      flash[:debug] = t 'admin.update.failure'
+      flash[:error] = t 'admin.update.failure'
       render 'menus/edit'
     end
   end
