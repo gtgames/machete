@@ -1,4 +1,4 @@
-Admin.controllers :language do
+Admin.controllers :languages do
 
   get :index do
     @languages = Language.all
@@ -6,42 +6,42 @@ Admin.controllers :language do
   end
 
   get :new do
-    @photo = Language.new
-    render 'photos/new'
+    @language = Language.new
+    render 'languages/new'
   end
 
   post :create do
-    @photo = Photo.new(params[:photo])
-    if @photo.save
-      flash[:notice] = t 
-      redirect url(:photos, :edit, :id => @photo.id)
+    @language = Language.new(params[:language])
+    if @language.save
+      flash[:notice] = t 'admin.create.success'
+      redirect url(:languages, :edit, :id => @language.id)
     else
-      render 'photos/new'
+      render 'languages/new'
     end
   end
 
   get :edit, :with => :id do
-    @photo = Photo.get(params[:id])
-    render 'photos/edit'
+    @language = Language.get(params[:id])
+    render 'languages/edit'
   end
 
   put :update, :with => :id do
-    @photo = Photo.get(params[:id])
-    if @photo.update(params[:photo])
-      flash[:notice] = 'Photo was successfully updated.'
-      redirect url(:photos, :edit, :id => @photo.id)
+    @language = Language.get(params[:id])
+    if @language.update(params[:language])
+      flash[:notice] = t 'admin.update.success'
+      redirect url(:languages, :edit, :id => @language.id)
     else
-      render 'photos/edit'
+      render 'languages/edit'
     end
   end
 
   delete :destroy, :with => :id do
-    image = Photo.get(params[:id])
-    if image.destroy
-      flash[:notice] = 'Photo was successfully destroyed.'
+    language = Language.get(params[:id])
+    if language.destroy
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Photo!'
+      flash[:error] = t 'admin.destroy.failure'
     end
-    redirect url(:photos, :index)
+    redirect url(:languages, :index)
   end
 end
