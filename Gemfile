@@ -3,7 +3,6 @@ source :gemcutter
 # Project requirements
 gem 'rake'
 gem 'rack-flash'
-gem 'rack-cache'
 gem 'thor', '= 0.14.0'
 
 group :development do
@@ -15,6 +14,8 @@ group :production do
 end
 
 # Component requirements
+gem 'carrierwave'
+gem 'mini_magick'
 gem 'dm-postgres-adapter'
 gem 'data_mapper'
 gem 'dm-constraints'

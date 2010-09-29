@@ -47,4 +47,8 @@ class Admin < Padrino::Application
     headers 'Last-Modified' => Time.now.httpdate
     content_type :html, 'charset' => 'utf-8'
   end
+  
+  error 404 do
+    render "base/index"
+  end
 end
