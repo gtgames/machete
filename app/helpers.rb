@@ -21,7 +21,7 @@ Frontend.helpers do
     unless r.empty?
       html += "<ul>"
       r.each do |p|
-        html += "<li><a href='#{ url(:page_show, :slug => p.slug(I18n.locale) ) }'>#{p.title}</a>"
+        html += "<li>" + link_to p.title, url(:page_show, :slug => p.slug )
         html += tree(p.children) unless p.children.empty?
         html << "</li>"
       end

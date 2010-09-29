@@ -14,7 +14,7 @@ class Page
     property :text_html, Text
 
     before :save do
-      attribute_set(:text_html, RDiscount.new(self.text).to_html)
+      attribute_set(:text_html, BlueCloth.new(self.text).to_html)
       attribute_set(:slug, self.title.to_slug)
     end
   end

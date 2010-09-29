@@ -29,6 +29,7 @@ Padrino.after_load do
   Paperclip.configure do |config|
     config.root = PADRINO_ROOT
   end
+  DataMapper.finalize
 end
 
 Padrino.load!
