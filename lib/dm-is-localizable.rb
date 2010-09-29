@@ -125,12 +125,8 @@ module DataMapper
 
         # translates the given attribute to the language identified by the given language_code
         def translate(attribute, language_code)
-          if language = Language[language_code]
-            t = translations.first(:language_id => language.id)
-            t.respond_to?(attribute) ? t.send(attribute) : nil
-          else
-            nil
-          end
+          t = translations.first(:language => [:code => language_code])
+          t.respond_to?(attribute) ? t.send(attribute) : nil
         end
 
       end # InstanceMethods
