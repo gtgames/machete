@@ -12,6 +12,10 @@ cache
 
 *.swp
 
+Gemfile.lock
+.bundle
+
 log/*
 db/*.db
 public/photos/*
+public/images/*
