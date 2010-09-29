@@ -3,8 +3,11 @@ require 'pp'
 Admin.controllers :pages do
   before do
     unless params[:page].nil?
-      params[:page][:parent_id] = nil if params[:page][:parent_id] == '0'
-      params[:page][:is_home_dir] = true if params[:page][:is_home_dir] == '1'
+      if params[:page][:is_home_page] == nil then
+        params[:page][:is_home_page] = false
+      else
+        params[:page][:is_home_page] = true
+      end
     end
   end
 
@@ -44,7 +47,6 @@ Admin.controllers :pages do
       flash[:notice] = t 'admin.update.success'
       redirect url(:pages, :edit, :id => @page.id)
     else
-      logger.error @page.errors.each{|e| e + '  |||  '}
       flash[:error] = t 'admin.create.failure'
       render 'pages/edit'
     end
@@ -52,11 +54,17 @@ Admin.controllers :pages do
 
   delete :destroy, :with => :id do
     page = Page.get(params[:id])
+
+    #TODO: BUG!!!+ROTTURADICAZZO ###
+    page.children.each do |p|
+      p.parent = nil
+      p.save!()
+    end
+
     if page.translations.destroy! && page.destroy!
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:error] = t 'admin.create.failure'
-      page.errors.each{|e| logger.error e}
     end
     redirect url(:pages, :index)
   end

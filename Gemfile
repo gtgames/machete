@@ -5,9 +5,9 @@ gem 'rack-cache'
 gem 'thin' # or mongrel
 
 # Component requirements
-gem 'dm-sqlite-adapter'
-# gem 'dm-mysql-adapter'
+gem 'dm-postgres-adapter'
 gem 'data_mapper'
+gem 'dm-constraints'
 gem 'dm-tags'
 gem 'dm-is-remixable'
 gem 'dm-accepts_nested_attributes'

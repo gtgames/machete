@@ -3,7 +3,7 @@ class Page
   include DataMapper::Resource
 
   property :id, Serial
-  property :parent_id, Integer
+  property :parent_id, Integer, :required => false
   property :is_index, Boolean, :default => false
   property :is_home_page, Boolean, :default => false
 
@@ -22,7 +22,6 @@ class Page
   property :updated_at, DateTime
   property :created_at, DateTime
 
-
   def self.get_slug(data)
     first :page_translations => [:slug => data]
   end
@@ -31,7 +30,15 @@ class Page
     Page.all(:id.not => attribute_get(:id)).update(:is_home_page => false) if b
     attribute_set(:is_home_page, b)
   end
-
+  
+  def parent_id=(b)
+    if (b=="NULL") 
+      attribute_set(:parent_id, nil)
+    else
+      attribute_set(:parent_id, b)
+    end
+  end
+  
   def self.home_page
     first :is_home_page => true
   end
