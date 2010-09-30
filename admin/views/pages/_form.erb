@@ -4,7 +4,7 @@
     
     <div class="group">
       <label> Titolo (<%= l.name %>)
-        <input type="text" name="page[page_translations_attributes][<%=l.code%>][title]" class="text_field" value="<%= f.object.title(l.code)%>">
+        <input type="text" name="page[page_translations_attributes][<%=l.code%>][title]" class="required text_field" value="<%= f.object.title(l.code)%>">
       </label>
       <span class="description">Titolo della pagina</span>
     </div>
@@ -15,7 +15,7 @@
   <% languages.each do |l| %>
     <div class="group">
       <label> Testo (<%= l.name %>)
-        <textarea type="text" name="page[page_translations_attributes][<%=l.code%>][text]" class="text_area" rows="10"><%= f.object.text(l.code)%></textarea>
+        <textarea type="text" name="page[page_translations_attributes][<%=l.code%>][text]" class="required text_area" rows="10"><%= f.object.text(l.code)%></textarea>
       </label>
       <span class="description">Testo alternativo del link</span>
     </div>

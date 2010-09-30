@@ -1,3 +1,4 @@
+# encoding:utf-8
 Admin.controllers :shop do
 
   get :index do
@@ -47,7 +48,7 @@ Admin.controllers :shop do
 
   delete :destroy_category, :with => :id do
     category = Category.get(params[:id])
-    if category.destroy!
+    if  category.translations.destroy && category.destroy!
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:notice] = t 'admin.destroy.failure'
@@ -99,7 +100,7 @@ Admin.controllers :shop do
 
   delete :destroy_product, :with => :id do
     product = Product.get(params[:id])
-    if product.destroy!
+    if products.translations.destroy && product.destroy!
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:notice] = t 'admin.destroy.failure'

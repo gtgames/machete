@@ -1,11 +1,5 @@
-require 'pp'
-
+# encoding:utf-8
 Admin.controllers :menus do
-  before do
-    logger.debug params[:menu].inspect
-    logger.error params[:menu].class
-  end
-
   get :index do
     @menus = Menu.all
     render 'menus/index'
@@ -20,7 +14,7 @@ Admin.controllers :menus do
     @menu = Menu.new(params[:menu])
     if @menu.save
       flash[:notice] = t 'admin.create.success'
-      redirect url(:menus, :edit, :id => @menu.id)
+      redirect url(:menus, :index)
     else
       flash[:error] = t 'admin.create.failure'
       render 'menus/new'
@@ -36,7 +30,7 @@ Admin.controllers :menus do
     @menu = Menu.get(params[:id])
     if @menu.update(params[:menu])
       flash[:notice] = t 'admin.update.success'
-      redirect url(:menus, :edit, :id => @menu.id)
+      redirect url(:menus, :index)
     else
       flash[:error] = t 'admin.update.failure'
       render 'menus/edit'

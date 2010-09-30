@@ -11,7 +11,9 @@
     <div class="inner">
       <% form_for :menu, url(:menus, :update, :id => @menu.id), :charset => 'utf8', :method => :put, :class => :form do |f| %>
         <% languages.each do |l| %>
-          <input type='hidden' name="menu[menu_translations_attributes][<%=l.code%>][id]" value='<%= f.object.translate('id', l.code) %>'>
+        <% if pid = f.object.translate('id', l.code) %>
+          <input type='hidden' name="menu[menu_translations_attributes][<%=l.code%>][id]" value='<%= pid %>'>
+        <% end %>
         <% end %>
         <%= partial "menus/form", :locals => { :f => f } %>
       <% end %>

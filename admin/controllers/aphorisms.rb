@@ -1,3 +1,4 @@
+# encoding:utf-8
 Admin.controllers :aphorisms do
 
   get :index do
@@ -14,7 +15,7 @@ Admin.controllers :aphorisms do
     @aphorism = Aphorism.new(params[:aphorism])
     if @aphorism.save
       flash[:notice] = t 'admin.create.success'
-      redirect url(:aphorisms, :edit, :id => @aphorism.id)
+      redirect url(:aphorisms, :index)
     else
       flash[:notice] = t 'admin.create.failure'
       render 'aphorisms/new'
@@ -30,7 +31,7 @@ Admin.controllers :aphorisms do
     @aphorism = Aphorism.get(params[:id])
     if @aphorism.update(params[:aphorism])
       flash[:notice] = t 'admin.update.success'
-      redirect url(:aphorisms, :edit, :id => @aphorism.id)
+      redirect url(:aphorisms, :index)
     else
       flash[:notice] = t 'admin.update.failure'
       render 'aphorisms/edit'

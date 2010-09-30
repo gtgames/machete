@@ -1,16 +1,5 @@
-require 'pp'
-
+# encoding:utf-8
 Admin.controllers :pages do
-  before do
-    unless params[:page].nil?
-      if params[:page][:is_home_page] == nil then
-        params[:page][:is_home_page] = false
-      else
-        params[:page][:is_home_page] = true
-      end
-    end
-  end
-
   get :index do
     @pages = Page.all
     render 'pages/index'
@@ -29,7 +18,7 @@ Admin.controllers :pages do
     @page = Page.new(params[:page])
     if @page.save
       flash[:notice] = t 'admin.create.success'
-      redirect url(:pages, :edit, :id => @page.id)
+      redirect url(:pages, :index)
     else
       flash[:error] = t 'admin.create.failure'
       render 'pages/new'
@@ -45,7 +34,7 @@ Admin.controllers :pages do
     @page = Page.get(params[:id])
     if @page.update(params[:page])
       flash[:notice] = t 'admin.update.success'
-      redirect url(:pages, :edit, :id => @page.id)
+      redirect url(:pages, :index)
     else
       flash[:error] = t 'admin.create.failure'
       render 'pages/edit'
@@ -61,7 +50,7 @@ Admin.controllers :pages do
       p.save!()
     end
 
-    if page.translations.destroy! && page.destroy!
+    if page.translations.destroy && page.destroy!
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:error] = t 'admin.create.failure'

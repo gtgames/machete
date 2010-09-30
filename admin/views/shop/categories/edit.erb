@@ -10,7 +10,9 @@
     <div class="inner">
       <% form_for :category, url(:shop, :update_category, :id => @category.id), :method => :put, :class => :form do |f| %>
         <% languages.each do |l| %>
-          <input type='hidden' name="category[category_translations_attributes][<%=l.code%>][id]" value='<%= f.object.translate('id', l.code) %>'>
+          <% if pid = f.object.translate('id', l.code) %>
+            <input type='hidden' name="category[category_translations_attributes][<%=l.code%>][id]" value='<%= pid %>'>
+          <% end %>
         <% end %>
         <%= partial "shop/categories/form", :locals => { :f => f } %>
       <% end %>

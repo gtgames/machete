@@ -10,7 +10,9 @@
     <div class="inner">
       <% form_for :product, url(:shop, :update_product, :id => @product.id), :method => :put, :multipart => true, :class => :form do |f| %>
         <% languages.each do |l| %>
-          <input type='hidden' name="product[product_translations_attributes][<%=l.code%>][id]" value='<%= f.object.translate('id', l.code) %>'>
+          <% if pid = f.object.translate('id', l.code) %>
+            <input type='hidden' name="product[product_translations_attributes][<%=l.code%>][id]" value='<%= pid %>'>
+          <% end %>
         <% end %>
         <%= partial "shop/products/form", :locals => { :f => f } %>
       <% end %>

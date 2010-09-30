@@ -1,3 +1,4 @@
+# encoding:utf-8
 Admin.controllers :photos do
 
   get :index do
@@ -14,7 +15,7 @@ Admin.controllers :photos do
     @photo = Photo.new(params[:photo])
     if @photo.save
       flash[:notice] = t 'admin.create.success'
-      redirect url(:photos, :edit, :id => @photo.id)
+      redirect url(:photos, :index)
     else
       flash[:error] = t 'admin.create.failure'
       render 'photos/new'
@@ -30,7 +31,7 @@ Admin.controllers :photos do
     @photo = Photo.get(params[:id])
     if @photo.update(params[:photo])
       flash[:notice] = t 'admin.update.success'
-      redirect url(:photos, :edit, :id => @photo.id)
+      redirect url(:photos, :index)
     else
       flash[:error] = t 'admin.update.failure'
       render 'photos/edit'

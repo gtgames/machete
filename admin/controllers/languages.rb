@@ -1,3 +1,4 @@
+# encoding:utf-8
 Admin.controllers :languages do
 
   get :index do
@@ -14,7 +15,7 @@ Admin.controllers :languages do
     @language = Language.new(params[:language])
     if @language.save
       flash[:notice] = t 'admin.create.success'
-      redirect url(:languages, :edit, :id => @language.id)
+      redirect url(:languages, :index)
     else
       render 'languages/new'
     end
@@ -29,7 +30,7 @@ Admin.controllers :languages do
     @language = Language.get(params[:id])
     if @language.update(params[:language])
       flash[:notice] = t 'admin.update.success'
-      redirect url(:languages, :edit, :id => @language.id)
+      redirect url(:languages, :index)
     else
       render 'languages/edit'
     end

@@ -5,8 +5,6 @@ class Frontend < Padrino::Application
   set :locales, Language.all.map {|x| x.code.to_sym }
   register Frenz::AutoLocale
 
-  register Frenz::RackCache
-
   enable :logger
   enable :sessions
   enable :flash

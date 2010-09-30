@@ -1,3 +1,4 @@
+# encoding:utf-8
 Admin.helpers do
   def category_options
     c = Category.all

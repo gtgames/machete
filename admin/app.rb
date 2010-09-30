@@ -1,3 +1,4 @@
+# encoding:utf-8
 class Admin < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
@@ -35,7 +36,7 @@ class Admin < Padrino::Application
       role.project_module :menus, "/menus"
       role.project_module :pages, "/pages"
       role.project_module :photos, "/photos"
-      #role.project_module :aphorisms, "/aphorisms"
+      role.project_module :aphorisms, "/aphorisms"
       role.project_module :languages, "/languages"
       role.project_module :accounts, "/accounts"
   end
@@ -46,9 +47,5 @@ class Admin < Padrino::Application
     headers 'Cache-Control' => "private, max-age=0, no-cache, must-revalidate"
     headers 'Last-Modified' => Time.now.httpdate
     content_type :html, 'charset' => 'utf-8'
-  end
-  
-  error 404 do
-    render "base/index"
   end
 end
