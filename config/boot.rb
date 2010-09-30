@@ -7,7 +7,6 @@ APP_LANGUAGES = [:it, :en]
 CACHING = false
 DOMAIN_NAME = (PADRINO_ENV == "development" )? "frenz.fr" : "frenz.fr"
 
-
 begin
   # Require the preresolved locked set of gems.
   require File.expand_path('../../.bundle/environment', __FILE__)

@@ -19,7 +19,7 @@ class Admin < Padrino::Application
   helpers Frenz::AutoLocale::Helpers
   
   set :charset, "utf8"
-  set :locales, Language.all.map {|x| x.code.to_sym }
+  set :locales, Language.all.map {|x| x.code.to_sym } || [:it]
 
   set :login_page, "/sessions/new"
   disable :store_location

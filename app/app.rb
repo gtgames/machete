@@ -2,7 +2,7 @@ class Frontend < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
   
-  set :locales, Language.all.map {|x| x.code.to_sym }
+  set :locales, Language.all.map {|x| x.code.to_sym } || [:it]
   register Frenz::AutoLocale
 
   enable :logger
