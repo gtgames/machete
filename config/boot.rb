@@ -5,7 +5,7 @@ PADRINO_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..')) unless 
 
 APP_LANGUAGES = [:it, :en]
 CACHING = false
-DOMAIN_NAME = (PADRINO_ENV == "development" )? "frenz.fr" : "frenz.fr"
+DOMAIN_NAME = "frenz.fr"
 
 begin
   # Require the preresolved locked set of gems.
