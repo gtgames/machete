@@ -1,6 +1,5 @@
 # encoding:utf-8
 Admin.helpers do
-
   def options_tree(my_id = nil, r = Page.roots)
     a = Array.new
     a << ['Radice', 'NULL']
