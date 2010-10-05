@@ -1,9 +1,11 @@
-source :gemcutter
+source 'http://rubygems.org'
 
 # Project requirements
 gem 'rake'
 gem 'rack-flash'
-gem 'thor', '= 0.14.0'
+gem 'thor', '>= 0.14.3'
+
+gem 'i18n'
 
 group :development do
   gem 'mongrel', '>= 1.2.0.pre2'
@@ -31,4 +33,4 @@ gem 'unidecode'
 
 
 # Padrino
-gem 'padrino', "0.9.16"
+gem 'padrino', "0.9.17"
