@@ -5,8 +5,8 @@ env = 'production'
 working_directory ::File::expand_path(File.dirname(__FILE__))
 
 worker_processes 2 # Master + 2 workers + app's background tasks
-pid APP_ROOT + "/unicorn.pid"
-stderr_path APP_ROOT + "/unicorn.log"
+pid APP_ROOT + "/tmp/unicorn.pid"
+stderr_path APP_ROOT + "/log/unicorn.log"
 
 #REE stuff
 if GC.respond_to?(:copy_on_write_friendly=)

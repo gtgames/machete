@@ -1,8 +1,8 @@
-Frontend.controllers :lang => I18n.locale do
+Frontend.controllers do
   ###############################################
   ## Welcome                                    #
   ###############################################
-  get :index, :map => "/:lang/" do
+  get :index, :map => "/" do
     @page = Page.home_page
     unless @page.nil?
       render 'pages/show'
@@ -19,17 +19,17 @@ Frontend.controllers :lang => I18n.locale do
   ###############################################
   ## Pages                                      #
   ###############################################
-  get :pages, :map => "/:lang/pages/" do
+  get :pages, :map => "/pages/" do
     render 'pages/index'
   end
 
-  get :page_show, :map => "/:lang/:id/:slug" do
+  get :page_show, :map => "/:id/:slug" do
     @page = Page.get params[:id]
     halt 404 if @page.nil?
     render 'pages/show'
   end
 
-  get :page_search, :map => "/:lang/search" do
+  get :page_search, :map => "/search" do
     @s = params[:q]
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
       render 'pages/search'
@@ -39,7 +39,7 @@ Frontend.controllers :lang => I18n.locale do
     end
   end
 
-  get :page_tags, :map => "/:lang/tag/:tags" do
+  get :page_tags, :map => "/tag/:tags" do
     @tags = params[:tags].split(',')
     @pages = Page.tagged_with(@tags)
     render 'page/tags'
@@ -74,12 +74,12 @@ Frontend.controllers :lang => I18n.locale do
     render 'media/index'
   end
 
-  get :media_show, :map => "/:lang/media/p/:id" do
+  get :media_show, :map => "/media/p/:id" do
     @media = Media.get params[:id]
     render 'media/show'
   end
 
-  post :media_search, :map => "/:lang/media/search" do
+  post :media_search, :map => "/media/search" do
     @media = Media.all :name.like => "%#{params[:term]}%"
     render 'media/index'
   end
@@ -88,7 +88,7 @@ Frontend.controllers :lang => I18n.locale do
   ## Imagination                                #
   ###############################################
 
-  get :imagination_index, :map => "/:lang/imagination/:tag", :provides => [:any, :json] do
+  get :imagination_index, :map => "/imagination/:tag", :provides => [:any, :json] do
     @photos = Photo.all
     case content_type
     when :json then
@@ -99,7 +99,7 @@ Frontend.controllers :lang => I18n.locale do
     end
   end
 
-  get :imagination_tag, :map => "/:lang/imagination/:tag", :provides => [:any, :json] do
+  get :imagination_tag, :map => "/imagination/:tag", :provides => [:any, :json] do
     @photos = Photo.tagged_with params[:tag]
     case content_type
     when :js then

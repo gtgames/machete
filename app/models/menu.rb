@@ -3,21 +3,10 @@ class Menu
   include DataMapper::Resource
 
   property :id, Serial
-  is :localizable do
-    property :title,  String, :length => 1..255
-    property :alt,    String, :length => 1..255
-  end
+  property :title,  String, :length => 1..255
+  property :alt,    String, :length => 1..255
   property :url,    String,   :length => 1..255
   property :weigth, Integer,  :default => 10
-
-  def iurl
-    url = attribute_get(:url)
-    if url =~ /^\/\w*[\w\d\/]*/
-      "/#{I18n.locale}#{url}"
-    else
-      url
-    end
-  end
 
   def url=(data)
     if data =~ /^(http:\/)?\/.*/

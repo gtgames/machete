@@ -1,40 +1,25 @@
-<%= f.error_messages %>
-<formset>
-  <% languages.each do |l| %>
-    <input type='hidden' name="menu[menu_translations_attributes][<%=l.code%>][language_id]" value='<%= l.id %>'>
-
-    <div class="group">
-      <%= f.error_message_on :title %>
-      <label> Titolo (<%= l.name %>)
-        <input type="text" name="menu[menu_translations_attributes][<%=l.code%>][title]" class="text_field" value="<%= f.object.title l.code%>">
-      </label>
-      <span class="description">Titolo del link, visualizzato nel bottone</span>
-    </div>
-  <% end %>
-</formset>
-<formset>
-  <% languages.each do |l| %>
-    <div class="group">
-      <%= f.error_message_on :title %>
-      <label> Testo alternativo (<%= l.name %>)
-        <input type="text" name="menu[menu_translations_attributes][<%=l.code%>][alt]" class="text_field" value="<%= f.object.alt l.code%>">
-      </label>
-      <span class="description">Testo alternativo del link, visualizzato al passagio del mouse</span>
-    </div>
-  <% end %>
-</formset>
+<div class="group">
+  <%= f.label :title %><%= f.error_message_on :title %>
+  <%= f.text_field :title, :class => :text_field %>
+  <span class="description"><%=t 'admin.menu.title.description' %></span>
+</div>
+<div class="group">
+  <%= f.label :alt %><%= f.error_message_on :alt %>
+  <%= f.text_field :alt, :class => :text_field %>
+  <span class="description"><%=t 'admin.menu.alt.description' %></span>
+</div>
 
 <div class="group">
   <%= f.label :url %><%= f.error_message_on :url %>
   <%= f.text_field :url, :class => :text_field %>
-  <span class="description">Link alla pagina interna</span>
+  <span class="description"><%=t 'admin.menu.url.description' %></span>
 </div>
 
 <div class="group">
   <%= f.label :weigth %><%= f.error_message_on :weigth %>
   <%= f.text_field :weigth, :class => :slide_text_field %>
   <div id="weigth_slider"></div>
-  <span class="description">Peso dell'oggetto nella pila (10 &egrave; il valore predefinito)</span>
+  <span class="description"><%=t 'admin.menu.weigth.description' %></span>
 </div>
 
 <div class="group navform wat-cf">

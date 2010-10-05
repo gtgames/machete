@@ -1,26 +1,15 @@
-<formset>
-  <% languages.each do |l| %>
-    <input type='hidden' name="page[page_translations_attributes][<%=l.code%>][language_id]" value='<%= l.id %>'>
-    
-    <div class="group">
-      <label> Titolo (<%= l.name %>)
-        <input type="text" name="page[page_translations_attributes][<%=l.code%>][title]" class="required text_field" value="<%= f.object.title(l.code)%>">
-      </label>
-      <span class="description">Titolo della pagina</span>
-    </div>
-  <% end %>
-</formset>
+<div class="group">
+  <%= f.label :title %><%= f.error_message_on :title %>
+  <%= f.text_field :title, :class => :text_field %>
+  <span class="description"><%=t 'admin.page.title.description' %></span>
+</div>
 
-<formset>
-  <% languages.each do |l| %>
-    <div class="group">
-      <label> Testo (<%= l.name %>)
-        <textarea type="text" name="page[page_translations_attributes][<%=l.code%>][text]" class="required text_area" rows="10"><%= f.object.text(l.code)%></textarea>
-      </label>
-      <span class="description">Testo alternativo del link</span>
-    </div>
-  <% end %>
-</formset>
+
+<div class="group">
+  <%= f.label :text %><%= f.error_message_on :text %>
+  <%= f.text_area :text, :class => :text_area %>
+  <span class="description"><%=t 'admin.page.text.description' %></span>
+</div>
 
 <div class="group">
   <label for="tag_list">Tags</label><%= f.error_message_on :tag_list %>

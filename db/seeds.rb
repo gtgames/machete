@@ -31,21 +31,3 @@ else
 end
 
 shell.say ""
-
-language = Language.create :code => 'it', :name => 'Italiano'
-if language.save
-  shell.say "Added new language: Italiano"
-else
-  language.errors.each do |e|
-    shell.say "Error: #{e}"
-  end
-end
-
-language = Language.create :code => 'en', :name => 'Inglese'
-if language.save
-  shell.say "Added new language: Inglese"
-else
-  language.errors.each do |e|
-    shell.say "Error: #{e}"
-  end
-end

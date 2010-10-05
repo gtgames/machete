@@ -1,8 +1,4 @@
 Frontend.helpers do
-  def locale
-    I18n.locale
-  end
-
   def aphorisms
     f = Aphorism.random
     unless f.nil?

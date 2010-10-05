@@ -151,14 +151,4 @@ namespace :db do
   remote_task :migrate do
     run("cd #{DEPLOY_ROOT}; bundle exec padrino rake seed")
   end
-
-  desc "Creates Lang table"
-  remote_task :lang do
-    require "sequel"
-    DB = Sequel.connect("postgres://#{APP_USER}:#{APP_DB_PASSWORD}@127.0.0.1/#{APP_DB}")
-    DB.run[
-      'CREATE TABLE languages ( id serial NOT NULL, code character varying(50) NOT NULL, "name" character varying(50) NOT NULL, CONSTRAINT languages_pkey PRIMARY KEY (id))',
-      'CREATE UNIQUE INDEX unique_languages_code ON languages USING btree (code)'
-    ]
-  end
 end

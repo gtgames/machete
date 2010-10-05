@@ -30,7 +30,7 @@ Admin.helpers do
     unless r.empty?
       html += "<ul>"
       r.each do |p|
-        html += "<li>#{p.title(I18n.locale)} &nbsp;"
+        html += "<li>#{p.title} &nbsp;"
         html += button_to pat(:edit), url(:pages, :edit, :id => p.id), :method => :get, :class => :button_to
         html += button_to pat(:delete), url(:pages, :destroy, :id => p.id), :method => :delete, :class => :button_to
         html += tree(p.children) unless p.children.empty?
@@ -42,11 +42,7 @@ Admin.helpers do
   end
 
   def page_url_for(page)
-    html = ''
-    options.locales.each do |l|
-      html += link_to( page.title(l), "#{options.frontend_url}/#{l}/#{page.slug(l)}")
-    end
-    html
+    link_to( page.title, "#{options.frontend_url}/#{page.id}/#{page.slug}")
   end
 end
 

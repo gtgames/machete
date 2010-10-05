@@ -1,6 +1,4 @@
-<% locales.each |l| %>
-  <% @pages.each do |p|%>
-    <%= p.title %>
-    <%= url :pages, :show, :lang => l, :slug => p.slug(l) %>
-  <% end %>
+<% @pages.each do |p|%>
+  <%= p.title %>
+  <%= url :pages, :show, :id => p.id, :slug => p.slug %>
 <% end %>
