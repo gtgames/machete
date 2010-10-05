@@ -74,64 +74,22 @@ Frontend.controllers :lang => I18n.locale do
   end
 
   ###############################################
-  ## Shop                                       #
+  ## Media with a nice array of tags            #
   ###############################################
-  get :categories, :map => "/:lang/shop/" do
-    @categories = (params[:c].nil?)? Category.all : Category.get(params[:c])
-    render 'shop/index'
+
+  get :media_index do
+    @tags = Media.tags
+    @media = Media.all
+    render 'media/index'
   end
 
-  get :category, :map => "/:lang/shop/:id" do
-    @category = Category.get(params[:id])
-    render 'shop/category'
+  get :show, :map => "/:lang/media/p/:id" do
+    @media = Media.get(:id => params[:id])
+    render 'media/show'
   end
 
-  get :show, :map => "/:lang/shop/p/:id" do
-    @product = Product.get(:id => params[:id])
-    render 'shop/product/show'
+  post :search, :map => "/:lang/media/search" do
+    @media = Media.all(:name.like => "%#{params[:term]}%")
+    render 'media/index'
   end
-
-  post :search, :map => "/:lang/shop/search" do
-    @products = Product.all(:name.like => "%#{params[:term]}%")
-    render 'shop/product/index'
-  end
-
-  ###############################################
-  ## Cart                                       #
-  ###############################################
-  #TODO use redis for cart crap
-  get :cart, :provides => [:any, :json], :map => "/:lang/shop/cart/" do
-    cookie = request.cookies["cart"]
-    
-    case content_type
-    when :json then
-      content_type :json
-      @photos.to_json
-    else
-      render 'shop/cart/index'
-    end
-  end
-
-  get :cart_product, :provides => [:any, :json], :map => "/:lang/shop/cart/:id" do
-    @product = Product.get(:id => params[:id])
-    case content_type
-    when :json then
-      content_type :json
-      @products.to_json
-    else
-      render 'shop/product/show'
-    end
-  end
-
-  post :cart_add, :provides => [:any, :json], :map => "/:lang/shop/cart/" do
-    cookie = request.cookies["cart"]
-    case content_type
-    when :json then
-      content_type :json
-      @products.to_json
-    else
-      render 'shop/product/show'
-    end
-  end
-
 end
