@@ -7,46 +7,32 @@ require 'rake/remote_task'
 
 APP_NAME = "skeleton.com"
 APP_USER = "skeleton"
-UNBIT = false
-TEMP_FOLDER = (UNBIT)? '/accounts/tazzo/tmp/' : "/home/#{APP_USER}/tmp/"
-DEPLOY_ROOT = (UNBIT)? "/accounts/tazzo/www/#{APP_NAME}" : "/home/#{APP_USER}/www/#{APP_NAME}"
-SERVER = (UNBIT)? "tazzo:" : "#{APP_USER}@ frenz:"
-
-DEPLOY_FILES= [
-  'admin',
-  'app',
-  'config',
-  'config.ru',
-  'db',
-  'lib',
-  # additional files/folders
-  'locale',
-  'imagination'
-].join(' ')
-
-IGNORE_FILES= [
-  # temp files
-  '*._*',
-  '*.DS_Store',
-  # additional crap-files
-  ''
-].map{|f| "--exclude='#{f}'"}.join(' ')
+APP_DB = "postgres"
+APP_DB_PASSWORD = ""
 
 
-UNICORN_RB = <<-RUBY
-env = 'production'
 
-working_directory "#{DEPLOY_ROOT}/current"
+TEMP_FOLDER = "/home/#{APP_USER}/tmp/"
+DEPLOY_ROOT = "/home/#{APP_USER}/www/#{APP_NAME}"
+SERVER = "#{APP_USER}@ frenz:"
 
-worker_processes 2 # Master + 2 workers + app's background tasks
-pid "#{DEPLOY_ROOT}/unicorn.pid"
-stderr_path "#{DEPLOY_ROOT}/logs/unicorn.log"
+DEPLOY_FILES= %w(
+  admin
+  app
+  config
+  config.ru
+  db
+  lib
+  locale
+  imagination
+  unicorn.rb
+).join(' ')
 
-#REE stuff
-preload_app true
-GC.respond_to?(:copy_on_write_friendly=) and
-  GC.copy_on_write_friendly = true
-RUBY
+IGNORE_FILES= %w(
+  *._*
+  *.DS_Store
+).map{|f| "--exclude='#{f}'"}.join(' ')
+
 
 role :app_server, "tazzo"
 set :rsync_flags, ['-avzP']
@@ -55,8 +41,6 @@ set :rsync_flags, ['-avzP']
 ##############################################################################
 # tasks
 ##############################################################################
-#TODO: add log reading task
-
 @archive = "#{APP_NAME}-#{`git rev-list --max-count=1 --abbrev=10 --abbrev-commit HEAD`.chomp}.tar.bz2"
 
 def restart_daemons
@@ -67,43 +51,10 @@ def restart_daemons
   end
 end
 
-def sync_unicorn_rb
-  run "if [ -f '#{DEPLOY_ROOT}/unicorn.rb' ]; then rm #{DEPLOY_ROOT}/unicorn.rb; fi"
-  put DEPLOY_ROOT, 'unicorn.rb'  do
-    UNICORN_RB
-  end
-  run "mv #{DEPLOY_ROOT}/unicorn.rb* #{DEPLOY_ROOT}/unicorn.rb"
-end
-
 def sync_public
   rsync 'public', SERVER+DEPLOY_ROOT
   run "ln -s -f -T #{DEPLOY_ROOT}/public #{DEPLOY_ROOT}/current/public"
 end
-
-def db_upgrade(type)
-  d = <<-RUBY
-class Padrino
-  def self.env;:production; end
-  def self.root(*args)
-    "#{DEPLOY_ROOT}/current/#{args.join('/')}"
-  end
-end
-require 'rubygems'
-PADRINO_ENV = 'production'
-PADRINO_ROOT =  "#{DEPLOY_ROOT}/current"
-File.read("#{DEPLOY_ROOT}/current/config.ru").each { |gem|
-  require /\'([\w\-\_\/]*)\'/.match(gem)[1] if gem =~ /^(\s*)?require\s\'(do\_.*|dm\-.*|data_mapper)\'$/
-}
-File.read("#{DEPLOY_ROOT}/current/config/database.rb").each { |l|
-  eval(/^.*:production then (DataMapper.setup\(.*\))/.match(l)[1]) if l =~ /^.*:production\sthen.*/
-}
-Dir["#{DEPLOY_ROOT}/current/*/models/*.rb"].each {|file| require file.sub(/\.rb$/, '') }
-
-DataMapper::auto_#{type}!
-RUBY
-  d
-end
-
 
 namespace :deploy do
   task :build do
@@ -183,36 +134,31 @@ namespace :server do
   end
 end
 
-namespace :db do
-
-  desc "Upgrades the db to the current scheme"
-  remote_task :upgrade do
-    run "if [ -f '#{DEPLOY_ROOT}/db_upgrade.rb' ]; then rm #{DEPLOY_ROOT}/unicorn.rb; fi"
-    put DEPLOY_ROOT, 'db_upgrade.rb'  do
-      db_upgrade('upgrade')
-    end
-    run "ruby #{DEPLOY_ROOT}/db_upgrade.rb*"
-  end
-
-  desc "Reinitializes db with the current scheme"
-  remote_task :migrate do
-    run "if [ -f '#{DEPLOY_ROOT}/db_upgrade.rb' ]; then rm #{DEPLOY_ROOT}/unicorn.rb; fi"
-    put DEPLOY_ROOT, 'db_upgrade.rb' do
-      db_upgrade('migrate')
-    end
-    run "ruby #{DEPLOY_ROOT}/db_upgrade.rb*"
-  end
-
-end
-
 namespace :log do
   remote_task :read, :lines do |t, args|
     args.with_defaults :lines => 45
     puts run("tail -n #{args.lines} #{DEPLOY_ROOT}/logs/unicorn.log")
   end
-  
+
   remote_task :download, :dir do |t, args|
     args.with_defaults :dir => './'
     get './', "#{DEPLOY_ROOT}/logs/unicorn.log"
+  end
+end
+
+namespace :db do
+  desc "Seeds the whole crap"
+  remote_task :migrate do
+    run("cd #{DEPLOY_ROOT}; bundle exec padrino rake seed")
+  end
+
+  desc "Creates Lang table"
+  remote_task :lang do
+    require "sequel"
+    DB = Sequel.connect("postgres://#{APP_USER}:#{APP_DB_PASSWORD}@127.0.0.1/#{APP_DB}")
+    DB.run[
+      'CREATE TABLE languages ( id serial NOT NULL, code character varying(50) NOT NULL, "name" character varying(50) NOT NULL, CONSTRAINT languages_pkey PRIMARY KEY (id))',
+      'CREATE UNIQUE INDEX unique_languages_code ON languages USING btree (code)'
+    ]
   end
 end
