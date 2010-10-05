@@ -16,42 +16,33 @@ Frontend.controllers :lang => I18n.locale do
     render 'sitemap/index'
   end
 
-
   ###############################################
   ## Pages                                      #
   ###############################################
-  get :pages, :map => "/:lang/#{I18n.t 'routes.pages.index'}/" do
+  get :pages, :map => "/:lang/pages/" do
     render 'pages/index'
   end
 
-  get :page_show, :map => "/:lang/:slug" do
-    @page = Page.get_slug params[:slug]
+  get :page_show, :map => "/:lang/:id/:slug" do
+    @page = Page.get params[:id]
     halt 404 if @page.nil?
     render 'pages/show'
   end
 
-  get :page_search, :map => "/:lang/#{I18n.t 'routes.page.search'}" do
+  get :page_search, :map => "/:lang/search" do
     @s = params[:q]
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
-      render 'page_search/index'
+      render 'pages/search'
     else
       @pages = Page.all( :title.like => "%#{@s}%" ) | Page.all( :text.like => "%#{@s}%" )
-      render 'page_search/results'
+      render 'page/results'
     end
   end
 
   get :page_tags, :map => "/:lang/tag/:tags" do
-    @tags = params[:tags]
-    if (/(\w+,?)+/i =~ @tags).nil?
-      redirect url(:page_search, :text)
-    end
-    @s = params[:q]
-    if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
-      @pages = Page.tagged_with(@tags)
-    else
-      @pages = Page.tagged_with(@tags) | Page.all( :title.like => "%#{@s}%" ) | Page.all( :text.like => "%#{@s}%" )
-    end
-    render 'page_search/results'
+    @tags = params[:tags].split(',')
+    @pages = Page.tagged_with(@tags)
+    render 'page/tags'
   end
 
   ###############################################
@@ -83,13 +74,40 @@ Frontend.controllers :lang => I18n.locale do
     render 'media/index'
   end
 
-  get :show, :map => "/:lang/media/p/:id" do
-    @media = Media.get(:id => params[:id])
+  get :media_show, :map => "/:lang/media/p/:id" do
+    @media = Media.get params[:id]
     render 'media/show'
   end
 
-  post :search, :map => "/:lang/media/search" do
-    @media = Media.all(:name.like => "%#{params[:term]}%")
+  post :media_search, :map => "/:lang/media/search" do
+    @media = Media.all :name.like => "%#{params[:term]}%"
     render 'media/index'
   end
+
+  ###############################################
+  ## Imagination                                #
+  ###############################################
+
+  get :imagination_index, :map => "/:lang/imagination/:tag", :provides => [:any, :json] do
+    @photos = Photo.all
+    case content_type
+    when :json then
+      content_type 'application/json'
+      @photos.to_json
+    else
+      render 'imagination/index', :layout => 'imagination'
+    end
+  end
+
+  get :imagination_tag, :map => "/:lang/imagination/:tag", :provides => [:any, :json] do
+    @photos = Photo.tagged_with params[:tag]
+    case content_type
+    when :js then
+      content_type 'application/json'
+      @photos.to_json
+    else
+      render 'imagination/index', :layout => 'imagination'
+    end
+  end
+
 end

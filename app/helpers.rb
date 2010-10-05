@@ -21,7 +21,7 @@ Frontend.helpers do
     unless r.empty?
       html += "<ul>"
       r.each do |p|
-        html += "<li>" + link_to(p.title, url(:page_show, :slug => "#{p.slug}", :lang => I18n.locale ))
+        html += "<li>" + link_to(p.title, url(:page_show, :id => p.id, :slug => "#{p.slug}", :lang => I18n.locale ))
         html += tree(p.children) unless p.children.empty?
         html << "</li>"
       end
@@ -31,7 +31,7 @@ Frontend.helpers do
   end
 
   def textilize(text)
-    RDiscount.new(text).to_html
+    BlueCloth.new(text).to_html
   end
 
 end
