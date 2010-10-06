@@ -50,7 +50,7 @@ Admin.controllers :pages do
       p.save!()
     end
 
-    if page.translations.destroy && page.destroy!
+    if page.destroy
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:error] = t 'admin.create.failure'

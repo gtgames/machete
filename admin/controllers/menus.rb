@@ -39,7 +39,7 @@ Admin.controllers :menus do
 
   delete :destroy, :with => :id do
     menu = Menu.get(params[:id])
-    if menu.translations.destroy! && menu.destroy!
+    if menu.destroy
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:error] = t 'admin.destroy.failure'
