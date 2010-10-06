@@ -87,15 +87,14 @@ Frontend.controllers do
   ###############################################
   ## Imagination                                #
   ###############################################
-
-  get :imagination_index, :map => "/imagination/:tag", :provides => [:any, :json] do
+  get :imagination_index, :map => "/imagination/", :provides => [:any, :json] do
     @photos = Photo.all
     case content_type
     when :json then
       content_type 'application/json'
       @photos.to_json
     else
-      render 'imagination/index', :layout => 'imagination'
+      render 'imagination/index', :layout => false
     end
   end
 
@@ -106,7 +105,7 @@ Frontend.controllers do
       content_type 'application/json'
       @photos.to_json
     else
-      render 'imagination/index', :layout => 'imagination'
+      render 'imagination/index', :layout => false
     end
   end
 
