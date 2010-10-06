@@ -16,6 +16,7 @@ group :production do
 end
 
 # Component requirements
+gem 'padrino-contrib'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'dm-postgres-adapter'
@@ -25,7 +26,6 @@ gem 'dm-tags'
 gem 'dm-is-tree'
 gem 'dm-is-remixable'
 gem 'dm-accepts_nested_attributes'
-gem 'dm-paperclip'
 
 gem 'bluecloth'
 gem 'unidecode'

@@ -2,8 +2,6 @@
 PADRINO_ENV  = ENV["PADRINO_ENV"] ||= ENV["RACK_ENV"] ||= "development"  unless defined?(PADRINO_ENV)
 PADRINO_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..')) unless defined?(PADRINO_ROOT)
 
-
-APP_LANGUAGES = [:it, :en]
 CACHING = false
 DOMAIN_NAME = "frenz.fr"
 
@@ -22,12 +20,10 @@ puts "=> Located #{Padrino.bundle} Gemfile for #{Padrino.env}"
 
 
 Padrino.before_load do
+  require "padrino-contrib/exceptions_notifier"
 end
 
 Padrino.after_load do
-  Paperclip.configure do |config|
-    config.root = PADRINO_ROOT
-  end
   DataMapper.finalize
 end
 

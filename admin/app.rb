@@ -4,18 +4,18 @@ class Admin < Padrino::Application
   register Padrino::Helpers
   register Padrino::Admin::AccessControl
 
-  ##
-  # Application configuration options
-  #
-  # set :raise_errors, true     # Show exceptions (default for development)
-  # set :public, "foo/bar"      # Location for static assets (default root/public)
-  # set :reload, false          # Reload application files (default in development)
-  # set :default_builder, "foo" # Set a custom form builder (default 'StandardFormBuilder')
-  # set :locale_path, "bar"     # Set path for I18n translations (default your_app/locales)
-  # enable  :sessions           # Disabled by default
-  # disable :flash              # Disables rack-flash (enabled by default if sessions)
-  # layout  :my_layout          # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
-  #
+  register Padrino::Contrib::ExceptionNotifier
+  set :exceptions_from,    "exceptions@#{DOMAIN_NAME}"
+  set :exceptions_to,      "exceptions@frenzart.com"
+
+  set :delivery_method, :smtp => {
+    :address              => "mail.#{DOMAIN_NAME}",
+    :port                 => 465,
+    :user_name            => "mail@#{DOMAIN_NAME}",
+    :password             => 'kUYAnAg92guxoziT53',
+    :authentication       => :plain,
+    :enable_starttls_auto => true
+  }
 
   set :charset, "utf8"
 

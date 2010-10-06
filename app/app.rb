@@ -2,6 +2,19 @@ class Frontend < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
 
+  register Padrino::Contrib::ExceptionNotifier
+  set :exceptions_from,    "exceptions@#{DOMAIN_NAME}"
+  set :exceptions_to,      "exceptions@frenzart.com"
+
+  set :delivery_method, :smtp => {
+    :address              => "mail.#{DOMAIN_NAME}",
+    :port                 => 465,
+    :user_name            => "mail@#{DOMAIN_NAME}",
+    :password             => 'kUYAnAg92guxoziT53',
+    :authentication       => :plain,
+    :enable_starttls_auto => true
+  }
+
   enable :logger
   enable :sessions
   enable :flash
