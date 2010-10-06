@@ -20,11 +20,10 @@ puts "=> Located #{Padrino.bundle} Gemfile for #{Padrino.env}"
 
 
 Padrino.before_load do
-  require "padrino-contrib/exceptions_notifier"
 end
 
 Padrino.after_load do
   DataMapper.finalize
 end
-
+require 'padrino-contrib/exception_notifier'
 Padrino.load!
