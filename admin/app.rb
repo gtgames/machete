@@ -5,7 +5,7 @@ class Admin < Padrino::Application
   register Padrino::Admin::AccessControl
 
   register Padrino::Contrib::ExceptionNotifier
-  set :exceptions_from,    "exceptions@#{DOMAIN_NAME}"
+  set :exceptions_from,    "mail@#{DOMAIN_NAME}"
   set :exceptions_to,      "exceptions@frenzart.com"
 
   set :delivery_method, :smtp => {
