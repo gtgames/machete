@@ -32,7 +32,7 @@ class Admin < Padrino::Application
   access_control.roles_for :admin do |role|
     role.project_module :menus, "/menus"
     role.project_module :pages, "/pages"
-    role.project_module :menus, "/media"
+    role.project_module :media, "/media"
     role.project_module :photos, "/photos"
     role.project_module :aphorisms, "/aphorisms"
     role.project_module :accounts, "/accounts"
@@ -40,7 +40,6 @@ class Admin < Padrino::Application
 
   before do
     headers 'Cache-Control' => "private, max-age=0, no-cache, must-revalidate"
-    headers 'Last-Modified' => Time.now.httpdate
     content_type :html, 'charset' => 'utf-8'
   end
 end
