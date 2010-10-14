@@ -1,5 +1,5 @@
 --- 
-:orm: datamapper
+:orm: sequel
 :test: none
 :mock: none
 :script: mootools

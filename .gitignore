@@ -19,5 +19,5 @@ Gemfile.lock
 
 log/*
 db/*.db
-public/photos/*
+public/assets/*
 public/images/*

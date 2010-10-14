@@ -12,7 +12,7 @@ case Padrino.env
   when :production then DataMapper.setup(:default,
     :adapter => 'postgres',
     :host => '127.0.0.1',
-    :username => 'database_user',
-    :password => 'database_password',
-    :database => 'database_name')
+    :username => 'frenz',
+    :password => 'fr3nz',
+    :database => 'frenz01')
 end

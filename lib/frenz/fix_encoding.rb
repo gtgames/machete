@@ -32,9 +32,7 @@ module Sinatra
       # The latter might not be necessary if Rack handles it one day.
       # Keep an eye on Rack's LH #100.
       if defined? Encoding
-        if Encoding.default_external.to_s =~ /^ASCII/
-          Encoding.default_external = "UTF-8"
-        end
+        Encoding.default_external = "UTF-8"
         Encoding.default_internal ||= Encoding.default_external
 
         def force_encoding(data)
