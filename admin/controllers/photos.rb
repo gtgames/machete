@@ -13,37 +13,35 @@ Admin.controllers :photos do
 
   post :create do
     @photo = Photo.new(params[:photo])
-    if @photo.save
-      flash[:notice] = t 'admin.create.success'
-      redirect url(:photos, :index)
+    if (@photo.save rescue false)
+      flash[:notice] = 'Photo was successfully created.'
+      redirect url(:photos, :edit, :id => @photo.id)
     else
-      flash[:error] = t 'admin.create.failure'
       render 'photos/new'
     end
   end
 
   get :edit, :with => :id do
-    @photo = Photo.get(params[:id])
+    @photo = Photo[params[:id]]
     render 'photos/edit'
   end
 
   put :update, :with => :id do
-    @photo = Photo.get(params[:id])
-    if @photo.update(params[:photo])
-      flash[:notice] = t 'admin.update.success'
-      redirect url(:photos, :index)
+    @photo = Photo[params[:id]]
+    if @photo.modified! && @photo.update(params[:photo])
+      flash[:notice] = 'Photo was successfully updated.'
+      redirect url(:photos, :edit, :id => @photo.id)
     else
-      flash[:error] = t 'admin.update.failure'
       render 'photos/edit'
     end
   end
 
   delete :destroy, :with => :id do
-    image = Photo.get(params[:id])
-    if image.destroy
-      flash[:notice] = t 'admin.destroy.success'
+    photo = Photo[params[:id]]
+    if photo.destroy
+      flash[:notice] = 'Photo was successfully destroyed.'
     else
-      flash[:error] = t 'admin.destroy.failure'
+      flash[:error] = 'Impossible destroy Photo!'
     end
     redirect url(:photos, :index)
   end

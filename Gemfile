@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :rubygems
 
 # Project requirements
 gem 'rake'
@@ -14,21 +14,18 @@ end
 group :production do
   gem 'unicorn'
 end
+gem 'rack-fiber_pool'
 
 # Component requirements
 gem 'padrino-contrib'
 gem 'carrierwave'
 gem 'mini_magick'
-gem 'dm-postgres-adapter'
-gem 'data_mapper'
-gem 'dm-constraints'
-gem 'dm-tags'
-gem 'dm-is-tree'
-gem 'dm-is-remixable'
-gem 'dm-accepts_nested_attributes'
 
 gem 'bluecloth'
 gem 'unidecode'
+gem 'haml'
+gem 'pg'
+gem 'sequel'
 
 # Test requirements
 

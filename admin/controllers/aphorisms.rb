@@ -13,37 +13,35 @@ Admin.controllers :aphorisms do
 
   post :create do
     @aphorism = Aphorism.new(params[:aphorism])
-    if @aphorism.save
-      flash[:notice] = t 'admin.create.success'
-      redirect url(:aphorisms, :index)
+    if (@aphorism.save rescue false)
+      flash[:notice] = 'Aphorism was successfully created.'
+      redirect url(:aphorisms, :edit, :id => @aphorism.id)
     else
-      flash[:notice] = t 'admin.create.failure'
       render 'aphorisms/new'
     end
   end
 
   get :edit, :with => :id do
-    @aphorism = Aphorism.get(params[:id])
+    @aphorism = Aphorism[params[:id]]
     render 'aphorisms/edit'
   end
 
   put :update, :with => :id do
-    @aphorism = Aphorism.get(params[:id])
-    if @aphorism.update(params[:aphorism])
-      flash[:notice] = t 'admin.update.success'
-      redirect url(:aphorisms, :index)
+    @aphorism = Aphorism[params[:id]]
+    if @aphorism.modified! && @aphorism.update(params[:aphorism])
+      flash[:notice] = 'Aphorism was successfully updated.'
+      redirect url(:aphorisms, :edit, :id => @aphorism.id)
     else
-      flash[:notice] = t 'admin.update.failure'
       render 'aphorisms/edit'
     end
   end
 
   delete :destroy, :with => :id do
-    aphorism = Aphorism.get(params[:id])
+    aphorism = Aphorism[params[:id]]
     if aphorism.destroy
-      flash[:notice] = t 'admin.destroy.success'
+      flash[:notice] = 'Aphorism was successfully destroyed.'
     else
-      flash[:error] = t 'admin.destroy.failure'
+      flash[:error] = 'Impossible destroy Aphorism!'
     end
     redirect url(:aphorisms, :index)
   end

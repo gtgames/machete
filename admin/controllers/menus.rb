@@ -12,37 +12,35 @@ Admin.controllers :menus do
 
   post :create do
     @menu = Menu.new(params[:menu])
-    if @menu.save
-      flash[:notice] = t 'admin.create.success'
-      redirect url(:menus, :index)
+    if (@menu.save rescue false)
+      flash[:notice] = 'Menu was successfully created.'
+      redirect url(:menus, :edit, :id => @menu.id)
     else
-      flash[:error] = t 'admin.create.failure'
       render 'menus/new'
     end
   end
 
   get :edit, :with => :id do
-    @menu = Menu.get(params[:id])
+    @menu = Menu[params[:id]]
     render 'menus/edit'
   end
 
   put :update, :with => :id do
-    @menu = Menu.get(params[:id])
-    if @menu.update(params[:menu])
-      flash[:notice] = t 'admin.update.success'
-      redirect url(:menus, :index)
+    @menu = Menu[params[:id]]
+    if @menu.modified! && @menu.update(params[:menu])
+      flash[:notice] = 'Menu was successfully updated.'
+      redirect url(:menus, :edit, :id => @menu.id)
     else
-      flash[:error] = t 'admin.update.failure'
       render 'menus/edit'
     end
   end
 
   delete :destroy, :with => :id do
-    menu = Menu.get(params[:id])
+    menu = Menu[params[:id]]
     if menu.destroy
-      flash[:notice] = t 'admin.destroy.success'
+      flash[:notice] = 'Menu was successfully destroyed.'
     else
-      flash[:error] = t 'admin.destroy.failure'
+      flash[:error] = 'Impossible destroy Menu!'
     end
     redirect url(:menus, :index)
   end

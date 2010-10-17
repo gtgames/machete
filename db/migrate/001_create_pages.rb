@@ -1,19 +1,21 @@
-migration 1, :create_pages do
-  up do
+class CreatePages < Sequel::Migration
+  def up
     create_table :pages do
-      column :id, DataMapper::Property::Integer, :serial => true
-      column :parent_id, DataMapper::Property::Integer
-      column :weigth, DataMapper::Property::Integer
-      column :title, DataMapper::Property::String
-      column :slug, DataMapper::Property::String
-      column :text, DataMapper::Property::Text
-      column :text_html, DataMapper::Property::Text
-      column :updated_at, DataMapper::Property::DateTime
-      column :created_at, DataMapper::Property::DateTime
+      primary_key :id
+      String :title, :size=>255
+      String :slug, :size=>255
+      Text :text
+      Text :html
+      Boolean :is_index
+      Boolean :is_home
+      DateTime :created_at
+      DateTime :updated_at
+      Integer :patent_id
+      index :slug, :unique => true
     end
   end
 
-  down do
+  def down
     drop_table :pages
   end
 end

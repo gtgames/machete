@@ -1,0 +1,33 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:attachments, :index)
+      %li=link_to pat(:new), url(:attachments, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:attachment)
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:attachment, :id)
+          %th=mat(:attachment, :file)
+          %th=mat(:attachment, :created_at)
+          %th=mat(:attachment, :updated_at)
+          %th=mat(:attachment, :page_id)
+          %th.last="&nbsp;"
+        -@attachments.each do |attachment|
+          %tr
+            %td.first=attachment.id
+            %td=attachment.file
+            %td=attachment.created_at
+            %td=attachment.updated_at
+            %td=attachment.page_id
+            %td.last
+              =button_to pat(:edit), url(:attachments, :edit, :id => attachment.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:attachments, :destroy, :id => attachment.id), :method => :delete, :class => :button_to
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

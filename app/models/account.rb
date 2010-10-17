@@ -1,62 +1,58 @@
 require 'digest/sha1'
 
-class Account
-  include DataMapper::Resource
-  include DataMapper::Validate
+class Account < ::Sequel::Model
+
+  plugin :validation_helpers
+
   attr_accessor :password, :password_confirmation
 
-  # Properties
-  property :id,               Serial
-  property :name,             String
-  property :surname,          String
-  property :email,            String
-  property :crypted_password, String
-  property :salt,             String
-  property :role,             String
+  def validate
+    validates_presence     :email
+    validates_presence     :role
+    validates_presence     :password if password_required
+    validates_presence     :password_confirmation if password_required
+    validates_length_range 4..40, :password unless password.blank?
+    errors.add(:password_confirmation, 'must confirm password') if !password.blank? && password != password_confirmation
+    validates_length_range 3..100, :email unless email.blank?
+    validates_unique       :email unless email.blank?
+    validates_format       /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :email unless email.blank?
+    validates_format       /[A-Za-z]/, :role unless role.blank?
+  end
 
-  # Validations
-  validates_presence_of      :email, :role
-  validates_presence_of      :password,                          :if => :password_required
-  validates_presence_of      :password_confirmation,             :if => :password_required
-  validates_length_of        :password, :min => 4, :max => 40,   :if => :password_required
-  validates_confirmation_of  :password,                          :if => :password_required
-  validates_length_of        :email,    :min => 3, :max => 100
-  validates_uniqueness_of    :email,    :case_sensitive => false
-  validates_format_of        :email,    :with => :email_address
-  validates_format_of        :role,     :with => /[A-Za-z]/
+  # Callbacks
+  def before_save
+    generate_password
+  end
 
   ##
   # This method is for authentication purpose
   #
   def self.authenticate(email, password)
-    account = first(:conditions => { :email => email }) if email.present?
+    account = filter(:email => email).first
     account && account.password_clean == password ? account : nil
   end
 
   ##
-  # This method is used by AuthenticationHelper
+  # Replace AR method
   #
   def self.find_by_id(id)
-    get(id) rescue nil
+    self[id] rescue nil
   end
 
   ##
   # This method is used to retrieve the original password.
   #
   def password_clean
-    crypted_password.decrypt(salt)
-  end
-
-  ###
-  # Password setter generates salt and crypted_password
-  #
-  def password=(val)
-    return if val.blank?
-    attribute_set(:salt, Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{email}--")) if new?
-    attribute_set(:crypted_password, val.encrypt(self.salt))
+    self.crypted_password.decrypt(salt)
   end
 
   private
+
+    def generate_password
+      return if password.blank?
+      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{email}--") if new?
+      self.crypted_password = password.encrypt(self.salt)
+    end
 
     def password_required
       crypted_password.blank? || !password.blank?

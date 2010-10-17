@@ -1,11 +1,3 @@
-require 'carrierwave/orm/datamapper'
-class Attachment
-  include DataMapper::Resource
-
-  property :id, Serial
-  property :file, Text
-  property :created_at, DateTime
-
-  mount_uploader :file, AttachmentUploader
-
+class Attachment < Sequel::Model
+  many_to_one :page
 end

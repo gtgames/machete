@@ -1,26 +1,21 @@
-action = shell.ask("Auto[M]igrate or Auto[U]pgrade (blank for nothing)")
-
-if action.downcase == 'm'
-  shell.say "auto_migrating! ..."
-  DataMapper.auto_migrate!
-elsif action.downcase == 'u'
-  shell.say "auto_upgrading! ..."
-  DataMapper.auto_upgrade!
-else
-  shell.say "... doing nothing"
-end
-
-
-email     = 'frenz@frenz.com'
-password  = 'frenz'
+# Seed add you the ability to populate your db.
+# We provide you a basic shell for interaction with the end user.
+# So try some code like below:
+#
+#   name = shell.ask("What's your name?")
+#   shell.say name
+#
+email     = shell.ask "Which email do you want use for loggin into admin?"
+password  = shell.ask "Tell me the password to use:"
 
 shell.say ""
 
-account = Account.create(:email => email, :name => "Frenz", :surname => "FrenFrenz", :password => password, :password_confirmation => password, :role => "admin")
+account = Account.create(:email => email, :name => "Foo", :surname => "Bar", :password => password, :password_confirmation => password, :role => "admin")
 
 if account.valid?
   shell.say "================================================================="
-  shell.say "Testing Account has been successfully created as:"
+  shell.say "Account has been successfully created, now you can login with:"
+  shell.say "================================================================="
   shell.say "   email: #{email}"
   shell.say "   password: #{password}"
   shell.say "================================================================="

@@ -1,41 +1,51 @@
-# encoding: utf-8
-class Page
-  include DataMapper::Resource
+class Page < Sequel::Model
+  # Recursive adjacency list
+  plugin :rcte_tree
+  plugin :validation_helpers
+  plugin :lazy_attributes, :text, :html
 
-  property :id, Serial
-  property :parent_id, Integer, :required => false
-  property :is_index, Boolean, :default => false
-  property :is_home_page, Boolean, :default => false
-  property :title, String, :length => (1..128), :format => /[\w+\s*]*/u
-  property :slug, Slug
-  property :text, Text
-  property :text_html, Text
-  property :updated_at, DateTime
-  property :created_at, DateTime
+  one_to_many :attachments
 
-  def is_home_page=(b)
-    Page.all(:id.not => attribute_get(:id)).update(:is_home_page => false) if b
-    attribute_set(:is_home_page, b)
-  end
-  
-  def parent_id=(b)
-    if (b=="NULL") 
-      attribute_set(:parent_id, nil)
-    else
-      attribute_set(:parent_id, b)
-    end
-  end
-  
-  def self.home_page
-    first :is_home_page => true
+  def validate
+    validates_length_range 3..100, :title
+    validates_unique       :title
+    validates_format       /[A-Za-z\s\w]*/, :title
   end
 
-
-  before :save do
-    attribute_set(:text_html, BlueCloth.new(self.text).to_html)
-    attribute_set(:slug, self.title.to_slug)
+  def before_save
+    self.text = BlueCloth.new(self.text).to_html
+    super
   end
 
-  is :tree
-  has_tags_on :tags
+  def before_create
+    self.created_at ||= Time.now
+    super
+  end
+
+  def before_update
+    self.updated_at ||= Time.now
+    super
+  end
+
 end
+=begin
+  ## http://sequel.rubyforge.org/rdoc-plugins/classes/Sequel/Plugins/RcteTree.html
+
+  Model.plugin :rcte_tree
+
+  # Lazy loading
+  model = Model.first
+  model.parent
+  model.children
+  model.ancestors # Populates :parent association for all ancestors
+  model.descendants # Populates :children association for all descendants
+
+  # Eager loading - also populates the :parent and children associations
+  # for all ancestors and descendants
+  Model.filter(:id=>[1, 2]).eager(:ancestors, :descendants).all
+
+  # Eager loading children and grand children
+  Model.filter(:id=>[1, 2]).eager(:descendants=>2).all
+  # Eager loading children, grand children, and great grand children
+  Model.filter(:id=>[1, 2]).eager(:descendants=>3).all
+=end

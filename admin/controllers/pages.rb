@@ -16,44 +16,35 @@ Admin.controllers :pages do
 
   post :create do
     @page = Page.new(params[:page])
-    if @page.save
-      flash[:notice] = t 'admin.create.success'
-      redirect url(:pages, :index)
+    if (@page.save rescue false)
+      flash[:notice] = 'Page was successfully created.'
+      redirect url(:pages, :edit, :id => @page.id)
     else
-      flash[:error] = t 'admin.create.failure'
       render 'pages/new'
     end
   end
 
   get :edit, :with => :id do
-    @page = Page.get(params[:id])
+    @page = Page[params[:id]]
     render 'pages/edit'
   end
 
   put :update, :with => :id do
-    @page = Page.get(params[:id])
-    if @page.update(params[:page])
-      flash[:notice] = t 'admin.update.success'
-      redirect url(:pages, :index)
+    @page = Page[params[:id]]
+    if @page.modified! && @page.update(params[:page])
+      flash[:notice] = 'Page was successfully updated.'
+      redirect url(:pages, :edit, :id => @page.id)
     else
-      flash[:error] = t 'admin.create.failure'
       render 'pages/edit'
     end
   end
 
   delete :destroy, :with => :id do
-    page = Page.get(params[:id])
-
-    #TODO: BUG!!!+ROTTURADICAZZO ###
-    page.children.each do |p|
-      p.parent = nil
-      p.save!()
-    end
-
+    page = Page[params[:id]]
     if page.destroy
-      flash[:notice] = t 'admin.destroy.success'
+      flash[:notice] = 'Page was successfully destroyed.'
     else
-      flash[:error] = t 'admin.create.failure'
+      flash[:error] = 'Impossible destroy Page!'
     end
     redirect url(:pages, :index)
   end

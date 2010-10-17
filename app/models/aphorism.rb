@@ -1,19 +1,13 @@
-# encoding: utf-8
-class Aphorism
-  include DataMapper::Resource
+class Aphorism < Sequel::Model
+  plugin :validation_helpers
 
-  property :id,         Serial
-  property :aphorism,   String, :required => true
-  property :updated_at, DateTime
-  property :created_at, DateTime
-
-  def self.random
-    n = all.count
-    if n > 0
-      all[rand(n)]
-    else
-      nil
-    end
+  def validate
+    validates_length_range 3..100, :aphorism
+    validates_unique       :aphorism
+    validates_format       /[A-Za-z\s\w]*/, :aphorism
   end
 
+  def self.random
+    with_sql("SELECT * FROM \"#{table_name}\" ORDER BY RANDOM() LIMIT 1").first
+  end
 end

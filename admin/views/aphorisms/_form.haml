@@ -1,0 +1,10 @@
+.group
+  =f.label :aphorism
+  =f.error_message_on :aphorism
+  =f.text_field :aphorism, :class => :text_field
+  %span.description Ex: a simple text
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:aphorisms, :index)}';return false", :class => :button

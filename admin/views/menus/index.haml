@@ -1,0 +1,33 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:menus, :index)
+      %li=link_to pat(:new), url(:menus, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:menu)
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:menu, :id)
+          %th=mat(:menu, :title)
+          %th=mat(:menu, :alt)
+          %th=mat(:menu, :url)
+          %th=mat(:menu, :weigth)
+          %th.last="&nbsp;"
+        -@menus.each do |menu|
+          %tr
+            %td.first=menu.id
+            %td=menu.title
+            %td=menu.alt
+            %td=menu.url
+            %td=menu.weigth
+            %td.last
+              =button_to pat(:edit), url(:menus, :edit, :id => menu.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:menus, :destroy, :id => menu.id), :method => :delete, :class => :button_to
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

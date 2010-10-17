@@ -1,0 +1,35 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:medias, :index)
+      %li=link_to pat(:new), url(:medias, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:media)
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:media, :id)
+          %th=mat(:media, :name)
+          %th=mat(:media, :description)
+          %th=mat(:media, :file)
+          %th=mat(:media, :created_at)
+          %th=mat(:media, :updated_at)
+          %th.last="&nbsp;"
+        -@medias.each do |media|
+          %tr
+            %td.first=media.id
+            %td=media.name
+            %td=media.description
+            %td=media.file
+            %td=media.created_at
+            %td=media.updated_at
+            %td.last
+              =button_to pat(:edit), url(:medias, :edit, :id => media.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:medias, :destroy, :id => media.id), :method => :delete, :class => :button_to
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

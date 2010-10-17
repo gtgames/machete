@@ -1,0 +1,15 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:aphorisms, :index)
+      %li=link_to pat(:new), url(:aphorisms, :new)
+      %li.active=link_to pat(:edit), url(:aphorisms, :edit, :id => @aphorism.id)
+  .content
+    %h2.title
+      =pat(:edit)
+      =mt(:aphorism)
+    .inner
+      -form_for :aphorism, url(:aphorisms, :update, :id => @aphorism.id), :method => :put, :class => :form do |f|
+        =partial "aphorisms/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")
