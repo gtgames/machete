@@ -5,7 +5,6 @@ class CreatePages < Sequel::Migration
       String :title, :size=>255
       String :slug, :size=>255
       Text :text
-      Text :html
       Boolean :is_index
       Boolean :is_home
       DateTime :created_at

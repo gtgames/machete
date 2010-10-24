@@ -1,8 +1,13 @@
 class Page < Sequel::Model
   # Recursive adjacency list
   plugin :rcte_tree
+
   plugin :validation_helpers
-  plugin :lazy_attributes, :text, :html
+  begin
+    plugin :lazy_attributes, :text
+  rescue
+    # do nothing ... fking stupid bugs
+  end
 
   one_to_many :attachments
 
@@ -13,7 +18,8 @@ class Page < Sequel::Model
   end
 
   def before_save
-    self.text = BlueCloth.new(self.text).to_html
+    self.text = html_cleanup(self.text)
+    self.slug = "#{self.title}".to_slug
     super
   end
 
@@ -25,6 +31,10 @@ class Page < Sequel::Model
   def before_update
     self.updated_at ||= Time.now
     super
+  end
+
+  def roots
+    self.all(:parent_id => nil)
   end
 
 end
