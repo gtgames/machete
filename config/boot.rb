@@ -23,7 +23,7 @@ Padrino.before_load do
 end
 
 Padrino.after_load do
-  DataMapper.finalize
 end
+
 require 'padrino-contrib/exception_notifier'
 Padrino.load!
