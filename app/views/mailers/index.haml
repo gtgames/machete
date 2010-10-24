@@ -1,0 +1,19 @@
+%article
+  %form{ :url => url(:contact_new), :method => "post"}
+    %label{:for => "mail"}
+      Indirizzo email
+    %input#mail{:type => 'input', :name => "mail", :value => @mail}
+
+    %label{ :for => :name}
+      Nome
+    %input#name{:type => 'input', :name => "name", :value => @name}
+
+    %label{:for => "text"}
+      Messaggio
+    %textarea#text{:name => "text"}
+      =@text
+
+    .recaptcha
+      = recaptcha_tag(:ajax, :display => {:theme => 'white'})
+
+    %input{:type => 'submit', :value => "Invia" }

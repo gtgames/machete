@@ -1,0 +1,59 @@
+!!! 5
+%html.no-js{:lang => I18n.locale}
+  %head
+    %meta{:charset => "utf-8"}
+    %link{:charset => "utf-8", :href => "/stylesheets/style.css", :rel => "stylesheet", :title => "a complete stylesheet", :type => "text/css"}
+    %meta{:name => "keywords", :content => yield_content(:keywords)}
+    %meta{:name => "description", :content => t('description')}
+    %meta{:name => "author", :content => "GTGames.it"}
+    / Mobile viewport optimized: j.mp/bplateviewport
+    %meta{:content => "width=device-width; initial-scale=1.0", :name => "viewport"}/
+    %script{:src => "/javascripts/modernizr-1.5.min.js"}
+    %title
+      #{BASE_TITLE}
+      = yield_content :title
+  /[if lt IE 7 ] <body class="ie6">
+  /[if IE 7 ] <body class="ie7">
+  /[if IE 8 ] <body class="ie8">
+  /[if IE 9 ] <body class="ie9">
+  / [if (gt IE 9)|!(IE)]><!
+  %body
+    / <![endif]
+    %nav.row.top
+      %ul
+        - menu.each do |m|
+          %li
+            %a{:alt => m.alt, :href => m.url}= m.title
+    %header.row
+      #logo.column.grid_4
+      .grid_8
+        %h1 #{BASE_TITLE}
+
+    .flash
+      = [:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join
+
+    %section.row
+      %nav.column.grid_3.left
+        = tree
+      .column.grid_9.content
+        = yield
+
+    %footer
+      %p via Roma snc, 67020 Fontecchio AQ
+      %p Telefono +39.349 09 17 950
+      %p Telefono +39.348 60 13 718
+      %p
+        Email:
+        %a#mailto
+          foo
+    %script{:charset => "utf-8", :src => "/javascripts/mootools/mootools-1.2.5-core-yc.js", :type => "text/javascript"}
+    %script{:charset => "utf-8", :src => "/javascripts/application.js", :type => "text/javascript"}
+    %script{:charset => "utf-8", :src => "http://github.com/DmitryBaranovskiy/raphael/blob/master/raphael-min.js?raw=true", :type => "text/javascript"}
+    %script{:charset => "utf-8", :src => "/javascripts/logo.js", :type => "text/javascript"}
+    /[if lt IE 7 ]
+      <script src="javascripts/iefix/dd_belatedpng.js?v=1"></script>
+    /[if lt IE 9 ]
+      <script src="javascripts/iefix/dd_roundies.js?v=1"></script>
+      <script src="javascripts/iefix/excanvas.js?v=1"></script>
+    -if PADRINO_ENV == 'development'
+      %script{:charset => "utf-8", :src => "/javascripts/development.js", :type => "text/javascript"}

@@ -9,12 +9,16 @@ class Frontend < Padrino::Application
   set :exceptions_page,    :errors
 
   set :delivery_method, :smtp => {
-    :address              => "mail.gtgames.it",
+    :address              => "frenz",
     :port                 => 25,
-    :user_name            => "mail@#{DOMAIN_NAME}",
-    :password             => 'kUYAnAg92guxoziT53',
-    :authentication       => :plain
+    :enable_starttls_auto => false
   }
+
+  use Rack::Recaptcha,
+    :private_key => "6Lf6G74SAAAAAFCm5dB7VzAD9VKw2xTt3p5N41sR",
+    :public_key => "6Lf6G74SAAAAAMSq_f-QtC2s2fcUg1hmzDHV5sDY",
+    :paths => "/contattaci"
+  helpers Rack::Recaptcha::Helpers
 
   enable :logger
   enable :sessions
@@ -22,12 +26,9 @@ class Frontend < Padrino::Application
 
   set :charset, "utf8"
 
-  set :base_title, "GTGames.it"
-
   layout :application
 
   before do
-    headers "X-UA-Compatible" => "IE=edge,chrome=1"
     content_type :html, 'charset' => 'utf-8'
   end
 end

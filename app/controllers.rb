@@ -48,19 +48,25 @@ Frontend.controllers do
   ###############################################
   ## Contact us                                 #
   ###############################################
-  get :contact_form, :map => "/contattaci" do
-    render 'mail'
+  get :contact_form, :map => "/contattaci/" do
+    @email  = ""
+    @name   = ""
+    @text   = ""
+    render 'mailers/index'
   end
   
-  post :contact_new, :map => "/contattaci" do
-    #params[:text] == //
-    #params[:email] == /[a-z0-9!#\$\%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\b/
-    email do
-      from params[:email]
-      to "info@#{DOMAIN_NAME}"
-      subject "[Nuovo messaggio] #{params[:title]}"
-      body params[:text]
-      via :sendmail
+  post :contact_new, :map => "/contattaci/" do
+    @mail  = params[:mail]
+    @name   = params[:name]
+    @text   = params[:text]
+
+    unless @mail =~ /[a-z0-9!#\$\%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$\%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum|it|eu|fr|de)\b/ or recaptcha_valid?
+      flash[:error] = "Errore nei dati inseriti"
+      render 'mailers/index'
+    else
+      deliver(:mailer, :info, params[:name], params[:mail], Sanitize.clean(params[:text]))
+      flash[:info] = "Messaggio inviato correttamente"
+      render 'mailers/index'
     end
   end
 

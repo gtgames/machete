@@ -1,0 +1,54 @@
+!!! 5
+%html.no-js{:lang => I18n.locale}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    / Mobile viewport optimized: j.mp/bplateviewport
+    %meta{:content => "width=device-width; initial-scale=1.0", :name => "viewport"}/
+    %script{:src => "/javascripts/modernizr-1.5.min.js"}
+    %link{:charset => "utf-8", :href => "/css/imagination.css", :media => "screen", :rel => "stylesheet", :title => "no title", :type => "text/css"}/
+    %title #{BASE_TITLE} - Photo Library
+  /[if lt IE 7 ] <body class="ie6">
+  /[if IE 7 ] <body class="ie7">
+  /[if IE 8 ] <body class="ie8">
+  /[if IE 9 ] <body class="ie9">
+  / [if (gt IE 9)|!(IE)]><!
+  %body
+    / <![endif]
+    %ul#menu
+      %li
+        %a{:href => "/"}
+          %img{:title => "back", :src => "/images/logo_mini.png"}
+    #photos
+      - @photos.each do |p|
+        %div
+          %h1= p.title
+          %img{:src => p.photo.url, :title => p.title}
+          %span.tags
+            - p.tag_list.each do |t|
+              = link_to t, url( :imagination_tag, :tag => t)
+    %script{:charset => "utf-8", :src => "/javascripts/jquery.min.js", :type => "text/javascript"}
+    %script{:charset => "utf-8", :src => "/javascripts/plugins.js", :type => "text/javascript"}
+    %script{:charset => "utf-8", :src => "/javascripts/galleria.js", :type => "text/javascript"}
+    %script{:charset => "utf-8", :src => "/javascripts/galleria.history.js", :type => "text/javascript"}
+    /[if lt IE 7 ]
+      <script src="js/dd_belatedpng.js?v=1"></script>
+    /[if lt IE 9 ]
+      <script src="js/dd_roundies.js?v=1"></script>
+      <script>$(function(){DD_roundies.addRule('#menu', '5px');});</script>
+    %script{:charset => "utf-8", :type => "text/javascript"}
+      Galleria.loadTheme('/javascripts/galleria/frenz.js');
+      
+      $('#photos').galleria({
+      image_crop: false,
+      transition: 'slide',
+      show_info: true,
+      thumbnails: true,
+      data_config: function(img) {
+      return {
+      title: $(img).parent().find('h1').html(),
+      description: $(img).parent().find('span').html()
+      };
+      }
+      });

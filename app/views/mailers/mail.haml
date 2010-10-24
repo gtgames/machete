@@ -1,0 +1,29 @@
+!!! 5
+%html
+  %head
+    %title
+      Nuovo messaggio da #{name}
+    %style
+      html {
+      font-family: 'Gill Sans', "Helvetica Neue", Helvetica-Neue, Helvetica, "MgOpen Moderna", sans-serif !important;
+      background-color:#f4f4f4 !important;
+      }
+      \#text {
+      border: 2px solid #f0f0f0;
+      background: #f5f5f5;
+      width: 400px;
+      margin: 10px auto;
+      }
+      \#from {
+      border: 2px solid #f0f0f0;
+      width: 200px;
+      padding: 5px;
+      background: #f5f5f5;
+      margin:0 auto;
+      }
+  %body
+    %h1
+      Nuovo messaggio da
+    #from #{name} - #{mail}
+    #text
+      = text
