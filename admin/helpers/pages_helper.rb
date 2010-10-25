@@ -18,8 +18,10 @@ Admin.helpers do
     a = Array.new
     unless r.empty?
       r.each do |p|
-        a << ['•'*p.ancestors.size + "#{p.title}", p.id] unless my_id == p.id
-        options_tree_array(my_id, p.children).each{|e|  a << e} unless p.children.empty?
+        if my_id != p.id
+          a << ['•'*p.ancestors.size + "#{p.title}", p.id] unless my_id == p.id
+          options_tree_array(my_id, p.children).each{|e|  a << e} unless p.children.empty?
+        end
       end
     end
     return a

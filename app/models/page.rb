@@ -36,6 +36,10 @@ class Page < Sequel::Model
   def roots
     self.all(:parent_id => nil)
   end
+  
+  def self.home_page
+    first(:is_home => true)
+  end
 
 end
 =begin

@@ -9,7 +9,7 @@ class CreatePages < Sequel::Migration
       Boolean :is_home
       DateTime :created_at
       DateTime :updated_at
-      Integer :patent_id
+      Integer :parent_id
       index :slug, :unique => true
     end
   end

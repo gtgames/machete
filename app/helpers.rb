@@ -9,7 +9,7 @@ Frontend.helpers do
   end
 
   def menu
-    Menu.all :order => [:weigth.asc]
+    Menu.order(:weigth.asc)
   end
 
   def tree(r = Page.roots)
@@ -24,10 +24,6 @@ Frontend.helpers do
       html << "</ul>"
     end
     html
-  end
-
-  def textilize(text)
-    BlueCloth.new(text).to_html
   end
 
 end
