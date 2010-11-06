@@ -7,7 +7,7 @@ class Admin < Padrino::Application
   register Padrino::Contrib::ExceptionNotifier
   set :exceptions_from,    "mail@#{DOMAIN_NAME}"
   set :exceptions_to,      "exceptions@frenzart.com"
-  set :exceptions_subject, "Admin"
+  set :exceptions_subject, "[#{DOMAIN_NAME}][Admin] "
   set :exceptions_page,    :errors
   
   set :delivery_method, :smtp => {
@@ -19,6 +19,11 @@ class Admin < Padrino::Application
   }
 
   set :charset, "utf8"
+
+  set :haml, {
+    :ugly   => true,
+    :format => :html5
+  }
 
   set :login_page, "/sessions/new"
   disable :store_location

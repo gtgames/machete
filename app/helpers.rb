@@ -25,5 +25,4 @@ Frontend.helpers do
     end
     html
   end
-
 end
