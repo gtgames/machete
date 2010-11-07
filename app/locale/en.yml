@@ -1,4 +1,7 @@
 en:
+  contact:
+    error: "Your message contains an error, please review your submission."
+    ok: "Your message has been delivered."
   pages:
     search:
       results: "Results:"

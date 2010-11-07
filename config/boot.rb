@@ -1,8 +1,5 @@
-BASE_TITLE = "GTgames"
-DOMAIN_NAME = "frenz.fr"
-
 #########################################################################################################
-PADRINO_ENV  = ENV["PADRINO_ENV"] ||= ENV["RACK_ENV"] ||= RACK_ENV ||= "development"  unless defined?(PADRINO_ENV)
+PADRINO_ENV  = ENV["PADRINO_ENV"] ||= ENV["RACK_ENV"] ||= "development"  unless defined?(PADRINO_ENV)
 PADRINO_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..')) unless defined?(PADRINO_ROOT)
 
 begin
@@ -23,7 +20,8 @@ Padrino.before_load do
 end
 
 Padrino.after_load do
+  DFS = Defensio.new DEFENSIO_KEY
 end
-
+require PADRINO_ROOT + '/config/custom'
 require 'padrino-contrib/exception_notifier'
 Padrino.load!

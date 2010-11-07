@@ -1,4 +1,7 @@
 it:
+  contact:
+    error: "Il messaggio contiene un errore, prego controllare tutti i campi."
+    ok: "Il tuo messaggio è stato inviato."
   models:
     menu:
       attributes:

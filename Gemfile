@@ -12,13 +12,12 @@ group :test do
   gem 'riot'
 end
 
-group :development do
-  gem 'mongrel', '>= 1.2.0.pre2'
-end
+gem 'eventmachine'
+gem 'thin'
 
-group :production do
-  gem 'thin'
-end
+gem 'em-net-http'
+gem 'em-resolv-replace'
+gem 'rack-fiber_pool'
 
 gem 'padrino-contrib'
 
@@ -32,7 +31,7 @@ gem 'nokogiri'
 gem 'sanitize'
 gem 'unidecode'
 
-gem 'rack-recaptcha', :require => 'rack/recaptcha'
+gem 'defensio'
 
 # Padrino
 gem 'padrino', "0.9.18"

@@ -49,23 +49,18 @@ Frontend.controllers do
   ## Contact us                                 #
   ###############################################
   get :contact_form, :map => "/contattaci/" do
-    @email  = ""
-    @name   = ""
-    @text   = ""
+    @mail  = Contact.new
     render 'mailers/index'
   end
-  
   post :contact_new, :map => "/contattaci/" do
-    @mail  = params[:mail]
-    @name   = params[:name]
-    @text   = params[:text]
+    @mail = Contact.new params[:mail]
 
-    unless @mail =~ /[a-z0-9!#\$\%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$\%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum|it|eu|fr|de)\b/ or recaptcha_valid?
-      flash[:error] = "Errore nei dati inseriti"
+    if @mail.valid? && @mail.classification != 'spam' && (@mail.save rescue false)
+      deliver(:mailer, :info, @mail.author, @mail.email, Sanitize.clean(@mail.text))
+      flash[:info] = I18n.t 'contact.ok'
       render 'mailers/index'
     else
-      deliver(:mailer, :info, params[:name], params[:mail], Sanitize.clean(params[:text]))
-      flash[:info] = "Messaggio inviato correttamente"
+      flash[:error] = I18n.t 'contact.error'
       render 'mailers/index'
     end
   end
