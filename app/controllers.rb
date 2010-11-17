@@ -12,7 +12,7 @@ Frontend.controllers do
   end
 
   get :sitemap, :map => "/sitemap", :provides => [:html, :json] do
-    @pages = Pages.all(:order => [:title.desc])
+    @pages = Pages.order(:title).all
     render 'sitemap/index'
   end
 
@@ -24,7 +24,7 @@ Frontend.controllers do
   end
 
   get :page_show, :map => "/:id/:slug" do
-    @page = Page.get params[:id]
+    @page = Page.first :id => params[:id]
     halt 404 if @page.nil?
     render 'pages/show'
   end
@@ -34,7 +34,7 @@ Frontend.controllers do
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
       render 'pages/search'
     else
-      @pages = Page.all( :title.like => "%#{@s}%" ) | Page.all( :text.like => "%#{@s}%" )
+      @pages =  Page.filter(:title.like("%#{@s}%") | :text.like("%#{@s}%")).all
       render 'page/results'
     end
   end
@@ -76,12 +76,12 @@ Frontend.controllers do
   end
 
   get :media_show, :map => "/media/p/:id" do
-    @media = Media.get params[:id]
+    @media = Media.first :id => params[:id]
     render 'media/show'
   end
 
   post :media_search, :map => "/media/search" do
-    @media = Media.all :name.like => "%#{params[:term]}%"
+    @media = Media.filter(:name.like("%#{params[:term]}%")).all
     render 'media/index'
   end
 

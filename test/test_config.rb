@@ -14,7 +14,7 @@ class Riot::Situation
   #   Padrino.application
   
   def app
-    Frontend.tap { |app|  }
+    Frontend.tap { |app| }
   end
 end
 
