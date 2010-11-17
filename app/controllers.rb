@@ -1,6 +1,6 @@
 Frontend.controllers do
   ###############################################
-  ## Welcome                                    #
+  #  Welcome                                    #
   ###############################################
   get :index, :map => "/" do
     @page = Page.home_page
@@ -17,7 +17,41 @@ Frontend.controllers do
   end
 
   ###############################################
-  ## Pages                                      #
+  #  Pages                                      #
+  ###############################################
+  get :news_index, :map => "/news/" do
+    @news = Post.limit(10).all
+    render 'news/index'
+  end
+
+  get :news_show, :map => "/news/:id/:slug" do
+    @news = Post.first :id => params[:id], :slug => params[:slug]
+    render 'news/index'
+  end
+
+  get :news_page, :map => "/news/page/:offset" do
+    @news = Post.limit(10, params[:offset]*10).all # pagination
+    render 'news/index'
+  end
+
+  get :news_year, :map => '/news/', :with => [:year] do
+    @news = Post.filter("updated_at >= #{Time.new(params[:year])}").all
+    render 'news/index'
+  end
+
+  get :news_month, :map => '/news/', :with => [:year, :month] do
+    @news = Post.filter("updated_at >= #{Time.new(params[:year], params[:month])}").all
+    render 'news/index'
+  end
+
+  get :news_day, :map => '/news/', :with => [:year, :month, :day] do
+    @news = Post.filter("updated_at >= #{Time.new(params[:year], params[:month], params[:day])}").all
+    render 'news/index'
+  end
+
+
+  ###############################################
+  #  Pages                                      #
   ###############################################
   get :pages, :map => "/pages/" do
     render 'pages/index'
@@ -34,7 +68,7 @@ Frontend.controllers do
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
       render 'pages/search'
     else
-      @pages =  Page.filter(:title.like("%#{@s}%") | :text.like("%#{@s}%")).all
+      @pages =  Page.full_text_search([:title, :text],@s)
       render 'page/results'
     end
   end
@@ -46,7 +80,7 @@ Frontend.controllers do
   end
 
   ###############################################
-  ## Contact us                                 #
+  #  Contact us                                 #
   ###############################################
   get :contact_form, :map => "/contattaci/" do
     @mail  = Contact.new
@@ -66,10 +100,10 @@ Frontend.controllers do
   end
 
   ###############################################
-  ## Media with a nice array of tags            #
+  #  Media with a nice array of tags            #
   ###############################################
 
-  get :media_index do
+  get :media_index, :map => "/media/" do
     @tags = Media.tags
     @media = Media.all
     render 'media/index'
@@ -81,12 +115,12 @@ Frontend.controllers do
   end
 
   post :media_search, :map => "/media/search" do
-    @media = Media.filter(:name.like("%#{params[:term]}%")).all
+    @media = Media.full_text_search([:name],params[:term])
     render 'media/index'
   end
 
   ###############################################
-  ## Imagination                                #
+  #  Imagination                                #
   ###############################################
   get :imagination_index, :map => "/imagination/", :provides => [:any, :json] do
     @photos = Photo.all

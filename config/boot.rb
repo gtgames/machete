@@ -20,7 +20,7 @@ Padrino.before_load do
 end
 
 Padrino.after_load do
-  DFS = Defensio.new DEFENSIO_KEY
+  DFS = Defensio.new DEFENSIO_KEY unless defined?DFS
 end
 require PADRINO_ROOT + '/config/custom'
 require 'padrino-contrib/exception_notifier'

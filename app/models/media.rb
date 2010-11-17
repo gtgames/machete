@@ -1,4 +1,5 @@
 class Media < Sequel::Model
+  def_dataset_method :full_text_search
 
   # hooks
   def before_create

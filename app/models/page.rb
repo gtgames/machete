@@ -1,4 +1,5 @@
 class Page < Sequel::Model
+  def_dataset_method :full_text_search
   # Recursive adjacency list
   plugin :rcte_tree
 
