@@ -34,7 +34,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(mp3 ogg mp4 flv)
+    %w(mp3 ogg mp4 flv pdf zip jpg jpeg gif png)
   end
 end
 

@@ -8,7 +8,7 @@
       =pat(:new)
       =mt(:media)
     .inner
-      -form_for :media, url(:media, :create), :class => :form do |f|
+      -form_for :media, url(:media, :create), :multipart => true, :class => :form do |f|
         =partial "medias/form", :locals => { :f => f }
 
 -content_for :sidebar, partial("base/sidebar")

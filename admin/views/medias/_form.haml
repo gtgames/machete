@@ -2,29 +2,18 @@
   =f.label :name
   =f.error_message_on :name
   =f.text_field :name, :class => :text_field
-  %span.description Ex: a simple text
 
 .group
   =f.label :description
   =f.error_message_on :description
   =f.text_field :description, :class => :text_field
-  %span.description Ex: a simple text
 
 .group
-  =f.label :media
-  =f.error_message_on :media
-  =#link_to(f.object.media_url) if @user.avatar?
-  =f.file_field :media, :class => :text_field
-  =f.hidden_field :media_cache
-  %span.description Ex: a simple text
-
-.group
-  =f.label :frozen_mediatag_list
-  =f.error_message_on :frozen_mediatag_list
-  =f.text_field :frozen_mediatag_list, :class => :text_field
-  %span.description Ex: a simple text
-
+  =f.label :file
+  =f.error_message_on :file
+  =link_to(f.object.file.url) unless f.object.file.nil?
+  =f.file_field :file, :class => :text_field
 
 .group.navform.wat-cf
   =f.submit pat(:save), :class => :button
-  =f.submit pat(:cancel), :onclick => "window.location='#{url(:medias, :index)}';return false", :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:media, :index)}';return false", :class => :button

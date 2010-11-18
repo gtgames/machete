@@ -1,5 +1,7 @@
+require 'carrierwave/orm/sequel'
 class Media < Sequel::Model
   def_dataset_method :full_text_search
+  mount_uploader :file, MediaUploader
 
   # hooks
   def before_create

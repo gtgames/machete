@@ -10,19 +10,15 @@
     .inner
       %table.table
         %tr
-          %th.first=mat(:media, :id)
-          %th=mat(:media, :name)
+          %th.first=mat(:media, :name)
           %th=mat(:media, :file)
-          %th=mat(:media, :frozen_mediatag_list)
           %th.last="&nbsp;"
         -@medias.each do |media|
           %tr
-            %td.first=media.id
-            %td=media.name
+            %td.first=media.name
             %td
-              #{link_to media.media.file.extension, media.media.url}
-              (#{media.media.file.size/1024} kb)
-            %td=media.frozen_mediatag_list
+              =link_to media.file.file.extension, media.file.url
+              (#{media.file.file.size/1024} kb)
             %td.last
               =button_to pat(:edit), url(:media, :edit, :id => media.id), :method => :get, :class => :button_to
               ="|"
