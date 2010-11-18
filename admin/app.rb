@@ -35,6 +35,10 @@ class Admin < Padrino::Application
     role.allow "/sessions"
   end
 
+  not_found do
+    render '404'
+  end
+
   access_control.roles_for :admin do |role|
     role.project_module :posts,     "/posts"
     role.project_module :menus,     "/menus"
