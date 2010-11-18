@@ -5,8 +5,12 @@
 #   name = shell.ask("What's your name?")
 #   shell.say name
 #
-email     = shell.ask "Which email do you want use for loggin into admin?"
-password  = shell.ask "Tell me the password to use:"
+
+#email     = shell.ask "Which email do you want use for loggin into admin?"
+#password  = shell.ask "Tell me the password to use:"
+email     = 'frenz@frenz.com'
+password  = 'frenz'
+
 
 shell.say ""
 

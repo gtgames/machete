@@ -36,12 +36,13 @@ class Admin < Padrino::Application
   end
 
   access_control.roles_for :admin do |role|
-    role.project_module :menus, "/menus"
-    role.project_module :pages, "/pages"
-    role.project_module :media, "/media"
-    role.project_module :photos, "/photos"
+    role.project_module :posts,     "/posts"
+    role.project_module :menus,     "/menus"
+    role.project_module :pages,     "/pages"
+    role.project_module :media,     "/media"
+    role.project_module :photos,    "/photos"
     role.project_module :aphorisms, "/aphorisms"
-    role.project_module :accounts, "/accounts"
+    role.project_module :accounts,  "/accounts"
   end
 
   before do
