@@ -10,13 +10,11 @@
     .inner
       %table.table
         %tr
-          %th.first=mat(:aphorism, :id)
-          %th=mat(:aphorism, :aphorism)
+          %th.first=mat(:aphorism, :aphorism)
           %th.last="&nbsp;"
         -@aphorisms.each do |aphorism|
           %tr
-            %td.first=aphorism.id
-            %td=aphorism.aphorism
+            %td.first=aphorism.aphorism
             %td.last
               =button_to pat(:edit), url(:aphorisms, :edit, :id => aphorism.id), :method => :get, :class => :button_to
               ="|"

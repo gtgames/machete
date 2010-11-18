@@ -10,15 +10,13 @@
     .inner
       %table.table
         %tr
-          %th.first=mat(:post, :id)
-          %th=mat(:post, :title)
+          %th.first=mat(:post, :title)
           %th=mat(:post, :created_at)
           %th=mat(:post, :updated_at)
           %th.last="&nbsp;"
         -@posts.each do |post|
           %tr
-            %td.first=post.id
-            %td=post.title
+            %td.first=post.title
             %td=post.created_at
             %td=post.updated_at
             %td.last
