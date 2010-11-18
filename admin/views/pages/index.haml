@@ -12,32 +12,23 @@
         %tr
           %th.first=mat(:page, :id)
           %th=mat(:page, :title)
-          %th=mat(:page, :slug)
-          %th=mat(:page, :text)
-          %th=mat(:page, :html)
-          %th=mat(:page, :is_index)
           %th=mat(:page, :is_home)
           %th=mat(:page, :created_at)
           %th=mat(:page, :updated_at)
-          %th=mat(:page, :patent_id)
           %th.last="&nbsp;"
         -@pages.each do |page|
           %tr
             %td.first=page.id
             %td=page.title
-            %td=page.slug
-            %td=page.text
-            %td=page.html
-            %td=page.is_index
             %td=page.is_home
             %td=page.created_at
             %td=page.updated_at
-            %td=page.patent_id
             %td.last
               =button_to pat(:edit), url(:pages, :edit, :id => page.id), :method => :get, :class => :button_to
-              ="|"
+              |
               =button_to pat(:delete), url(:pages, :destroy, :id => page.id), :method => :delete, :class => :button_to
       .actions-bar.wat-cf
-        .actions="&nbsp;"
+        .actions
+          &nbsp;
 
 -content_for :sidebar, partial("base/sidebar")

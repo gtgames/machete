@@ -21,6 +21,11 @@ class Page < Sequel::Model
   def before_save
     self.text = html_cleanup(self.text)
     self.slug = "#{self.title}".to_slug
+    self.parent_id = (self.parent_id == 0)? nil : self.parent_id
+    if self.is_home
+      Page.filter(:is_home => true).update(:is_home => false)
+      self.is_home = true
+    end
     super
   end
 

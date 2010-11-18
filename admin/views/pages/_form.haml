@@ -2,28 +2,33 @@
   = f.label :title
   = f.error_message_on :title
   = f.text_field :title, :class => :text_field
+
 .group
   = f.label :text
   = f.error_message_on :text
   = f.text_area :text, :class => :text_area
-.group
-  %label{:for => "tag_list"} Tags
-  = f.error_message_on :tag_list
-  = f.text_field :tag_list, :value => tags, :class => :text_field
-  %span.description
-    Lista
-    %em tag
-    divisi da virgola
-    %br
-    Formato: 'Montagna, Storia, ...'
+
+/.group
+/  %label{:for => "tag_list"} Tags
+/  = f.error_message_on :tag_list
+/  = f.text_field :tag_list, :value => 'daf', :class => :text_field
+/  %span.description
+/    Lista
+/    %em tag
+/    divisi da virgola
+/    %br
+/    Formato: 'Montagna, Storia, ...'
+
 .group
   = f.label :parent_id
   = f.error_message_on :parent_id
-  = f.select :parent_id, :options => options_tree(my_id), :selected => f.object.parent_id, :class => :slide_text_field
+  = f.select :parent_id, :options => options_tree(f.object.id), :selected => f.object.parent_id, :class => :slide_text_field
+
 .group
-  = f.label :is_home_page
-  = f.error_message_on :is_home_page
-  = f.check_box :is_home_page, :value => '1', :class => :slide_text_field
+  = f.label :is_home
+  = f.error_message_on :is_home
+  = f.check_box :is_home, :value => '1', :class => :slide_text_field
+
 .group.navform.wat-cf
   = f.submit pat(:save), :class => :button
   = f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button

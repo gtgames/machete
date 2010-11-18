@@ -2,7 +2,7 @@
 Admin.helpers do
   def options_tree(my_id = nil, r = Page.roots)
     a = Array.new
-    a << ['Radice', 'NULL']
+    a << ['Radice', '0']
     unless r.empty?
       r.each do |p|
         if my_id != p.id
