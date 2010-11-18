@@ -35,17 +35,17 @@ Frontend.controllers do
   end
 
   get :news_year, :map => '/news/', :with => [:year] do
-    @news = Post.filter("updated_at >= #{Time.new(params[:year])}").all
+    @news = Post.filter("updated_at >= '#{Time.new(params[:year])}'").all
     render 'news/index'
   end
 
   get :news_month, :map => '/news/', :with => [:year, :month] do
-    @news = Post.filter("updated_at >= #{Time.new(params[:year], params[:month])}").all
+    @news = Post.filter("updated_at >= '#{Time.new(params[:year], params[:month])}'").all
     render 'news/index'
   end
 
   get :news_day, :map => '/news/', :with => [:year, :month, :day] do
-    @news = Post.filter("updated_at >= #{Time.new(params[:year], params[:month], params[:day])}").all
+    @news = Post.filter("updated_at >= '#{Time.new(params[:year], params[:month], params[:day])}'").all
     render 'news/index'
   end
 
