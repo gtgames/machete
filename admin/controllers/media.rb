@@ -1,4 +1,4 @@
-Admin.controllers :medias do
+Admin.controllers :media do
 
   get :index do
     @medias = Media.all

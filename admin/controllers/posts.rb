@@ -14,7 +14,7 @@ Admin.controllers :posts do
     @post = Post.new(params[:post])
     if (@post.save rescue false)
       flash[:notice] = 'Post was successfully created.'
-      redirect url(:posts, :edit, :id => @post.id)
+      redirect url(:posts, :index)
     else
       render 'posts/new'
     end
@@ -29,7 +29,7 @@ Admin.controllers :posts do
     @post = Post[params[:id]]
     if @post.modified! && @post.update(params[:post])
       flash[:notice] = 'Post was successfully updated.'
-      redirect url(:posts, :edit, :id => @post.id)
+      redirect url(:posts, :index)
     else
       render 'posts/edit'
     end
