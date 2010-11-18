@@ -1,7 +1,7 @@
 # encoding:utf-8
 Admin.controllers :menus do
   get :index do
-    @menus = Menu.all
+    @menus = Menu.order(:weight).all
     render 'menus/index'
   end
 

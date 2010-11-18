@@ -5,7 +5,7 @@ class CreateMenus < Sequel::Migration
       String  :title, :size=>255
       String  :alt, :size=>255
       String  :url, :size=>255
-      Integer :weigth
+      Integer :weight
     end
   end
 
