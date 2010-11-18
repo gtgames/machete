@@ -14,7 +14,7 @@ Admin.controllers :media do
     @media = Media.new(params[:media])
     if (@media.save rescue false)
       flash[:notice] = 'Media was successfully created.'
-      redirect url(:medias, :edit, :id => @media.id)
+      redirect url(:media, :edit, :id => @media.id)
     else
       render 'medias/new'
     end
@@ -29,7 +29,7 @@ Admin.controllers :media do
     @media = Media[params[:id]]
     if @media.modified! && @media.update(params[:media])
       flash[:notice] = 'Media was successfully updated.'
-      redirect url(:medias, :edit, :id => @media.id)
+      redirect url(:media, :edit, :id => @media.id)
     else
       render 'medias/edit'
     end
@@ -42,6 +42,6 @@ Admin.controllers :media do
     else
       flash[:error] = 'Impossible destroy Media!'
     end
-    redirect url(:medias, :index)
+    redirect url(:media, :index)
   end
 end
