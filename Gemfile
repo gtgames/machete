@@ -8,6 +8,10 @@ gem 'thor', '>= 0.14.3'
 gem 'i18n'
 gem 'haml'
 
+gem 'json'
+
+gem 'bcrypt-ruby',  :require => "bcrypt"
+
 group :test do
   gem 'riot'
 end
@@ -34,4 +38,4 @@ gem 'unidecode'
 gem 'defensio'
 
 # Padrino
-gem 'padrino', "0.9.18"
+gem 'padrino', "0.9.19"

@@ -6,7 +6,6 @@ class CreateAccounts < Sequel::Migration
       String :surname, :size=>255
       String :email, :size=>255
       String :crypted_password, :size=>255
-      String :salt, :size=>255
       String :role, :size=>255
     end
   end
