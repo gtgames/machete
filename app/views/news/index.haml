@@ -2,12 +2,6 @@
   .post
     %h1
       =p.title
-    .date
-      = link_to p.updated_at.year, url(:news_year, :year => p.updated_at.year)
-      \/
-      = link_to p.updated_at.month, (:news_month, :year => p.updated_at.year, :month => p.updated_at.month)
-      \/
-      = link_to p.updated_at.day, (:news_day, :year => p.updated_at.year, :month => p.updated_at.month, :day => p.updated_at.day)
-      #{p.updated_at.hour}:#{p.updated_at.min}
+    =partial "news/date", {:p => p}
     %p
       =p.text

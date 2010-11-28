@@ -34,8 +34,4 @@ class Frontend < Padrino::Application
   not_found do
     render '404'
   end
-
-  before do
-    content_type :html, 'charset' => 'utf-8'
-  end
 end

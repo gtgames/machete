@@ -25,4 +25,8 @@ Frontend.helpers do
     end
     html
   end
+
+  def latest_news
+    Post.limit(10).all
+  end
 end

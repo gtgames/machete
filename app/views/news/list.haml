@@ -1,0 +1,3 @@
+- @news.each do |p|
+  .headline
+    =link_to p.title, url(:news_show, :id => p.id, :slug => p.slug)
