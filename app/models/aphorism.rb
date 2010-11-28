@@ -2,6 +2,7 @@ class Aphorism < Sequel::Model
   plugin :validation_helpers
 
   def validate
+    super
     validates_length_range 3..100, :aphorism
     validates_unique       :aphorism
     validates_format       /[A-Za-z\s\w]*/, :aphorism

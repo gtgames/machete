@@ -2,7 +2,7 @@ class Page < Sequel::Model
   def_dataset_method :full_text_search
   # Recursive adjacency list
   plugin :rcte_tree
-
+  plugin :timestamps, :create=>:created_on, :update=>:updated_on
   plugin :validation_helpers
   begin
     plugin :lazy_attributes, :text
@@ -13,9 +13,10 @@ class Page < Sequel::Model
   one_to_many :attachments
 
   def validate
+    super
     validates_length_range 3..100, :title
-    validates_unique       :title
-    validates_format       /[A-Za-z\s\w]*/, :title
+    validates_unique :title
+    validates_format(/[A-Za-z\s\w]*/, :title)
   end
 
   def before_save
@@ -26,16 +27,6 @@ class Page < Sequel::Model
       Page.filter(:is_home => true).update(:is_home => false)
       self.is_home = true
     end
-    super
-  end
-
-  def before_create
-    self.created_at ||= Time.now
-    super
-  end
-
-  def before_update
-    self.updated_at ||= Time.now
     super
   end
 
