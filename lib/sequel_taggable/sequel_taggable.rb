@@ -10,11 +10,11 @@ module Sequel
 
           def tag_list
             if @frozen_tag_list.nil?
-              tags = []
+              tgs = []
               self.tags.each do |t|
-                tags << t.name
+                tga << t.name
               end
-              tags.join ', '
+              tgs.join ', '
             else
               @frozen_tag_list
             end
