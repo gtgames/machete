@@ -10,7 +10,7 @@ Admin.controllers :sessions do
       set_current_account(account)
       redirect url(:base, :index)
     else
-      flash[:warning] = t 'admin.login.failure'
+      flash[:warning] = t'admin.login.failure'
       redirect url(:sessions, :new)
     end
   end

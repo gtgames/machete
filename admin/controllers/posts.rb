@@ -13,6 +13,7 @@ Admin.controllers :posts do
   post :create do
     @post = Post.new(params[:post])
     if (@post.save rescue false)
+      @post.tag_list params[:tags]
       flash[:notice] = 'Post was successfully created.'
       redirect url(:posts, :index)
     else
@@ -28,6 +29,7 @@ Admin.controllers :posts do
   put :update, :with => :id do
     @post = Post[params[:id]]
     if @post.modified! && @post.update(params[:post])
+      @post.tag_list params[:tags]
       flash[:notice] = 'Post was successfully updated.'
       redirect url(:posts, :index)
     else

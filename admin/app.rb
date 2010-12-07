@@ -31,8 +31,8 @@ class Admin < Padrino::Application
   set :frontend_url, "http://#{DOMAIN_NAME}/"
 
   access_control.roles_for :any do |role|
-    role.protect "/"
-    role.allow "/sessions"
+    role.protect  "/"
+    role.allow    "/sessions"
   end
 
   not_found do
@@ -40,13 +40,13 @@ class Admin < Padrino::Application
   end
 
   access_control.roles_for :admin do |role|
-    role.project_module :'novità',     "/posts"
-    role.project_module :menu,     "/menus"
-    role.project_module :pagine,     "/pages"
-    role.project_module :media,     "/media"
+    role.project_module :news,    "/posts"
+    role.project_module :menu,    "/menus"
+    role.project_module :pagine,  "/pages"
+    role.project_module :media,   "/media"
     role.project_module :foto,    "/photos"
-    role.project_module :aforismi, "/aphorisms"
-    role.project_module :account,  "/accounts"
+    role.project_module :aforismi,"/aphorisms"
+    role.project_module :account, "/accounts"
   end
 
   before do

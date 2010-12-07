@@ -1,16 +1,16 @@
 Frontend.controllers :pages do
 
-  get :pages, :map => "/pages/" do
+  get :index do
     render 'pages/index'
   end
 
-  get :page_show, :map => "/:id/:slug" do
+  get :show, :map => "/:id/:slug" do
     @page = Page.first :id => params[:id]
     halt 404 if @page.nil?
     render 'pages/show'
   end
 
-  get :page_search, :map => "/search" do
+  get :search, :map => "/search" do
     @s = params[:q]
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
       render 'pages/search'
@@ -20,7 +20,7 @@ Frontend.controllers :pages do
     end
   end
 
-  get :page_tags, :map => "/tag/:tags" do
+  get :tags, :map => "/tag/:tags" do
     @tags = params[:tags].split(',')
     @pages = Page.tagged_with(@tags)
     render 'page/tags'

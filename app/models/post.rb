@@ -8,15 +8,9 @@ class Post < Sequel::Model
   rescue
     # do nothing ... fking stupid bugs
   end
+  plugin :taggable
 
-  many_to_many :post_tags
-
-  def tagged_with=(tag_list)
-    tag_list.scan(/[\w]+/).each do |t|
-      tag = PostTag.find_or_create(:name => t)
-      self.add_tag tag
-    end
-  end
+  #many_to_many :tags, :left_key => :posts_id, :right_key=>:tags_id, :join_table => :posts_tags
 
   def validate
     super
@@ -25,8 +19,11 @@ class Post < Sequel::Model
     validates_format(/[A-Za-z\s\w]*/, :title)
   end
 
+  def text=(param)
+    super html_cleanup(param)
+  end
+
   def before_save
-    self.text = html_cleanup(self.text)
     self.slug = "#{self.title}".to_slug
     super
   end

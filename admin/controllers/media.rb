@@ -13,6 +13,7 @@ Admin.controllers :media do
   post :create do
     @media = Media.new(params[:media])
     if (@media.save rescue false)
+      @media.add_tags params[:tags]
       flash[:notice] = 'Media was successfully created.'
       redirect url(:media, :edit, :id => @media.id)
     else
@@ -28,6 +29,7 @@ Admin.controllers :media do
   put :update, :with => :id do
     @media = Media[params[:id]]
     if @media.modified! && @media.update(params[:media])
+      @media.add_tags params[:tags]
       flash[:notice] = 'Media was successfully updated.'
       redirect url(:media, :edit, :id => @media.id)
     else
