@@ -3,6 +3,7 @@
     %ul.wat-cf
       %li.first=link_to pat(:list), url(:pages, :index)
       %li=link_to pat(:new), url(:pages, :new)
+      %li=link_to pat(:tree), url(:pages, :tree)
       %li.active=link_to pat(:edit), url(:pages, :edit, :id => @page.id)
   .content
     %h2.title

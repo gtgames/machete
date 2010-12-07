@@ -21,3 +21,11 @@ log/*
 db/*.db
 public/assets/*
 public/images/*
+
+
+app/views/shared/_footer.haml
+config/custom.rb
+config/database.rb
+public/javascripts/application.js
+public/stylesheets/imagination.css
+public/stylesheets/style.css

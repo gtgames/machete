@@ -7,9 +7,9 @@ def html_cleanup h
         'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'u',
         'ul', 'iframe'],
       :attributes => {
-        :all          => ['class','href','style'],
-        'img'         => ['alt', 'src', 'title'],
-        'a'           => ['href', 'title'],
+        :all          => ['class','href'],
+        'img'         => ['alt', 'src', 'title', 'style'],
+        'a'           => ['href', 'title', 'rel'],
         'blockquote'  => ['cite'],
         'col'         => ['span', 'width'],
         'colgroup'    => ['span', 'width'],
