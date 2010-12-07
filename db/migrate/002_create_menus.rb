@@ -1,5 +1,5 @@
-class CreateMenus < Sequel::Migration
-  def up
+Sequel.migration do
+  up do
     create_table :menus do
       primary_key :id
       String  :title, :size=>255
@@ -9,7 +9,7 @@ class CreateMenus < Sequel::Migration
     end
   end
 
-  def down
+  down do
     drop_table :menus
   end
 end

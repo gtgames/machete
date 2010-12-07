@@ -1,6 +1,6 @@
 #sequel -d postgres://host/database > db/migrations/001_start.rb
-class CreateContacts < Sequel::Migration
-  def up
+Sequel.migration do
+  up do
     create_table(:contacts) do
       primary_key :id
       String  :author,    :size =>255
@@ -20,7 +20,7 @@ class CreateContacts < Sequel::Migration
     end
   end
 
-  def down
+  down do
     drop_table(:contacts)
   end
 end

@@ -1,5 +1,5 @@
-class CreatePhotos < Sequel::Migration
-  def up
+Sequel.migration do
+  up do
     create_table :photos do
       primary_key :id
       String :name, :size=>255
@@ -9,7 +9,7 @@ class CreatePhotos < Sequel::Migration
     end
   end
 
-  def down
+  down do
     drop_table :photos
   end
 end

@@ -1,5 +1,5 @@
-class CreateAccounts < Sequel::Migration
-  def up
+Sequel.migration do
+  up do
     create_table :accounts do
       primary_key :id
       String :name, :size=>255
@@ -10,7 +10,7 @@ class CreateAccounts < Sequel::Migration
     end
   end
 
-  def down
+  down do
     drop_table :accounts
   end
 end

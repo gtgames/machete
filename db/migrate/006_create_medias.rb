@@ -1,5 +1,5 @@
-class CreateMedias < Sequel::Migration
-  def up
+Sequel.migration do
+  up do
     create_table :medias do
       primary_key :id
       String    :name, :size=>255
@@ -10,7 +10,8 @@ class CreateMedias < Sequel::Migration
     end
   end
 
-  def down
+  down do
+    drop_table :media_tags
     drop_table :medias
   end
 end

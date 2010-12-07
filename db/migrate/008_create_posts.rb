@@ -1,5 +1,5 @@
-class CreatePosts < Sequel::Migration
-  def up
+Sequel.migration do
+  up do
     create_table :posts do
       primary_key   :id
       String        :title, :size=>255
@@ -11,7 +11,8 @@ class CreatePosts < Sequel::Migration
     end
   end
 
-  def down
+  down do
     drop_table :posts
+    drop_table :post_tags
   end
 end
