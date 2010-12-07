@@ -10,6 +10,11 @@
   =f.text_area :text, :class => :text_area
   %span.description Corpo del testo
 
+.group
+  =f.label :tag_list
+  =f.error_message_on :tag_list
+  =f.text_field :tag_list, :class => :text_field
+  %span.description Lista Tags
 
 .group.navform.wat-cf
   =f.submit pat(:save), :class => :button
