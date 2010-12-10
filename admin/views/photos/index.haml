@@ -12,6 +12,7 @@
         %tr
           %th.first=mat(:photo, :name)
           %th=mat(:photo, :file)
+          %th=mat(:photo, :tag_list)
           %th=mat(:photo, :created_at)
           %th=mat(:photo, :updated_at)
           %th.last="&nbsp;"
@@ -19,6 +20,7 @@
           %tr
             %td.first=photo.name
             %td=photo.file
+            %td=photo.tag_list
             %td=photo.created_at
             %td=photo.updated_at
             %td.last

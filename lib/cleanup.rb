@@ -19,7 +19,8 @@ def html_cleanup h
         'table'       => ['summary', 'width'],
         'td'          => ['abbr', 'axis', 'colspan', 'rowspan', 'width'],
         'th'          => ['abbr', 'axis', 'colspan', 'rowspan', 'scope', 'width'],
-        'ul'          => ['type']
+        'ul'          => ['type'],
+        'iframe'      => ['src', "width", "height", "frameborder", "scrolling", "marginheight", "marginwidth"]
       },
       :protocols => {
         'a'          => {'href' => ['ftp', 'http', 'https', 'mailto', :relative]},
