@@ -1,17 +1,6 @@
 require 'rubygems'
 require 'unidecode'
 
-# my simple touch
-def touch(f, t=Time.now)
-  begin
-    File.utime(t, t, f)
-  rescue Errno::ENOENT
-    File.open(f, 'a'){
-      ;
-    }
-  end
-end
-
 # Array extensions
 Array.class_eval do
   def arithmetic_mean
@@ -25,7 +14,6 @@ end
 
 # String extensions
 String.class_eval do
-
   # console colors
   def red; colorize(self, "\e[1m\e[31m"); end
   def green; colorize(self, "\e[1m\e[32m"); end
