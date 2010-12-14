@@ -27,7 +27,7 @@
           %img#logo{ :src => "/images/machete.png", :title => "Machete Backend" }
         %ul#user-navigation
           %li
-            %a{:href => "#{options.frontend_url}", :target => "_new"} vai al sito
+            %a{:href => "http://#{DOMAIN_NAME}/", :target => "_new"} vai al sito
           %li= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id)
           %li= link_to pat(:logout), url(:sessions, :destroy), :method => :delete
       %nav.column

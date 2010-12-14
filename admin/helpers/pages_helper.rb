@@ -44,7 +44,7 @@ Admin.helpers do
   end
 
   def page_url_for(page)
-    link_to( page.title, "#{options.frontend_url}/#{page.id}/#{page.slug}")
+    link_to( page.title, "http://#{DOMAIN_NAME}/#{page.id}/#{page.slug}")
   end
 end
 

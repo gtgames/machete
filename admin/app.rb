@@ -6,12 +6,12 @@ class Admin < Padrino::Application
 
   register Padrino::Contrib::ExceptionNotifier
   set :exceptions_from,    "mail@#{DOMAIN_NAME}"
-  set :exceptions_to,      "exceptions@frenzart.com"
+  set :exceptions_to,      "god@progettoca.se"
   set :exceptions_subject, "[#{DOMAIN_NAME}][Admin] "
   set :exceptions_page,    :errors
   
   set :delivery_method, :smtp => {
-    :address              => "mail.gtgames.it",
+    :address              => "127.0.0.1",
     :port                 => 25,
     :user_name            => "mail@#{DOMAIN_NAME}",
     :password             => 'kUYAnAg92guxoziT53',
@@ -27,8 +27,6 @@ class Admin < Padrino::Application
 
   set :login_page, "/sessions/new"
   disable :store_location
-
-  set :frontend_url, "http://#{DOMAIN_NAME}/"
 
   access_control.roles_for :any do |role|
     role.protect  "/"
