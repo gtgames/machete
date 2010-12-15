@@ -9,10 +9,14 @@ Sequel.migration do
       DateTime      :updated_at
       index :slug,  :unique => true
     end
+    create_table :post_taggins do
+      foreign_key :post_id, :posts
+      foreign_key :tag_id, :tags
+    end
   end
 
   down do
+    drop_table :post_taggins
     drop_table :posts
-    drop_table :post_tags
   end
 end

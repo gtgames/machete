@@ -1,12 +1,15 @@
+require 'sequel/extensions/blank'
+require 'sequel/extensions/inflector'
+
 module Sequel
   module Plugins
     module Polymorphic
+
       # Apply the plugin to the model.
-      def self.apply(model, options = {})
+      def self.apply(model_class, *arguments, &block)
       end
 
-      module InstanceMethods
-
+      def self.configure(model_class, *arguments, &block)
       end
 
       module ClassMethods
@@ -20,9 +23,9 @@ module Sequel
             self.class_eval %{
               associate(:many_to_one, :#{able}, :reciprocal=>:#{plural_model},
                  :dataset=>(proc { klass = #{able}_type.constantize; klass.filter(klass.primary_key=>#{able}_id) }), 
-                 :eager_loader=>(proc do |key_hash, #{plural_model}, associations|
+                 :eager_loader=>(proc do |eo|
                    id_map = {}
-                   #{plural_model}.each do |#{singular_model}| 
+                   eo[:rows].each do |#{singular_model}| 
                      #{singular_model}.associations[:#{able}] = nil; 
                      ((id_map[#{singular_model}.#{able}_type] ||= {})[#{singular_model}.#{able}_id] ||= []) << #{singular_model}
                    end
@@ -34,9 +37,9 @@ module Sequel
                    end
                  end)
               )
-             
+
               private
-             
+
               def _#{able}=(#{able})
                 self[:#{able}_id] = (#{able}.pk if #{able})
                 self[:#{able}_type] = (#{able}.class.name if #{able})
@@ -46,7 +49,7 @@ module Sequel
             associate(:many_to_one, *args, &block)
           end
         end
-        
+
         alias :belongs_to :many_to_one
 
         def one_to_many(*args, &block)
@@ -54,13 +57,13 @@ module Sequel
           options ||= {}
           many_class = many_of_class.to_s.singularize
           if able = options[:as]
-            associate(:one_to_many, many_of_class, :key=>"#{able}_id".to_sym) do |ds|
+            associate(:one_to_many, many_of_class, :key=>"#{able}_id".to_sym, :reciprocal => nil) do |ds|
               ds.filter("#{able}_type".to_sym => self.class.to_s)
             end
 
              method_definitions = %{
                private
-           
+
                def _add_#{many_class}(#{many_class})
                  #{many_class}.#{able}_id = pk
                  #{many_class}.#{able}_type = '#{self}'
@@ -80,9 +83,9 @@ module Sequel
             associate(:one_to_many, *args, &block)
           end
         end
-        
+
         alias :has_many :one_to_many
-        
+
         #example:   many_to_many :tags, :through => :taggings, :as => :taggable
         def many_to_many(*args, &block)
           many_to_class, options = *args # => :tags, :through => :taggings, :as => :taggable
@@ -119,5 +122,3 @@ module Sequel
     end # Polymorphic
   end # Plugins
 end # Sequel
-
-

@@ -9,6 +9,7 @@ class Post < Sequel::Model
     # do nothing ... fking stupid bugs
   end
   plugin :taggable
+  many_to_many :tags, :join_table => :post_taggins
 
   #many_to_many :tags, :left_key => :posts_id, :right_key=>:tags_id, :join_table => :posts_tags
 

@@ -7,9 +7,14 @@ Sequel.migration do
       DateTime :created_at
       DateTime :updated_at
     end
+    create_table :photo_taggins do
+      foreign_key :photo_id, :photos
+      foreign_key :tag_id, :tags
+    end
   end
 
   down do
+    drop_table :photo_taggins
     drop_table :photos
   end
 end

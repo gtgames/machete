@@ -8,10 +8,14 @@ Sequel.migration do
       DateTime  :created_at
       DateTime  :updated_at
     end
+    create_table :media_taggins do
+      foreign_key :media_id, :medias
+      foreign_key :tag_id, :tags
+    end
   end
 
   down do
-    drop_table :media_tags
+    drop_table :media_taggins
     drop_table :medias
   end
 end
