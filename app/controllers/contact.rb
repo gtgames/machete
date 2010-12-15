@@ -1,7 +1,7 @@
 Frontend.controllers :contact do
 
   get :form, :map => "/contattaci/" do
-    @mail  = Contact.new
+    @mail = Contact.new
     render 'mailers/index'
   end
   post :new, :map => "/contattaci/" do
