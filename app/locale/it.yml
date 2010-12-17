@@ -4,16 +4,32 @@ it:
     ok: "Il tuo messaggio è stato inviato."
   models:
     menu:
+      name: "Menù"
       attributes:
         title: "Titolo"
         weight: "Peso"
         alt: "Testo alternativo"
         url: "Link"
     page:
+      name: Pagine
       attributes:
         title: "Titolo"
         text: "Corpo del testo"
         weight: "Peso"
+        created_at: Creato il
+        updated_at: Aggiornato il
+    aphorism:
+      name: Aforismi
+      attributes:
+        aphorims: Aforisma
+    post:
+      name: Notizie
+      attributes:
+        title: Titolo
+        tag_list: Lista Tag
+        created_at: Creato il
+        updated_at: Aggiornato il
+  
   pages:
     search:
       results: "Risultati ricerca"
@@ -37,3 +53,7 @@ it:
     destroy:
       success: 'Eliminato con successo'
       failure: "Errore durante l'eliminazione!"
+  padrino:
+    admin:
+      new: Nuovo
+      list: Lista
