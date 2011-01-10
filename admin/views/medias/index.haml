@@ -11,8 +11,8 @@
       %table.table
         %tr
           %th.first=mat(:media, :name)
-          %th=mat(:media, :file)
           %th=mat(:media, :tag_list)
+          %th=mat(:media, :file)
           %th.last="&nbsp;"
         -@medias.each do |media|
           %tr

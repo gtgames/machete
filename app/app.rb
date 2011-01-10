@@ -25,7 +25,7 @@ class Frontend < Padrino::Application
     :format => :html5
   }
 
-  if File.exists? (PADRINO_ROOT + '/app/views/layouts/custom.haml')
+  if File.exists?(PADRINO_ROOT + '/app/views/layouts/custom.haml')
     layout :custom
   else
     layout :application
@@ -33,5 +33,11 @@ class Frontend < Padrino::Application
 
   not_found do
     render '404'
+  end
+
+  before do
+    if File.exists?(PADRINO_ROOT + '._maintainance')
+      render 'maintainance'
+    end
   end
 end

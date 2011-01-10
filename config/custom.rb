@@ -1,6 +1,12 @@
 BASE_TITLE = "GTgames"
 DOMAIN_NAME = "frenz.fr"
-DEFENSIO_KEY = "00000000000000000000"
 
 DESCRIPTION = ""
 KEYWORDS = ""
+
+
+# Defensio.com key
+DEFENSIO_KEY = ""
+
+# Google analytics tacking code https://www.google.com/analytics/
+ANALYTICS = ""

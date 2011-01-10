@@ -9,13 +9,7 @@
     %script{:src => "/javascripts/modernizr-1.5.min.js"}
     %link{:charset => "utf-8", :href => "/css/imagination.css", :media => "screen", :rel => "stylesheet", :title => "no title", :type => "text/css"}/
     %title #{BASE_TITLE} - Photo Library
-  /[if lt IE 7 ] <body class="ie6">
-  /[if IE 7 ] <body class="ie7">
-  /[if IE 8 ] <body class="ie8">
-  /[if IE 9 ] <body class="ie9">
-  / [if (gt IE 9)|!(IE)]><!
   %body
-    / <![endif]
     %ul#menu
       %li
         %a{:href => "/"}
@@ -23,32 +17,15 @@
     #photos
       - @photos.each do |p|
         %div
-          %h1= p.title
-          %img{:src => p.photo.url, :title => p.title}
+          %h1= p.name
+          %img{:src => p.file.url, :title => p.name}
           %span.tags
-            - p.tag_list.each do |t|
-              = link_to t, url( :imagination_tag, :tag => t)
-    %script{:charset => "utf-8", :src => "/javascripts/jquery.min.js", :type => "text/javascript"}
-    %script{:charset => "utf-8", :src => "/javascripts/plugins.js", :type => "text/javascript"}
-    %script{:charset => "utf-8", :src => "/javascripts/galleria.js", :type => "text/javascript"}
-    %script{:charset => "utf-8", :src => "/javascripts/galleria.history.js", :type => "text/javascript"}
+            - p.tags.each do |t|
+              = link_to t.name, url( :imagination_tag, :tag => t.name)
     /[if lt IE 7 ]
       <script src="js/dd_belatedpng.js?v=1"></script>
     /[if lt IE 9 ]
       <script src="js/dd_roundies.js?v=1"></script>
       <script>$(function(){DD_roundies.addRule('#menu', '5px');});</script>
     %script{:charset => "utf-8", :type => "text/javascript"}
-      Galleria.loadTheme('/javascripts/galleria/frenz.js');
-      
-      $('#photos').galleria({
-      image_crop: false,
-      transition: 'slide',
-      show_info: true,
-      thumbnails: true,
-      data_config: function(img) {
-      return {
-      title: $(img).parent().find('h1').html(),
-      description: $(img).parent().find('span').html()
-      };
-      }
-      });
+      /**/

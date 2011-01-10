@@ -13,16 +13,14 @@
           %th.first=mat(:photo, :name)
           %th=mat(:photo, :file)
           %th=mat(:photo, :tag_list)
-          %th=mat(:photo, :created_at)
-          %th=mat(:photo, :updated_at)
           %th.last="&nbsp;"
         -@photos.each do |photo|
           %tr
-            %td.first=photo.name
-            %td=photo.file
+            %td.first=photo.name          
+            %td
+              =link_to photo.file.file.extension, photo.file.url
+              (#{photo.file.file.size/1024} kb)
             %td=photo.tag_list
-            %td=photo.created_at
-            %td=photo.updated_at
             %td.last
               =button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => :button_to
               ="|"
