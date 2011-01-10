@@ -7,7 +7,7 @@ Frontend.controllers :pages do
   get :show, :map => "/:id/:slug", :id => /\d+/ do
     begin
       @page = Page.first :id => params[:id]
-    rescue
+    rescue Sequel::DatabaseError
       halt 404
     end
     render 'pages/show'
