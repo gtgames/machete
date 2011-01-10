@@ -4,7 +4,7 @@ Frontend.controllers :news do
     render 'news/index'
   end
 
-  get :show, :with => [:id, :slug], :provides => [:any, :json]do
+  get :show, :with => [:id, :slug], :id => /\d+/, :provides => [:any, :json] do
     @news = Post.first :id => params[:id], :slug => params[:slug]
     case content_type
     when :js then
@@ -20,17 +20,17 @@ Frontend.controllers :news do
     render 'news/index'
   end
 
-  get :year, :map => '/news/', :with => [:year] do
+  get :year, :map => '/news/', :with => [:year], :year => /\d+/ do
     @news = Post.filter("updated_at >= '#{Time.new(params[:year])}'").all
     render 'news/list'
   end
 
-  get :month, :map => '/news/', :with => [:year, :month] do
+  get :month, :map => '/news/', :with => [:year, :month], :year => /\d+/, :month => /\d+/ do
     @news = Post.filter("updated_at >= '#{Time.new(params[:year], params[:month])}'").all
     render 'news/list'
   end
 
-  get :day, :map => '/news/', :with => [:year, :month, :day] do
+  get :day, :map => '/news/', :with => [:year, :month, :day], :year => /\d+/, :month => /\d+/, :day => /\d+/ do
     @news = Post.filter("updated_at >= '#{Time.new(params[:year], params[:month], params[:day])}'").all
     render 'news/list'
   end

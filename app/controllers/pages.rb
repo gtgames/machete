@@ -4,9 +4,12 @@ Frontend.controllers :pages do
     render 'pages/index'
   end
 
-  get :show, :map => "/:id/:slug" do
-    @page = Page.first :id => params[:id]
-    halt 404 if @page.nil?
+  get :show, :map => "/:id/:slug", :id => /\d+/ do
+    begin
+      @page = Page.first :id => params[:id]
+    rescue
+      halt 404
+    end
     render 'pages/show'
   end
 
