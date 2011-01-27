@@ -8,5 +8,5 @@
     =pat(:edit)
     =mt(:photo)
   .inner
-    -form_for :photo, url(:photos, :update, :id => @photo.id), :method => :put, :class => :form do |f|
+    -form_for :photo, url(:photos, :update, :id => @photo.id), :method => :put, :multipart => true, :class => :form do |f|
       =partial "photos/form", :locals => { :f => f }

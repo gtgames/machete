@@ -4,6 +4,8 @@
   =f.text_field :name
 
 .group
+  - if not f.object.file.nil?
+    %img.thumb{ :src => f.object.file.thumb.url }
   =f.label :file
   =f.error_message_on :file
   =f.file_field :file

@@ -21,7 +21,8 @@
       - @photos.each do |p|
         %div
           %h1= p.name
-          %img{:src => p.file.url, :title => p.name}
+          %a{:href => p.file.url, :title => p.name}
+            %img{:src => p.file.thumb.url, :title => p.name}
           %span.tags
             - p.tags.each do |t|
               = link_to t.name, url( :imagination_tag, :tag => t.name)

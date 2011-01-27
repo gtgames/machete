@@ -1,6 +1,5 @@
+require 'carrierwave/processing/mini_magick'
 class AttachmentUploader < CarrierWave::Uploader::Base
-  # include CarrierWave::MiniMagick
-
   storage :file
 
   def root; File.join(Padrino.root,"public/"); end
@@ -20,7 +19,6 @@ end
 
 
 class MediaUploader < CarrierWave::Uploader::Base
-
   storage :file
 
   def root; File.join(Padrino.root,"public/"); end
@@ -55,10 +53,9 @@ class ImageUploader < CarrierWave::Uploader::Base
     "/images/default_image.png"
   end
 
-
   process :resize_to_fit => [740, 580]
   version :thumb do
-    process :resize_to_fill => [100, 100]
+    process :resize_to_fit => [100, 100]
   end
 
   def extension_white_list
