@@ -6,7 +6,7 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %title Machete Administration - #{BASE_TITLE}
     -# CSS 
-    %link{:href => "/stylesheets/admin.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://frenzart.com/css/admin_0.2.css", :rel => "stylesheet", :type => "text/css"}
     %script{:charset => "utf-8", :src => "http://frenzart.com/js/head.js", :type => "text/javascript"}
 
   %body
@@ -44,7 +44,7 @@
       %footer
         %p
           Powered by
-          %a{ :href => 'http://machete.it' } Machete
+          %a{ :href => 'http://machete.it' } Machete 0.2
           %br
           &copy; #{Time.now.year}
           %a{ :href => 'http://gtgames.it' } GTGames.it
@@ -52,8 +52,7 @@
     %script{:charset => "utf-8", :type => "text/javascript"}
       head.js("http://frenzart.com/js/mootools/1.3.js",function(){
       head.js("http://frenzart.com/js/mootools/more.js",
-      /*"http://frenzart.com/js/admin.js",*/
-      "/javascripts/admin.js",
+      "http://frenzart.com/js/admin_0.2.js",
       "http://frenzart.com/js/antistress.js")
       });
     /[if lt IE 7 ]
