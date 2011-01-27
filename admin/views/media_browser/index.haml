@@ -1,0 +1,28 @@
+!!! 5
+%html
+  %head
+    %title Media Browser
+    %link{ :charset => "utf-8", :type=>"text/css", :rel => "stylesheet", :href=>"/stylesheets/admin_mediabrowser.css"}
+    %script{:type => "text/javascript", :src => "http://frenzart.com/js/head.js"}
+  %body
+    #list
+      - @media.each do |m|
+        .item{:id => "#{m.id}"}
+          .icon{:class => "#{m.type}"}
+          .name=link_to m.file.to_s.split('/').last, m.file.url
+
+    #toolbar
+      %form#upload{ :action => "", :method => "POST", :enctype => "multipart/form-data" }
+        %input{ :type => "file", :name => "file" }
+        %input{ :type => "submit", :text => "Upload" }
+
+      %button#submit
+        Inserisci!
+
+    %script{:type => "text/template"}
+      .item
+        .icon{:class=> '{type}'}
+        .name {name}
+
+    %script{:type => "text/javascript"}
+      head.js("http://frenzart.com/js/mootools/1.3.js", "http://frenzart.com/js/fileuploader.js", "/javascripts/tiny_mce/tiny_mce_popup.js", "/javascripts/admin_mediabrowser.js");

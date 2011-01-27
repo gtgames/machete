@@ -4,7 +4,7 @@ class Frontend < Padrino::Application
 
   register Padrino::Contrib::ExceptionNotifier
   set :exceptions_from,    "mail@#{DOMAIN_NAME}"
-  set :exceptions_to,      "exceptions@frenzart.com"
+  set :exceptions_to,      "god@progettoca.se"
   set :exceptions_subject, "[#{DOMAIN_NAME}][Frontend] "
   set :exceptions_page,    :errors
 

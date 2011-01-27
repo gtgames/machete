@@ -1,8 +1,10 @@
 require 'carrierwave/orm/sequel'
 class Media < Sequel::Model
-  many_to_many :tags, :join_table => :media_taggins
-  plugin :taggable
-
   def_dataset_method :full_text_search
   mount_uploader :file, MediaUploader
+  
+  def before_save
+    self.type = `file -b --mime-type #{self.file.file.file}`.split('/').first
+    super
+  end
 end

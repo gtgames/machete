@@ -25,6 +25,8 @@ class Admin < Padrino::Application
     :format => :html5
   }
 
+  use Rack::RawUpload, :paths => ['/media_browser/create/*']
+
   set :login_page, "/sessions/new"
   disable :store_location
 

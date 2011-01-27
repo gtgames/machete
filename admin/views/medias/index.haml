@@ -11,16 +11,13 @@
       %table.table
         %tr
           %th.first=mat(:media, :name)
-          %th=mat(:media, :tag_list)
-          %th=mat(:media, :file)
+          %th=mat(:media, :size)
           %th.last="&nbsp;"
         -@medias.each do |media|
           %tr
-            %td.first=media.name
-            %td=media.tag_list
+            %td.first=link_to media.file.to_s.split('/').last, media.file.url
             %td
-              =link_to media.file.file.extension, media.file.url
-              (#{media.file.file.size/1024} kb)
+              #{media.file.file.size/1024} kb
             %td.last
               =button_to pat(:edit), url(:media, :edit, :id => media.id), :method => :get, :class => :button_to
               |

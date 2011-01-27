@@ -23,11 +23,14 @@ class Page < Sequel::Model
     self.text = html_cleanup(self.text)
     self.slug = "#{self.title}".to_slug
     self.parent_id = (self.parent_id == 0)? nil : self.parent_id
-    if self.is_home
-      Page.filter(:is_home => true).update(:is_home => false)
-      self.is_home = true
-    end
+    Page.where(:is_home => true).update(:is_home => false) if t == '1' or t == true
     super
+  end
+
+  def before_destroy
+    self.children.each do |c|
+      c.update(:parent => self.parent)
+    end
   end
 
   def roots

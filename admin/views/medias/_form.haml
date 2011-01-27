@@ -1,24 +1,8 @@
 .group
-  =f.label :name
-  =f.error_message_on :name
-  =f.text_field :name, :class => :text_field
-
-.group
-  =f.label :description
-  =f.error_message_on :description
-  =f.text_field :description, :class => :text_field
-
-.group
   =f.label :file
   =f.error_message_on :file
   =link_to(f.object.file.url) unless f.object.file.nil?
   =f.file_field :file, :class => :text_field
-
-.group
-  =f.label :tag_list
-  =f.error_message_on :tag_list
-  =f.text_field :tag_list, :class => :text_field
-  %span.description Lista Tags
 
 .group.navform.wat-cf
   =f.submit pat(:save), :class => :button

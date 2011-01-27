@@ -32,10 +32,6 @@ class MediaUploader < CarrierWave::Uploader::Base
   def cache_dir
     Padrino.root("tmp")
   end
-
-  def extension_white_list
-    %w(mp3 ogg mp4 flv pdf zip jpg jpeg gif png)
-  end
 end
 
 

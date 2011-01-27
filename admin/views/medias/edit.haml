@@ -9,7 +9,7 @@
       =pat(:edit)
       =mt(:media)
     .inner
-      -form_for :media, url(:media, :update, :id => @media.id), :method => :put, :class => :form do |f|
+      -form_for :media, url(:media, :update, :id => @media.id), :method => :put, :enctype => "multipart/form-data", :class => :form do |f|
         =partial "medias/form", :locals => { :f => f }
 
 -content_for :sidebar, partial("base/sidebar")
