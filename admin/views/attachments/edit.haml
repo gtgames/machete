@@ -1,15 +1,14 @@
-.block
-  .secondary-navigation
-    %ul.wat-cf
-      %li.first=link_to pat(:list), url(:attachments, :index)
-      %li=link_to pat(:new), url(:attachments, :new)
-      %li.active=link_to pat(:edit), url(:attachments, :edit, :id => @attachment.id)
-  .content
-    %h2.title
-      =pat(:edit)
-      =mt(:attachment)
-    .inner
-      -form_for :attachment, url(:attachments, :update, :id => @attachment.id), :method => :put, :class => :form do |f|
-        =partial "attachments/form", :locals => { :f => f }
+%nav.secondary-navigation
+  %ul.wat-cf
+    %li.first=link_to pat(:list), url(:attachments, :index)
+    %li=link_to pat(:new), url(:attachments, :new)
+    %li.active=link_to pat(:edit), url(:attachments, :edit, :id => @attachment.id)
+#content
+  %h2
+    =pat(:edit)
+    =mt(:attachment)
+  .inner
+    -form_for :attachment, url(:attachments, :update, :id => @attachment.id), :method => :put, :class => :form do |f|
+      =partial "attachments/form", :locals => { :f => f }
 
 -content_for :sidebar, partial("base/sidebar")

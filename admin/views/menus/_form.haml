@@ -1,28 +1,26 @@
 .group
   =f.label :title
   =f.error_message_on :title
-  =f.text_field :title, :class => :text_field
-  %span.description Ex: a simple text
+  =f.text_field :title
 
 .group
   =f.label :alt
   =f.error_message_on :alt
-  =f.text_field :alt, :class => :text_field
-  %span.description Ex: a simple text
+  =f.text_field :alt
 
 .group
   =f.label :url
   =f.error_message_on :url
-  =f.text_field :url, :class => :text_field
-  %span.description Ex: a simple text
+  =f.text_field :url
+  %span.description url del link (es. "http://gtgames.it/")
 
 .group
   =f.label :weight
   =f.error_message_on :weight
-  =f.text_field :weight, :class => :text_field
-  %span.description Ex: a simple text
+  =f.text_field :weight
+  %span.description Il peso decide la posizione nel men&ugrave;
 
 
-.group.navform.wat-cf
+.group.navform
   =f.submit pat(:save), :class => :button
   =f.submit pat(:cancel), :onclick => "window.location='#{url(:menus, :index)}';return false", :class => :button

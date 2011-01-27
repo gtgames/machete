@@ -1,9 +1,10 @@
 .group
   =f.label :file
   =f.error_message_on :file
-  =link_to(f.object.file.url) unless f.object.file.nil?
-  =f.file_field :file, :class => :text_field
+  -unless f.object.file.nil?
+    = link_to f.object.file.url, f.object.file.url
+  =f.file_field :file
 
-.group.navform.wat-cf
+.group.navform
   =f.submit pat(:save), :class => :button
   =f.submit pat(:cancel), :onclick => "window.location='#{url(:media, :index)}';return false", :class => :button

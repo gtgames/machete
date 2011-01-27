@@ -34,46 +34,36 @@ head.ready(function(){
   }
   
   if ($$('textarea').length > 0) {
-    tinyMCE.init({
-      mode : "textareas",
-  		theme : "advanced",
-  		plugins : "advhr,advimage,advlink,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,contextmenu,paste,directionality,fullscreen,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
-  		
-  		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect",
-  		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,preview",
-  		theme_advanced_buttons3 : "hr,removeformat,visualaid,|,sub,sup,|,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen,|,cite,abbr,acronym,del,ins,attribs,|,visualchars",
-  		theme_advanced_toolbar_location : "top",
-  		theme_advanced_toolbar_align : "left",
-  		theme_advanced_statusbar_location : "bottom",
-  		theme_advanced_resizing : true,
-  		
-  		content_css : "stylesheets/style.css",
-  		
-  		external_link_list_url : "/tree/mce_list.js",
-  		
-  		style_formats : [
-  			{title : 'Bold text', inline : 'strong'}
-  		],
-  		
-      file_browser_callback : function (field_name, url, type, win) {
-
-        var cmsURL = "/media_browser/?type=" + type;
-
-        tinyMCE.activeEditor.windowManager.open({
-            file: cmsURL,
-            width: 780,  // Your dimensions may differ - toy around with them!
-            height: 500,
-            resizable: "yes",
-            scrollbars: "yes",
-            inline: "yes",
-            close_previous: "no"
-        }, {
-            window: win,
-            input: field_name,
-            editor_id: tinyMCE.selectedInstance.editorId
+    // Editor
+    head.js("http://frenzart.com/js/ckeditor/ckeditor.js", function(){
+      window.CKEDITOR_BASEPATH = '/js/ckeditor/';
+      $$('textarea').each(function(e){
+        CKEDITOR.replace(e.get('name'), {
+          lang: 'it',
+          skin: 'v2',
+          
+          toolbar_Full: [
+            ['Source', '-', 'Preview', '-'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker'], //, 'Scayt' 
+            ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'],
+            '/',
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            '/',
+            ['Styles', 'Format', 'Templates'],
+            ['Maximize', 'ShowBlocks']
+          ],
+          
+          startupFocus: false,
+          
+          filebrowserBrowseUrl: '/media_browser/',
+          filebrowserImageWindowWidth: '760',
+          filebrowserImageWindowHeight: '480'
         });
-        return false;
-        }
+      });
     });
   }
 });

@@ -34,16 +34,18 @@ head.ready(function() {
     var item = $$("a[href=" + window.location.hash.replace('#', '') + "]")[0].getParent('.item').toggleClass("selected");
 
   function submit(){
-    var URL = $$('.item.selected')[0].getElement('a').get('href');
-    var win = tinyMCEPopup.getWindowArg("window");
-    win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
-    if (typeof(win.ImageDialog) != "undefined") {
-      if (win.ImageDialog.getImageData)
-        win.ImageDialog.getImageData();
-      if (win.ImageDialog.showPreviewImage)
-          win.ImageDialog.showPreviewImage(URL);
+    function getUrlParam(paramName)
+    {
+      var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+      var match = window.location.search.match(reParam);
+      return (match && match.length > 1) ? match[1] : '' ;
     }
-    tinyMCEPopup.close();
+    var funcNum = getUrlParam('CKEditorFuncNum');
+    var fileUrl = $$('.selected')[0].getElement('a').get('href');
+    window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+    
+    window.close();
+    // go back to the editor
   }
   $$('.item').addEvents({
     click: function(e) {

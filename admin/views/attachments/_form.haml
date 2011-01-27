@@ -1,16 +1,16 @@
 .group
   =f.label :file
   =f.error_message_on :file
-  =f.text_field :file, :class => :text_field
+  =f.text_field :file
   %span.description Ex: a simple text
 
 .group
   =f.label :page_id
   =f.error_message_on :page_id
-  =f.text_field :page_id, :class => :text_field
+  =f.text_field :page_id
   %span.description Ex: a simple text
 
 
-.group.navform.wat-cf
+.group.navform
   =f.submit pat(:save), :class => :button
   =f.submit pat(:cancel), :onclick => "window.location='#{url(:attachments, :index)}';return false", :class => :button

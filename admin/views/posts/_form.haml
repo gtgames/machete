@@ -1,19 +1,17 @@
 .group
   =f.label :title
   =f.error_message_on :title
-  =f.text_field :title, :class => :text_field
-  %span.description Titolo della notizia
+  =f.text_field :title
 
 .group
   =f.label :text
   =f.error_message_on :text
-  =f.text_area :text, :class => :text_area
-  %span.description Corpo del testo
+  =f.text_area :text
 
 .group
   =f.label :tag_list
   =f.error_message_on :tag_list
-  =f.text_field :tag_list, :class => :text_field
+  =f.text_field :tag_list
   %span.description Lista Tags
 
 .group.navform.wat-cf
