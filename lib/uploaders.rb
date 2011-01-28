@@ -35,6 +35,7 @@ end
 
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
+  MiniMagick.processor = :gm
 
   storage :file
 
