@@ -1,0 +1,35 @@
+%nav.secondary-navigation
+  %ul.wat-cf
+    %li.first=link_to pat(:list), url(:media, :index)
+    %li=link_to pat(:new), url(:media, :new)
+    %li=link_to pat(:edit), url(:media, :edit, :id => @media.id)
+    %li.active=link_to pat(:crop), url(:media, :crop, :id => @media.id)
+    %li=link_to pat(:resize), url(:media, :resize, :id => @media.id)
+#content
+  %h2
+    =pat(:crop)
+    =mt(:media)
+  .inner
+    %form{:action => "#{url(:media, :process, :id => @media.id, :action => 'crop')}", :method => 'post', :class => 'form'}
+
+      %img#media{:src => "#{@media.file.url}"}
+
+      .group
+        %label{:for => 'w'}
+          Larghezza
+        %input{:name => 'w'}
+      .group
+        %label{:for => 'h'}
+          Altezza
+        %input{:name => 'h'}
+      .group
+        %label{:for => 'x'}
+          X
+        %input{:name => 'x'}
+      .group
+        %label{:for => 'y'}
+          Y
+        %input{:name => 'y'}
+
+      %button{:type => 'submit'} Invia
+      %button{:type => 'submit', :onclick => "window.location='#{url(:media, :index)}';return false", :class => :button}="#{pat(:cancel)}"

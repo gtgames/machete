@@ -89,15 +89,15 @@ input, select { vertical-align:middle; }
 }
 
 .qq-upload-drop-area {
-    position:fixed;
-    top:  0;
-    left: 0;
-    width: 220px;
-    height:100%;
-    z-index: 2;
-    background: #505386;
-    text-align: center;
-    border-right: 1px solid #636EC5;
+  position:fixed;
+  top:  25%;
+  left: 25%;
+  width: 50%;
+  height:50%;
+  z-index: 2;
+  background: #505386;
+  text-align: center;
+  border-right: 1px solid #636EC5;
 }
 .qq-upload-drop-area span {
     display:block; position:absolute; top: 50%; width:100%; margin-top:-8px; font-size:16px;
@@ -171,16 +171,47 @@ input, select { vertical-align:middle; }
   width:96px;
   height:96px;
   margin: 0 auto;
+  background: url(http://frenzart.com/css/images/mb_icons.png);
 }
-.item .name {
+.name {
   display:block;
   text-align: center;
+  overflow: hidden;
+}
+.actions {
+  text-align: center;
+  position: absolute;
+  width: 18px;
+  margin: 20px 0px 0px 1px;
+  z-index:6;
+  visibility: hidden;
+  background: rgba(0,0,0,.2);
+  padding: 2px;
+	 -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+          border-radius: 2px;
+}
+.actions>a {
+  width: 18px;
+  background: url(http://frenzart.com/css/images/mb_icons.png);
+  background-position: -18px 18px;
+  display: block;
+  text-indent: -9999px;
+}
+.actions>a:first-child {
+  background-position: 0px 18px;
+}
+.item:hover .actions{
+  visibility: visible;
 }
 
 .icon.image {
-  background:#ccc;
+  background-position: 0 -288px;
 }
 
+.icon.video {
+  background-position: 0 -192px;
+}
 
 #toolbar {
   padding: 4px;
@@ -205,3 +236,4 @@ input, select { vertical-align:middle; }
   text-transform: normal;
   letter-spacing: normal;
   line-height: 1.4em;
+}

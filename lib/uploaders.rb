@@ -19,6 +19,9 @@ end
 
 
 class MediaUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
+  MiniMagick.processor = :gm
+
   storage :file
 
   def root; File.join(Padrino.root,"public/"); end
@@ -56,7 +59,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   process :resize_to_fit => [740, 580]
   version :thumb do
-    process :resize_to_fit => [100, 100]
+    process :resize_to_fill => [100, 100]
   end
 
   def extension_white_list

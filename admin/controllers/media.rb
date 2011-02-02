@@ -44,4 +44,42 @@ Admin.controllers :media do
     end
     redirect url(:media, :index)
   end
+
+
+  get :resize, :with => :id do
+    @media = Media[params[:id]]
+    if (@media.type != 'image')
+      flash[:error] = 'Errore, il documento non &nbsp; una immagine!'
+      redirect url(:media, :index)
+    end
+    render 'medias/resize'
+  end
+
+  get :crop, :with => :id do
+    @media = Media[params[:id]]
+    if (@media.type != 'image')
+      flash[:error] = 'Errore, il documento non &nbsp; una immagine!'
+      redirect url(:media, :index)
+    end
+    render 'medias/crop'
+  end
+
+  post :process, :with => [:id, :action] do
+    @media = Media[params[:id]]
+    if params[:action] == "crop"
+      if crop_image(@media.file.file.file, params[:w], params[:h], params[:x], params[:y])
+        @media.file.recreate_versions!
+        redirect url(:media, :index)
+      else
+        flash[:error] = 'Errore durante il rimpicciolimento dell\'immagine!'
+      end
+    else
+      if resize_image(@media.file.file.file, params[:w], params[:h])
+        @media.file.recreate_versions!
+        redirect url(:media, :index)
+      else
+        flash[:error] = 'Errore durante il rimpicciolimento dell\'immagine!'
+      end
+    end
+  end
 end

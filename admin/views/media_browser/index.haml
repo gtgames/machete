@@ -8,6 +8,10 @@
     #list
       - @media.each do |m|
         .item{:id => "#{m.id}"}
+          -if m.type == 'image'
+            .actions
+              =link_to pat(:crop), url(:media, :crop, :id => m.id), :title => "Ritaglia"
+              =link_to pat(:resize), url(:media, :resize, :id => m.id), :title => "Ridimensiona"
           .icon{:class => "#{m.type}"}
           .name=link_to m.file.to_s.split('/').last, m.file.url
 
@@ -24,5 +28,6 @@
         .icon{:class=> '{type}'}
         .name {name}
 
+    %link{ :charset => "utf-8", :type=>"text/css", :rel => "stylesheet", :href=>"http://frenzart.com/js/cerabox/style/cerabox.css"}
     %script{:type => "text/javascript"}
-      head.js("http://frenzart.com/js/mootools/1.3.js", "http://frenzart.com/js/fileuploader.js", "http://frenzart.com/js/admin_mediabrowser.js");
+      head.js("http://frenzart.com/js/mootools/1.3.js", "http://frenzart.com/js/mootools/more.js", "http://frenzart.com/js/fileuploader.js", "http://frenzart.com/js/cerabox/cerabox.js", "http://frenzart.com/js/admin_mediabrowser.js");

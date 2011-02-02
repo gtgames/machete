@@ -12,6 +12,11 @@ class Page < Sequel::Model
 
   one_to_many :attachments
 
+  def is_home= t
+    Page.where(:is_home => true).update(:is_home => false) if t == '1' or t == true
+    super
+  end
+
   def validate
     super
     validates_length_range 3..100, :title
@@ -23,7 +28,6 @@ class Page < Sequel::Model
     self.text = html_cleanup(self.text)
     self.slug = "#{self.title}".to_slug
     self.parent_id = (self.parent_id == 0)? nil : self.parent_id
-    Page.where(:is_home => true).update(:is_home => false) if self.is_home == '1' or self.is_home == true
     super
   end
 
