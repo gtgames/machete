@@ -1,8 +1,8 @@
 .group
   =f.label :file
   =f.error_message_on :file
-  -unless f.object.file.nil?
-    = link_to f.object.file.url, f.object.file.url
+  -if not f.object.file.nil?
+    %a{:href => f.object.file.url}= f.object.file.url
   =f.file_field :file
 
 .group.navform
