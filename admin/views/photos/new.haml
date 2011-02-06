@@ -8,4 +8,4 @@
     = mt(:photo)
   .inner
     - form_for :photo, url(:photos, :create), :multipart => true, :class => :form do |f|
-      = partial "photos/form", :locals => { :f => f, :photo => false, :tags => '' }
+      = partial "photos/form", :locals => { :f => f }
