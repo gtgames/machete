@@ -1,0 +1,14 @@
+%nav.secondary-navigation
+  %ul.wat-cf
+    %li.first=link_to pat(:list), url(:shortcuts, :index)
+    %li=link_to pat(:new), url(:shortcuts, :new)
+    %li.active=link_to pat(:edit), url(:shortcuts, :edit, :id => @shortcut.id)
+#content
+  %h2
+    =pat(:edit)
+    =mt(:shortcut)
+  .inner
+    -form_for :shortcut, url(:shortcuts, :update, :id => @shortcut.id), :method => :put, :class => :form do |f|
+      =partial "shortcuts/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")

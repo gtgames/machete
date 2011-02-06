@@ -1,0 +1,23 @@
+%nav.secondary-navigation
+  %ul.wat-cf
+    %li.first.active=link_to pat(:list), url(:shortcuts, :index)
+    %li=link_to pat(:new), url(:shortcuts, :new)
+#content
+  %h2
+    =pat(:all)
+    =mt(:shortcut)
+  .inner
+    %table
+      %tr
+        %th.first=mat(:shortcut, :name)
+        %th=mat(:shortcut, :link)
+        %th.last="&nbsp;"
+      -@shortcuts.each do |shortcut|
+        %tr
+          %td.first=shortcut.shortcut
+          %td.last
+            =button_to pat(:edit), url(:shortcuts, :edit, :id => shortcut.id), :method => :get, :class => :button_to
+            =button_to pat(:delete), url(:shortcuts, :destroy, :id => shortcut.id), :method => :delete, :class => :button_to_delete
+
+
+-content_for :sidebar, partial("base/sidebar")

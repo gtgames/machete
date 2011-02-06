@@ -29,4 +29,8 @@ Frontend.helpers do
   def latest_news
     Post.limit(10).all
   end
+
+  def shortcuts
+    Shortcuts.all
+  end
 end

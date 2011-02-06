@@ -1,0 +1,13 @@
+.group
+  =f.label :title
+  =f.error_message_on :title
+  =f.text_field :title
+
+.group
+  = f.label :url
+  = f.error_message_on :url
+  = f.select :url, :options => options_tree_array(), :selected => f.object.url
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:shortcuts, :index)}';return false", :class => :button

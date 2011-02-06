@@ -43,6 +43,7 @@ class Admin < Padrino::Application
     role.project_module :news,    "/posts"
     role.project_module :menu,    "/menus"
     role.project_module :pagine,  "/pages"
+    role.project_module :shortcuts,"/shortcuts"
     role.project_module :partner, "/partner"
     role.project_module :media,   "/media"
     role.project_module :foto,    "/photos"
