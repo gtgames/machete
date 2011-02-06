@@ -11,10 +11,10 @@ Admin.controllers :partner do
   end
 
   post :create do
-    @partner = Partner.new(params[:media])
+    @partner = Partner.new(params[:partner])
     if (@partner.save rescue false)
       flash[:notice] = 'Partner was successfully created.'
-      redirect url(:media, :edit, :id => @partner.id)
+      redirect url(:partner, :edit, :id => @partner.id)
     else
       render 'partners/new'
     end
@@ -27,9 +27,9 @@ Admin.controllers :partner do
 
   put :update, :with => :id do
     @partner = Partner[params[:id]]
-    if @partner.modified! && @partner.update(params[:media])
+    if @partner.modified! && @partner.update(params[:partner])
       flash[:notice] = 'Partner was successfully updated.'
-      redirect url(:media, :edit, :id => @partner.id)
+      redirect url(:partner, :edit, :id => @partner.id)
     else
       render 'partners/edit'
     end
@@ -50,7 +50,7 @@ Admin.controllers :partner do
     @partner = Partner[params[:id]]
     if (@partner.type != 'image')
       flash[:error] = 'Errore, il documento non &nbsp; una immagine!'
-      redirect url(:media, :index)
+      redirect url(:partner, :index)
     end
     render 'partners/resize'
   end
@@ -59,27 +59,8 @@ Admin.controllers :partner do
     @partner = Partner[params[:id]]
     if (@partner.type != 'image')
       flash[:error] = 'Errore, il documento non &nbsp; una immagine!'
-      redirect url(:media, :index)
+      redirect url(:partner, :index)
     end
     render 'partners/crop'
-  end
-
-  post :process, :with => [:id, :action] do
-    @partner = Partner[params[:id]]
-    if params[:action] == "crop"
-      if crop_image(@partner.file.file.file, params[:w], params[:h], params[:x], params[:y])
-        @partner.file.recreate_versions!
-        redirect url(:media, :index)
-      else
-        flash[:error] = 'Errore durante il rimpicciolimento dell\'immagine!'
-      end
-    else
-      if resize_image(@partner.file.file.file, params[:w], params[:h])
-        @partner.file.recreate_versions!
-        redirect url(:media, :index)
-      else
-        flash[:error] = 'Errore durante il rimpicciolimento dell\'immagine!'
-      end
-    end
   end
 end

@@ -14,7 +14,7 @@ class PartnerUploader < CarrierWave::Uploader::Base
     Padrino.root("tmp")
   end
 
-  process :resize_to_fit => [100, 100]
+  process :resize_to_fill => [120, 120]
   def extension_white_list
     %w(jpg jpeg gif png)
   end

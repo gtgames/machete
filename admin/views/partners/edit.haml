@@ -6,7 +6,7 @@
 #content
   %h2
     =pat(:edit)
-    =mt(:photo)
+    =mt(:partner)
   .inner
-    -form_for :photo, url(:partner, :update, :id => @partner.id), :method => :put, :multipart => true, :class => :form do |f|
-      =partial "partner/form", :locals => { :f => f }
+    -form_for :partner, url(:partner, :update, :id => @partner.id), :method => :put, :multipart => true, :class => :form do |f|
+      =partial "partners/form", :locals => { :f => f }
