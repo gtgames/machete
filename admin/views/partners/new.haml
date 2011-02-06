@@ -1,0 +1,11 @@
+%nav.secondary-navigation
+  %ul
+    %li.first= link_to pat(:list), url(:photos, :index)
+    %li.active= link_to pat(:new), url(:photos, :new)
+.content
+  %h2
+    = pat(:new)
+    = mt(:photo)
+  .inner
+    - form_for :photo, url(:partner, :create), :multipart => true, :class => :form do |f|
+      = partial "photos/form", :locals => { :f => f }

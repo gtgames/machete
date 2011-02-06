@@ -1,0 +1,15 @@
+.group
+  =f.label :url
+  =f.error_message_on :url
+  =f.text_field :url
+
+.group
+  - if not f.object.file.nil?
+    %img.thumb{ :src => f.object.file.thumb.url }
+  =f.label :file
+  =f.error_message_on :file
+  =f.file_field :file
+
+.group.navform
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:partner, :index)}';return false", :class => :button
