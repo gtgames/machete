@@ -1,5 +1,5 @@
-head.js("http://frenzart.com/js/cereabox/cereabox.js",function(){
-  Asset.css("http://frenzart.com/js/cereabox/style/cerabox.css").inject(document.body);
+head.js("http://frenzart.com/js/cerabox/cerabox.js",function(){
+  Asset.css("http://frenzart.com/js/cerabox/style/cerabox.css").inject(document.body);
   var box = new CeraBox({
     displayTitle:     true,
   	displayOverlay:   true,
