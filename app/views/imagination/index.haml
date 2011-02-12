@@ -21,7 +21,7 @@
       - @photos.each do |p|
         %div
           %h1= p.name
-          %a{:href => p.file.url, :title => p.name}
+          %a.photo{:href => p.file.url, :title => p.name}
             %img{:src => p.file.thumb.url, :title => p.name}
           %span.tags
             - p.tags.each do |t|

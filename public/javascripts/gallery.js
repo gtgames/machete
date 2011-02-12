@@ -8,5 +8,5 @@ head.js("http://frenzart.com/js/cerabox/cerabox.js",function(){
   	group:			      true,
   	errorLoadingMessage:	'Il contenuto non puo essere caricato!'
   });
-  box.addItems('#photos a');
+  box.addItems('a.photo');
 });
