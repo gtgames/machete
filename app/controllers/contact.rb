@@ -10,7 +10,7 @@ Frontend.controllers :contact do
     if @mail.valid? && @mail.classification != 'spam' && (@mail.save rescue false)
       deliver(:mailer, :info, @mail.author, @mail.email, Sanitize.clean(@mail.text))
       flash[:info] = I18n.t 'contact.ok'
-      render 'mailers/index'
+      render 'mailers/sent'
     else
       flash[:error] = I18n.t 'contact.error'
       render 'mailers/index'
