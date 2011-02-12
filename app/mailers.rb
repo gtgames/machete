@@ -5,7 +5,6 @@ Frontend.mailer :mailer do
       subject "[WEB] #{name} (#{email}) ha chiesto informazioni"
       locals :name => name, :email => email, :text => text
       content_type :html
-      charset 'utf-8'
       via :smtp
       render 'mail'
     end
