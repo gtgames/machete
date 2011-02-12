@@ -20,6 +20,7 @@
   =f.text_field :weight
   %span.description Il peso decide la posizione nel men&ugrave;
 
+= cpartial "custom/menus", :locals => { :f => f }
 
 .group.navform
   =f.submit pat(:save), :class => :button

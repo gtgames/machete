@@ -13,6 +13,8 @@
   =f.error_message_on :file
   =f.file_field :file
 
+= cpartial "custom/partners", :locals => { :f => f }
+
 .group.navform
   =f.submit pat(:save), :class => :button
   =f.submit pat(:cancel), :onclick => "window.location='#{url(:partner, :index)}';return false", :class => :button

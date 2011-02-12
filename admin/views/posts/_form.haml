@@ -14,6 +14,8 @@
   =f.text_field :tag_list
   %span.description Lista Tags
 
+= cpartial "custom/posts", :locals => { :f => f }
+
 .group.navform.wat-cf
   =f.submit pat(:save), :class => :button
   =f.submit pat(:cancel), :onclick => "window.location='#{url(:posts, :index)}';return false", :class => :button

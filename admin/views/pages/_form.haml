@@ -18,6 +18,8 @@
   = f.error_message_on :is_home
   = f.check_box :is_home, :value => '1'
 
+= cpartial "custom/pages", :locals => { :f => f }
+
 .group.navform
   = f.submit pat(:save), :class => :button
   = f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button

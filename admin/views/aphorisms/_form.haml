@@ -4,6 +4,7 @@
   =f.text_field :aphorism
   %span.description Ex: a simple text
 
+= cpartial "custom/aphorisms", :locals => { :f => f }
 
 .group.navform.wat-cf
   =f.submit pat(:save), :class => :button

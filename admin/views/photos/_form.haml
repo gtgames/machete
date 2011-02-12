@@ -16,6 +16,8 @@
   =f.text_field :tag_list
   %span.description Lista Tags
 
+= cpartial "custom/photos", :locals => { :f => f }
+
 
 .group.navform
   =f.submit pat(:save), :class => :button
