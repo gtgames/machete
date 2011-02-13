@@ -31,6 +31,6 @@ Frontend.helpers do
   end
 
   def shortcuts
-    Shortcuts.all
+    Shortcut.all
   end
 end
