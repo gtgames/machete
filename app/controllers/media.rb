@@ -1,6 +1,5 @@
 Frontend.controllers :media do
   get :index do
-    @tags = Media.tags
     @media = Media.all
     render 'media/index'
   end

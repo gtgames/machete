@@ -22,11 +22,4 @@ Frontend.controllers :pages do
       render 'page/results'
     end
   end
-
-  get :tags, :map => "/tag/:tags" do
-    @tags = params[:tags].split(',')
-    @pages = Page.tagged_with(@tags)
-    render 'page/tags'
-  end
-
 end
