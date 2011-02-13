@@ -14,6 +14,10 @@ en:
       search: 'search'
       
   admin:
+    
+    menu:
+      templates: 'Menu Templates'
+    
     login:
       failure: 'Please check your password/login'
     create:

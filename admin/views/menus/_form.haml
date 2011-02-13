@@ -1,4 +1,11 @@
 .group
+  %a#menu_templates_toggler=t :"admin.menu.templates"
+  %div#menu_templates
+    %span
+      -nav_list.each do |n|
+        %a{ :href => "#{n[:link]}", :title => "#{n[:title]}" }= n[:title]
+
+.group
   =f.label :title
   =f.error_message_on :title
   =f.text_field :title

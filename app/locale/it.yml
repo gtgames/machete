@@ -42,6 +42,9 @@ it:
       search: 'ricerca'
   
   admin:
+    menu:
+      templates: 'Menu Templates'
+    
     login:
       failure: 'Password o Login errato'
     create:
