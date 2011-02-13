@@ -11,11 +11,9 @@ class Admin < Padrino::Application
   set :exceptions_page,    :errors
   
   set :delivery_method, :smtp => {
-    :address              => "127.0.0.1",
+    :address              => "frenz",
     :port                 => 25,
-    :user_name            => "mail@#{DOMAIN_NAME}",
-    :password             => 'kUYAnAg92guxoziT53',
-    :authentication       => :plain
+    :enable_starttls_auto => false
   }
 
   set :charset, "utf8"
@@ -25,7 +23,7 @@ class Admin < Padrino::Application
     :format => :html5
   }
 
-  use Rack::RawUpload, :paths => ['/media_browser/create/*']
+  use Rack::RawUpload, :paths => ['/media_browser/create/*', '/attachment/create/*']
 
   set :login_page, "/sessions/new"
   disable :store_location
