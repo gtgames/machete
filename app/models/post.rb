@@ -15,7 +15,7 @@ class Post < Sequel::Model
 
   def validate
     super
-    validates_length_range 3..100, :title
+    validates_length_range 3..255, :title
     validates_unique :title
     validates_format(/[A-Za-z\s\w]*/, :title)
   end
