@@ -1,7 +1,5 @@
 - @posts.each do |p|
   .post
-    %h1
-      =p.title
+    %h1=p.title
     =partial "news/date", {:p => p}
-    %p
-      =p.text
+    %p=p.text

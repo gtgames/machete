@@ -1,0 +1,4 @@
+.post
+  %h1=@post.title
+  =partial "news/date", {:p => @post}
+  %p=@post.text

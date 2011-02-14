@@ -10,7 +10,7 @@ Frontend.controllers :news do
     when :js then
       return @news.to_json
     else
-      render 'news/index'
+      render 'news/show'
     end
   end
 
