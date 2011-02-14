@@ -2,7 +2,6 @@ class Post < Sequel::Model
   def_dataset_method :full_text_search
 
   plugin :validation_helpers
-  plugin :timestamps, :create=>:created_on, :update=>:updated_on
   begin
     plugin :lazy_attributes, :text
   rescue

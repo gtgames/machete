@@ -1,7 +1,7 @@
-Sequel::Model.plugin(:schema)
+Sequel::Model.plugin :schema
 Sequel::Model.raise_on_save_failure = false # Do not throw exceptions on failure
 Sequel::Model.plugin :force_encoding, 'UTF-8'
-Sequel::Model.plugin :timestamps
+Sequel::Model.plugin :timestamps, :force=>true, :update_on_create=>true
 Sequel::Model.plugin :json_serializer
 DB = case Padrino.env
   when :development then Sequel.connect("postgres://postgres:postgres@192.168.159.254/development", :max_connections => 4, :loggers => [logger])

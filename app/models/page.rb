@@ -2,7 +2,6 @@ class Page < Sequel::Model
   def_dataset_method :full_text_search
   # Recursive adjacency list
   plugin :rcte_tree
-  plugin :timestamps, :create=>:created_on, :update=>:updated_on
   plugin :validation_helpers
   begin
     plugin :lazy_attributes, :text
