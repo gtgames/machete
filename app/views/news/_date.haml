@@ -4,4 +4,6 @@
   = link_to(p.updated_at.month, url(:news, :month, :year => p.updated_at.year, :month => p.updated_at.month))
   \/
   = link_to(p.updated_at.day, url(:news, :day, :year => p.updated_at.year, :month => p.updated_at.month, :day => p.updated_at.day))
-  #{p.updated_at.hour}:#{p.updated_at.min}
+  #{p.updated_at.hour}
+  \:
+  #{p.updated_at.min}
