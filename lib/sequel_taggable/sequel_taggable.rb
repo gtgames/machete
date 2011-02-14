@@ -24,4 +24,3 @@ module Sequel
     end # Taggable
   end # Plugins
 end # Sequel
-    
