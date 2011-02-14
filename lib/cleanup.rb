@@ -82,7 +82,7 @@ def html_cleanup h
           node = env[:node]
           return unless node.elem?
 
-          unless node.children.any?{|c| c.text? && c.content.strip.length > 0 || !c.text? || not (c.text =~ /\s*\&nbsp;\s*/).nil? }
+          unless node.children.any?{|c| c.text? && c.content.strip.length > 0 || !c.text? || !(c.text =~ /\s*\&nbsp;\s*/).nil? }
             node.unlink
           end
         end
