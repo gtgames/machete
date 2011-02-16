@@ -13,7 +13,7 @@ Admin.controllers :partner do
   post :create do
     @partner = Partner.new(params[:partner])
     if (@partner.save rescue false)
-      flash[:notice] = 'Partner was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:partner, :edit, :id => @partner.id)
     else
       render 'partners/new'
@@ -28,7 +28,7 @@ Admin.controllers :partner do
   put :update, :with => :id do
     @partner = Partner[params[:id]]
     if @partner.modified! && @partner.update(params[:partner])
-      flash[:notice] = 'Partner was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:partner, :edit, :id => @partner.id)
     else
       render 'partners/edit'
@@ -38,9 +38,9 @@ Admin.controllers :partner do
   delete :destroy, :with => :id do
     media = Partner[params[:id]]
     if Partner.destroy
-      flash[:notice] = 'Partner was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Partner!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:partner, :index)
   end

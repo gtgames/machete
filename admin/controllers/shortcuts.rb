@@ -14,7 +14,7 @@ Admin.controllers :shortcuts do
   post :create do
     @shortcut = Shortcut.new(params[:shortcut])
     if (@shortcut.save rescue false)
-      flash[:notice] = 'Aphorism was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:shortcuts, :edit, :id => @shortcut.id)
     else
       render 'shortcuts/new'
@@ -29,7 +29,7 @@ Admin.controllers :shortcuts do
   put :update, :with => :id do
     @shortcut = Shortcut[params[:id]]
     if @shortcut.modified! && @shortcut.update(params[:shortcut])
-      flash[:notice] = 'Aphorism was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:shortcuts, :edit, :id => @shortcut.id)
     else
       render 'shortcuts/edit'
@@ -39,9 +39,9 @@ Admin.controllers :shortcuts do
   delete :destroy, :with => :id do
     shortcut = Shortcut[params[:id]]
     if shortcut.destroy
-      flash[:notice] = 'Aphorism was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Aphorism!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:shortcuts, :index)
   end

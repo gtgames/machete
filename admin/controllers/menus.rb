@@ -13,7 +13,7 @@ Admin.controllers :menus do
   post :create do
     @menu = Menu.new(params[:menu])
     if (@menu.save rescue false)
-      flash[:notice] = 'Menu was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:menus, :edit, :id => @menu.id)
     else
       render 'menus/new'
@@ -28,7 +28,7 @@ Admin.controllers :menus do
   put :update, :with => :id do
     @menu = Menu[params[:id]]
     if @menu.modified! && @menu.update(params[:menu])
-      flash[:notice] = 'Menu was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:menus, :edit, :id => @menu.id)
     else
       render 'menus/edit'
@@ -38,9 +38,9 @@ Admin.controllers :menus do
   delete :destroy, :with => :id do
     menu = Menu[params[:id]]
     if menu.destroy
-      flash[:notice] = 'Menu was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Menu!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:menus, :index)
   end

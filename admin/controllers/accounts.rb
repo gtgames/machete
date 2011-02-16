@@ -14,7 +14,7 @@ Admin.controllers :accounts do
   post :create do
     @account = Account.new(params[:account])
     if (@account.save rescue false)
-      flash[:notice] = 'Account was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:accounts, :edit, :id => @account.id)
     else
       render 'accounts/new'
@@ -29,7 +29,7 @@ Admin.controllers :accounts do
   put :update, :with => :id do
     @account = Account[params[:id]]
     if @account.modified! && @account.update(params[:account])
-      flash[:notice] = 'Account was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:accounts, :edit, :id => @account.id)
     else
       render 'accounts/edit'
@@ -39,9 +39,9 @@ Admin.controllers :accounts do
   delete :destroy, :with => :id do
     account = Account[params[:id]]
     if account != current_account && account.destroy
-      flash[:notice] = 'Account was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Account!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:accounts, :index)
   end

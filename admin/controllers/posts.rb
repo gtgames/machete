@@ -13,7 +13,7 @@ Admin.controllers :posts do
   post :create do
     @post = Post.new(params[:post])
     if (@post.save rescue false)
-      flash[:notice] = 'Post was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:posts, :index)
     else
       render 'posts/new'
@@ -28,7 +28,7 @@ Admin.controllers :posts do
   put :update, :with => :id do
     @post = Post[params[:id]]
     if @post.modified! && @post.update(params[:post])
-      flash[:notice] = 'Post was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:posts, :index)
     else
       render 'posts/edit'
@@ -38,9 +38,9 @@ Admin.controllers :posts do
   delete :destroy, :with => :id do
     post = Post[params[:id]]
     if post.destroy
-      flash[:notice] = 'Post was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Post!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:posts, :index)
   end

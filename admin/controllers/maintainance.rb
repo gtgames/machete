@@ -11,7 +11,7 @@ Admin.controllers :maintaince do
   
   post :create do
     if (File.exists?)
-      flash[:notice] = 'Aphorism was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:aphorisms, :edit, :id => @aphorism.id)
     else
       render 'maintainance/edit'

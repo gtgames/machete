@@ -26,10 +26,11 @@ Admin.controllers :media_browser do
 
   delete :destroy, :with => :id do
     media = Media[params[:id]]
+    
     if media.destroy
-      flash[:notice] = 'Media was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Media!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:media, :index)
   end

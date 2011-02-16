@@ -14,7 +14,7 @@ Admin.controllers :aphorisms do
   post :create do
     @aphorism = Aphorism.new(params[:aphorism])
     if (@aphorism.save rescue false)
-      flash[:notice] = 'Aphorism was successfully created.'
+      flash[:notice] = t 'admin.create.success'
       redirect url(:aphorisms, :edit, :id => @aphorism.id)
     else
       render 'aphorisms/new'
@@ -29,7 +29,7 @@ Admin.controllers :aphorisms do
   put :update, :with => :id do
     @aphorism = Aphorism[params[:id]]
     if @aphorism.modified! && @aphorism.update(params[:aphorism])
-      flash[:notice] = 'Aphorism was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:aphorisms, :edit, :id => @aphorism.id)
     else
       render 'aphorisms/edit'
@@ -39,9 +39,9 @@ Admin.controllers :aphorisms do
   delete :destroy, :with => :id do
     aphorism = Aphorism[params[:id]]
     if aphorism.destroy
-      flash[:notice] = 'Aphorism was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Aphorism!'
+      flash[:error] = t 'admin.destroy.failure'
     end
     redirect url(:aphorisms, :index)
   end
