@@ -1,7 +1,7 @@
-Admin.controllers :attachments do
-
+# encoding:utf-8
+Admin.controllers :attachments, :parent => :page do
   get :index do
-    @attachments = Attachment.all
+    @attachments = Attachment.where(:page_id => params[:page_id]).all
     render 'attachments/index'
   end
 
@@ -11,10 +11,14 @@ Admin.controllers :attachments do
   end
 
   post :create do
-    @attachment = Attachment.new(params[:attachment])
+    @attachment = Attachment.new(
+      :name => params[:attachment][:name],
+      :file => params[:attachment][:file],
+      :page_id => params[:page_id])
+
     if (@attachment.save rescue false)
-      flash[:notice] = 'Attachment was successfully created.'
-      redirect url(:attachments, :edit, :id => @attachment.id)
+      flash[:notice] = t 'admin.create.success'
+      redirect url(:attachments, :edit, :page_id => params[:page_id], :id => @attachment.id)
     else
       render 'attachments/new'
     end
@@ -28,7 +32,7 @@ Admin.controllers :attachments do
   put :update, :with => :id do
     @attachment = Attachment[params[:id]]
     if @attachment.modified! && @attachment.update(params[:attachment])
-      flash[:notice] = 'Attachment was successfully updated.'
+      flash[:notice] = t 'admin.update.success'
       redirect url(:attachments, :edit, :id => @attachment.id)
     else
       render 'attachments/edit'
@@ -38,10 +42,10 @@ Admin.controllers :attachments do
   delete :destroy, :with => :id do
     attachment = Attachment[params[:id]]
     if attachment.destroy
-      flash[:notice] = 'Attachment was successfully destroyed.'
+      flash[:notice] = t 'admin.destroy.success'
     else
-      flash[:error] = 'Impossible destroy Attachment!'
+      flash[:error] = t 'admin.destroy.failure'
     end
-    redirect url(:attachments, :index)
+    redirect url(:attachment, :index)
   end
 end

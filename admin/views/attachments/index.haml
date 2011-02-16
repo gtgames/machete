@@ -1,7 +1,8 @@
 %nav.secondary-navigation
   %ul.wat-cf
-    %li.first.active=link_to pat(:list), url(:attachments, :index)
-    %li=link_to pat(:new), url(:attachments, :new)
+    %li.first.active=link_to pat(:list), url(:attachments, :index, :page_id => params[:page_id])
+    %li=link_to pat(:new), url(:attachments, :new, :page_id => params[:page_id])
+    %li=link_to 'Pagine', url(:pages, :index)
 #content
   %h2
     =pat(:all)
@@ -9,21 +10,17 @@
   .inner
     %table
       %tr
-        %th.first=mat(:attachment, :id)
-        %th=mat(:attachment, :file)
+        %th.first=mat(:attachment, :name)
         %th=mat(:attachment, :created_at)
         %th=mat(:attachment, :updated_at)
-        %th=mat(:attachment, :page_id)
         %th.last="&nbsp;"
       -@attachments.each do |attachment|
         %tr
-          %td.first=attachment.id
-          %td=attachment.file
+          %td.first=link_to attachment.name, attachment.file.url
           %td=attachment.created_at
           %td=attachment.updated_at
-          %td=attachment.page_id
           %td.last
-            =button_to pat(:edit), url(:attachments, :edit, :id => attachment.id), :method => :get, :class => :button_to
-            =button_to pat(:delete), url(:attachments, :destroy, :id => attachment.id), :method => :delete, :class => :button_to_delete
+            =button_to pat(:edit), url(:attachments, :edit, :page_id => params[:page_id], :id => attachment.id), :method => :get, :class => :button_to
+            =button_to pat(:delete), url(:attachments, :destroy, :page_id => params[:page_id], :id => attachment.id), :method => :delete, :class => :button_to_delete
 
 -content_for :sidebar, partial("base/sidebar")

@@ -1,5 +1,5 @@
 require 'carrierwave/orm/sequel'
 class Attachment < Sequel::Model
-  many_to_one :page
+  one_to_one :pages
   mount_uploader :file, AttachmentUploader
 end

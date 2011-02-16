@@ -5,7 +5,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   def root; File.join(Padrino.root,"public/"); end
 
   def store_dir
-    "assets/#{model.class.to_s.underscore}/#{model.id}"
+    "attachments/#{model.class.to_s.underscore}/#{model.id}"
   end
 
   def cache_dir

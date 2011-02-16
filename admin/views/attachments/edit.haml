@@ -1,14 +1,14 @@
 %nav.secondary-navigation
   %ul.wat-cf
-    %li.first=link_to pat(:list), url(:attachments, :index)
-    %li=link_to pat(:new), url(:attachments, :new)
-    %li.active=link_to pat(:edit), url(:attachments, :edit, :id => @attachment.id)
+    %li.first=link_to pat(:list), url(:attachments, :index, :page_id => params[:page_id])
+    %li=link_to pat(:new), url(:attachments, :new, :page_id => params[:page_id])
+    %li.active=link_to pat(:edit), url(:attachments, :edit, :page_id => params[:page_id], :id => @attachment.id)
 #content
   %h2
     =pat(:edit)
     =mt(:attachment)
   .inner
-    -form_for :attachment, url(:attachments, :update, :id => @attachment.id), :method => :put, :class => :form do |f|
+    -form_for :attachment, url(:attachments, :update, :page_id => params[:page_id], :id => @attachment.id), :method => :put, :multipart => true, :class => :form do |f|
       =partial "attachments/form", :locals => { :f => f }
 
 -content_for :sidebar, partial("base/sidebar")
