@@ -32,13 +32,14 @@ Admin.helpers do
     unless r.empty?
       html += "<ul>"
       r.each do |p|
-        html += "<li>#{p.title} &nbsp;"
+        html += "<li><span>#{p.title}"
         html += button_to pat(:edit), url(:pages, :edit, :id => p.id), :method => :get, :class => :button_to
         html += button_to pat(:delete), url(:pages, :destroy, :id => p.id), :method => :delete, :class => :button_to
+        html += '</span>'
         html += tree(p.children) unless p.children.empty?
-        html << "</li>"
+        html += "</li>"
       end
-      html << "</ul>"
+      html += "</ul>"
     end
     return html
   end

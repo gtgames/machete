@@ -1,3 +1,13 @@
 %h1.title= @page.title
 %article
   = @page.text
+
+-if @page.is_drawer
+  %ul.drawer
+    -@page.children.each do |p|
+      %li=link_to p.title, url(:page, :show, :id => p.id, :slug => p.slug)
+
+-if @page.attachments.count
+  %ul.attachments
+    -@page.attachments.each do |a|
+      %li=link_to a.name, a.file.url

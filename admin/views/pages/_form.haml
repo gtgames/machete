@@ -17,6 +17,14 @@
   = f.label :is_home
   = f.error_message_on :is_home
   = f.check_box :is_home, :value => '1'
+  %span.description Appare o meno nella Home
+
+
+.group
+  = f.label :is_drawer
+  = f.error_message_on :is_drawer
+  = f.check_box :is_drawer, :value => '1'
+  %span.description Alla pagina viene aggiunto l'indice dei figli
 
 = cpartial "custom/pages", :locals => { :f => f }
 

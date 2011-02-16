@@ -23,6 +23,9 @@
           %td=page.is_home
           %td=page.created_at
           %td=page.updated_at
+          %td
+            =link_to 'Allegati', url(:attachments, :index, :page_id => page.id)
+            (#{page.attachments.count})
           %td.last
             =button_to pat(:edit), url(:pages, :edit, :id => page.id), :method => :get, :class => :button_to
             =button_to pat(:delete), url(:pages, :destroy, :id => page.id), :method => :delete, :class => :button_to_delete
