@@ -11,8 +11,8 @@ class Page < Sequel::Model
 
   one_to_many :attachments
 
-  def is_home= t
-    Page.where(:is_home => true).update(:is_home => false) if t == '1' or t == true
+  def is_home=t
+    Page.where.filter({:is_home => true} & ~{:id => self.id}).update(:is_home => false) if t == '1' or t == true
     super
   end
 
