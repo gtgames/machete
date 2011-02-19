@@ -1,3 +1,4 @@
+# charset: utf-8
 BASE_TITLE = "GTgames"
 DOMAIN_NAME = "frenz.fr"
 
