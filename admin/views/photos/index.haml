@@ -17,8 +17,9 @@
         %tr
           %td.first=photo.name          
           %td
-            =link_to photo.file.file.extension, photo.file.url
-            (#{photo.file.file.size/1024} kb)
+            -if photo.file
+              =link_to photo.file.file.extension, photo.file.url
+              (#{photo.file.file.size/1024} kb)
           %td=photo.tag_list
           %td.last
             =button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => :button_to
