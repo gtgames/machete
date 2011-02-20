@@ -3,6 +3,7 @@ BASE_TITLE = "GTgames"
 DOMAIN_NAME = "frenz.fr"
 
 DESCRIPTION = ""
+
 KEYWORDS = ""
 
 
