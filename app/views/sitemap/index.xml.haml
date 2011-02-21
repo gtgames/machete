@@ -1,4 +1,3 @@
-- locales.each |l|
 - @pages.each do |p|
   = p.title
-  = url :pages, :show, :lang => l, :slug => p.slug(l)
+  = url :pages, :show, :slug => p.slug(l)
