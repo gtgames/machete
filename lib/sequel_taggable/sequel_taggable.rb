@@ -18,7 +18,7 @@ module Sequel
 
       module ClassMethods
         def tagged_with tag
-          full_text_search([:tags], tag).all
+          full_text_search([:tags], tag.gsub(/\s/, ' & ')).all
         end
       end # ClassMethods
     end # Taggable
