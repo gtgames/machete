@@ -21,8 +21,8 @@
           %td=page.title
           %td=link_to "url", "http://#{DOMAIN_NAME}/#{page.id}/#{page.slug}"
           %td=page.is_home
-          %td=page.created_at
-          %td=page.updated_at
+          %td=datef page.created_at
+          %td=datef page.updated_at
           %td
             =link_to 'Allegati', url(:attachments, :index, :page_id => page.id)
             (#{page.attachments.count})
