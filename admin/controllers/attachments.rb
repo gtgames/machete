@@ -46,6 +46,6 @@ Admin.controllers :attachments, :parent => :page do
     else
       flash[:error] = t 'admin.destroy.failure'
     end
-    redirect url(:attachment, :index)
+    redirect url(:attachments, :index)
   end
 end
