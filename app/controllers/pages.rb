@@ -5,7 +5,7 @@ Frontend.controllers :pages do
   end
 
   get :show, :map => "/:id/:slug", :id => /\d+/ do
-    @page = Page.filter(:id => '11').first
+    @page = Page.filter(:id => params[:id]).first
     
     halt 404 if @pahe.nil?
     
