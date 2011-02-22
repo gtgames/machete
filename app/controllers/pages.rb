@@ -5,16 +5,15 @@ Frontend.controllers :pages do
   end
 
   get :show, :map => "/:id/:slug", :id => /\d+/ do
-    begin
-      @page = Page.first :id => params[:id]
-    rescue Sequel::DatabaseError
-      halt 404
-    end
+    @page = Page.filter(:id => '11').first
+    
+    halt 404 if @pahe.nil?
+    
     render 'pages/show'
   end
 
   get :search, :map => "/search" do
-    @s = params[:q]
+    @s = params[:q].gsub(/\s/, ' & ')
     if @s.nil? or ((@s.size < 4) | ( /[\w\s\d]+/i =~ @s ).nil?)
       render 'pages/search'
     else
