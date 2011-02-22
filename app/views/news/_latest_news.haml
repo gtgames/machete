@@ -1,10 +1,4 @@
 -latest_news.each do |p|
   .headline
-    =link_to p.title, (:news_show, :id => p.id, :slug => p.slug)
-    .date
-      = link_to p.updated_at.year, url(:news_year, :year => p.updated_at.year)
-      \/
-      = link_to p.updated_at.month, (:news_month, :year => p.updated_at.year, :month => p.updated_at.month)
-      \/
-      = link_to p.updated_at.day, (:news_day, :year => p.updated_at.year, :month => p.updated_at.month, :day => p.updated_at.day)
-      #{p.updated_at.hour}:#{p.updated_at.min}
+    =link_to p.title, url(:news_show, :id => p.id, :slug => p.slug)
+    =partial "news/date",:locals => {:p => p}
