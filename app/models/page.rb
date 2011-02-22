@@ -1,5 +1,7 @@
 class Page < Sequel::Model
   def_dataset_method :full_text_search
+  #default ordering
+  set_dataset dataset.reverse_order(:updated_at)
   # Recursive adjacency list
   plugin :rcte_tree
   plugin :validation_helpers

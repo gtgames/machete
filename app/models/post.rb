@@ -1,5 +1,6 @@
 class Post < Sequel::Model
   def_dataset_method :full_text_search
+  set_dataset dataset.reverse_order(:updated_at)
 
   plugin :validation_helpers
   begin
