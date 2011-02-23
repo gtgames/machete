@@ -4,6 +4,6 @@ Sequel.migration do
   end
 
   down do
-    remove_column :attachments, :name
+    drop_column :attachments, :name
   end
 end
