@@ -1,8 +1,8 @@
 Sequel.migration do
   up do
-    run <<SQL
+    run <<SQLSQL
     CREATE OR REPLACE FUNCTION tagcache()
-      RETURNS character varying AS
+      RETURNS TRIGGER AS
     $BODY$
     DECLARE
       r RECORD;
@@ -17,16 +17,30 @@ Sequel.migration do
           UPDATE tags SET size = size+1 WHERE tag = r.tag ;
         END IF;
       END LOOP;
-      return 1;
+      return NULL;
     END;
     $BODY$
       LANGUAGE plpgsql VOLATILE
       COST 100;
     ALTER FUNCTION tagcache() OWNER TO postgres;
+    
+    CREATE TRIGGER tagcache_posts
+      AFTER INSERT OR UPDATE ON posts
+      FOR EACH STATEMENT
+      EXECUTE PROCEDURE tagcache();
+    CREATE TRIGGER tagcache_photos
+      AFTER INSERT OR UPDATE ON photos
+      FOR EACH STATEMENT
+      EXECUTE PROCEDURE tagcache();
+SQLSQL
   end
 
   down do
-    run 'DROP FUNCTION tagcache();'
+    run <<SQLSQL
+      DROP TRIGGER tagcache_posts;
+      DROP TRIGGER tagcache_photos;
+      DROP FUNCTION tagcache();
+SQLSQL
   end
 end
 =begin

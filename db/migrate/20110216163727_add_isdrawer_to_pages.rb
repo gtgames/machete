@@ -4,6 +4,6 @@ Sequel.migration do
   end
 
   down do
-    remove_column :pages, :is_drawer
+    drop_column :pages, :is_drawer
   end
 end

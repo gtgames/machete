@@ -33,4 +33,11 @@ Frontend.helpers do
   def shortcuts
     Shortcut.all
   end
+
+  def tag_cloud
+    html = ''
+    DB[:tags].all.each do |t|
+      html << link_to(t[:tag], url(:tags, :index, :t => t[:tag]), :class => "tag_#{t[:size]}")
+    end
+  end
 end
