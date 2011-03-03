@@ -31,15 +31,15 @@ Sequel.migration do
       AFTER INSERT OR UPDATE ON photos
       FOR EACH STATEMENT
       EXECUTE PROCEDURE tagcache();
-    SQLSQL
+SQLSQL
   end
 
   down do
-    run <<SQLSQL-
+    run <<SQLSQL
       DROP TRIGGER tagcache_posts ON posts;
       DROP TRIGGER tagcache_photos ON photos;
       DROP FUNCTION tagcache();
-    SQLSQL
+SQLSQL
     drop_table :tags
   end
 end
