@@ -5,7 +5,7 @@ Sequel.migration do
       Integer :size
       index   :tag,  :unique => true
     end
-    run <<SQLSQL-
+    run <<SQLSQL
     CREATE OR REPLACE FUNCTION tagcache()
       RETURNS trigger AS
     $BODY$
