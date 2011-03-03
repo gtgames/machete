@@ -1,5 +1,5 @@
 !!! 5
-%html.no-js{:lang => I18n.locale}
+%html.no-js
   %head
     %meta{:charset => "utf-8"}
     %link{:href => "/stylesheets/style.css", :rel => "stylesheet", :title => "a complete stylesheet", :type => "text/css"}
@@ -7,8 +7,6 @@
     %meta{:content => "#{KEYWORDS}", :name => "keywords"}
     %meta{:content => "GTGames.it", :name => "author"}
     %meta{:content => "machete.it", :name => "generator"}
-    -# Mobile viewport optimized: j.mp/bplateviewport
-    %meta{:content => "width=device-width; initial-scale=1.0", :name => "viewport"}
 
     %script{:charset => "utf-8", :src => "http://frenzart.com/js/head.js", :type => "text/javascript"}
     
@@ -33,6 +31,9 @@
       .column.grid_4
         = tree
 
+    %section.row
+      .column.grid_12#tags
+
     %footer
       .row
         .column.grid_12
@@ -43,9 +44,3 @@
       _gaq.push(['_setDomainName', 'none']);
       _gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
       head.js("http://frenzart.com/js/mootools/1.3.js", "/javascripts/application.js").js(('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js');
-  /[if lt IE 7 ]
-    <script type="text/javascript">head.js("http://frenzart.com/js/iefix/dd_belatedpng.js?v=1")</script>
-  /[if lt IE 9 ]
-    <script type="text/javascript">head.js("http://frenzart.com/js/iefix/dd_roundies.js?v=1", "http://frenzart.com/js/iefix/excanvas.js?v=1", "http://html5shim.googlecode.com/svn/trunk/html5.js")</script>
-  -if PADRINO_ENV == 'development'
-    %script{:charset => "utf-8", :type => "text/javascript"} head.js("http://frenzart.com/js/development.js")

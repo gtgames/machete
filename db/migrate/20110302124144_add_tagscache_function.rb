@@ -5,7 +5,7 @@ Sequel.migration do
       Integer :size
       index   :tag,  :unique => true
     end
-    run <<SQLSQL
+    run <<SQLSQL-
     CREATE OR REPLACE FUNCTION tagcache()
       RETURNS trigger AS
     $BODY$
@@ -35,7 +35,7 @@ Sequel.migration do
   end
 
   down do
-    run <<SQLSQL
+    run <<SQLSQL-
       DROP TRIGGER tagcache_posts ON posts;
       DROP TRIGGER tagcache_photos ON photos;
       DROP FUNCTION tagcache();
