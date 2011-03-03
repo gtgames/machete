@@ -39,5 +39,6 @@ Frontend.helpers do
     DB[:tags].all.each do |t|
       html << link_to(t[:tag], url(:tags, :index, :t => t[:tag]), :class => "tag_#{t[:size]}")
     end
+    return html
   end
 end

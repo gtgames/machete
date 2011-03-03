@@ -1,0 +1,6 @@
+- @photos.each do |p|
+  %a{:href => "#{p.file.url}"}
+    %img{:src => "#{p.file.thumb.url}"}
+
+- @posts.each do |p|
+  =link_to p.title, url(:news, :show, :id => p.id, :slug => p.slug)
