@@ -6,7 +6,7 @@
 .group
   = f.label :text
   = f.error_message_on :text
-  = f.text_area :text
+  = f.text_area :text, :id => 'wysiwyg'
 
 .group
   = f.label :parent_id
@@ -18,7 +18,6 @@
   = f.error_message_on :is_home
   = f.check_box :is_home, :value => '1'
   %span.description Appare o meno nella Home
-
 
 .group
   = f.label :is_drawer

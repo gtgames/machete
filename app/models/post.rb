@@ -1,3 +1,4 @@
+require 'carrierwave/orm/sequel'
 class Post < Sequel::Model
   def_dataset_method :full_text_search
   set_dataset dataset.reverse_order(:updated_at)
@@ -9,6 +10,8 @@ class Post < Sequel::Model
     # do nothing ... fking stupid bugs
   end
   plugin :taggable
+
+  mount_uploader :photo, ImageUploader
 
   def validate
     super

@@ -2,8 +2,8 @@ Sequel.migration do
   up do
     drop_table :post_taggins, :photo_taggins, :tags
     
-    add_column :posts,  :tags, String
-    add_column :photos, :tags, String
+    add_column :posts,  :tags, String, :size => 400
+    add_column :photos, :tags, String, :size => 400
   end
 
   down do

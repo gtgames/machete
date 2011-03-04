@@ -4,9 +4,21 @@
   =f.text_field :title
 
 .group
+  - if not f.object.photo.nil?
+    %img.thumb{ :src => f.object.photo.thumb.url }
+  =f.label :photo
+  =f.error_message_on :photo
+  =f.file_field :photo
+
+.group
+  =f.label :subtitle
+  =f.error_message_on :subtitle
+  =f.text_area :subtitle
+
+.group
   =f.label :text
   =f.error_message_on :text
-  =f.text_area :text
+  =f.text_area :text, :id => 'wysiwyg'
 
 .group
   =f.label :tag_list

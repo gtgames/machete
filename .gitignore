@@ -21,7 +21,7 @@ log/*
 db/*.db
 public/assets/*
 public/images/*
-
+public/attachments/*
 
 app/views/shared/_footer.haml
 config/custom.rb
