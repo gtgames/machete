@@ -1,11 +1,17 @@
 .group
+  =f.label :title
+  =f.error_message_on :title
+  =f.text_field :title, :placeholder => "Titolo"
+
+.group
   =f.label :url
   =f.error_message_on :url
   =f.text_field :url, :placeholder => "http://gtgames.it/"
   %p
-    URL in formato 
-    %em
-      http://gtgames.it/
+    URL nel formato:
+    %em http://gtgames.it/
+
+
 .group
   - if not f.object.file.nil?
     %img.thumb{ :src => f.object.file.url }
