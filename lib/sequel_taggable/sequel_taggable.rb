@@ -11,7 +11,7 @@ module Sequel
         end
         def tag_list=(string)
           self.tags = string.split(',').map {|n|
-            n.gsub(/[^\w\s_-]/i, '').strip
+            n.gsub(/[^\w\s_-]/i, '').strip.downcase!
           }.uniq.sort.join(', ')
         end
       end
