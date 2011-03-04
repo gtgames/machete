@@ -8,20 +8,22 @@
     =mt(:menu)
   .inner
     %table
-      %tr
-        %th.first=mat(:menu, :id)
-        %th=mat(:menu, :title)
-        %th=mat(:menu, :alt)
-        %th=mat(:menu, :url)
-        %th=mat(:menu, :weight)
-        %th.last="&nbsp;"
-      -@menus.each do |menu|
+      %thead
         %tr
-          %td.first=menu.id
-          %td=menu.title
-          %td=menu.alt
-          %td=menu.url
-          %td=menu.weight
-          %td.last
-            =button_to pat(:edit), url(:menus, :edit, :id => menu.id), :method => :get, :class => :button_to
-            =button_to pat(:delete), url(:menus, :destroy, :id => menu.id), :method => :delete, :class => :button_to_delete
+          %th.first=mat(:menu, :id)
+          %th=mat(:menu, :title)
+          %th=mat(:menu, :alt)
+          %th=mat(:menu, :url)
+          %th=mat(:menu, :weight)
+          %th.last="&nbsp;"
+      %tbody
+        -@menus.each do |menu|
+          %tr
+            %td.first=menu.id
+            %td=menu.title
+            %td=menu.alt
+            %td=menu.url
+            %td=menu.weight
+            %td.last
+              =button_to pat(:edit), url(:menus, :edit, :id => menu.id), :method => :get, :class => :button_to
+              =button_to pat(:delete), url(:menus, :destroy, :id => menu.id), :method => :delete, :class => :button_to_delete

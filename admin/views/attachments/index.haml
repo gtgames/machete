@@ -9,18 +9,18 @@
     =mt(:attachment)
   .inner
     %table
-      %tr
-        %th.first=mat(:attachment, :name)
-        %th=mat(:attachment, :created_at)
-        %th=mat(:attachment, :updated_at)
-        %th.last="&nbsp;"
-      -@attachments.each do |attachment|
+      %thead
         %tr
-          %td.first=link_to attachment.name, attachment.file.url
-          %td=attachment.created_at
-          %td=attachment.updated_at
-          %td.last
-            =button_to pat(:edit), url(:attachments, :edit, :page_id => params[:page_id], :id => attachment.id), :method => :get, :class => :button_to
-            =button_to pat(:delete), url(:attachments, :destroy, :page_id => params[:page_id], :id => attachment.id), :method => :delete, :class => :button_to_delete
-
--content_for :sidebar, partial("base/sidebar")
+          %th.first=mat(:attachment, :name)
+          %th=mat(:attachment, :created_at)
+          %th=mat(:attachment, :updated_at)
+          %th.last="&nbsp;"
+      %tbody
+        -@attachments.each do |attachment|
+          %tr
+            %td.first=link_to attachment.name, attachment.file.url
+            %td=attachment.created_at
+            %td=attachment.updated_at
+            %td.last
+              =button_to pat(:edit), url(:attachments, :edit, :page_id => params[:page_id], :id => attachment.id), :method => :get, :class => :button_to
+              =button_to pat(:delete), url(:attachments, :destroy, :page_id => params[:page_id], :id => attachment.id), :method => :delete, :class => :button_to_delete

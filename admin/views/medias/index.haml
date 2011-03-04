@@ -8,17 +8,19 @@
     =mt(:media)
   .inner
     %table
-      %tr
-        %th.first=mat(:media, :name)
-        %th=mat(:media, :size)
-        %th.last="&nbsp;"
-      -@medias.each do |media|
+      %thead
         %tr
-          %td.first=link_to media.file.to_s.split('/').last, media.file.url
-          %td
-            #{media.file.file.size/1024} kb
-          %td.last
-            =button_to pat(:edit), url(:media, :edit, :id => media.id), :method => :get, :class => :button_to
-            =button_to pat(:delete), url(:media, :destroy, :id => media.id), :method => :delete, :class => :button_to_delete
+          %th.first=mat(:media, :name)
+          %th=mat(:media, :size)
+          %th.last="&nbsp;"
+      %tbody
+        -@medias.each do |media|
+          %tr
+            %td.first=link_to media.file.to_s.split('/').last, media.file.url
+            %td
+              #{media.file.file.size/1024} kb
+            %td.last
+              =button_to pat(:edit), url(:media, :edit, :id => media.id), :method => :get, :class => :button_to
+              =button_to pat(:delete), url(:media, :destroy, :id => media.id), :method => :delete, :class => :button_to_delete
 
 -content_for :sidebar, partial("base/sidebar")
