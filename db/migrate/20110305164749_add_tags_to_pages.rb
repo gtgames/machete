@@ -1,6 +1,6 @@
 Sequel.migration do
   up do
-    add_column :partners, :title, String, :size => 255
+    add_column :pages, :tags, String, :size => 400
     run "
     REPLACE FUNCTION tagcache()
       RETURNS trigger AS
