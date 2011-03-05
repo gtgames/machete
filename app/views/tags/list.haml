@@ -8,5 +8,5 @@
   =link_to p.title, url(:news, :show, :id => p.id, :slug => p.slug)
 
 %h2 Pagine
-- @page.each do |p|
+- @pages.each do |p|
   =link_to p.title, url(:page, :show, :id => p.id, :slug => p.slug)
