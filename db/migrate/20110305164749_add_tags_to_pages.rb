@@ -2,7 +2,7 @@ Sequel.migration do
   up do
     add_column :pages, :tags, String, :size => 400
     run "
-    REPLACE FUNCTION tagcache()
+    CREATE OR REPLACE FUNCTION tagcache()
       RETURNS trigger AS
     $BODY$
       BEGIN
