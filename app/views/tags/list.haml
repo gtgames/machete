@@ -1,6 +1,12 @@
+%h2 Immagini
 - @photos.each do |p|
   %a{:href => "#{p.file.url}"}
     %img{:src => "#{p.file.thumb.url}"}
 
+%h2 News
 - @posts.each do |p|
   =link_to p.title, url(:news, :show, :id => p.id, :slug => p.slug)
+
+%h2 Pagine
+- @page.each do |p|
+  =link_to p.title, url(:page, :show, :id => p.id, :slug => p.slug)

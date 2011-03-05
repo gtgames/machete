@@ -10,6 +10,7 @@ class Page < Sequel::Model
   rescue
     # do nothing ... fking stupid bugs
   end
+  plugin :taggable
 
   one_to_many :attachments
 
