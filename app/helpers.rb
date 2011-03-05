@@ -26,8 +26,8 @@ Frontend.helpers do
     html
   end
 
-  def latest_news
-    Post.limit(10).all
+  def latest_news(limit = 10)
+    Post.limit(limit).all
   end
 
   def shortcuts

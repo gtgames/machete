@@ -5,19 +5,15 @@ Sequel.migration do
       Integer :size
       index   :tag,  :unique => true
     end
-    run <<SQLSQL
-    CREATE OR REPLACE FUNCTION tagcache()
-      RETURNS trigger AS
+    run "CREATE OR REPLACE FUNCTION tagcache() RETURNS trigger AS
     $BODY$
       BEGIN
-
         TRUNCATE tags;
         INSERT INTO tags SELECT tag,count(*) FROM (
           SELECT regexp_split_to_table(tags,'[[:space:]]*,[[:space:]]*') FROM photos
           UNION ALL
           SELECT regexp_split_to_table(tags,'[[:space:]]*,[[:space:]]*') FROM posts
         ) s(tag) GROUP BY tag;
-
       return NULL;
     END;
     $BODY$
@@ -30,16 +26,14 @@ Sequel.migration do
     CREATE TRIGGER tagcache_photos
       AFTER INSERT OR UPDATE ON photos
       FOR EACH STATEMENT
-      EXECUTE PROCEDURE tagcache();
-SQLSQL
+      EXECUTE PROCEDURE tagcache();"
   end
 
   down do
-    run <<SQLSQL
-      DROP TRIGGER tagcache_posts ON posts;
+    run "DROP TRIGGER tagcache_posts ON posts;
       DROP TRIGGER tagcache_photos ON photos;
       DROP FUNCTION tagcache();
-SQLSQL
+      "
     drop_table :tags
   end
 end

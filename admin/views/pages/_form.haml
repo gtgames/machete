@@ -14,6 +14,12 @@
   = f.select :parent_id, :options => options_tree(f.object.id), :selected => f.object.parent_id
 
 .group
+  =f.label :tag_list
+  =f.error_message_on :tag_list
+  =f.text_field :tag_list
+  %span.description Lista Tags
+
+.group
   = f.label :is_home
   = f.error_message_on :is_home
   = f.check_box :is_home, :value => '1'
