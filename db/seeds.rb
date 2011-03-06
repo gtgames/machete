@@ -1,5 +1,5 @@
-email     = 'frenz@frenz.com'
-password  = 'frenz'
+email     = 'info@frenzart.com'
+password  = 'N0str4PWD'
 
 
 shell.say ""
