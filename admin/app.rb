@@ -37,7 +37,7 @@ class Admin < Padrino::Application
     render '404'
   end
 
-  access_control.roles_for :admin do |role|
+  access_control.roles_for :root do |role|
     role.project_module :news,    "/posts"
     role.project_module :menu,    "/menus"
     role.project_module :pagine,  "/pages"
@@ -49,8 +49,13 @@ class Admin < Padrino::Application
     role.project_module :account, "/accounts"
   end
 
+  eval(File.read(File.expand_path(PADRINO_ROOT + '/config/access_role.rb')))
+
   before do
     headers 'Cache-Control' => "private, max-age=0, no-cache, must-revalidate"
     content_type :html, 'charset' => 'utf-8'
+    puts ':'*90
+    puts access_control.roles.delete_if{|r| r == :root }.inspect
+    puts ':'*90
   end
 end

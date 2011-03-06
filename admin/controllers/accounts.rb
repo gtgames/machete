@@ -2,7 +2,7 @@
 Admin.controllers :accounts do
 
   get :index do
-    @accounts = Account.all
+    @accounts = (current_account.role != 'root')? Account.filter("role != 'root'").all : Account.all
     render 'accounts/index'
   end
 

@@ -31,7 +31,10 @@
 .group
   =f.label :role
   =f.error_message_on :role
-  =f.select :role, :options => access_control.roles
+  -if current_account.role == :root
+    =f.select :role, :options => access_control.roles
+  -else
+    =f.select :role, :options => access_control.roles.delete_if{|r| r == :root }
   %span.description Ex: a simple text
 
 
