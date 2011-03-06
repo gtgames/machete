@@ -49,7 +49,7 @@ class Admin < Padrino::Application
     role.project_module :account, "/accounts"
   end
 
-  eval(File.read(File.expand_path(PADRINO_ROOT + '/config/access_role.rb')))
+  require PADRINO_ROOT + '/config/access_role'
 
   before do
     headers 'Cache-Control' => "private, max-age=0, no-cache, must-revalidate"
