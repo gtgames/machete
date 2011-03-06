@@ -9,4 +9,4 @@
 
 %h2 Pagine
 - @pages.each do |p|
-  =link_to p.title, url(:page, :show, :id => p.id, :slug => p.slug)
+  =link_to p.title, url(:pages, :show, :id => p.id, :slug => p.slug)
