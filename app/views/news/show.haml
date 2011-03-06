@@ -1,4 +1,7 @@
 .post
-  %h1=@news.title
-  =partial "news/date",:locals => {:p => @news}
-  %p=@news.text
+  %h1.title=@news.title
+  %article
+    =partial "news/date",:locals => {:p => @news}
+    %p.subtitle=@news.subtitle
+    %img.news{ :src => @news.photo.url }
+    =@news.text
