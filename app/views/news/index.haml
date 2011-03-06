@@ -1,5 +1,2 @@
 - @news.each do |p|
-  .post
-    %h1=p.title
-    =partial "news/date", :locals => {:p => p}
-    %p=p.text
+  =partial "news/headline", :locals => { :p => p }

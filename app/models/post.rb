@@ -11,7 +11,7 @@ class Post < Sequel::Model
   end
   plugin :taggable
 
-  mount_uploader :photo, ImageUploader
+  mount_uploader :photo, PostImageUploader
 
   def validate
     super

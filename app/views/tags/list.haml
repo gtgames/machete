@@ -9,7 +9,7 @@
   %h1.title News
   %article
     - @posts.each do |p|
-      =link_to p.title, url(:news, :show, :id => p.id, :slug => p.slug)
+      =partial "news/headline", :locals => { :p => p }
 
 -if @pages.length > 0
   %h1.title Pagine
