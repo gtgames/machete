@@ -1,5 +1,5 @@
 require 'carrierwave/orm/sequel'
-class Media < Sequel::Model
+class Media < Sequel::Model(:media)
   set_dataset dataset.order(:type)
 
   def_dataset_method :full_text_search
