@@ -54,8 +54,5 @@ class Admin < Padrino::Application
   before do
     headers 'Cache-Control' => "private, max-age=0, no-cache, must-revalidate"
     content_type :html, 'charset' => 'utf-8'
-    puts ':'*90
-    puts access_control.roles.delete_if{|r| r == :root }.inspect
-    puts ':'*90
   end
 end

@@ -34,7 +34,7 @@
   -if current_account.role == :root
     =f.select :role, :options => access_control.roles
   -else
-    =f.select :role, :options => access_control.roles.delete_if{|r| r == :root }
+    =f.select :role, :options => access_control.roles.reject{|r| r == :root }
   %span.description Ex: a simple text
 
 
