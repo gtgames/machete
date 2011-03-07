@@ -1,9 +1,9 @@
 Sequel.migration do
   up do
-    add_column :medias, :type, String
+    add_column :media, :type, String
   end
 
   down do
-    drop_column :medias, :type
+    drop_column :media, :type
   end
 end

@@ -3,6 +3,7 @@
     %li.first=link_to pat(:list), url(:menus, :index)
     %li=link_to pat(:new), url(:menus, :new)
     %li.active=link_to pat(:edit), url(:menus, :edit, :id => @menu.id)
+    %li=link_to pat(:tree), url(:menus, :tree)
 #content
   %h2
     =pat(:edit)

@@ -1,8 +1,17 @@
 # encoding:utf-8
 Admin.controllers :menus do
   get :index do
-    @menus = Menu.order(:weight).all
+    @menus = Menu.all
     render 'menus/index'
+  end
+
+  get :tree do
+    render 'menus/tree'
+  end
+
+  post :tree do
+    to_tree(JSON.parse(params[:menu][:serialized]), "Menu")
+    render 'menus/tree'
   end
 
   get :new do

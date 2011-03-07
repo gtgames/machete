@@ -1,17 +1,17 @@
 %nav.secondary-navigation
   %ul
-    %li.first=link_to pat(:list), url(:pages, :index)
-    %li=link_to pat(:new), url(:pages, :new)
-    %li.active=link_to pat(:tree), url(:pages, :tree)
+    %li.first=link_to pat(:list), url(:menus, :index)
+    %li=link_to pat(:new), url(:menus, :new)
+    %li.active=link_to pat(:tree), url(:menus, :tree)
 #content
   %h2
     =pat(:all)
-    =mt(:page)
+    =mt(:menu)
   .inner
-    #tree= tree
+    #tree=tree(Menu.roots)
 
 
-  -form_for :page, url(:pages, :tree), :method => :post, :class => :form do |f|
+  -form_for :menu, url(:menus, :tree), :method => :post, :class => :form do |f|
     = f.hidden_field :serialized
     = f.submit pat(:save), :class => :button, :id => :save
     = f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button

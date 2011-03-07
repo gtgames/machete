@@ -1,3 +1,5 @@
+/* @override http://frenzart.com/css/admin_0.2.css */
+
 /* @group Reset */
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -401,6 +403,8 @@ footer {
   width: 100%;
 }
 th {
+  height: 2em;
+  vertical-align: middle;
   color: #333;
   border-bottom: 2px solid #CCCCCC;
 }
@@ -413,13 +417,16 @@ table tbody tr {
   border-bottom: 2px solid #cccccc;
 }
 table tbody tr td {
+  vertical-align: middle;
   padding: 0.5em 0.5em;
   border-left: 1px solid #cccccc;
 }
 td.first, td.last {
   border:0px;
 }
-
+td.last {
+  width: 220px;
+}
 nav.secondary-navigation {
   border-bottom: 1px double #424242;
 }
@@ -455,18 +462,47 @@ label {
   display: block;
 }
 textarea {
-  width: 99%;
-  min-height: 200px;
+  width: 100%;
+  min-height: 120px;
 }
-input[type=text] {
-  width: 100%;  
+
+input, textarea { 
+  padding: 9px;
+  border: solid 1px #E5E5E5;
+  outline: 0;
+  font: normal 13px/100% Verdana, Tahoma, sans-serif;
+  width: 200px;
+  background: #FFFFFF url('bg_form.png') left top repeat-x;
+  background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+  background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+  box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+     -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+  -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
 }
+input:hover, textarea:hover,
+input:focus, textarea:focus { 
+  border-color: #C9C9C9; 
+  -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
+}
+input.button {
+  width: 300px;
+  font-weight: 700;
+  color: #404040;
+}
+input.button:hover {
+  color: #000000;  
+}
+.description {
+  color: #808080;
+  padding: 10px;
+  width: 300px;
+}
+.group input:focus .description {
+  display: block;
+} 
+
 div.group.navform {
   text-align: right;
-}
-div.group.navform input {
-  width: 12em;
-  height: 2em;
 }
 input[type=file]{
   display: block;
@@ -485,8 +521,9 @@ form.button_to input,
 form.button_to_delete input {
   background: #6a9ad8;
   border: 0px solid;
-  padding: 4px;
+  padding: 6px;
   display:  inline;
+  width: 100px;
      -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
           border-radius: 4px;
@@ -496,6 +533,13 @@ form.button_to_delete input {
 form.button_to_delete input {
   background: #f41f1a;
   text-shadow: #8c0d0a 1px 0 2px;
+}
+
+form.filter {
+  margin-bottom: 10px;
+}
+form.filter label input {
+  margin-left: 2em;
 }
 
 #weight_slider {

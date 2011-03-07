@@ -6,6 +6,12 @@ Admin.controllers :pages do
   end
 
   get :tree do
+    puts tree()
+    render 'pages/tree'
+  end
+
+  post :tree do
+    to_tree(JSON.parse(params[:page][:serialized]), "Page")
     render 'pages/tree'
   end
 

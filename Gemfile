@@ -23,6 +23,7 @@ group :development do
   gem 'looksee', :require => 'looksee/shortcuts'
   gem 'wirble'
   gem 'bond'
+  gem 'faker'
 end
 
 gem 'eventmachine'

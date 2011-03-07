@@ -1,9 +1,9 @@
 class Page < Sequel::Model
   def_dataset_method :full_text_search
-  #default ordering
-  set_dataset dataset.order(:title)
   # Recursive adjacency list
   plugin :rcte_tree
+  plugin :list
+  
   plugin :validation_helpers
   begin
     plugin :lazy_attributes, :text

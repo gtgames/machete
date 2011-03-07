@@ -1,6 +1,6 @@
 Sequel.migration do
   up do
-    create_table :medias do
+    create_table :media do
       primary_key :id
       String    :file, :size=>255
       DateTime  :created_at
@@ -9,6 +9,6 @@ Sequel.migration do
   end
 
   down do
-    drop_table :medias
+    drop_table :media
   end
 end

@@ -32,10 +32,7 @@ Admin.helpers do
     unless r.empty?
       html += "<ul>"
       r.each do |p|
-        html += "<li><span>#{p.title}"
-        html += button_to pat(:edit), url(:pages, :edit, :id => p.id), :method => :get, :class => :button_to
-        html += button_to pat(:delete), url(:pages, :destroy, :id => p.id), :method => :delete, :class => :button_to
-        html += '</span>'
+        html += "<li id='#{p.id}'>#{p.title}"
         html += tree(p.children) unless p.children.empty?
         html += "</li>"
       end
@@ -44,8 +41,18 @@ Admin.helpers do
     return html
   end
 
-  def page_url_for(page)
-    link_to( page.title, "http://#{DOMAIN_NAME}/#{page.id}/#{page.slug}")
+  def to_tree(h, klass,i = 1)
+    h.each{ |k,v|
+      pid = k.split('-')
+      eval(klass)[pid[0]].update({
+        position: i,
+        parent_id: (pid[1].to_i == 0)? nil : pid[1].to_i
+      })
+      if v.is_a? Hash
+        to_tree(v, klass, i)
+      end
+      i += 1
+    }
   end
 end
 

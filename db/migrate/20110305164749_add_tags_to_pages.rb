@@ -28,8 +28,7 @@ Sequel.migration do
   down do
     drop_column :pages, :tags
     run "DROP TRIGGER tagcache_pages ON pages;
-    
-    REPLACE FUNCTION tagcache()
+    CREATE OR REPLACE FUNCTION tagcache()
       RETURNS trigger AS
     $BODY$
       BEGIN

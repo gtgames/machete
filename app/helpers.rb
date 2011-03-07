@@ -9,7 +9,7 @@ Frontend.helpers do
   end
 
   def menu
-    Menu.order(:weight).all
+    Menu.all
   end
 
   def tree(r = Page.roots)

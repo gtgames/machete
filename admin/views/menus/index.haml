@@ -2,6 +2,7 @@
   %ul
     %li.first.active=link_to pat(:list), url(:menus, :index)
     %li=link_to pat(:new), url(:menus, :new)
+    %li=link_to pat(:tree), url(:menus, :tree)
 #content
   %h2
     =pat(:all)
@@ -14,7 +15,6 @@
           %th=mat(:menu, :title)
           %th=mat(:menu, :alt)
           %th=mat(:menu, :url)
-          %th=mat(:menu, :weight)
           %th.last="&nbsp;"
       %tbody
         -@menus.each do |menu|
@@ -23,7 +23,6 @@
             %td=menu.title
             %td=menu.alt
             %td=menu.url
-            %td=menu.weight
             %td.last
               =button_to pat(:edit), url(:menus, :edit, :id => menu.id), :method => :get, :class => :button_to
               =button_to pat(:delete), url(:menus, :destroy, :id => menu.id), :method => :delete, :class => :button_to_delete
