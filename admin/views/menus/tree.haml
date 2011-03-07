@@ -15,7 +15,3 @@
     = f.hidden_field :serialized
     = f.submit pat(:save), :class => :button, :id => :save
     = f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button
-
-
-%script
-  head.js("/javascripts/tree.js")
