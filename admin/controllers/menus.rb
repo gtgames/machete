@@ -10,7 +10,9 @@ Admin.controllers :menus do
   end
 
   post :tree do
-    to_tree(JSON.parse(params[:menu][:serialized]), "Menu")
+    DB.transaction do
+      to_tree(JSON.parse(params[:menu][:serialized]), "Menu")
+    end
     render 'menus/tree'
   end
 

@@ -9,7 +9,7 @@ Frontend.controllers :welcome do
   end
 
   get :sitemap, :map => "/sitemap", :provides => [:html, :json] do
-    @pages = Pages.order(:title).all
+    @pages = Page.order(:title).all
     render 'sitemap/index'
   end
 end

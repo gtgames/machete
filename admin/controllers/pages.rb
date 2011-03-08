@@ -6,12 +6,13 @@ Admin.controllers :pages do
   end
 
   get :tree do
-    puts tree()
     render 'pages/tree'
   end
 
   post :tree do
-    to_tree(JSON.parse(params[:page][:serialized]), "Page")
+    DB.transaction do
+      to_tree(JSON.parse(params[:page][:serialized]), "Page")
+    end
     render 'pages/tree'
   end
 
@@ -47,7 +48,8 @@ Admin.controllers :pages do
 
   delete :destroy, :with => :id do
     page = Page[params[:id]]
-    if page.remove_all_attachments && page.destroy
+    page.remove_all_attachments
+    if page.destroy
       flash[:notice] = t 'admin.destroy.success'
     else
       flash[:error] = t 'admin.destroy.failure'
