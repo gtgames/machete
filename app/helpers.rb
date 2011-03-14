@@ -12,6 +12,10 @@ Frontend.helpers do
     Menu.all
   end
 
+  def menu_tree
+    tree Menu.roots
+  end
+
   def tree(r = Page.roots)
     html = ''
     unless r.empty?
