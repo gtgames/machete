@@ -12,8 +12,18 @@ Frontend.helpers do
     Menu.all
   end
 
-  def menu_tree
-    tree Menu.roots
+  def menu_tree(r = Page.roots)
+    html = ''
+    unless r.empty?
+      html += "<ul>"
+      r.each do |p|
+        html += "<li>" + link_to(p.title, p.url)
+        html += tree(p.children) unless p.children.empty?
+        html << "</li>"
+      end
+      html << "</ul>"
+    end
+    html
   end
 
   def tree(r = Page.roots)
