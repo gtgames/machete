@@ -18,7 +18,7 @@ Frontend.helpers do
       html += "<ul>"
       r.each do |p|
         html += "<li>" + link_to(p.title, p.url)
-        html += tree(p.children) unless p.children.empty?
+        html += menu_tree(p.children) unless p.children.empty?
         html << "</li>"
       end
       html << "</ul>"
