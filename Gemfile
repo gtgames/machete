@@ -50,4 +50,4 @@ gem 'unidecode'
 gem 'defensio'
 
 # Padrino
-gem 'padrino', "0.9.21"
+gem 'padrino', "0.9.23"
