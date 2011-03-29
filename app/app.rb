@@ -1,43 +1,25 @@
-class Frontend < Padrino::Application
+class Machete < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
 
-  register Padrino::Contrib::ExceptionNotifier
-  set :exceptions_from,    "mail@#{DOMAIN_NAME}"
-  set :exceptions_to,      "god@progettoca.se"
-  set :exceptions_subject, "[#{DOMAIN_NAME}][Frontend] "
-  set :exceptions_page,    :errors
+  ##
+  # Application configuration options
+  #
+  # set :raise_errors, true     # Show exceptions (default for development)
+  # set :public, "foo/bar"      # Location for static assets (default root/public)
+  # set :reload, false          # Reload application files (default in development)
+  # set :default_builder, "foo" # Set a custom form builder (default 'StandardFormBuilder')
+  # set :locale_path, "bar"     # Set path for I18n translations (defaults to app/locale/)
+  # enable  :sessions           # Disabled by default
+  # disable :flash              # Disables rack-flash (enabled by default if sessions)
+  # layout  :my_layout          # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
+  #
 
-  set :delivery_method, :smtp => {
-    :address              => "frenz",
-    :port                 => 25,
-    :enable_starttls_auto => false
-  }
-
-  enable :logger
-  enable :sessions
-  enable :flash
-
-  set :charset, "utf8"
-
-  set :haml, {
-    :ugly   => true,
-    :format => :html5
-  }
-
-  if File.exists?(PADRINO_ROOT + '/app/views/layouts/custom.haml')
-    layout :custom
-  else
-    layout :application
+  configure :development do
+    set :slim, { :pretty   => true }
   end
 
-  not_found do
-    render '404'
-  end
-
-  before do
-    if File.exists?(PADRINO_ROOT + '._maintainance')
-      render 'maintainance'
-    end
+  error 404 do
+    render 'errors/404'
   end
 end

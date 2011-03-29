@@ -1,0 +1,8 @@
+h1 = @post.title
+article.subtitle = @post.subtitle
+
+- unless @post.photo.empty?
+  img src=#{@post.photo.url} title=#{@post.title}
+
+article
+  == @post.text

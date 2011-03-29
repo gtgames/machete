@@ -1,8 +1,0 @@
-%h1.title Ultime News
-%article
-  - @news.each do |p|
-    .headline
-      %a{:href => url(:news_show, :id => p.id, :slug => p.slug)}
-        %img{:src => p.photo.thumb.url }
-        %h3=p.title
-        %p=p.subtitle

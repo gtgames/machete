@@ -1,8 +1,7 @@
-# encoding: UTF-8
 Admin.controllers :accounts do
 
   get :index do
-    @accounts = (current_account.role != 'root')? Account.filter("role != 'root'").all : Account.all
+    @accounts = Account.all
     render 'accounts/index'
   end
 
@@ -13,8 +12,8 @@ Admin.controllers :accounts do
 
   post :create do
     @account = Account.new(params[:account])
-    if (@account.save rescue false)
-      flash[:notice] = t 'admin.create.success'
+    if @account.save
+      flash[:notice] = 'Account was successfully created.'
       redirect url(:accounts, :edit, :id => @account.id)
     else
       render 'accounts/new'
@@ -22,14 +21,14 @@ Admin.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    @account = Account[params[:id]]
+    @account = Account.find(params[:id])
     render 'accounts/edit'
   end
 
   put :update, :with => :id do
-    @account = Account[params[:id]]
-    if @account.modified! && @account.update(params[:account])
-      flash[:notice] = t 'admin.update.success'
+    @account = Account.find(params[:id])
+    if @account.update_attributes(params[:account])
+      flash[:notice] = 'Account was successfully updated.'
       redirect url(:accounts, :edit, :id => @account.id)
     else
       render 'accounts/edit'
@@ -37,11 +36,11 @@ Admin.controllers :accounts do
   end
 
   delete :destroy, :with => :id do
-    account = Account[params[:id]]
+    account = Account.find(params[:id])
     if account != current_account && account.destroy
-      flash[:notice] = t 'admin.destroy.success'
+      flash[:notice] = 'Account was successfully destroyed.'
     else
-      flash[:error] = t 'admin.destroy.failure'
+      flash[:error] = 'Impossible destroy Account!'
     end
     redirect url(:accounts, :index)
   end

@@ -1,31 +1,22 @@
-require 'carrierwave/orm/sequel'
-class Post < Sequel::Model
-  def_dataset_method :full_text_search
-  set_dataset dataset.reverse_order(:updated_at)
+require 'carrierwave/orm/mongoid'
+require File.join Padrino.root('app/uploaders'), 'headline'
+class Post
+  include Mongoid::Document
+  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include Mongoid::Document::Taggable
 
-  plugin :validation_helpers
-  begin
-    plugin :lazy_attributes, :text
-  rescue
-    # do nothing ... fking stupid bugs
+  mount_uploader :photo, HeadlineUploader
+
+  field :title, :type => String
+  field :text, :type => String
+
+  index :slug , :unique => true
+  
+  before_create :generate_slug
+
+  protected
+  def generate_slug
+    self[:slug] = title.to_ascii.downcase.gsub(/[^a-z0-9 ]/, ' ').strip.gsub(/[ ]+/, '-')
   end
-  plugin :taggable
-
-  mount_uploader :photo, PostImageUploader
-
-  def validate
-    super
-    validates_length_range 3..255, :title
-    validates_unique :title
-    validates_format(/[A-Za-z\s\w]*/, :title)
-  end
-
-  def text=(param)
-    super html_cleanup(param)
-  end
-
-  def before_save
-    self.slug = "#{self.title}".to_slug
-    super
-  end
+  
 end

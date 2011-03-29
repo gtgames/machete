@@ -1,5 +1,5 @@
-# encoding:utf-8
 Admin.controllers :photos do
+  provides :html, :js, :json
 
   get :index do
     @photos = Photo.all
@@ -13,8 +13,8 @@ Admin.controllers :photos do
 
   post :create do
     @photo = Photo.new(params[:photo])
-    if (@photo.save rescue false)
-      flash[:notice] = t 'admin.create.success'
+    if @photo.save
+      flash[:notice] = 'Photo was successfully created.'
       redirect url(:photos, :edit, :id => @photo.id)
     else
       render 'photos/new'
@@ -22,14 +22,14 @@ Admin.controllers :photos do
   end
 
   get :edit, :with => :id do
-    @photo = Photo[params[:id]]
+    @photo = Photo.find(params[:id])
     render 'photos/edit'
   end
 
   put :update, :with => :id do
-    @photo = Photo[params[:id]]
-    if @photo.modified! && @photo.update(params[:photo])
-      flash[:notice] = t 'admin.update.success'
+    @photo = Photo.find(params[:id])
+    if @photo.update_attributes(params[:photo])
+      flash[:notice] = 'Photo was successfully updated.'
       redirect url(:photos, :edit, :id => @photo.id)
     else
       render 'photos/edit'
@@ -37,11 +37,11 @@ Admin.controllers :photos do
   end
 
   delete :destroy, :with => :id do
-    photo = Photo[params[:id]]
+    photo = Photo.find(params[:id])
     if photo.destroy
-      flash[:notice] = t 'admin.destroy.success'
+      flash[:notice] = 'Photo was successfully destroyed.'
     else
-      flash[:error] = t 'admin.destroy.failure'
+      flash[:error] = 'Impossible destroy Photo!'
     end
     redirect url(:photos, :index)
   end

@@ -1,0 +1,7 @@
+it:
+  responder:
+    messages:
+      default:
+        destroy: "%{model} é stato eliminato con successo."
+        create: "%{model} creato con successo."
+        update: "%{model} aggiornato con successo."

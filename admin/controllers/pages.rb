@@ -1,59 +1,32 @@
-# encoding:utf-8
 Admin.controllers :pages do
+  provides :html, :json
+
   get :index do
-    @pages = Page.all
-    render 'pages/index'
-  end
-
-  get :tree do
-    render 'pages/tree'
-  end
-
-  post :tree do
-    DB.transaction do
-      to_tree(JSON.parse(params[:page][:serialized]), "Page")
-    end
-    render 'pages/tree'
+    respond(@pages = Page.all)
   end
 
   get :new do
-    @page = Page.new
-    render 'pages/new'
+    respond(@page = Page.new)
   end
 
-  post :create do
+  post :create, :map => '/pages' do
     @page = Page.new(params[:page])
-    if (@page.save rescue false)
-      flash[:notice] = t 'admin.create.success'
-      redirect url(:pages, :edit, :id => @page.id)
-    else
-      render 'pages/new'
-    end
+    @page.save
+    respond @page, url(:pages, :edit, :id => @page.id)
   end
 
-  get :edit, :with => :id do
-    @page = Page[params[:id]]
-    render 'pages/edit'
+  get :edit, :with => :id, :map => '/pages' do
+    respond(@page = Page.find(params[:id]))
   end
 
-  put :update, :with => :id do
-    @page = Page[params[:id]]
-    if @page.modified! && @page.update(params[:page])
-      flash[:notice] = t 'admin.update.success'
-      redirect url(:pages, :edit, :id => @page.id)
-    else
-      render 'pages/edit'
-    end
+  put :update, :with => :id, :map => '/pages' do
+    @page = Page.find(params[:id])
+    @page.update_attributes(params[:page])
+    respond(@page, url(:pages, :edit, :id => @page.id))
   end
 
-  delete :destroy, :with => :id do
-    page = Page[params[:id]]
-    page.remove_all_attachments
-    if page.destroy
-      flash[:notice] = t 'admin.destroy.success'
-    else
-      flash[:error] = t 'admin.destroy.failure'
-    end
-    redirect url(:pages, :index)
+  delete :destroy, :with => :id, :map => '/pages' do
+    page = Page.find(params[:id])
+    respond(page.destroy, url(:pages, :index))
   end
 end

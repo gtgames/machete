@@ -1,0 +1,65 @@
+script name='pages_form' type="text/x-template"
+  .block
+    .secondary-navigation
+      ul.wat-cf
+        li.first
+          a href="#!/pages/" Indice
+        li.active
+          a href="#!/pages/new" Nuovo
+    .content
+      .inner
+        h2 Nuovo Documento
+        form.form
+          .group
+            label for='title' Titolo:
+            input.text_field type='text' name='title' placeholder='Titolo' value='{{ page.title }}'
+          .group
+            label for='lead' Introduzione:
+            textarea.text_area name='lead' placeholder='frase introduttiva' {{ page.lead }}
+          .group
+            label for='text' Testo:
+            textarea.text_area name='text' placeholder='Testo' {{ page.text }}
+          .group
+            label for='tag_list' Etichette:
+            input.text_field type='text' name='tag_list' placeholder='lista tag' value='{{ page.tags }}'
+          .group.navform.wat-cf
+            input type='submit' value='Salva'
+            input type='reset' value='Annulla'
+
+script name='pages_list' type="text/x-template"
+  .block
+    .secondary-navigation
+      ul.wat-cf
+        li.first.active
+          a href="#!/pages/" Indice
+        li
+          a href="#!/pages/new" Nuovo
+    .content
+      h2.title
+        ' lista documenti
+      .inner
+        table.table
+          thead
+            tr
+              th.first=mat(:page, :title)
+              th=mat(:page, :tag_list)
+              th=mat(:page, :updated_at)
+              th=mat(:page, :created_at)
+              th.last=="&nbsp;"
+          tbody
+            | {{#pages}}{{#page}}
+            tr
+              td.first {{title}}
+              td
+                | {{#each tag_list}}
+                | {{ this }} ,
+                | {{/each}}
+              td {{updated_at}}
+              td {{created_at}}
+              td.last
+                a.button.edit data-id='{{ _id }}'  href='#!/pages/{{ _id }}' Modifica
+                ' 
+                a.button.delete data-id='{{ _id }}' href='#!/pages/{{ _id }}/delete' Elimina
+              | {{/page}}{{/pages}}
+        .actions-bar.wat-cf
+          .actions=="&nbsp;"

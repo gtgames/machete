@@ -1,53 +1,28 @@
-source 'http://rubygems.org'
+source :rubygems
 
 # Project requirements
 gem 'rake'
 gem 'rack-flash'
-gem 'thor', '>= 0.14.3'
+gem 'thin' # or mongrel
 
-gem 'i18n'
-gem 'haml'
-
-gem 'yajl-ruby', :require => "yajl/json_gem"
-
-gem 'bcrypt-ruby',  :require => "bcrypt"
-
-group :test do
-  gem 'riot'
-end
-
-group :development do
-  gem 'interactive_editor'
-  gem 'net-http-spy'
-  gem 'hirb', :require => 'hirb/import_object'
-  gem 'looksee', :require => 'looksee/shortcuts'
-  gem 'wirble'
-  gem 'bond'
-  gem 'faker'
-end
-
-gem 'eventmachine'
-gem 'thin'
-
-gem 'em-net-http'
-gem 'em-resolv-replace'
-gem 'rack-fiber_pool'
-
-gem "rack-raw-upload", :require => 'rack/raw_upload'
-
-gem 'padrino-contrib'
+# Component requirements
+gem 'bcrypt-ruby', :require => "bcrypt"
+gem 'yajl-ruby', :require => 'yajl/json_gem'
+gem 'slim'
+gem 'builder'
+gem 'mongoid', '>=2.0.0.rc.4'
+gem 'bson_ext', :require => "mongo"
 
 gem 'carrierwave'
 gem 'mini_magick'
 
-gem 'pg'
-gem 'sequel'
-
-gem 'nokogiri'
-gem 'sanitize'
 gem 'unidecode'
 
-gem 'defensio'
+gem 'mongoid_nested_set'
+
+# Test requirements
+gem 'riot', :group => "test"
+gem 'rack-test', :require => "rack/test", :group => "test"
 
 # Padrino
 gem 'padrino', "0.9.23"

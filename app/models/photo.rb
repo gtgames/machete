@@ -1,11 +1,10 @@
-require 'carrierwave/orm/sequel'
-class Photo < Sequel::Model
-  plugin :taggable
-  
-  def_dataset_method :full_text_search
-  mount_uploader :file, ImageUploader
-  
-  def self.random(num = 1)
-    with_sql("SELECT * FROM \"#{table_name}\" ORDER BY RANDOM() LIMIT #{num}").all
-  end
+require 'carrierwave/orm/mongoid'
+require File.join Padrino.root('app/uploaders'), 'photo'
+class Photo
+  include Mongoid::Document
+  include Mongoid::Timestamps # adds created_at and updated_at fields
+
+  mount_uploader :file, PhotoUploader
+  field :title, :type => String
+
 end

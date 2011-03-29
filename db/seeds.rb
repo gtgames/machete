@@ -1,54 +1,40 @@
+# Seed add you the ability to populate your db.
+# We provide you a basic shell for interaction with the end user.
+# So try some code like below:
+#
+#   name = shell.ask("What's your name?")
+#   shell.say name
+#
 email     = 'info@frenzart.com'
 password  = 'N0str4PWD'
 
-
 shell.say ""
 
-account = Account.create(:email => email, :name => "Foo", :surname => "Bar", :password => password, :password_confirmation => password, :role => "root")
+account = Account.create(:email => email, :name => "GT", :surname => "Games", :password => password, :password_confirmation => password, :role => "admin")
 
-unless account.nil? or not account.valid?
+if account.valid?
   shell.say "================================================================="
   shell.say "Account has been successfully created, now you can login with:"
   shell.say "================================================================="
-  shell.say "   email:    #{email}"
+  shell.say "   email: #{email}"
   shell.say "   password: #{password}"
-  shell.say "   access:   root"
   shell.say "================================================================="
 else
-  shell.say "Sorry but some thing went worng!"
+  shell.say "Sorry but some thing went wrong!"
   shell.say ""
-  account.errors.full_messages.each { |m| shell.say "   - #{m}" } unless account.nil?
+  account.errors.full_messages.each { |m| shell.say "   - #{m}" }
 end
 
 shell.say ""
 
-if PADRINO_ENV == 'development'
-  require "faker"
-
-  def pages
-    10.times do
-      Page.create ({
-        title: Faker::Company.bs,
-        text: "<p>#{Faker::Lorem.paragraphs(3).join('</p><p>')}</p>",
-        parent_id: 0,
-        tag_list: Faker::Lorem.words.join(', ')
-      })
+if File.exists? Padrino.root('Application.json')
+  JSON.parse( File.read( Padrino.root('Application.json') )).each do |c|
+    begin
+      Configuration.create! c
+    rescue e
+      shell.say "An error occurred creating the Configuration collection: #{e}"
     end
   end
-
-  def posts
-    1.upto(10) do
-      Post.create({
-        title: Faker::Company.bs,
-        text: "<p>#{Faker::Lorem.paragraphs(3).join('</p><p>')}</p>",
-        subtitle: Faker::Lorem.paragraph,
-        tag_list: Faker::Lorem.words.join(', ')
-      })
-    end
-  end
-
-  if shell.yes?("create fake data?")
-    pages
-    posts
-  end
+else
+  shell.say "No Application.json found, cannot continue."
 end

@@ -1,47 +1,32 @@
 Admin.controllers :posts do
+  provides :html, :json
 
   get :index do
-    @posts = Post.all
-    render 'posts/index'
+    respond(@posts = Post.all)
   end
 
   get :new do
-    @post = Post.new
-    render 'posts/new'
+    respond(@post = Post.new)
   end
 
-  post :create do
+  post :create, :map => '/posts' do
     @post = Post.new(params[:post])
-    if (@post.save rescue false)
-      flash[:notice] = t 'admin.create.success'
-      redirect url(:posts, :index)
-    else
-      render 'posts/new'
-    end
+    @post.save
+    respond(@post, url(:posts, :edit, :id => @post.id))
   end
 
-  get :edit, :with => :id do
-    @post = Post[params[:id]]
-    render 'posts/edit'
+  get :edit, :with => :id, :map => '/posts' do
+    respond(@post = Post.find(params[:id]))
   end
 
-  put :update, :with => :id do
-    @post = Post[params[:id]]
-    if @post.modified! && @post.update(params[:post])
-      flash[:notice] = t 'admin.update.success'
-      redirect url(:posts, :index)
-    else
-      render 'posts/edit'
-    end
+  put :update, :with => :id, :map => '/posts' do
+    @post = Post.find(params[:id])
+    @post.update_attributes(params[:post])
+    respond(@post, url(:posts, :edit, :id => @post.id))
   end
 
-  delete :destroy, :with => :id do
-    post = Post[params[:id]]
-    if post.destroy
-      flash[:notice] = t 'admin.destroy.success'
-    else
-      flash[:error] = t 'admin.destroy.failure'
-    end
-    redirect url(:posts, :index)
+  delete :destroy, :with => :id, :map => '/posts' do
+    post = Post.find(params[:id])
+    respond(post.destroy, url(:posts, :index))
   end
 end

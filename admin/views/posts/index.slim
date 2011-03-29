@@ -1,0 +1,36 @@
+.block
+  .secondary-navigation
+    ul.wat-cf
+      li.first.active==link_to pat(:list), url(:posts, :index)
+      li==link_to pat(:new), url(:posts, :new)
+  .content
+    h2.title
+      ==pat(:all)
+      =="&nbsp;"
+      ==mt(:posts)
+    .inner
+      table.table
+        thead
+          tr
+            th.first=mat(:post, :title)
+            th=mat(:post, :lead)
+            th=mat(:post, :created_at)
+            th=mat(:post, :updated_at)
+            th=mat(:post, :tag_list)
+            th.last=="&nbsp;"
+        tbody
+          -@posts.each do |post|
+            tr
+              td.first=post.title
+              td=post.lead
+              td=post.updated_at
+              td=post.created_at
+              td=post.tag_list
+              td.last
+                ==button_to pat(:edit), url(:posts, :edit, :id => post.id), :method => :get, :class => :button_to
+                '  |
+                ==button_to pat(:delete), url(:posts, :destroy, :id => post.id), :method => :delete, :class => :button_to
+      .actions-bar.wat-cf
+        .actions=="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

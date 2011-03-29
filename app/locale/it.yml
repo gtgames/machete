@@ -1,62 +1,30 @@
 it:
-  contact:
-    error: "Il messaggio contiene un errore, prego controllare tutti i campi."
-    ok: "Il tuo messaggio è stato inviato."
-  models:
-    menu:
-      name: "Menù"
-      attributes:
-        title: "Titolo"
-        weight: "Peso"
-        alt: "Testo alternativo"
-        url: "Link"
-    page:
-      name: Pagine
-      attributes:
-        title: "Titolo"
-        text: "Corpo del testo"
-        weight: "Peso"
-        created_at: Creato il
-        updated_at: Aggiornato il
-    aphorism:
-      name: Aforismi
-      attributes:
-        aphorims: Aforisma
-    post:
-      name: Notizie
-      attributes:
-        title: Titolo
-        tag_list: Lista Tag
-        created_at: Creato il
-        updated_at: Aggiornato il
-  
-  pages:
-    search:
-      results: "Risultati ricerca"
-    tags:
-      list: "Lista Tag"
-  
-  routes:
-    pages:
-      index: 'pagine'
-      search: 'ricerca'
-  
-  admin:
-    menu:
-      templates: 'Menu Templates'
-    
-    login:
-      failure: 'Password o Login errato'
-    create:
-      success: 'Creato con successo'
-      failure: 'Errore di creazione!'
-    update:
-      success: 'Modificato con successo'
-      failure: 'Errore durante la modifica!'
-    destroy:
-      success: 'Eliminato con successo'
-      failure: "Errore durante l'eliminazione!"
   padrino:
     admin:
-      new: Nuovo
-      list: Lista
+      menu:
+        pages: 'Pagine'
+        accounts: 'Utenti'
+        posts: 'Blog'
+        galleries: 'Gallerie'
+
+  models:
+    page:
+      attributes:
+        lead: 'Introduzione'
+        created_at: 'Creazione'
+        updated_at: 'Aggiornamento'
+  
+    post:
+      attributes:
+        lead: 'Introduzione'
+        text: 'Testo'
+        created_at: 'Creazione'
+        updated_at: 'Aggiornamento'
+  
+    gallery:
+      attributes:
+        lead: 'Introduzione'
+        created_at: 'Creazione'
+        updated_at: 'Aggiornamento'
+  
+

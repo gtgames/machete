@@ -1,0 +1,18 @@
+script name='links_edit' type="text/x-handlebars-template" 
+  form
+    p
+      label for='title' Titolo:
+      input name='title' placeholder='Titolo' value='{{ title }}'
+    p
+      label for='subtitle' Sottotitolo:
+      input name='subtitle' placeholder='Sottotitolo' value='{{ lead }}'
+    p
+      label for='subtitle' Testo:
+      textarea name='subtitle' placeholder='Testo' {{ text }}
+    p
+      input type='submit' value='Salva'
+      input type='reset' value='Annulla'
+
+script name='links_list' type="text/x-handlebars-template" 
+  table
+    

@@ -1,6 +1,0 @@
-%h1
-  = t "pages.search.results"
-  \:
-%article
-  - @pages.each do |p|
-    = link_to p.title, url(:pages, :show, :id => p.id, :slug => p.slug)

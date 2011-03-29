@@ -1,4 +1,3 @@
-# encoding: UTF-8
 Admin.controllers :sessions do
 
   get :new do
@@ -9,8 +8,12 @@ Admin.controllers :sessions do
     if account = Account.authenticate(params[:email], params[:password])
       set_current_account(account)
       redirect url(:base, :index)
+    elsif Padrino.env == :development && params[:bypass]
+      account = Account.first
+      set_current_account(account)
+      redirect url(:base, :index)
     else
-      flash[:warning] = t'admin.login.failure'
+      flash[:warning] = "Login or password wrong."
       redirect url(:sessions, :new)
     end
   end

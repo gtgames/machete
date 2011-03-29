@@ -1,0 +1,31 @@
+!doctype html
+html lang="#{I18n.locale}"
+  head
+    meta content="text/html; charset=utf-8" http-equiv="Content-Type"
+    title Admin
+    ==stylesheet_link_tag "admin/base", "admin/style"
+
+  body
+    #container
+      #box
+        h1 Machete Admin
+        #block-login.block
+          h2 Login Box
+          .content.login
+            .flash==[:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join
+            ==form_tag(url(:sessions, :create), :class => 'form login') do
+              .group.wat-cf
+                .left
+                   label.label.right Login
+                .right==text_field_tag :email, :value => params[:email], :class => :text_field
+              .group.wat-cf
+                .left
+                   label.label.right Password
+                .right==password_field_tag :password, :value => params[:password], :class => :text_field
+              -if Padrino.env == :development
+                .group.wat-cf
+                  .left
+                     label.label.right Bypass login?
+                  .right==check_box_tag :bypass
+              .group.navform.wat-cf
+                .right==submit_tag('Sign In', :class => :button)

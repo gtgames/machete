@@ -1,0 +1,71 @@
+script name='posts_form' type="text/x-handlebars-template"
+  .block
+    .secondary-navigation
+      ul.wat-cf
+        li.first
+          a href="#!/posts/" Indice
+        li.active
+          a href="#!/posts/new" Nuovo
+    .content
+      .inner
+        h2 Nuovo Post
+        form.form
+          .group
+            label for='title' Titolo:
+            input.text_field type='text' name='title' placeholder='titolo' value='{{ post.title }}'
+          .group
+            label for='lead' Introduzione:
+            textarea.text_area type='text' name='lead' placeholder='frase introduttiva' {{ post.lead }}
+          .group
+            label for='text' Testo:
+            textarea.text_area type='text' name='text' placeholder='testo' {{ post.text }}
+          .group
+            label for='tag_list' Etichette:
+            input.text_field type='text' name='tag_list' placeholder='lista etichette' value='{{ post.tags }}'
+          .group.navform.wat-cf
+            input type='submit' value='Salva'
+            input type='reset' value='Annulla'
+
+
+script name='posts_list' type="text/x-handlebars-template"
+  .block
+    .secondary-navigation
+      ul.wat-cf
+        li.first.active
+          a href="#!/posts/" Indice
+        li
+          a href="#!/posts/new" Nuovo
+    .content
+      h2.title
+        ' lista documenti
+      .inner
+        table.table
+          thead
+            tr
+              th.first=mat(:post, :title)
+              th=mat(:post, :tag_list)
+              th=mat(:post, :updated_at)
+              th=mat(:post, :created_at)
+              th.last=="&nbsp;"
+          tbody
+            | {{#posts}} {{#post}}
+            tr
+              td.first {{title}}
+              td
+                | {{#each tag_list}}
+                | {{ this }} ,
+                | {{/each}}
+              td {{updated_at}}
+              td {{created_at}}
+              td.last
+                a.button.edit data-id='{{ _id }}' href='#!/posts/{{ _id }}' Modifica
+                ' 
+                a.button.delete data-id='{{ _id }}' href='#!/posts/{{ _id }}/delete' Elimina
+              | {{/post}} {{/posts}}
+        .actions-bar.wat-cf
+          .actions=="&nbsp;"
+
+script name='posts_list_item' type="text/x-handlebars-template"
+  .list_item
+    a href='#/pages/{{ _id }}' {{ title }}
+    a href='#/pages/{{ _id }}/delete' Elimina
