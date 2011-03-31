@@ -69,8 +69,6 @@ _.extend(Backbone.Model.prototype, Backbone.RailsJSON, {
   }
 });
 
-
-
 /* Mini Growl notifications ... I miss MooTools Class */
 function MiniGrowl(options) {
   this.$ = jQuery;
@@ -81,30 +79,32 @@ function MiniGrowl(options) {
   this.template = Handlebars.compile($("script[name=growl]").html());
   _.extend(this, options);
 }
-MiniGrowl.prototype.render = function(message, type) {
-  var msg = {
-    message: message,
-    type: type
-  },
-    obj = $(this.template(msg));
-  this.notifications.push(obj);
-  this.$(this.el).append(obj);
-
-  setTimeout(function() {
-    obj.animate({
-      "height": "toggle",
-      "opacity": "toggle"
+_.extend(MiniGrowl.prototype, {
+  render: function(message, type) {
+    var msg = {
+      message: message,
+      type: type
     },
-    "slow", function() {
-      $(this).remove();
-    });
+      obj = $(this.template(msg));
+    this.notifications.push(obj);
+    this.$(this.el).append(obj);
+
+    setTimeout(function() {
+      obj.animate({
+        "height": "toggle",
+        "opacity": "toggle"
+      },
+      "slow", function() {
+        $(this).remove();
+      });
+    },
+    this.timeout);
   },
-  this.timeout);
-};
-MiniGrowl.prototype.push = function(message, type) {
-  if ((!_.isString(type)) | (!_.include(this.types, type))) type = 'notice';
-  this.render(message, type);
-};
+  push: function(message, type) {
+    if ((!_.isString(type)) | (!_.include(this.types, type))) type = 'notice';
+    this.render(message, type);
+  }
+});
 
 /* App Namespace */
 window.App = window.App || {
