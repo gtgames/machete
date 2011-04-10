@@ -1,7 +1,7 @@
 --- 
-:orm: sequel
+:orm: none
 :test: riot
 :mock: none
 :script: mootools
-:renderer: haml
+:renderer: erb
 :stylesheet: none
