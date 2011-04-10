@@ -1,20 +1,18 @@
 class Page
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Document::Taggable
-  acts_as_nested_set
+  include MongoODM::Document
+  self.include_root_in_json = false
 
-  field :title, :type => String
-  field :slug,  :type => String
-  field :text,  :type => String
+  field :title, String
+  field :slug, String
+  field :text, String
 
-  index :slug , :unique => true
-  
+  index :name, :unique => true
+
   before_save :generate_slug
 
   protected
   def generate_slug
-    self.slug = title.to_ascii.downcase.gsub(/[^a-z0-9 ]/, ' ').strip.gsub(/[ ]+/, '-')
+    self.slug = title.to_slug
   end
   
 end

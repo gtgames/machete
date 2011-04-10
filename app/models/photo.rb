@@ -1,10 +1,8 @@
-require 'carrierwave/orm/mongoid'
-require File.join Padrino.root('app/uploaders'), 'photo'
 class Photo
-  include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include MongoODM::Document
+  self.include_root_in_json = false
 
-  mount_uploader :file, PhotoUploader
-  field :title, :type => String
-
+  field :title, String
+  field :file,  SimpleUploader
+  field :tags,  Array
 end

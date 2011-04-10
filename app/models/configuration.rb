@@ -1,9 +1,8 @@
 class Configuration
-  include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include MongoODM::Document
+  self.include_root_in_json = false
 
-  field :key, :type => String
-  field :value, :type => String
+  field :key
+  field :value, String
 
-  index :key , :unique => true
 end

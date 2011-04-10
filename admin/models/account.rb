@@ -1,13 +1,15 @@
 class Account
-  include Mongoid::Document
+  include MongoODM::Document
   attr_accessor :password, :password_confirmation
+  self.include_root_in_json = false
 
   # Fields
-  field :name,             :type => String
-  field :surname,          :type => String
-  field :email,            :type => String
-  field :crypted_password, :type => String
-  field :role,             :type => String
+  field :name,             String
+  field :surname,          String
+  field :email,            String
+  field :crypted_password, String
+  field :role,             String
+
 
   # Validations
   validates_presence_of     :email, :role
@@ -23,11 +25,15 @@ class Account
   # Callbacks
   before_save :encrypt_password, :if => :password_required
 
+  def id
+    _id.to_s
+  end
+
   ##
   # This method is for authentication purpose
   #
   def self.authenticate(email, password)
-    account = first(:conditions => { :email => email }) if email.present?
+    account = find_one(:conditions => { :email => email }) if email.present?
     account && account.has_password?(password) ? account : nil
   end
 
@@ -35,7 +41,7 @@ class Account
   # This method is used by AuthenticationHelper
   #
   def self.find_by_id(id)
-    find(id) rescue nil
+    find_one({_id:BSON::ObjectId(id)}) rescue nil
   end
 
   def has_password?(password)

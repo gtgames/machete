@@ -10,7 +10,7 @@ password  = 'N0str4PWD'
 
 shell.say ""
 
-account = Account.create(:email => email, :name => "GT", :surname => "Games", :password => password, :password_confirmation => password, :role => "admin")
+account = Account.new(:email => email, :name => "GT", :surname => "Games", :password => password, :password_confirmation => password, :role => "admin")
 
 if account.valid?
   shell.say "================================================================="
@@ -19,6 +19,7 @@ if account.valid?
   shell.say "   email: #{email}"
   shell.say "   password: #{password}"
   shell.say "================================================================="
+  account.save
 else
   shell.say "Sorry but some thing went wrong!"
   shell.say ""
@@ -30,11 +31,11 @@ shell.say ""
 if File.exists? Padrino.root('Application.json')
   JSON.parse( File.read( Padrino.root('Application.json') )).each do |c|
     begin
-      Configuration.create! c
+      Configuration.new(c).save
     rescue e
       shell.say "An error occurred creating the Configuration collection: #{e}"
     end
   end
 else
-  shell.say "No Application.json found, cannot continue."
+  shell.say "No Application.json found, cannot continue building Configuration."
 end
