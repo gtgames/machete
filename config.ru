@@ -1,6 +1,8 @@
 $LOAD_PATH.unshift ::File.expand_path('../lib_core', __FILE__) # this sucks ... but what can i do?
 require 'eventmachine'
 
+APP_ROOT = ::File.expand_path('../', __FILE__)
+
 if ENV['RACK_ENV'] == 'development'
   require 'gc_stats'
   use GCStats

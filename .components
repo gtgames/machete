@@ -1,7 +1,7 @@
 --- 
-:orm: none
+:orm: mongomapper
 :test: riot
-:mock: none
+:mock: rr
 :script: mootools
 :renderer: erb
 :stylesheet: none

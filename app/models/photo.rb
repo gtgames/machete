@@ -1,8 +1,7 @@
 class Photo
-  include MongoODM::Document
-  self.include_root_in_json = false
+  include MongoMapper::Document
+  plugin MongoMachete::Plugin::Taggable
 
-  field :title, String
-  field :file,  SimpleUploader
-  field :tags,  Array
+  key :title, String
+  key :file,  SimpleUploader
 end

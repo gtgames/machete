@@ -6,7 +6,7 @@ Machete.controllers :posts do
   end
 
   get :index, :with => [:slug] do
-    @post = Post.where(:slug => params[:slug]).first
+    @post = Post.find_one({:slug => params[:slug]}).first
     render 'posts/show'
   end
 

@@ -1,8 +1,7 @@
 class Link
-  include MongoODM::Document
-  self.include_root_in_json = false
+  include MongoMapper::Document
 
-  field :title, String
-  field :url,   String
+  key :title, String
+  key :url,   String
 
 end

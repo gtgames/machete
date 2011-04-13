@@ -1,12 +1,10 @@
 class Imaging < Padrino::Application
   require 'rack_thumb'
-
   disable :sessions
   disable :flash
   use Rack::Thumb,
     :write => true
 end
-
 
 Padrino.mount("Machete").to('/').host(/^(?!(admin|www\.admin)).*$/)
 

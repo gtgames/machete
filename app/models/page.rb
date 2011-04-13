@@ -1,18 +1,33 @@
 class Page
-  include MongoODM::Document
-  self.include_root_in_json = false
+  include MongoMapper::Document
+  plugin MongoMachete::Plugin::Taggable
 
-  field :title, String
-  field :slug, String
-  field :text, String
+  key :title, String
+  key :lead,  String
+  key :text,  String
+  key :tags,  Array
 
-  index :name, :unique => true
-
-  before_save :generate_slug
-
-  protected
-  def generate_slug
-    self.slug = title.to_slug
+  timestamps!
+  def slug
+    title.to_slug
   end
-  
+
+  if Configuration.translable?
+    many :page_translation
+    scope :by_slug,  lambda { |slug|
+      where("page_translation.slug" => slug)
+    }
+  end
+end
+
+if Configuration.translable?
+  class PageTranslation
+    include MongoMapper::EmbeddedDocument
+
+    key :lang,  String
+    key :title, String
+    key :lead,  String
+    key :text,  String
+
+  end
 end

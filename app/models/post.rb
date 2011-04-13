@@ -1,18 +1,19 @@
 class Post
-  include MongoODM::Document
-  self.include_root_in_json = false
+  include MongoMapper::Document
+  plugin MongoMachete::Plugin::Taggable
 
-  field :title, String
-  field :text,  String
-  field :photo, SimpleUploader
+  key :title, String
+  key :slug,  String
+  key :text,  String
+  key :photo, SimpleUploader
+  key :tags,  Array
 
-  index :slug, :unique => true
-  
+  ensure_index :slug, :unique => true
+  scope :by_slug, lambda { |slug| where(:slug => slug) }
+
   before_save :generate_slug
-
   protected
   def generate_slug
     self[:slug] = title.to_slug
   end
-  
 end
