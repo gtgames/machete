@@ -2,9 +2,6 @@ module Rack
  
   # A Rack middleware for parsing POST/PUT body data when Content-Type is
   # not one of the standard supported types, like <tt>application/json</tt>.
-  #
-  # TODO: Find a better name.
-  #
   class PostBodyContentTypeParser
  
     # Constants
@@ -16,9 +13,7 @@ module Rack
  
     # Supported Content-Types
     #
- 
-    ################## turned into regex so it matches type with encoding data...
-    #APPLICATION_JSON = 'application/json'.freeze
+
     APPLICATION_JSON = /^application\/json/.freeze
  
     def initialize(app)

@@ -1,6 +1,6 @@
 class Post
   include MongoMapper::Document
-  plugin MongoMachete::Plugin::Taggable
+  plugin MongoMachete::Taggable
 
   key :title, String
   key :slug,  String

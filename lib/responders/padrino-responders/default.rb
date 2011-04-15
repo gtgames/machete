@@ -178,5 +178,5 @@ module Padrino
           end
         end
     end # Default
-  end # Responders  
+  end # Responders
 end # Padrino 

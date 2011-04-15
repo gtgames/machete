@@ -1,33 +1,28 @@
 class Page
   include MongoMapper::Document
-  plugin MongoMachete::Plugin::Taggable
+  plugin MongoMapper::Plugins::ReferencedTree
+  plugin MongoMachete::Taggable
 
   key :title, String
+  key :slug,  String
   key :lead,  String
   key :text,  String
   key :tags,  Array
 
   timestamps!
-  def slug
-    title.to_slug
-  end
+  referenced_tree
+  ensure_index :slug, :unique => true
 
-  if Configuration.translable?
-    many :page_translation
-    scope :by_slug,  lambda { |slug|
-      where("page_translation.slug" => slug)
-    }
-  end
-end
+  # validations
+  validates_presence_of     :title, :lead
+  validates_uniqueness_of   :slug
 
-if Configuration.translable?
-  class PageTranslation
-    include MongoMapper::EmbeddedDocument
+  scope :by_slug, lambda{ |slug| where(slug: slug) }
+  scope :roots, where(depth: 1)
 
-    key :lang,  String
-    key :title, String
-    key :lead,  String
-    key :text,  String
-
+  before_validation :slugify
+  private
+  def slugify
+    slug = title.to_slug
   end
 end
