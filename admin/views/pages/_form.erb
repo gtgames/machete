@@ -1,0 +1,13 @@
+<div class="module_content">
+  <%= f.input :title, :as => :string%>
+  <%= f.input :lead,  :as => :text %>
+  <%= f.input :text,  :as => :text %>
+  <%= f.input :tags,  :as => :string %>
+</div>
+
+<footer>
+  <div class='submit_link'>
+    <%= f.submit pat(:save), :class => :alt_btn %>
+    <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+  </div>
+</footer>

@@ -1,0 +1,90 @@
+<script name='pages_form' type="text/x-template">
+<div class='block'>
+  <div class='secondary-navigation'>
+    <ul class='wat-cf'>
+      <li class='first'>
+        <a href="#!/pages/">Indice</a>
+      </li>
+      <li class='active'>
+        <a href="#!/pages/new">Nuovo</a>
+      </li>
+    </ul>
+  </div>
+  <div class='content'>
+    <div class='inner'>
+      <h2>Nuovo Documento</h2>
+      <form class='form'>
+        <div class='group'>
+          <label for='title'>Titolo:</label>
+          <input class='text_field' type='text' name='title' placeholder='Titolo' value='{{ page.title }}'>
+        </div>
+        <div class='group'>
+          <label for='lead'>Introduzione:</label>
+          <textarea class='text_area' name='lead' placeholder='frase introduttiva'>{{ page.lead }}</textarea>
+        </div>
+        <div class='group'>
+          <label for='text'>Testo:</label>
+          <textarea class='text_area' name='text' placeholder='Testo'>{{ page.text }}</textarea>
+        </div>
+        <div class='group'>
+          <label for='tag_list'>Etichette:</label>
+          <input class='text_field' type='text' name='tag_list' placeholder='lista tag' value='{{ page.tags }}'>
+        </div>
+        <div class='group navform wat-cf'>
+          <input type='submit' value='Salva'>
+          <input type='reset' value='Annulla'>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</script>
+
+<script name='pages_list' type="text/x-template">
+  <div class='block'>
+    <div class='secondary-navigation'>
+      <ul class='wat-cf'>
+        <li class='first active'>
+          <a href="#!/pages/">Indice</a>
+        </li>
+        <li>
+          <a href="#!/pages/new">Nuovo</a>
+        </li>
+      </ul>
+    </div>
+    <div class='content'>
+      <h2 class='title'>lista documenti</h2>
+      <div ='inner'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th class='first'><%= mat(:page, :title) %></th>
+              <th><%= mat(:page, :tag_list) %></th>
+              <th><%= mat(:page, :updated_at) %></th>
+              <th><%= mat(:page, :created_at) %></th>
+              <th class='last'>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#pages}}{{#page}}
+            <tr>
+              <td class='first'> {{title}}</td>
+              <td>
+                {{#each tag_list}}
+                {{ this }} ,
+                {{/each}}
+              </td>
+              <td>{{updated_at}}</td>
+              <td>{{created_at}}</td>
+              <td class='last'>
+                <a class='button edit' data-id='{{ _id }}'  href='#!/pages/{{ _id }}'>Modifica</a>
+                <a class'button delete' data-id='{{ _id }}' href='#!/pages/{{ _id }}/delete'>Elimina</a>
+              </td>
+            </tr>
+            {{/page}}{{/pages}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</script>

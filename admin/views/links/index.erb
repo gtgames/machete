@@ -1,0 +1,29 @@
+<table cellspacing="0"> 
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th><%= mat(:link, :title) %></th>
+      <th><%= mat(:link, :url) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @links.each do |link| %>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td><%= link.title %></td>
+        <td><%= link.url %></td>
+        <td>
+          <%= button_to pat(:edit), url(:links, :edit, :id => link.id), :method => :get, :class => [:button_to, :edit] %>
+          <%= button_to pat(:delete), url(:links, :destroy, :id => link.id), :method => :delete, :class => [:button_to, :trash] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<footer></footer>
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :links }) %>
+<% content_for :sidebar, partial("base/sidebar") %>
+<% content_for :title, 'Menu' %>

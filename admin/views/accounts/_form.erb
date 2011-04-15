@@ -1,0 +1,14 @@
+<div class="module_content">
+  <%= f.input :name %>
+  <%= f.input :surname %>
+  <%= f.input :password %>
+  <%= f.input :password_confirmation %>
+  <%= f.input :role, :options => access_control.roles %>
+</div>
+
+<footer>
+  <div class='submit_link'>
+    <%= f.submit pat(:save), :class => :button %>
+    <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:accounts, :index)}';return false", :class => :button %>
+  </div>
+</footer>

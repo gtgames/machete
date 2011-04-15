@@ -1,0 +1,8 @@
+&nbsp;
+<% form_for :account, url(:accounts, :create), :class => :form do |f| %>
+  <%= partial "accounts/form", :locals => { :f => f } %>
+<% end %>
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :accounts }) %>
+<% content_for :sidebar, partial("base/sidebar") %>
+<% content_for :title, 'Nuovo Utente' %>

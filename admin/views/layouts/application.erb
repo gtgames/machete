@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Admin</title>
+  <link rel="stylesheet" href="/stylesheets/admin/layout.css" type="text/css" media="screen">
+</head>
+<body>
+  <header id="header">
+    <hgroup>
+      <h1 class="site_title"><a href="/">Website Admin</a></h1>
+      <h2 class="section_title"><%= yield_content :title %></h2><div class="btn_view_site"><a href="">View Site</a></div>
+    </hgroup>
+  </header>
+
+  <section id="secondary_bar">
+    <div class="user">
+      <p><%= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id) %> (<a href="#">3 Messages</a>)</p>
+      <%= link_to pat(:logout), url(:sessions, :destroy), :method => :delete, :class => :logout_user %>
+    </div>
+    <div class="breadcrumbs_container">
+      <div class="breadcrumbs">
+        <a href="/">Website Admin</a>
+        <div class="breadcrumb_divider"></div>
+        <a class="current"><%= yield_content :title %></a>
+      </div>
+    </div>
+  </section><!-- end of secondary bar -->
+
+  <aside id="sidebar" class="column">
+    <% project_modules.each do |project_module| %>
+      <h3 class="<%= "active" if request.path_info =~ /^#{project_module.path}/ %>"><%= project_module.human_name %></h3>
+      <ul class="toggle">
+        <li class="icn_new_article"><%= link_to 'Nuovo Documento', project_module.path("/")+'/new' %></li>
+        <li class="icn_categories"><%= link_to 'Lista', project_module.path("/") %></li>
+      </ul>
+      <hr>
+    <% end %>
+    <h3>Media</h3>
+    <ul class="toggle">
+      <li class="icn_folder"><a href="#">File Manager</a></li>
+      <li class="icn_photo"><a href="#">Gallery</a></li>
+      <li class="icn_audio"><a href="#">Audio</a></li>
+      <li class="icn_video"><a href="#">Video</a></li>
+    </ul>
+    <hr>
+    <h3>Admin</h3>
+    <ul class="toggle">
+      <li class="icn_settings"><a href="#">Options</a></li>
+      <li class="icn_security"><a href="#">Security</a></li>
+      <li class="icn_jump_back"><a href="#">Logout</a></li>
+    </ul>
+
+    <footer>
+      <hr />
+      <p><strong>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.8</a></strong></p>
+    </footer>
+  </aside><!-- end of sidebar -->
+
+  <section id="main" class="column">
+    <div class="flash">
+      <%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join %>
+    </div>
+    
+    <article class="module width_3_quarter">
+      <header>
+        <h3><%= yield_content :title %></h3>
+        <%= yield_content :actions %>
+      </header>
+      <%= yield %>
+    </article>
+    
+    <article class="module width_quarter">
+      <%= yield_content :sidebar %>
+    </article>
+    
+  </section>
+</body>
+</html>

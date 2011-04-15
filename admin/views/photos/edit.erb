@@ -1,0 +1,8 @@
+&nbsp;
+<% form_for :photo, url(:photos, :update, :id => @photo.id), :method => :put, :class => :form do |f| %>
+  <%= partial "photos/form", :locals => { :f => f } %>
+<% end %>
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :photos }) %>
+<% content_for :sidebar, partial("base/sidebar") %>
+<% content_for :title, 'Modifica Foto' %>
