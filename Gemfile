@@ -4,7 +4,6 @@ source :rubygems
 gem 'rake'
 gem 'rack-flash'
 gem 'thin'
-
 #gem 'rack-cache' #!included
 
 #gem 'em-net-http'
@@ -18,13 +17,16 @@ gem 'yajl-ruby', :require => "yajl/json_gem"
 gem 'builder'
 
 gem 'mongo', '>=1.3.0'
-gem 'bson_ext', '>=1.3.0', :require => "mongo"
+gem 'bson_ext', '>=1.3.0', :require => nil
 
 gem 'mongo_mapper', '>=0.9.0'
 #gem 'hunt'
+gem 'mm-referenced-tree', '>=0.2.0'
+gem 'mm-embeddable'
 
 group :development do
   gem 'ruby-debug19'
+  gem 'wirb'
 end
 
 # Test requirements
@@ -36,10 +38,6 @@ group :test do
   gem 'machinist_mongo'
   gem 'machinist', :require => 'machinist/mongo_mapper'
   gem 'rack-test', :require => "rack/test"
-end
-
-group :development do
-  gem 'wirb'
 end
 
 gem 'padrino-contrib'
