@@ -1,32 +1,47 @@
 Admin.controllers :pages do
-  provides :html, :json
 
   get :index do
-    respond(@pages = Page.all)
+    @pages = Page.all
+    render 'pages/index'
   end
 
   get :new do
-    respond(@page = Page.new)
+    @page = Page.new
+    render 'pages/new'
   end
 
-  post :create, :map => '/pages' do
+  post :create do
     @page = Page.new(params[:page])
-    @page.save
-    respond @page, url(:pages, :edit, :id => @page.id)
+    if @page.save
+      flash[:notice] = 'Page was successfully created.'
+      redirect url(:pages, :edit, :id => @page.id)
+    else
+      render 'pages/new'
+    end
   end
 
-  get :edit, :with => :id, :map => '/pages' do
-    respond(@page = Page.find(params[:id]))
-  end
-
-  put :update, :with => :id, :map => '/pages' do
+  get :edit, :with => :id do
     @page = Page.find(params[:id])
-    @page.update_attributes(params[:page])
-    respond(@page, url(:pages, :edit, :id => @page.id))
+    render 'pages/edit'
   end
 
-  delete :destroy, :with => :id, :map => '/pages' do
+  put :update, :with => :id do
+    @page = Page.find(params[:id])
+    if @page.update_attributes(params[:page])
+      flash[:notice] = 'Page was successfully updated.'
+      redirect url(:pages, :edit, :id => @page.id)
+    else
+      render 'pages/edit'
+    end
+  end
+
+  delete :destroy, :with => :id do
     page = Page.find(params[:id])
-    respond(page.destroy, url(:pages, :index))
+    if page.destroy
+      flash[:notice] = 'Page was successfully destroyed.'
+    else
+      flash[:error] = 'Impossible destroy Page!'
+    end
+    redirect url(:pages, :index)
   end
 end

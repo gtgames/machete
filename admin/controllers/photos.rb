@@ -1,5 +1,4 @@
 Admin.controllers :photos do
-  provides :html, :js, :json
 
   get :index do
     @photos = Photo.all

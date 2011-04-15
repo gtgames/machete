@@ -1,5 +1,6 @@
 Admin.controllers :base do
+
   get :index, :map => "/" do
-    render "base/xhr", :layout => false
+    render "base/index"
   end
 end
