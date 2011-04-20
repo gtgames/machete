@@ -6,6 +6,6 @@ context "PagesController" do
       get "/"
     end
 
-    asserts("the response body") { last_response.body }.equals "Hello World"
+    asserts("the response body") { last_response.status }.equals 200
   end
 end

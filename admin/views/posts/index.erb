@@ -14,8 +14,8 @@
         <td><%= post.title %></td>
         <td><%= post.tags %></td>
         <td>
-          <%= button_to pat(:edit), url(:post, :edit, :id => post.id), :method => :get, :class => [:button_to, :edit] %>
-          <%= button_to pat(:delete), url(:post, :destroy, :id => post.id), :method => :delete, :class => [:button_to, :trash] %>
+          <%= button_to pat(:edit), url(:post, :edit, :id => post.id), :method => :get, :class => 'button_to edit' %>
+          <%= button_to pat(:delete), url(:post, :destroy, :id => post.id), :method => :delete, :class => 'button_to trash' %>
         </td>
       </tr>
     <% end %>

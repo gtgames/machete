@@ -8,6 +8,17 @@ module MongoMachete
     end
 
     module InstanceMethods
+      def tag_list
+        (self['tags'].nil?)? '' : self['tags'].join(', ')
+      end
+      def tag_list=(string)
+        self['tags'] = []
+        string.to_s.split(',').map { |n|
+          n.gsub(/[^\w\s_-]/i, '').strip
+        }.uniq.sort.each{ |o|
+          self['tags'] << o
+        }
+      end
     end
 
     def self.configure(model)

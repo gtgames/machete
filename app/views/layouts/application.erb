@@ -10,7 +10,7 @@
 
     <script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
 
-    <title><%= configuration('title') %><%= yield_content(:title) %></title>
+    <title><%= cfg('title') %><%= yield_content(:title) %></title>
   </head>
   <body>
     <nav class="row">
@@ -48,7 +48,7 @@
     </footer>
     <script>
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', '<%= configuration('analytics') %>']);
+      _gaq.push(['_setAccount', '<%= cfg('analytics') %>']);
       _gaq.push(['_setDomainName', 'none']);
       _gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
       head.js(

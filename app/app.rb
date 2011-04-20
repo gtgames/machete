@@ -17,10 +17,6 @@ class Machete < Padrino::Application
 
   layout  :application
 
-  configure :development do
-    set :slim, { :pretty   => true }
-  end
-
   error 404 do
     render 'errors/404'
   end

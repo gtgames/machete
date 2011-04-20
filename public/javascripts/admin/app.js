@@ -16,6 +16,7 @@ $(function() {
   window.Pages = new App.Pages.Controller();
   window.Posts = new App.Posts.Controller();
   window.Menu = new App.Menu.Controller();
+  window.Cards = new App.Card.Controller();
   new Workbench();
   Backbone.history.start();
 });

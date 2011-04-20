@@ -6,6 +6,10 @@ APP_ROOT = ::File.expand_path('../', __FILE__)
 if ENV['RACK_ENV'] == 'development'
   require 'gc_stats'
   use GCStats
+  
+  use Rack::Static,
+    :urls => ["/stylesheets", "/images"],
+    :root => "public"
 end
 
 if EM.reactor_running?

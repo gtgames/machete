@@ -1,0 +1,6 @@
+<% @posts.each do |post| %>
+  <a href="http://<%= cfg(:domain) %>/<%= url(:posts, :show, :slug => post.slug) %>"><%= post.title %></a>
+<% end %>
+<% @pages.each do |page| %>
+  <a href="http://<%= cfg(:domain) %>/<%= url(:pages, :show, :slug => page.slug) %>"><%= page.title %></a>
+<% end %>

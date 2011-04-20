@@ -15,7 +15,7 @@ class Page
 
   # validations
   validates_presence_of     :title, :lead
-  validates_uniqueness_of   :slug
+  validates_uniqueness_of   :slug, :title
 
   scope :by_slug, lambda{ |slug| where(slug: slug) }
   scope :roots, where(depth: 1)
@@ -23,6 +23,6 @@ class Page
   before_validation :slugify
   private
   def slugify
-    slug = title.to_slug
+    self['slug'] = self['title'].to_slug
   end
 end

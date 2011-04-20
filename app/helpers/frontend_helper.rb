@@ -1,8 +1,8 @@
 Machete.helpers do
   def menu
-    Link.find()
+    Link.all
   end
   def tree
-    pages = Page.find()
+    Page.all
   end
 end

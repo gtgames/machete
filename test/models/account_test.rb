@@ -7,15 +7,9 @@ context "Account" do
     setup { Account.make }
     asserts_topic.has_key :name,             String
     asserts_topic.has_key :surname,          String
-    asserts_topic.has_key :role,             String
     asserts_topic.has_key :email,            String
-    asserts_topic.has_key :salt,             String
     asserts_topic.has_key :crypted_password, String
-    asserts_topic.has_key :username,         String
-    asserts_topic.has_key :post_ids,         Array, :typecast => 'ObjectId'
-    
-    # associations
-    asserts_topic.has_association :many, :posts, :in => :post_ids
+    asserts_topic.has_key :role,             String
 
     # responds to
     asserts_topic.responds_to :password
@@ -33,7 +27,7 @@ context "Account" do
 
     # validates length of
     asserts_topic.has_validation :validates_length_of, :password, :within => 4..40, :if => :password_required
-    asserts_topic.has_validation :validates_length_of, :email, :within => 3..100
+    asserts_topic.has_validation :validates_length_of, :email,    :within => 3..100
 
     #validates uniqueness
     asserts_topic.has_validation :validates_uniqueness_of, :email, :case_sensitive => false
@@ -53,10 +47,4 @@ context "Account" do
     setup { Account.make }
     asserts("finds account") { Account.find_by_id(topic.id) }
   end
-
-  context "password_clean method" do
-    setup { Account.make :password => 'password', :password_confirmation => 'password' }
-    asserts("success") { topic.password_clean }.equals 'password'
-  end
-
 end
