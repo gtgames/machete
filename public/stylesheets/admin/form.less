@@ -1,0 +1,64 @@
+@input_width: 600px;
+@input_border: #bab9b9;
+@button_submit: #f7941d;
+@button_reset: #f7941d;
+@button_text: #ffffff;
+
+
+textarea,
+input[type="text"],
+input[type="file"],
+input[type="tel"],
+input[type="url"],
+input[type="email"],
+input[type="password"],
+input[type="datetime"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetimelocal"],
+input[type="number"],
+input[type="color"] {
+  border: 1px solid @input_border;
+  padding: 10px;
+  width: @input_width;
+  color:#707070;
+  font-size:14px;
+}
+textarea {
+  height: 8em;
+}
+
+input[type="submit"],
+input[type="reset"] {
+  margin: 0px;
+  padding: 10px 20px;
+  border: 0px;
+  font-size: 14px;
+  color: @button_text;
+}
+input[type="submit"] {
+  background-color: @button_submit;
+}
+input[type="reset"] {
+  background-color: @button_reset;
+}
+
+label {
+  text-transform: uppercase;
+  line-height: 2em;
+  font-weight: bolder;
+  display: block;
+}
+
+form.button_to {
+  display:inline-block;
+  padding:0;
+}
+form.trash input[type=submit] {
+  .iconr_trash();
+}
+form.edit input[type=submit] {
+  .iconr_edit();
+}

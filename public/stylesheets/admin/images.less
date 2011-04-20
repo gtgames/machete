@@ -1,0 +1,34 @@
+.image_replace(@i, @pl:0px, @pt:0px, @w:32px, @h:32px) {
+  padding: 0;
+  width: @w;
+  height: @h;
+  background: e(%("url(%s/images/%s)", @lib_path, @i)) @pl @pt;
+  text-indent: -9999px;
+}
+
+.iconr_trash(){
+  .image_replace('icons.png', 0px, -64px);
+}
+.iconr_edit(){
+  .image_replace('icons.png', 0px, -32px);
+}
+
+.before_icon(@i, @pl:0px, @pt:0px, @w:16px, @h:16px) {
+  position: relative;
+  padding-left: 18px;
+  &:before {
+    content: "";
+    position: absolute;
+    width: @w;
+    height: @h;
+    left: 1px;
+    background: e(%("url(%s/images/%s)", @lib_path, @i)) @pl @pt;
+  }
+}
+
+.iconb_list() {
+  .before_icon('icons_16.png', 0px, -16px);
+}
+.iconb_list() {
+  .before_icon('icons_16.png', 0px, -16px);
+}
