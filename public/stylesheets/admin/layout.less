@@ -1,8 +1,48 @@
+/*
 @import "reset.less";
 @import "typo.less";
 @import "css3.less";
-@import "images.less";
+*/
+@fontstack1: Helvetica, arial, sans-serif; /* Headings */
+@fontstack2: Helvetica Neue, arial, sans-serif; /* Body copy */
+@fontstack3: Georgia, serif;
+@font-stack: Helvetica, arial, sans-serif;
+@font-stack2: Helvetica Neue, arial, sans-serif;
+
+@font-size: 12px;
+@vertical-rhythm: @font-size * 1.5;
+
+@link-color: #8b59c2;
+@link-hover-color: darken(@link-color, 10);
+
+@columnWidth: 49px;
+@gutter: 16px;
+@allColumns: @columnWidth * 12;
+@allGutters: (@gutter * 12) * 2;
+@totalWidth: @allColumns + @allGutters;
+
+// Colors
+// Grays
+@white: #fff;
+@gray-lighter: #ccc;
+@gray-light: #777;
+@gray: #555;
+@gray-dark: #333;
+@black: #000;
+
+// Accent Colors
+@blue: #00b3ee;
+@green: #46a546;
+@red: #9d261d;
+@yellow: #ffc40d;
+@orange: #f89406;
+@pink: #c3325f;
+@purple: #7a43b6;
+
+
+@import "bootstrap.less";
 @import "form.less";
+@import "images.less";
 
 .util_clearfix() {
   &:after {
@@ -15,8 +55,6 @@
   zoom: 1;
 }
 
-
-.reset();
 
 @lib_path: '/stylesheets/admin';
 
@@ -68,12 +106,14 @@ a:hover{
 }
 /* nav */
 nav {
-  .css3_box_shadow(1px, 1px, 4px);
+  .box-shadow(1px 1px 4px);
   display: inline-block;
   position: relative;
   background-color: @face_color;
   ul {
     .util_clearfix();
+    padding:0;
+    margin:0;
     background-color: @face_color;
     ul {
       position: absolute;
@@ -131,6 +171,7 @@ nav {
     .util_clearfix();
   }
   .title, #actions {
+    margin:0;
     text-align: center;
     padding-top: 0.5em;
   }
@@ -159,6 +200,7 @@ td {
   background-color:lighten(@bg_color, 10%);
 }
 table {
+  .border-radius(3px);
   width: @inside_width;
   border-top: 1px solid @border_color;
   border-right: 1px solid @border_color;

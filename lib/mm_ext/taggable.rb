@@ -23,7 +23,7 @@ module MongoMachete
 
     def self.configure(model)
       model.key :tags, Array
-      model.scope :by_tag, lambda { |tag| where(:tags => tag) }
+      model.scope :by_tag, lambda { |tag| where(:tags.in => tag) }
     end
 
   end
