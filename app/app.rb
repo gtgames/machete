@@ -4,7 +4,7 @@ class Machete < Padrino::Application
 
   enable :sessions
   enable :flash
-  
+
   layout  :application
 
   error 404 do

@@ -1,3 +1,4 @@
+
 $LOAD_PATH.unshift ::File.expand_path('../lib_core', __FILE__) # this sucks ... but what can i do?
 require 'eventmachine'
 
