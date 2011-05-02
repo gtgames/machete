@@ -3,10 +3,10 @@
   <%= f.input :photo, :as => :string%>
   <%= f.input :lead,  :as => :text %>
   <%= f.input :text,  :as => :text %>
-  <%= f.input :tags,  :as => :string %>
+  <%= f.input :tag_list,  :as => :string %>
 </div>
 
-<div class="group navform wat-cf">
+<div class='submit_link'>
   <%= f.submit pat(:save), :class => :button %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:posts, :index)}';return false", :class => :button %>
 </div>

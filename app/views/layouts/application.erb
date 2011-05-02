@@ -2,14 +2,19 @@
 <html class='no-js'>
   <head>
     <meta charset="utf-8">
-    <link href="/stylesheets/style.css" rel="stylesheet" title="a complete stylesheet" type="text/css">
-    <meta name="description" content="">
-    <meta name="keywords"    content="">
+    <meta name="description" content="<%= yield_content(:description) %>">
+    <meta name="keywords"    content="<%= yield_content(:keywords) %>">
     <meta name="author"      content="GTGames.it">
     <meta name="generator"   content="machete.it">
 
-    <script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
+    <link rel="stylesheet/less" href="/stylesheets/layout.less" type="text/css" media="screen">
+    <script src="/javascripts/libs/less.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+      less.env = 'development';
+      less.watch();
+    </script>
 
+    <script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
     <title><%= cfg('title') %><%= yield_content(:title) %></title>
   </head>
   <body>
@@ -17,7 +22,7 @@
       <ul class="column grid_12">
         <% menu.each do |m| %>
           <li>
-            <a title="<%= m.alt %>" href="<%= m.url %>">
+            <a href="<%= m.url %>">
               <%= m.title %>
             </a>
           </li>

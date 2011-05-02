@@ -1,11 +1,5 @@
-Admin.controllers :media do
-
+Admin.controllers :dialogs do
   get :index do
-  end
-
-  post :index do
-  end
-
-  get :filemanager do
+    render 'dialogs/index'
   end
 end

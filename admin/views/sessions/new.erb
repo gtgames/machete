@@ -3,29 +3,39 @@
 <head>
   <meta charset="utf-8">
   <title>Admin</title>
-  <%= stylesheet_link_tag :base, "themes/default/style" %>
+  <link rel="stylesheet" href="/stylesheets/admin/layout.less" type="text/less" media="screen" title="no title" charset="utf-8">
+  <script src="/javascripts/libs/less.js" type="text/javascript"></script>
+  <script type="text/javascript" charset="utf-8">
+    less.env = 'development';
+    less.watch();
+  </script>
 </head>
 <body>
 
   <div id='login_box'>
-    <h2>Login Box</h2>
-      <div class="content login">
-        <div class="flash">
-          <%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join %>
-        </div>
-        <% form_tag(url(:sessions, :create), :class => 'form login') do %>
-          <label class="label right">Login</label>
-          <%= text_field_tag :email, :value => params[:email], :class => 'text_field' %>
-          <label class="label right">Password</label>
-          <%= password_field_tag :password, :value => params[:password], :class => 'text_field' %>
-
-          <% if Padrino.env == :development %>
-            <label class="label right">Bypass login?</label>
-            <%= check_box_tag :bypass %>
-          <% end %>
-          <%= submit_tag "Sign in", :class => :button %>
-        <% end %>
+    <div class="flash">
+      <%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join %>
     </div>
+    <h1>Login Box</h1>
+    <% form_tag(url(:sessions, :create), :class => 'form login') do %>
+      <p>
+        <label for="username">Login</label>
+        <%= text_field_tag :username, :value => params[:username], :id => 'username' %>
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <%= password_field_tag :password, :value => params[:password], :id => 'password' %>
+      </p>
+      <% if Padrino.env == :development %>
+        <p>
+          <label for="bypass">Bypass login?</label>
+          <%= check_box_tag :bypass, :id => 'bypass' %>
+        </p>
+      <% end %>
+      <div class="submit_link">
+        <%= submit_tag "Sign in", :class => :button %>
+      </div>
+    <% end %>
   </div>
 </body>
 </html>

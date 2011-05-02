@@ -5,9 +5,14 @@
   <%= f.input :tag_list,  :as => :string %>
 </div>
 
-<footer>
-  <div class='submit_link'>
-    <%= f.submit pat(:save), :class => :alt_btn %>
-    <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
-  </div>
-</footer>
+<div id='advanced'>
+  <%= f.input :meta_keyword, :as => :string %>
+  <%= f.input :meta_description, :as => :string %>
+  <%= f.input :parent %>
+  <%= f.input :menu %>
+</div>
+
+<div class='submit_link'>
+  <%= f.submit pat(:save), :class => :alt_btn %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+</div>

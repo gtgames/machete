@@ -9,12 +9,16 @@ class Page
   key :text,  String
   key :tags,  Array
 
+  key :meta_keyword, String
+  key :meta_description, String
+  key :browser_title, String
+  key :menu, Boolean, :default => false
+
   timestamps!
   referenced_tree
-  ensure_index :slug, :unique => true
 
   # validations
-  validates_presence_of     :title, :lead
+  validates_presence_of     :title, :lead, :text
   validates_uniqueness_of   :slug, :title
 
   scope :by_slug, lambda{ |slug| where(slug: slug) }

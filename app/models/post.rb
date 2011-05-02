@@ -8,8 +8,12 @@ class Post
   key :photo, SimpleUploader
   key :tags,  Array
 
-  ensure_index :slug, :unique => true
+  timestamps!
+
   scope :by_slug, lambda { |slug| where(:slug => slug) }
+
+  validates_presence_of     :title, :lead, :text
+  validates_uniqueness_of   :slug, :title
 
   before_save :generate_slug
   protected

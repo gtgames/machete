@@ -4,10 +4,11 @@ class Imaging < Padrino::Application
   disable :flash
   use Rack::Thumb,
     :write => true
+  get '/' do
+    throw 404
+  end
 end
 
 Padrino.mount("Machete").to('/').host(/^(?!(admin|www\.admin)).*$/)
-
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
-
 Padrino.mount("Imaging").to('/media/')

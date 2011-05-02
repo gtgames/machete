@@ -3,15 +3,17 @@ source :rubygems
 # Project requirements
 gem 'rake'
 gem 'rack-flash'
+gem 'eventmachine'
 gem 'thin'
-#gem 'rack-cache' #!included
 
-#gem 'em-net-http'
-#gem 'em-resolv-replace'
+gem 'em-net-http'
+gem 'em-resolv-replace'
 gem 'rack-fiber_pool'
 gem 'em-synchrony', '>=0.2.0'
 
 # Component requirements
+gem 'erubis'
+
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'yajl-ruby', :require => "yajl/json_gem"
 gem 'builder'
@@ -50,4 +52,4 @@ gem 'unidecode'
 #gem 'mapel', :git => 'https://github.com/vidibus/mapel.git'
 
 # Padrino
-gem 'padrino', "0.9.23"
+gem 'padrino', "0.9.26"

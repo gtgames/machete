@@ -3,9 +3,9 @@ class Comment
 
   key :body,       String
   key :voters,     Array
-  key :votes,      Integer, default: 0
-  key :depth,      Integer, default: 0
-  key :path,       String,  default: ""
+  key :votes,      Integer, :default => 0
+  key :depth,      Integer, :default => 0
+  key :path,       String,  :default => ""
 
   key :parent_id,  String
   key :story_id,   ObjectId
@@ -14,8 +14,8 @@ class Comment
   timestamps!
 
   # Relationships.
-  belongs_to :user
-  belongs_to :story
+  #belongs_to :user
+  #belongs_to :story
 
   # Callbacks.
   after_create :auto_upvote, :set_path, :increment_story_comment_count

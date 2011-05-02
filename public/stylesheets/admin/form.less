@@ -1,9 +1,9 @@
-@input_width: 600px;
+@input_width: 960px;
 @input_border: #bab9b9;
 @button_submit: #f7941d;
 @button_reset: #f7941d;
-@button_text: #ffffff;
-
+@button_text: #000;
+@button_border: #BD5E07;
 
 textarea,
 input[type="text"],
@@ -25,24 +25,40 @@ input[type="color"] {
   width: @input_width;
   color:#707070;
   font-size:14px;
+  .box-shadow(0px 0px 8px #d0d0d0 inset);
 }
 textarea {
   height: 8em;
 }
 
-input[type="submit"],
-input[type="reset"] {
-  margin: 0px;
-  padding: 10px 20px;
-  border: 0px;
-  font-size: 14px;
-  color: @button_text;
-}
-input[type="submit"] {
-  background-color: @button_submit;
-}
-input[type="reset"] {
-  background-color: @button_reset;
+.submit_link input{
+  &[type="submit"],
+  &[type="reset"] {
+    margin: 20px 20px 2px 0;
+    padding: 5px 10px;
+    border: 0px;
+    font-size: 14px;
+    color: @button_text;
+  }
+  &[type="submit"] {
+    cursor:pointer;
+    background-color: @button_submit;
+    @shadow: -3px -9px 20px #BD5E07 inset, 1px 1px 1px #FFFFFF inset, 1px 1px 2px #000;
+    .box-shadow(@shadow);
+    border-radius: 8px;
+    border: 1px solid @button_border;
+    border-left: 4px solid @button_border;
+    text-shadow: 0 1px 1px rgba(255,255,255,.5);
+    &:hover {
+    }
+    &:active {
+      margin-top: 22px;
+      margin-bottom: 0px;
+    }
+  }
+  &[type="reset"] {
+    background-color: @button_reset;
+  }
 }
 
 label {
@@ -55,6 +71,9 @@ label {
 form.button_to {
   display:inline-block;
   padding:0;
+  input {
+    border: 0;
+  }
 }
 form.trash input[type=submit] {
   .iconr_trash();
