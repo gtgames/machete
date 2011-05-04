@@ -15,7 +15,6 @@ gem 'em-synchrony', '>=0.2.0'
 gem 'erubis'
 
 gem 'bcrypt-ruby', :require => "bcrypt"
-gem 'yajl-ruby', :require => "yajl/json_gem"
 gem 'builder'
 
 gem 'mongo', '>=1.3.0'
@@ -51,5 +50,6 @@ gem 'unidecode'
 #gem 'rack-thumb', :git => 'https://github.com/vidibus/rack-thumb.git'
 #gem 'mapel', :git => 'https://github.com/vidibus/mapel.git'
 
+gem 'yajl-ruby', :require => "yajl/json_gem"
 # Padrino
 gem 'padrino', "0.9.26"

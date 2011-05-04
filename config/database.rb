@@ -1,6 +1,8 @@
+require 'yajl/json_gem'
+
 settings = JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))
 
-MongoMapper.connection = Mongo::Connection.new(settings[:mongo][:host], nil, :logger => logger)
+MongoMapper.connection = Mongo::Connection.new(settings['mongo']['host'], nil, :logger => logger)
 
 case Padrino.env
   when :development then MongoMapper.database = settings['mongo']['name'] + '_development'
@@ -8,4 +10,4 @@ case Padrino.env
   when :test        then MongoMapper.database = settings['mongo']['name'] + '_test'
 end
 
-MongoMapper.database.authenticate(settings['username'], settings['password']) unless (settings['username']).nil?
+MongoMapper.database.authenticate(settings['mongo']['username'], settings['mongo']['password']) unless (settings['mongo']['username']).nil?
