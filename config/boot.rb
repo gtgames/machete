@@ -25,6 +25,9 @@ end
 # Add here your after load hooks
 #
 Padrino.after_load do
+  Page.ensure_index :slug, :unique => true
+  Post.ensure_index :slug, :unique => true
+  Configuration.ensure_index :key, :unique => true
 end
 
 Padrino.load!
