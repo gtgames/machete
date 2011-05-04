@@ -16,6 +16,7 @@ class Page
 
   timestamps!
   referenced_tree
+  attr_protected :parent
 
   # validations
   validates_presence_of     :title, :lead, :text

@@ -5,12 +5,15 @@
   <%= f.input :tag_list,  :as => :string %>
 </div>
 
-<div id='advanced'>
+
+<fieldset id='advanced'>
+  <legend>Avanzate</legend>
   <%= f.input :meta_keyword, :as => :string %>
   <%= f.input :meta_description, :as => :string %>
   <%= f.input :parent %>
   <%= f.input :menu %>
-</div>
+</fieldset>
+
 
 <div class='submit_link'>
   <%= f.submit pat(:save), :class => :alt_btn %>

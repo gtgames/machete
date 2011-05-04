@@ -1,34 +1,39 @@
-@input_width: 960px;
+@input_width: 1050px;
 @input_border: #bab9b9;
 @button_submit: #f7941d;
 @button_reset: #f7941d;
 @button_text: #000;
 @button_border: #BD5E07;
+.in {
+  textarea,
+  input[type="text"],
+  input[type="file"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="email"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="date"],
+  input[type="month"],
+  input[type="week"],
+  input[type="time"],
+  input[type="datetimelocal"],
+  input[type="number"],
+  input[type="color"] {
+    width: @input_width;
+    padding: 10px;
+    color:#707070;
+    font-size:14px;
+    .box-shadow(0px 0px 8px #d0d0d0 inset);
+  }
+  textarea {
+    height: 8em;
+  }
 
-textarea,
-input[type="text"],
-input[type="file"],
-input[type="tel"],
-input[type="url"],
-input[type="email"],
-input[type="password"],
-input[type="datetime"],
-input[type="date"],
-input[type="month"],
-input[type="week"],
-input[type="time"],
-input[type="datetimelocal"],
-input[type="number"],
-input[type="color"] {
-  border: 1px solid @input_border;
-  padding: 10px;
-  width: @input_width;
-  color:#707070;
-  font-size:14px;
-  .box-shadow(0px 0px 8px #d0d0d0 inset);
-}
-textarea {
-  height: 8em;
+  input[name*="[title]"] {
+    font-size: 130%;
+    font-weight: bolder;
+  }
 }
 
 .submit_link input{
@@ -80,4 +85,8 @@ form.trash input[type=submit] {
 }
 form.edit input[type=submit] {
   .iconr_edit();
+}
+
+.login input {
+  max-width: 690px;
 }

@@ -7,25 +7,7 @@ class Media
   key :content_type,  String
 
   before_create :take_care
-  private
-  def take_care
-    media_folder = "#{APP_ROOT}/public/media"
-    subfolder = (/^image\/.*/.match(self['content_type']).nil?)? 'assets' : 'pictures'
-    temp_path = self['path'] if self.new?
-    self['name'] = self['name'].gsub(/\s+/,'_')
-    self['url']  = (! self.new?)? self['url']  : "/media/#{subfolder}/#{self['_id']}/#{self['name']}"
-    self['path'] = (! self.new?)? self['path'] : "#{media_folder}/#{subfolder}/#{self['_id']}/#{self['name']}"
-    self['ext']  = (! self.new?)? self['ext']  : ::File.extname(self['name']).slice!(1..-1)
 
-    if self.new?
-      FileUtils.mkdir_p ::File.dirname(self['path'])
-      FileUtils.cp temp_path, self['path']
-    end
-  end
-end
-
-
-class MediaPicture < Media
   def thumb(t=:default)
     if t.is_a? Symbol
       width = case t
@@ -59,7 +41,21 @@ class MediaPicture < Media
     end
     return self['url'].sub(/\.\w+$/, "_#{width}.#{self['ext']}")
   end
+
+  private
+  def take_care
+    media_folder = "#{APP_ROOT}/public/media"
+    subfolder = (/^image\/.*/.match(self['content_type']).nil?)? 'assets' : 'pictures'
+    temp_path = self['path'] if self.new?
+    self['name'] = self['name'].gsub(/\s+/,'_')
+    self['url']  = (! self.new?)? self['url']  : "/media/#{subfolder}/#{self['_id']}/#{self['name']}"
+    self['path'] = (! self.new?)? self['path'] : "#{media_folder}/#{subfolder}/#{self['_id']}/#{self['name']}"
+    self['ext']  = (! self.new?)? self['ext']  : ::File.extname(self['name']).slice!(1..-1)
+
+    if self.new?
+      FileUtils.mkdir_p ::File.dirname(self['path'])
+      FileUtils.cp temp_path, self['path']
+    end
+  end
 end
 
-class MediaAttachment < Media
-end
