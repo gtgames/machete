@@ -1,0 +1,9 @@
+<div class="module_content">
+  <%= f.input :key,   :as => :string%>
+  <%= f.input :value, :as => :text %>
+</div>
+
+<div class='submit_link'>
+  <%= f.submit pat(:save), :class => :alt_btn %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:configurations, :index)}';return false", :class => :button %>
+</div>
