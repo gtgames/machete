@@ -1,4 +1,4 @@
-class Conntact
+class Contact
   include MongoMapper::Document
 
   key :author, String
