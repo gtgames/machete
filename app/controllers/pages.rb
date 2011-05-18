@@ -6,7 +6,10 @@ Machete.controllers :pages do
   end
 
   get :show, :map => "/:slug" do
-    @page = Page.find({:slug => params[:slug]}).first
-    render 'pages/show'
+    if (@page = Page.first({:slug => params[:slug].downcase}))
+      render 'pages/show'
+    else
+      404
+    end
   end
 end
