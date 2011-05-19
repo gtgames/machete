@@ -1,7 +1,7 @@
 Admin.controllers :configurations do
 
   get :index do
-    @configuration = Configuration.all
+    @configurations = Configuration.all
     render 'configurations/index'
   end
 
