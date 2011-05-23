@@ -1,0 +1,7 @@
+<% form_for :configuration, url(:configurations, :create), :class => :form do |f| %>
+  <%= partial "configurations/form", :locals => { :f => f } %>
+<% end %>
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :configurations }) %>
+
+<% content_for :title, 'Nuova Chiave di configurazione' %>

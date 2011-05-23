@@ -1,0 +1,29 @@
+<table cellspacing="0"> 
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th><%= mat(:configuration, :key) %></th>
+      <th><%= mat(:configuration, :value) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @configurations.each do |c| %>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td><%= c.key %></td>
+        <td><%= c.value %></td>
+        <td>
+          <%= button_to pat(:edit), url(:configurations, :edit, :id => page.id), :method => :get, :class => 'button_to edit' %>
+          <%= button_to pat(:delete), url(:configurations, :destroy, :id => page.id), :method => :delete, :class => 'button_to trash' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<footer></footer>
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :configurations }) %>
+
+<% content_for :title, 'Impostazioni' %>
