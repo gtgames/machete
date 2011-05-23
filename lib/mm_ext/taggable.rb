@@ -6,10 +6,9 @@ module MongoMachete
         TagCloud.build self.collection
       end
     end
-
     module InstanceMethods
       def tag_list
-        (self['tags'].nil?)? '' : self['tags'].join(', ')
+        (self['tags'].nil?)? '' : self['tags'].join(',')
       end
       def tag_list=(string)
         self['tags'] = []
