@@ -13,6 +13,10 @@ Admin.controllers :pages do
   post :create do
     @page = Page.new(params[:page])
     if @page.save
+      if @page.parent.nil? or params[:page][:parent] != @page.parent._id
+        @page.parent = Page.find(params[:page][:parent]) unless params[:page][:parent].empty?
+      end
+
       flash[:notice] = 'Page was successfully created.'
       redirect url(:pages, :edit, :id => @page.id)
     else
@@ -28,10 +32,6 @@ Admin.controllers :pages do
   put :update, :with => :id do
     @page = Page.find(params[:id])
     if @page.update_attributes(params[:page])
-      if params[:page][:parent] != @page.parent._id
-        @page.parent = (params[:page][:parent].empty?)? nil : Page.find(params[:page][:parent])
-      end
-
       flash[:notice] = 'Page was successfully updated.'
       redirect url(:pages, :edit, :id => @page.id)
     else
