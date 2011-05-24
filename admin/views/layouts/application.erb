@@ -28,36 +28,9 @@
       </div>
     </div>
     <nav>
-      <ul>
-        <% project_modules.each do |project_module| %>
-        <li>
-          <%= link_to project_module.human_name, project_module.path("/"), :class => (request.path_info =~ /^#{project_module.path}/)? 'active' : '' %>
-          <ul>
-            <li class="icn_new_article"><%= link_to 'Nuovo', project_module.path("/")+'/new' %></li>
-            <li class="icn_categories"><%= link_to 'Lista', project_module.path("/") %></li>
-          </ul>
-        </li>
-        <% end %>
-        <li>
-          <a href='/media'>Media</a>
-          <ul class="toggle">
-            <li class="icn_folder"><a href="#">File Manager</a></li>
-            <li class="icn_photo"><a href="#">Gallery</a></li>
-            <li class="icn_audio"><a href="#">Audio</a></li>
-            <li class="icn_video"><a href="#">Video</a></li>
-          </ul>
-        </li>
-        <li>
-          Admin
-          <ul class="toggle">
-            <li class="icn_settings"><a href="#">Options</a></li>
-            <li class="icn_security"><a href="#">Security</a></li>
-            <li class="icn_jump_back"><a href="#">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
+      <%= partial 'layouts/navigation' %>
       
-      <input id="filterform" type="search" placeholder="filtra i contenuti" class="search_box" name="search">
+      <!--<input id="filterform" type="search" placeholder="filtra i contenuti" class="search_box" name="search">-->
       
     </nav>
   </header>
@@ -81,18 +54,5 @@
   </section>
   
   <footer><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.8</a></p></footer>
-
-  <script type="text/javascript" charset="utf-8">
-    /*(function() {
-     var t   = document.createElement('script');
-     t.type  = 'text/javascript';
-     t.async = true;
-     t.id    = 'analyst-tracker';
-     t.setAttribute('data-site-id','123456789asd001');
-     t.src = 'http://frenz:8080/al.js';
-     var s = document.getElementsByTagName('script')[0];
-     s.parentNode.insertBefore(t, s);
-     })();*/
-    </script>
 </body>
 </html>

@@ -3,3 +3,13 @@ Admin.controllers :dialogs do
     render 'dialogs/index'
   end
 end
+
+Admin.controllers :multimedia do
+  get :index do
+    render 'multimedia/index'
+  end
+
+  post :create do
+    media = Media.new(params[:media])
+  end
+end
