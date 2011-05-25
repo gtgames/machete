@@ -11,5 +11,6 @@ Admin.controllers :multimedia do
 
   post :create do
     media = Media.new(params[:media])
+    render 'multimedia/new'
   end
 end

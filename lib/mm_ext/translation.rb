@@ -43,8 +43,8 @@ class Translation < String
     return value if value.kind_of?(self)
 
     result = self.new
-    result.keys = value
-    result.default_language = value["default"] || "it"
+    result.keys = (value.nil?)? {} : value
+    result.default_language = (value.nil?)? "it" : value["default"]
 
     result
   end
