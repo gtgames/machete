@@ -36,7 +36,7 @@ module Padrino
         def default_input(attribute,type,options={})
           input_options = options.keep_if {|key, value| key != :as}
           if options[:options] || options[:grouped_options]
-            if type==:radios || type == :checks
+            if type == :radios || type == :checks
               collect_inputs_as(attribute,type,input_options)
             else
               select(attribute,input_options)
@@ -100,7 +100,11 @@ module Padrino
         
         def required?(attribute)
           k = klazz.is_a?(String) ? klazz.constantize : klazz
-          k.form_attribute_is_required?(attribute)
+          if k.respond_to? 'form_attribute_is_required?'
+            k.form_attribute_is_required?(attribute)
+          else
+            false
+          end
         end
         
         def collection_input(attribute,type,item, options={})

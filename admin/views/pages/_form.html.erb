@@ -1,0 +1,35 @@
+<div class="module_content">
+  <% Cfg.translations.each do |l| %>
+
+    <% f.fields_for :title do |t| %>
+    <%= t.input l.to_sym, :caption => "Titolo", :as => :string %>
+    <%end%>
+
+    <% f.fields_for :lead do |t| %>
+    <%= t.input l.to_sym, :caption => "Introduzione", :as => :string %>
+    <%end%>
+
+    <% f.fields_for :text do |t| %>
+    <%= t.input l.to_sym, :caption => "Testo", :as => :text, :class => :editor %>
+    <%end%>
+
+  <% end %>
+
+  <%= f.input :tags, :as => :text %>
+
+</div>
+
+<fieldset id='advanced'>
+  <legend>Avanzate</legend>
+  <%= f.input :slug, :as => :string %>
+  <%= f.input :meta_keyword, :as => :string %>
+  <%= f.input :meta_description, :as => :string %>
+  <%= f.input :parent %>
+  <%= f.input :menu, :as => :boolean %>
+</fieldset>
+
+
+<div class='submit_link'>
+  <%= f.submit pat(:save), :class => :alt_btn %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+</div>

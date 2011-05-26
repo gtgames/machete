@@ -3,31 +3,26 @@ class Page
   plugin MongoMapper::Plugins::ReferencedTree
   plugin MongoMachete::Taggable
 
-  key :title, Translation
-  key :slug,  String
-  key :lead,  Translation
-  key :text,  Translation
-  key :tags,  Array
+  one :title, :class => Translated
+  key :slug
 
-  key :meta_keyword, String
-  key :meta_description, String
-  key :browser_title, String
+  one :lead, :class => Translated
+  one :text, :class => Translated
+
+  key :meta_keyword
+  key :meta_description
+  key :browser_title
+
+  key :tags,  Array
   key :menu, Boolean, default: false
+  
+  #validations
+  validates_presence_of  :title, :lead, :text
 
   timestamps!
   referenced_tree
   attr_protected :parent
 
-  # validations
-  validates_presence_of     :title, :lead, :text
-  validates_uniqueness_of   :slug, :title
-  
   scope :by_slug, lambda{ |slug| where(slug: slug) }
   scope :roots, where(depth: 1)
-
-  before_validation :slugify
-  private
-  def slugify
-    self['slug'] = self['title'].to_slug
-  end
 end

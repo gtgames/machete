@@ -1,8 +1,9 @@
-(function($) {
+;(function($) {
 
   $.fn.tagit = function(options) {
     if (!this.length) return this;
 
+    const TAB = 0;
     const BACKSPACE = 8;
     const ENTER = 13;
     const SPACE = 32;
@@ -27,8 +28,8 @@
           if(v.length > 0) create_choice(v);
         }
       );
-      this.attr('name', '');
     }
+    this.attr('name', 'none');
 
     el.click(function(e) {
       if (e.target.tagName == 'A') {
@@ -49,8 +50,8 @@
           el.children(".tagit-choice:last").remove();
         }
       } // Comma/Space/Enter are all valid delimiters for new tags.
-      else if (event.which == COMMA || event.which == SPACE || event.which == ENTER) {
-        event.preventDefault();
+      else if (event.which == COMMA || event.which == SPACE || event.which == ENTER || event.which == TAB) {
+        if (event.which != TAB) event.preventDefault();
 
         var typed = input.attr('value').replace(/,+$/, "").trim();
 

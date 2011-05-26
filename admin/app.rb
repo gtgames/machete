@@ -6,7 +6,7 @@ class Admin < Padrino::Application
   register PadrinoFields
   set :default_builder, 'PadrinoFieldsBuilder'
   PadrinoFields::Settings.configure do |config|
-    config.container = :fieldset
+    config.container = :div
     config.label_required_marker = "<abbr>*</abbr>"
     config.label_required_marker_position = :append
   end

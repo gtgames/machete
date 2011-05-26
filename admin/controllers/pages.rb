@@ -7,6 +7,9 @@ Admin.controllers :pages do
 
   get :new do
     @page = Page.new
+    @page.title = Translated.new
+    @page.lead = Translated.new
+    @page.text = Translated.new
     render 'pages/new'
   end
 

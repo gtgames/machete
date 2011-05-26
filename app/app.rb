@@ -7,6 +7,8 @@ class Machete < Padrino::Application
 
   layout  :application
 
+  use Rack::LocaleSelector
+
   error 404 do
     render 'errors/404'
   end
