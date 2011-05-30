@@ -1,5 +1,5 @@
 Machete.controllers :index, :lang => I18n.locale do
-  get :index, :map => '/:lang', :with => [:lang] do
+  get :index, :map => '/:lang/' do
     render 'index/index'
   end
 

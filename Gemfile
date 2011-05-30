@@ -25,6 +25,8 @@ gem 'mongo_mapper', '>=0.9.0'
 gem 'mm-referenced-tree', '>=0.2.0'
 gem 'mm-embeddable'
 
+gem 'promise'
+
 group :development do
   gem 'ruby-debug19'
   gem 'wirb'

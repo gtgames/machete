@@ -1,1 +1,9 @@
-{"mongo":{"host":"127.0.0.1","name":"machete"}}
+{
+  "mongo":{
+    "host":"127.0.0.1",
+    "name":"machete"
+  },
+  "site":{
+    "locales":["it"]
+  }
+}

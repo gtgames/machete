@@ -2,33 +2,33 @@ class Cfg
   attr_accessor :config, :cache
 
   def self.refresh!
-    @config = MongoMapper.database['configurations'].find({}).find_all.to_a.map do |c|
+    c = MongoMapper.database['configurations'].find({}).find_all.to_a.map do |c|
       return c["key"] => c["value"]
     end
-    puts @configx
+    @config = @config.merge c
     @cache = Time.new
   end
 
-  def self.[] key
+  def [] key
     if Time.new - @cache > 1.hour
-      refresh!
+      self.refresh!
     end
-    @config.select{|x| x["key"] == key.to_s}.first[:value]
+    @config[key]
   end
 
-  def self.translations
-    t = self[:translations]
-    return (t.nil?)? ['it'] : t
-  end
-
-  def self.roles
+  def roles
     t = self[:roles]
     return (t.nil?)? [:admin] : t
   end
 
-  def self.acl role
+  def acl role
     @config[role]
   end
+
+  @config = JSON.parse(File.read(Padrino.root("config", "config.json")))['site']
+  @cache = Time.new
+  self.refresh!
+
 end
 
-Cfg.refresh!
+
