@@ -1,5 +1,4 @@
 Admin.controllers :pages do
-
   get :index do
     @pages = Page.all
     render 'pages/index'
@@ -45,10 +44,16 @@ Admin.controllers :pages do
   delete :destroy, :with => :id do
     page = Page.find(params[:id])
     if page.destroy
-      flash[:notice] = 'Page was successfully destroyed.'
+      flash[:notice] = t 'destroy.success'
     else
-      flash[:error] = 'Impossible destroy Page!'
+      flash[:error] = t 'destroy.fail'
     end
     redirect url(:pages, :index)
+  end
+
+  # TODO: unified interface with index
+  get :tree do
+    @pages = Page.roots
+    render 'pages/tree'
   end
 end

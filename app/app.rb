@@ -7,7 +7,8 @@ class Machete < Padrino::Application
 
   layout  :application
 
-  use Rack::LocaleSelector
+  use Frenz::AutoLocale
+  set :locales, Cfg[:locales]
 
   error 404 do
     render 'errors/404'

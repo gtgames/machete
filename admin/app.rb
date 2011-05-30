@@ -11,7 +11,7 @@ class Admin < Padrino::Application
     config.label_required_marker_position = :append
   end
 
-  use Rack::PostBodyContentTypeParser
+  #use Rack::PostBodyContentTypeParser
 
   enable  :sessions
 
@@ -25,7 +25,7 @@ class Admin < Padrino::Application
     role.allow "/sessions"
   end
 
-  access_control.roles_for :admin do |role|
+  access_control.roles_for :root do |role|
     role.project_module :links,     "/links"
     role.project_module :photos,    "/photos"
     role.project_module :posts,     "/posts"
@@ -33,4 +33,10 @@ class Admin < Padrino::Application
     role.project_module :configurations, "/configurations"
     role.project_module :accounts,  "/accounts"
   end
+
+  #access_control.roles_for :admin do |role|
+  #  Cfg.acl(:admin).each_with_key do |role, key|
+  #    role.project_module :"#{key}", "#{role}"
+  #  end
+  #end
 end

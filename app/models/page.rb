@@ -4,7 +4,7 @@ class Page
   plugin MongoMachete::Taggable
 
   one :title, :class => Translated
-  key :slug
+  one :slug, :class => Translated
 
   one :lead, :class => Translated
   one :text, :class => Translated
@@ -15,7 +15,9 @@ class Page
 
   key :tags,  Array
   key :menu, Boolean, default: false
-  
+
+  key :position, Integer, default: 0
+
   #validations
   validates_presence_of  :title, :lead, :text
 
@@ -23,6 +25,6 @@ class Page
   referenced_tree
   attr_protected :parent
 
-  scope :by_slug, lambda{ |slug| where(slug: slug) }
+  scope :by_slug, lambda{ |slug| where(:"slug.#{I18n.locale}" => "#{slug}".downcase) }
   scope :roots, where(depth: 1)
 end
