@@ -28,6 +28,8 @@ Padrino.after_load do
   Page.ensure_index :slug, :unique => true
   Post.ensure_index :slug, :unique => true
   Configuration.ensure_index :key, :unique => true
+
+  I18n.default_locale = Cfg[:locales].first
 end
 
 Padrino.load!

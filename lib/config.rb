@@ -1,34 +1,59 @@
-class Cfg
-  attr_accessor :config, :cache
+module Cfg
 
-  def self.refresh!
-    c = MongoMapper.database['configurations'].find({}).find_all.to_a.map do |c|
-      return c["key"] => c["value"]
+  class Backend
+    attr_accessor :config, :cache
+
+    def initialize
+      @cache = Time.new
+      @config = JSON.parse(File.read(Padrino.root("config", "config.json")))['site']
+      fetch
     end
-    @config = @config.merge c
-    @cache = Time.new
-  end
 
-  def [] key
-    if Time.new - @cache > 1.hour
-      self.refresh!
+    def get key
+      if Time.new - @cache > 1.hour
+        refresh!
+      end
+      @config[key.to_s]
     end
-    @config[key]
+
+    def refresh
+      fetch
+    end
+
+    protected
+    def fetch
+      conf = Hash.new
+      MongoMapper.database['configurations'].find({}).find_all.to_a.each do |c|
+        conf[c["key"]] = c["value"]
+      end
+      @config = @config.merge conf
+      @cache = Time.new
+    end
   end
 
-  def roles
-    t = self[:roles]
-    return (t.nil?)? [:admin] : t
+  class << self
+    def config
+      Thread.current[:cfg_fetcher] ||= Cfg::Backend.new
+    end
+    def config= v
+      Thread.current[:cfg_fetcher] = v
+    end
+    def roles
+      t = self.config.get :roles
+      return (t.nil?)? [:admin] : t
+    end
+    def [] key
+      self.config.get key
+    end
+    def acl role
+      self.config.get role
+    end
+    def refresh!
+      self.config.refresh
+    end
   end
-
-  def acl role
-    @config[role]
-  end
-
-  @config = JSON.parse(File.read(Padrino.root("config", "config.json")))['site']
-  @cache = Time.new
-  self.refresh!
-
 end
+
+Cfg.refresh!
 
 
