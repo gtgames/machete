@@ -1,7 +1,9 @@
 {
   "mongo":{
     "host":"127.0.0.1",
-    "name":"machete"
+    "name":"machete",
+    "user":"machete",
+    "password":"machete"
   },
   "site":{
     "locales":["it"]
