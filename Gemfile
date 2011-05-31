@@ -54,4 +54,4 @@ gem 'unidecode'
 
 gem 'yajl-ruby', :require => "yajl/json_gem"
 # Padrino
-gem 'padrino', "0.9.28"
+gem 'padrino', "0.9.29"
