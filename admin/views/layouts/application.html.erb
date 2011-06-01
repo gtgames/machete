@@ -32,9 +32,7 @@
     </div>
     <nav>
       <%= partial 'layouts/navigation' %>
-      
       <!--<input id="filterform" type="search" placeholder="filtra i contenuti" class="search_box" name="search">-->
-      
     </nav>
   </header>
 
@@ -50,12 +48,10 @@
     <div class='in'>
       <%= yield %>
     </div>
-    
     <div class="sidebar">
       <%= yield_content :sidebar %>
     </div>
   </section>
-  
   <footer><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.8</a></p></footer>
 </body>
 </html>

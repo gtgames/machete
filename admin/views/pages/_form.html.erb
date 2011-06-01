@@ -1,5 +1,5 @@
 <div class="module_content">
-  <% Cfg.translations.each do |l| %>
+  <% Cfg[:locales].each do |l| %>
 
     <% f.fields_for :title do |t| %>
     <%= t.input l.to_sym, :caption => "Titolo", :as => :string %>
