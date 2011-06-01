@@ -11,7 +11,7 @@ module Cfg
 
     def get key
       if Time.new - @cache > 1.hour
-        refresh!
+        refresh
       end
       @config[key.to_s]
     end
