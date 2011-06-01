@@ -25,9 +25,9 @@ class Page
   referenced_tree
   attr_protected :parent
 
-  scope :by_slug, lambda{ |slug|
-    l = (Cfg[:locales].include? I18n.locale)? I18m.locale : Cfg[:locales].first
-    first(:"slug.#{l}" => "#{slug}".downcase)
-  }
   scope :roots, where(depth: 1)
+  def self.by_slug sl
+    l = (Cfg[:locales].include? I18n.locale)? I18m.locale : Cfg[:locales].first
+    return first(:"slug.#{l}" => "#{sl}".downcase)
+  end
 end
