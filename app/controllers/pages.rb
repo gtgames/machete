@@ -6,7 +6,7 @@ Machete.controllers :pages, :lang => I18n.locale do
   end
 
   get :show, :map => "/:lang/:slug" do
-    if (@page = Page.by_slug(params[:slug]))
+    if (@page = Page.by_slug(params[:slug]).first)
       render 'pages/show'
     else
       404
