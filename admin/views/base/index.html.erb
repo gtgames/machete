@@ -1,10 +1,16 @@
 <img src="http://chart.apis.google.com/chart?chxr=0,0,3000&chxt=y&chs=520x140&cht=lc&chco=76A4FB,80C65A&chd=s:Tdjpsvyvttmiihgmnrst,OTbdcfhhggcTUTTUadfk&chls=2|2&chma=40,20,20,30" width="520" height="140" alt="" />
 
+<div id="stats">
+  <div class="domain"></div>
+  <div class="uniques"></div>
+  <div class="pings"></div>
+</div>
+
 
 <script>
 //<![CDATA[
 $(function(){
-$.getJSON("http://analyst.machete.it/<%= Cgf[:analyst] %>.js?callback=?",
+$.getJSON("http://analyst.machete.it/<%= Cfg[:analyst] %>.js?callback=?",
   function(data) {
     $('#stats.domain').attr('html', data.domain);
     $('#stats.uniques').attr('html', data.uniques);
