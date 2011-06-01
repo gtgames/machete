@@ -26,7 +26,7 @@ class Page
   attr_protected :parent
 
   scope :by_slug, lambda{ |slug|
-    l = (Cfg[:locales].includes I18n.locale)? I18m.locale : Cfg[:locales].first
+    l = (Cfg[:locales].includes? I18n.locale)? I18m.locale : Cfg[:locales].first
     first(:"slug.#{l}" => "#{slug}".downcase)
   }
   scope :roots, where(depth: 1)
