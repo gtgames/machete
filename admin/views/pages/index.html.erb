@@ -1,4 +1,4 @@
-<table cellspacing="0"> 
+<table cellspacing="0">
   <thead>
     <tr>
       <th>&nbsp;</th>
@@ -12,7 +12,7 @@
       <tr>
         <td><input type="checkbox"></td>
         <td><%= page.title %></td>
-        <td><%= page.tag_list %></td>
+        <td><%= page.taxonomy.to_s %></td>
         <td>
           <%= button_to pat(:edit), url(:pages, :edit, :id => page.id), :method => :get, :class => 'button_to edit' %>
           <%= button_to pat(:delete), url(:pages, :destroy, :id => page.id), :method => :delete, :class => 'button_to trash' %>

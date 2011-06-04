@@ -1,31 +1,26 @@
+<%= f.object.errors %>
+
 <div class="module_content">
   <% Cfg[:locales].each do |l| %>
-
-    <% f.fields_for :title do |t| %>
-    <%= t.input l.to_sym, :caption => "Titolo", :as => :string %>
-    <%end%>
-
-    <% f.fields_for :lead do |t| %>
-    <%= t.input l.to_sym, :caption => "Introduzione", :as => :string %>
-    <%end%>
-
-    <% f.fields_for :text do |t| %>
-    <%= t.input l.to_sym, :caption => "Testo", :as => :text, :class => :editor %>
-    <%end%>
-
+    <div class="language <%=l%>">
+      <%= f.input :"title(#{l})", :value => "#{f.object.title[l]}", :caption => "Titolo" %>
+      <%= f.input :"lead(#{l})", :value => "#{f.object.lead[l]}", :caption => "Introduzione", :as => :string %>
+      <%= f.input :"text(#{l})", :value => "#{f.object.text[l]}", :caption => "Testo", :as => :text, :class => :editor %>
+    </div>
   <% end %>
 
-  <%= f.input :tags, :as => :text %>
+  <div>TODO: </div>
+  <%= f.input :taxon, :as => :string %>
 
 </div>
 
 <fieldset id='advanced'>
   <legend>Avanzate</legend>
-  <%= f.input :slug, :as => :string %>
+  <% Cfg[:locales].each do |l| %>
+    <%= f.input :"slug(#{l})", :value => "#{f.object.slug[l]}", :caption => 'Permalink', :as => :string, :class => l %>
+  <%end%>
   <%= f.input :meta_keyword, :as => :string %>
   <%= f.input :meta_description, :as => :string %>
-  <%= f.input :parent %>
-  <%= f.input :menu, :as => :boolean %>
 </fieldset>
 
 
@@ -33,3 +28,4 @@
   <%= f.submit pat(:save), :class => :alt_btn %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
 </div>
+
