@@ -1,9 +1,13 @@
-<h1><%= @post.title %></h1>
-<article class='lead'><%= @post.subtitle %>
-<%- unless @post.photo.empty? %>
-  <img src="<%= @post.photo.url %>" title="<%= @post.title %>">
-<%- end %>
-</article>
 <article>
-  <%= @post.text %>
+  <h1><%= @post.title %></h1>
+
+  <div class='lead'><%= @post.subtitle %></div>
+
+  <% unless @post.photo.empty? %>
+    <img src="<%= @post.photo.url %>" title="<%= @post.title %>">
+  <% end %>
+
+  <div>
+    <%= @post.text %>
+  </div>
 </article>
