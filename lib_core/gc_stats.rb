@@ -97,3 +97,29 @@ class GCStats
     "\033[0;31m#{text}\033[0m"
   end
 end
+
+
+
+# Memory Bloat
+#
+module Rack
+  class MemoryBloat
+    def initialize(app, logger)
+      @app = app
+      @logger = logger
+    end
+
+    def call(env)
+      memory_usage_before = memory_usage
+      result = @app.call(env)
+      memory_usage_after = memory_usage
+      @logger.info "MemoryBloat: #{memory_usage_after - memory_usage_before} URL: #{Rack::Request.new(env).url}"
+      result
+    end
+
+    private
+    def memory_usage
+      `ps -o rss= -p #{$$}`.to_i
+    end
+  end
+end

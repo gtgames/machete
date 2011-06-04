@@ -6,8 +6,11 @@ APP_ROOT = ::File.expand_path('../', __FILE__)
 
 if ENV['RACK_ENV'] == 'development'
   require 'gc_stats'
-  use GCStats
-  
+  #use GCStats
+
+  require 'logger'
+  use Rack::MemoryBloat, Logger.new(STDOUT)
+
   use Rack::Static,
     :urls => ["/stylesheets", "/images"],
     :root => "public"
@@ -18,7 +21,7 @@ if EM.reactor_running?
   use Rack::FiberPool
 end
 
-if ENV['RACK_ENV'] == 'production'
+if ENV['RACK_ENV'] == 'production___'
   require "rack/cache"
   use Rack::Cache,
     :metastore   => "file:#{::File.expand_path('../cache', __FILE__)}/meta",

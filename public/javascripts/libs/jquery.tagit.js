@@ -21,14 +21,11 @@
 
     var input_name = this.attr('name') + '[]';
 
-    if (this.html().size > 2){
-      $.each(
-        this.html().replace(/[\s\[\]\'\"]+/g,'').trim().match(/([\w\=\-\_\*\&\%\$]+)/g),
+    $.each(
+        this.html().match(/[a-zA-Z\-\_\.]+/g),
         function(k,v){
-          if(v.length > 0) create_choice(v);
-        }
-      );
-    }
+          create_choice(v);
+        });
     this.attr('name', 'none');
 
     el.click(function(e) {

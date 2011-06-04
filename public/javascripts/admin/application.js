@@ -6,7 +6,7 @@
       this.getParent().text('My content changes when my tooltip appears!');
       }
     });*/
-  
+
     $('#advanced>div').toggle();
     $('#advanced').find('legend').click(function(e){
       $('#advanced>div').toggle();

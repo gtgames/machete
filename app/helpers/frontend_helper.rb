@@ -3,6 +3,6 @@ Machete.helpers do
     Link.all
   end
   def tree
-    Page.all
+    "tree delle tassonomie"
   end
 end

@@ -2,10 +2,10 @@
 <html class='no-js'>
   <head>
     <meta charset="utf-8">
-    <meta name="description" content="<%= yield_content(:description) %>">
-    <meta name="keywords"    content="<%= yield_content(:keywords) %>">
-    <meta name="author"      content="GTGames.it">
-    <meta name="generator"   content="machete.it">
+    <meta name="description" content="<%= Cfg[:description] %> <%= yield_content(:description) %>">
+    <meta name="keywords"    content="<%= Cfg[:keywords] %> <%= yield_content(:keywords) %>">
+    <meta name="author"      content="<%= Cfg[:author] %>">
+    <meta name="generator"   content="Machete ( http://machete.it ) by gtgames.it">
 
     <link rel="stylesheet/less" href="/stylesheets/layout.less" type="text/css" media="screen">
     <script src="/javascripts/libs/less.js" type="text/javascript"></script>
@@ -15,24 +15,20 @@
     </script>
 
     <script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
-    <title><%= cfg('title') %><%= yield_content(:title) %></title>
+    <title><%= Cfg[:title] %> <%= yield_content(:title) %></title>
   </head>
   <body>
     <nav class="row">
       <ul class="column grid_12">
         <% menu.each do |m| %>
-          <li>
-            <a href="<%= m.url %>">
-              <%= m.title %>
-            </a>
-          </li>
+          <li><a href="<%= m.url %>"><%= m.title %></a></li>
         <% end %>
       </ul>
     </nav>
     <header id="header" class="row">
       <img src="/images/logo.png">
       <div class="column">
-        <h1>Titolo?</h1>
+        <h1>Titolo</h1>
       </div>
     </header>
     <section class="row">
@@ -53,7 +49,7 @@
     </footer>
     <script>
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', '<%= cfg('analytics') %>']);
+      _gaq.push(['_setAccount', '<%= Cfg['analytics'] %>']);
       _gaq.push(['_setDomainName', 'none']);
       _gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
       head.js(

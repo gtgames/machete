@@ -1,9 +1,6 @@
 (function($) {
   $(function() {
-    $('textarea[name*="[text]"]').change(function(e) {
-      console.log('textarea changed!');
-    });
-    $('textarea[name*="[text]"]').wymeditor({
+    $('textarea.editor').wymeditor({
       basePath: '/wymeditor/',
 
       updateSelector: '.in>form',
