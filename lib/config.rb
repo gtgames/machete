@@ -39,17 +39,20 @@ module Cfg
       Thread.current[:cfg_fetcher] = v
     end
     def roles
-      t = self.config.get :roles
+      t = self[:roles]
       return (t.nil?)? [:admin] : t
     end
     def [] key
       self.config.get key
     end
     def acl role
-      self.config.get role
+      self[role]
     end
     def refresh!
       self.config.refresh
+    end
+    def locale
+      (self[:locales].include? I18n.locale)? I18n.locale : self[:locales].first
     end
   end
 end

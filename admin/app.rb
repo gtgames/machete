@@ -30,13 +30,17 @@ class Admin < Padrino::Application
     role.project_module :photos,    "/photos"
     role.project_module :posts,     "/posts"
     role.project_module :pages,     "/pages"
+    role.project_module :taxonomy,  "/taxonomy"
     role.project_module :configurations, "/configurations"
     role.project_module :accounts,  "/accounts"
   end
 
-  #access_control.roles_for :admin do |role|
-  #  Cfg.acl(:admin).each_with_key do |role, key|
-  #    role.project_module :"#{key}", "#{role}"
-  #  end
-  #end
+  ## ACL built from database or config.json
+  Cfg[:acl].each_pair do |name, modules|
+    access_control.roles_for name.to_sym do |role|
+      modules.each do |m|
+        role.project_module m.to_sym, m
+      end
+    end
+  end
 end
