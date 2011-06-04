@@ -1,6 +1,6 @@
 (function($) {
   $(function() {
-    $('.editor textarea').wymeditor({
+    $('.editor').parent().find('textarea').wymeditor({
       basePath: '/wymeditor/',
 
       updateSelector: '.in>form',
