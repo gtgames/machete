@@ -3,6 +3,7 @@ class Page
   plugin MongoMapper::Plugins::HashParameterAttributes
 
   key :title, Translation
+  key :slug, Translation
 
   key :lead, Translation
   key :text, Translation
