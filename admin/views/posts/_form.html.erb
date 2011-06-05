@@ -1,8 +1,8 @@
 <div class="module_content">
-  <%= f.input :title, :as => :string%>
-  <%= f.input :photo, :as => :string%>
+  <%= f.input :title, :as => :string %>
+  <%= f.input :photo, :as => :file %>
   <%= f.input :lead,  :as => :text %>
-  <%= f.input :text,  :as => :text %>
+  <%= f.input :text,  :as => :text, :class => :editor %>
   <%= f.input :tags,  :as => :text %>
 </div>
 

@@ -16,7 +16,7 @@ $(function(){
     $('#stats.uniques').attr('html', data.uniques);
     $('#stats.pings').attr('html', data.pings);
 
-    var url = function(){
+    this.url = (function(){
       var pi = parseFloat(data.pings),
       un = parseFloat(data.uniques);
       var tot = pi+un;
@@ -25,9 +25,8 @@ $(function(){
       "&chds=0," + tot + ",0," + tot +
       "&chd=t:" + pi + "|" + un +
       "&chtt=Horizontal+bar+chart"
-    };
-
-    $('#chart').attr('src', url())
+    })();
+    $('#chart').attr('src', this.url);
   });
 });
 //]]>

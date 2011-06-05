@@ -21,11 +21,13 @@
 
     var input_name = this.attr('name') + '[]';
 
-    $.each(
-        this.html().match(/[a-zA-Z\-\_\.]+/g),
-        function(k,v){
-          create_choice(v);
-        });
+    // the tag field should be more than 2 chars long!
+    if (this.html().length > 2)
+      $.each(
+          this.html().match(/[a-zA-Z\-\_\.]+/g),
+          function(k,v){
+            create_choice(v);
+          });
     this.attr('name', 'none');
 
     el.click(function(e) {

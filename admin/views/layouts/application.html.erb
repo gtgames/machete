@@ -9,7 +9,11 @@
   <% if PADRINO_ENV == 'development' %>
     <script>/*less.env='development';less.watch();*/less.unwatch()</script>
   <% end%>
-  <script src="/javascripts/libs/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <!--[if IE ]>
+    <script src="/javascripts/libs/selectivizr.js" type="text/javascript"></script>
+  <![endif]-->
+  <script src="http://frenzart.com/js/modernizr.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
   <header>
@@ -44,7 +48,6 @@
     </div>
   </section>
   <footer><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.8</a></p></footer>
-  <script src="/javascripts/libs/selectivizr.js" type="text/javascript"></script>
   <script src="/javascripts/libs/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/javascripts/admin/application.js" type="text/javascript" charset="utf-8"></script>
   <script src="/javascripts/libs/jquery.simpletip.js" type="text/javascript"></script>
@@ -52,5 +55,6 @@
   <script src="/wymeditor/jquery.wymeditor.js" type="text/javascript" charset="utf-8"></script>
   <script src="/wymeditor/jquery.wymeditor.modal_dialog.js" type="text/javascript" charset="utf-8"></script>
   <script src="/wymeditor/wymeditor.machete.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/javascripts/libs/upload.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
