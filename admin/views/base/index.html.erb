@@ -1,4 +1,4 @@
-<img src="http://chart.apis.google.com/chart?chxr=0,0,3000&chxt=y&chs=520x140&cht=lc&chco=76A4FB,80C65A&chd=s:Tdjpsvyvttmiihgmnrst,OTbdcfhhggcTUTTUadfk&chls=2|2&chma=40,20,20,30" width="520" height="140" alt="" />
+<img src="http://chart.apis.google.com/chart?chbh=a&chs=360x120&cht=bhg&chco=3072F3,76A4FB&chds=0,195,0,200&chd=t:120|50&chtt=Contatti:" width="360" height="120" alt="Grafico contatti sul sito web">
 
 <div id="stats">
   <div class="domain"></div>
@@ -10,13 +10,26 @@
 <script>
 //<![CDATA[
 $(function(){
-$.getJSON("http://analyst.machete.it/<%= Cfg[:analyst] %>.js?callback=?",
+  $.getJSON("http://analyst.machete.it/<%= Cfg[:analyst] %>.js?callback=?",
   function(data) {
     $('#stats.domain').attr('html', data.domain);
     $('#stats.uniques').attr('html', data.uniques);
     $('#stats.pings').attr('html', data.pings);
-  }
-);
+
+    var url = function(){
+      var pi = parseFloat(data.pings),
+      un = parseFloat(data.uniques);
+      var tot = pi+un;
+      return "http://chart.apis.google.com/chart" +
+      "?chbh=a&chs=360x120&cht=bhs&chco=3072F3,76A4FB" +
+      "&chds=0," + tot + ",0," + tot +
+      "&chd=t:" + pi + "|" + un +
+      "&chtt=Horizontal+bar+chart"
+    };
+
+    $('#chart').attr('src', url())
+  });
+});
 //]]>
 </script>
 
