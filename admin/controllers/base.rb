@@ -5,6 +5,11 @@ Admin.controllers :base do
   end
 
   get :tagblob, :provides => :js do
-    Post.find({}, {:tags => 1 }).to_json
+    # Array union: |
+    (Post.tagging | Photo.tagging).to_json
+  end
+
+  post :upload do
+    %{<script>window.parent.eval('$("##{params["form_id"]}").trigger("success", [#{params["file"].to_json}]);');</script>}
   end
 end

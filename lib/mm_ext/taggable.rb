@@ -5,6 +5,13 @@ module MongoMachete
       def tag_cloud
         TagCloud.build self.collection
       end
+      def tagging
+        begin
+          TagCloud.build(self.collection).collect{|t| t['_id']}
+        rescue Mongo::OperationFailure
+          []
+        end
+      end
     end
     module InstanceMethods
       def tag_list
@@ -54,6 +61,6 @@ class TagCloud
   end
 
   def self.build(kollection)
-    kollection.map_reduce(map, reduce, :query => {})
+    kollection.map_reduce(map, reduce, {:out => {:inline => true}, :raw => true})["results"]
   end
 end
