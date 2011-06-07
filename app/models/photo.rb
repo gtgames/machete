@@ -4,6 +4,6 @@ class Photo
 
   key :title, String
 
-  one :media_file
+  key :file, SimpleUploader
 
 end

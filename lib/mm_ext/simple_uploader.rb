@@ -1,29 +1,32 @@
 require "fileutils"
-class SimpleUploader
-  attr_reader :name, :type, :url
+class SimpleUploader < HashWithIndifferentAccess
+  def initialize(*args)
+    super(*args)
+    return self if self['name'].nil?
 
-  def initialize(val)
     media_folder = "#{APP_ROOT}/public/media"
-    is_new = Regexp.new(Regexp.escape(media_folder)).match(val['path']).nil?
+    is_new = !! Regexp.new(Regexp.escape(media_folder)).match(self['path']).nil?
 
-    @name = val['name']
-    @type = val['content_type'] ||= val['type']
+    return self if !is_new
 
-    subfolder = (/^image\/.*/.match(@type).nil?)? 'assets' : 'pictures'
+    tempfile = self["path"]
+    subfolder = (/^image\/.*/.match(self['content_type']).nil?)? 'assets' : 'pictures'
 
-    @time = (! is_new)? val['time'] : Time.new.to_i
-    @url  = (! is_new)? val['url']  : "/media/#{subfolder}/#{@time}/#{@name}"
-    @path = (! is_new)? val['path'] : "#{media_folder}/#{subfolder}/#{@time}/#{@name}"
-    @ext  = (! is_new)? val['ext']  : ::File.extname(val['name']).slice!(1..-1)
+    self["time"] = ::Time.new.to_i
+    self["url"]  = "/media/#{subfolder}/#{self['time']}/#{self["name"]}"
+    self["path"] = "#{media_folder}/#{subfolder}/#{self['time']}/#{self['name']}"
+    self["ext"]  = ::File.extname(self['name']).slice!(1..-1)
 
-    if is_new
-      FileUtils.mkdir_p ::File.dirname(@path)
-      FileUtils.cp val['path'], @path
-    end
+    FileUtils.mkdir_p ::File.dirname(self['path'])
+    FileUtils.cp tempfile, self['path']
+
+    return self
   end
 
   def thumb(type = :default)
-    return @url if /^image\/.*/.match(@type).nil?
+    if (self['content_type'] =~ /^image\/.*/).nil?
+      return self['url']
+    end
     if type.is_a? Symbol
       width = case type
         when :mini
@@ -50,40 +53,22 @@ class SimpleUploader
     else
       width = "#{type}x"
     end
-    return @url.sub(/\.\w$/, "_#{width}.#{@ext}")
+    return self['url'].sub(/\.\w+$/, "_#{width}.#{self['ext']}")
   end
 
   def inspect
-    "ImageUploader(#{@name}, #{@path}, #{@type})"
+    "ImageUploader(#{self['name']}, #{self['path']}, #{self['type']})"
   end
 
   def clean!
-    FileUtils.rm "#{@path.sub(/\.\w+$/, '-*')}" if @type =~ /$images\/\w+^/
+    FileUtils.rm "#{self['path'].sub(/\.\w+$/, '-*')}" if self['content_type'] =~ /$images\/\w+^/
   end
 
-  def to_h
-    { 'name' => @name,
-      'path' => @path,
-      'url'  => @url,
-      'ext'  => @ext,
-      'type' => @type,
-      'time' => @time
-    }
-  end
-
-  def self.to_mongo(value)
-    { 'name' => @name,
-      'path' => @path,
-      'url'  => @url,
-      'ext'  => @ext,
-      'type' => @type,
-      'time' => @time
-    }.merge!((value.is_a? Hash)? value : value.to_h)
+  def to_s
+    self['url']
   end
 
   def self.from_mongo(value)
-    return nil if value.nil?
-    return value if value.is_a?(SimpleUploader)
-    return new(value) if value.is_a?(Hash)
+    SimpleUploader.new(value || {})
   end
 end
