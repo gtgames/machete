@@ -1,4 +1,4 @@
-<img src="http://chart.apis.google.com/chart?chbh=a&chs=360x120&cht=bhg&chco=3072F3,76A4FB&chds=0,195,0,200&chd=t:120|50&chtt=Contatti:" width="360" height="120" alt="Grafico contatti sul sito web">
+<img id="chart" src="" width="360" height="120" alt="Grafico contatti sul sito web">
 
 <div id="stats">
   <div class="domain"></div>
@@ -21,10 +21,9 @@ $(function(){
       un = parseFloat(data.uniques);
       var tot = pi+un;
       return "http://chart.apis.google.com/chart" +
-      "?chbh=a&chs=360x120&cht=bhs&chco=3072F3,76A4FB" +
-      "&chds=0," + tot + ",0," + tot +
-      "&chd=t:" + pi + "|" + un +
-      "&chtt=Horizontal+bar+chart"
+      "?chs=360x120&cht=p&chco=72D5FF" +
+      "&chds=0," + max + "&chd=t:" + pi + "," + un +
+      "&chl=Contatti|Unici&chma=5,5,5,5"
     })();
     $('#chart').attr('src', this.url);
   });
