@@ -16,13 +16,14 @@
       color: 'red'
     });
 
-    //$('input[name*="[tag_list]"]').hide();
-    $.getJSON('/base/tagblob.js', function(data){
-      $('textarea[name*="[tags]"]').tagit({
-        availableTags: data
+    if ($('textarea[name*="[tags]"').length){
+      //$('input[name*="[tag_list]"]').hide();
+      $.getJSON('/base/tagblob.js', function(data){
+        $('textarea[name*="[tags]"]').tagit({
+          availableTags: data
+        });
       });
-    });
-
+    }
     // Async Upload iFrame based
     $('input[type=file]').jsUpload();
   });
