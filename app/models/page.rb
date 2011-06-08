@@ -30,6 +30,7 @@ class Page
   protected
   def build_taxonomy
     slug = {}
-    ['title'].each_pair{|k,v| slug << {k => v} }
+    self['title'].each_pair{|k,v| slug << {k => v} }
+    self['slug'] = slug
  end
 end

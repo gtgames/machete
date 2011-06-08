@@ -12,8 +12,8 @@ Admin.controllers :pages do
   post :create do
     @page = Page.new(params[:page])
     if @page.save
-      flash[:notice] = t 'created'
-      redirect url(:pages, :edit, :id => @page.id)
+      flash[:notice] = t'created'
+      redirect url(:pages, :index)
     else
       render 'pages/new'
     end
