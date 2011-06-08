@@ -12,4 +12,9 @@ Admin.controllers :base do
   post :upload do
     %{<script>window.parent.eval('$("##{params["form_id"]}").trigger("success", [#{params["file"].to_json}]);');</script>}
   end
+
+  get :reboot do
+    require 'fileutils'
+    FileUtils.touch(Padrino.root('tmp', 'restart')) if Padrino.environment == 'development'
+  end
 end
