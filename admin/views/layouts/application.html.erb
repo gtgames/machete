@@ -12,7 +12,7 @@
   <!--[if IE ]>
     <script src="/javascripts/libs/selectivizr.js" type="text/javascript"></script>
   <![endif]-->
-  <script src="http://frenzart.com/js/modernizr.js" type="text/javascript" charset="utf-8"></script>
+  <!--<script src="http://frenzart.com/js/modernizr.js" type="text/javascript" charset="utf-8"></script> -->
   <script src="/javascripts/libs/jquery.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
@@ -21,7 +21,7 @@
       <a id='site_title' href="/">Admin</a>
       <a id='site_link' href="<%= Cfg[:domain] %>">View Site</a>
       <div id='profile'>
-        <% if Padrino.env == 'development' %><a href='/base/reboot'>REBOOT</a><% end %>
+        <% if Padrino.env == :development %><a href='/base/reboot'>REBOOT</a> | <% end %>
         <%= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id) %> |
         <%= link_to pat(:logout), url(:sessions, :destroy), :method => :delete, :class => :logout_user %>
       </div>
@@ -59,3 +59,4 @@
   <script src="/javascripts/libs/upload.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
+

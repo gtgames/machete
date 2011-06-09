@@ -15,6 +15,6 @@ Admin.controllers :base do
 
   get :reboot do
     require 'fileutils'
-    FileUtils.touch(Padrino.root('tmp', 'restart')) if Padrino.environment == 'development'
+    FileUtils.touch(Padrino.root('tmp', 'restart')) if Padrino.env == :development
   end
 end
