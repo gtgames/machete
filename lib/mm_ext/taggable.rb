@@ -8,7 +8,8 @@ module MongoMachete
       def tagging
         begin
           TagCloud.build(self.collection).collect{|t| t['_id']}
-        rescue Mongo::OperationFailure
+        rescue  Exception => e
+          puts "ERROR: #{ e } (#{ e.class })!"
           []
         end
       end
