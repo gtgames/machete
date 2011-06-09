@@ -8,7 +8,7 @@ module MongoMachete
       def tagging
         begin
           TagCloud.build(self.collection).collect{|t| t['_id']}
-        rescue  Exception => e
+        rescue Exception => e
           puts "ERROR: #{ e } (#{ e.class })!"
           []
         end
@@ -38,30 +38,15 @@ end
 
 class TagCloud
   def self.map
-    <<-JS
-      function(){
-        this.tags.forEach(function(tag){
-          emit(tag, 1);
-        });
-      }
-    JS
+    %q{function(){ this.tags.forEach(function(tag) { emit(tag, 1); });}}
   end
-
   def self.reduce
-    <<-JS
-      function(prev, current) {
-        var count = 0;
-
-        for (index in current) {
-            count += current[index];
-        }
-
-        return count;
-      }
-    JS
+    %q{function(prev,current) { var count = 0; for(index in current){ count += current[index]; } return count; }}
   end
 
   def self.build(kollection)
-    kollection.map_reduce(map, reduce, {:out => {:inline => true}, :raw => true})["results"]
+    kollection.map_reduce(map, reduce, {:out => "tagcloud"})
+    MongoMapper.database.collection('tagcloud').find({}).to_a
   end
+
 end
