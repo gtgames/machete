@@ -16,7 +16,7 @@
       color: 'red'
     });
 
-    if ($('textarea[name*="[tags]"').length){
+    if ($('textarea[name*="[tags]"]').length){
       //$('input[name*="[tag_list]"]').hide();
       $.getJSON('/base/tagblob.js', function(data){
         $('textarea[name*="[tags]"]').tagit({

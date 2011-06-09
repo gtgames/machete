@@ -2,7 +2,7 @@ require "fileutils"
 class SimpleUploader < HashWithIndifferentAccess
   def initialize(*args)
     super(*args)
-    return self if self['name'].nil?
+    return nil if self['name'].nil? or self['name'].size < 1
 
     media_folder = "#{APP_ROOT}/public/media"
     is_new = !! Regexp.new(Regexp.escape(media_folder)).match(self['path']).nil?
