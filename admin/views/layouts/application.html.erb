@@ -21,6 +21,7 @@
       <a id='site_title' href="/">Admin</a>
       <a id='site_link' href="<%= Cfg[:domain] %>">View Site</a>
       <div id='profile'>
+        <% if Padrino.env == 'development' %><a href='/base/reboot'>REBOOT</a><% end %>
         <%= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id) %> |
         <%= link_to pat(:logout), url(:sessions, :destroy), :method => :delete, :class => :logout_user %>
       </div>
