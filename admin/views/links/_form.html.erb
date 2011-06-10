@@ -1,6 +1,10 @@
 <div class="module_content">
-  <%= f.input :title, :as => :string%>
-  <%= f.input :url %>
+  <% Cfg[:locales].each do |l| -%>
+    <div class="language <%= l %>">
+      <%= f.input :"title(#{l})", :caption => mat(:links, :title), :as => :string %>
+      <%= f.input :"url(#{l})", :caption => mat(:links, :url), :as => :string %>
+    </div>
+  <% end -%>
 </div>
 
 <footer>
@@ -9,3 +13,4 @@
     <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:links, :index)}';return false", :class => :button %>
   </div>
 </footer>
+
