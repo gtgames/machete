@@ -58,7 +58,7 @@ class Comment
   # Upvote this comment.
   def upvote(user)
     unless self.voters.any? {|id| id.to_s == user.id.to_s}
-      self.voters << user.id 
+      self.voters << user.id
       self.votes += 1
       self.save
     end
