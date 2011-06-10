@@ -12,7 +12,7 @@
       <tr>
         <td><input type="checkbox"></td>
         <td><%= photo.title %></td>
-        <td><%= photo.file.thumb %></td>
+        <td><%= link_to image_tag( photo.file.thumb('50xx50') ), photo.file %></td>
         <td>
           <%= button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => 'button_to edit' %>
           <%= button_to pat(:delete), url(:photos, :destroy, :id => photo.id), :method => :delete, :class => 'button_to trash' %>

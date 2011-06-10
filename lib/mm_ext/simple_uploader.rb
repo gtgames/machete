@@ -51,7 +51,7 @@ class SimpleUploader < HashWithIndifferentAccess
           '120x120'
         end
     else
-      width = "#{type}x"
+      width = "#{type}"
     end
     return self['url'].sub(/\.\w+$/, "_#{width}.#{self['ext']}")
   end
