@@ -2,6 +2,25 @@
   $.fn.jsUpload = function(){
     if (this.length == 0) return;
 
+    var Spinner = function(target){
+      var speed = 2000;
+      var that = this;
+      this.el = $("<span>In caricamento<em></em></span>").appendTo(target).hide();
+      this.start = function(){
+        that.el.show();
+        that.dotdot = setInterval(function(){
+          that.el.find('em').html('');
+          setTimeout(function(){that.el.find('em').html('.')}, speed/4*1);
+          setTimeout(function(){that.el.find('em').html('..')}, speed/4*2);
+          setTimeout(function(){that.el.find('em').html('...')}, speed/4*3);
+        }, speed);
+      };
+      this.stop = function(){
+        this.el.hide();
+        clearInterval(that.dotdot);
+      };
+    };
+
     var uuid = (function(){
       this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('');
       var radix = chars.length,
@@ -17,7 +36,8 @@
           filename: $('<input name="'+ this.attr('name') +'[name]" type="hidden">').appendTo(this.parent()),
           tempfile: $('<input name="'+ this.attr('name') +'[path]" type="hidden">').appendTo(this.parent()),
           filetype: $('<input name="'+ this.attr('name') +'[content_type]" type="hidden">').appendTo(this.parent())
-        };
+        },
+        spinner = new Spinner($('<div class="dotdot"></div>').appendTo(this.parent()));
 
     $('<input type="hidden" name="form_id" value="upload_form_'+ uuid +'">').appendTo(iform); // passing the form_id to call it back when upload completes
 
@@ -28,12 +48,15 @@
     this.attr('name', 'file');
 
     this.change(function(e){
+      iform.find('input').hide
+      spinner.start();
       iform.submit();
     });
 
     iform.bind('clear', function(evt, val) {
       $(this).find('input[type=text], input[type=file]').val('');
     }).bind('success', function(evt, val) {
+      spinner.stop();
       field.filename.attr('value', val.filename);
       field.tempfile.attr('value', val.tempfile);
       field.filetype.attr('value', val.type);
