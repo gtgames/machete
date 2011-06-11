@@ -14,23 +14,16 @@ class Page
 
   key :position, Integer, :default => 0
 
-  key :taxonomy, Translation
+  key :taxonomy, Taxonomy::Embeddable
 
   #validations
-  validates_presence_of  :title, :lead, :text
+  validates_presence_of  :title, :lead, :text, :taxonomy
 
   # additional methods
   timestamps!
 
+  # Scopes
   def self.by_taxon sl
-    return first(:"taxonomy.#{Cfg.locale}".in => %r{#{sl.downcase}})
+    return first(:"taxonomy.path.#{Cfg.locale}".in => %r{#{sl.downcase}})
   end
-
-  #TODO: before_save :build_taxonomy
-  protected
-  def build_taxonomy
-    slug = {}
-    self['title'].each_pair{|k,v| slug << {k => v} }
-    self['slug'] = slug
- end
 end

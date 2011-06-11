@@ -1,0 +1,7 @@
+<% form_for @taxonomy, url(:taxonomy, :update, :id => @taxonomy.id) do |f| %>
+  <%= partial "taxonomy/form", :locals => { :f => f } %>
+<% end %>
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :taxonomy }) %>
+
+<% content_for :title, 'Modifica Tassonomia' %>

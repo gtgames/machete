@@ -22,12 +22,14 @@ gem 'bson_ext', '>=1.3.1', :require => nil
 
 gem 'mongo_mapper', '>=0.9.1'
 #gem 'hunt'
+#
+gem 'mm-embeddable', :git => "https://github.com/rlivsey/mm-embeddable.git"
 
 gem 'promise'
 
 group :development do
+  gem 'awesome_print'
   gem 'ruby-debug19'
-  gem 'wirb'
 end
 
 # Test requirements

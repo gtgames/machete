@@ -13,7 +13,7 @@ Admin.controller :taxonomy do
     @taxonomy = Taxonomy.new(params[:taxonomy])
     if @taxonomy.save
       flash[:notice] = t 'created'
-      redirect url(:taxonomy, :edit, :id => @taxonomy.id)
+      redirect url(:taxonomy, :index)
     else
       render 'taxonomy/new'
     end
@@ -25,6 +25,7 @@ Admin.controller :taxonomy do
   end
 
   put :update, :with => :id do
+    ap(params)
     @taxonomy = Taxonomy.find(params[:id])
     if @taxonomy.update_attributes(params[:taxonomy])
       flash[:notice] = t'updated'
@@ -42,5 +43,9 @@ Admin.controller :taxonomy do
       flash[:error] = t'destroy.fail'
     end
     redirect url(:taxonomy, :index)
+  end
+
+  get :tree, :provides => :js do
+    Taxonomy.threaded('/', true).to_json
   end
 end

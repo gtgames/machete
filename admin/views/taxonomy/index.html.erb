@@ -12,10 +12,10 @@
       <tr>
         <td><input type="checkbox"></td>
         <td><%= tax.title %></td>
-        <td><%= tax.url %></td>
+        <td><%= tax.slug %></td>
         <td>
-          <%= button_to pat(:edit), url(:links, :edit, :id => tax.id), :method => :get, :class => 'button_to edit' %>
-          <%= button_to pat(:delete), url(:links, :destroy, :id => tax.id), :method => :delete, :class => 'button_to trash' %>
+          <%= button_to pat(:edit), url(:taxonomy, :edit, :id => tax.id), :method => :get, :class => 'button_to edit' %>
+          <%= button_to pat(:delete), url(:taxonomy, :destroy, :id => tax.id), :method => :delete, :class => 'button_to trash' %>
         </td>
       </tr>
     <% end %>

@@ -1,13 +1,38 @@
 <div class="module_content">
-  <% Cfg[:locales].each do |l| %>
-    <div class="language <%=l%>">
-      <% f.fields_for :title do |t| %>
-        <%= t.input l.to_sym, :caption => "Titolo", :as => :string %>
-      <%end%>
+  <% Cfg[:locales].each do |l| -%>
+    <div class="language <%= l %>">
+      <%= f.input :"title(#{l})", :caption => mat(:taxonomy, :title), :as => :string %>
+      <%= f.input :"description(#{l})", :caption => mat(:taxonomy, :description), :as => :text, :class => :editor %>
     </div>
-  <% end %>
-  <%= f.input :tags, :as => :text %>
+  <% end -%>
 </div>
+
+<div>
+  Tree:<br>
+  <script src="http://jquery-option-tree.googlecode.com/svn/trunk/jquery.optionTree.js" type="text/javascript"></script>
+  <input name='fooo'>
+  <script type="text/javascript">
+    $(function() {
+      $.getJSON('tree.js', function(tree) {
+        $('input[name=fooo]').optionTree(tree, {
+          preselect: {'fooo': "---"}
+        });
+      });
+    });
+  </script>
+</div>
+
+<fieldset id='advanced'>
+  <legend>Avanzate</legend>
+  <% Cfg[:locales].each do |l| -%>
+    <div class="language <%= l %>">
+      FIXME: Tree delle tassonomie + slug generator<br>
+      questo parametro e' generato da JS!<br>
+      <%= f.input :"slug(#{l})", :caption => mat(:taxonomy, :slug), :as => :string %>
+    </div>
+  <% end -%>
+</fieldset>
+
 
 <div class='submit_link'>
   <%= f.submit pat(:save), :class => :alt_btn %>
