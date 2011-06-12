@@ -23,7 +23,8 @@ gem 'bson_ext', '>=1.3.1', :require => nil
 gem 'mongo_mapper', '>=0.9.1'
 #gem 'hunt'
 #
-gem 'mm-embeddable', :git => "https://github.com/aliem/mm-embeddable.git"
+#gem 'mm-embeddable', :git => "https://github.com/aliem/mm-embeddable.git"
+gem 'mm-embeddable', '~>0.0.1'
 
 gem 'promise'
 
