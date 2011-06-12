@@ -1,26 +1,17 @@
 <div class="module_content">
   <% Cfg[:locales].each do |l| -%>
     <div class="language <%= l %>">
-      <%= f.input :"title(#{l})", :caption => mat(:taxonomy, :title), :as => :string %>
-      <%= f.input :"description(#{l})", :caption => mat(:taxonomy, :description), :as => :text, :class => :editor %>
+      <%= f.input :"title(#{l})", :caption => mat(:taxonomy, :title), :as => :string, :value => f.object.title[l] %>
+      <%= f.input :"description(#{l})", :caption => mat(:taxonomy, :description), :as => :text, :value => f.object.description[l],  :class => :editor %>
     </div>
   <% end -%>
 </div>
 
 <div>
-  <%= f.input :parent_id, :as => :string, :type => :hidden %>
+  <%= f.input :parent_id, :as => :string %>
 
-  <script src="http://jquery-option-tree.googlecode.com/svn/trunk/jquery.optionTree.js" type="text/javascript"></script>
-  <input name='_dummy' type="hidden">
-  <script type="text/javascript">
-    $(function() {
-      $.getJSON('tree.js', function(tree) {
-        $('input[name=_dummy]').optionTree(tree, {
-          preselect: {'_dummy': "---"},
-        }).change(function(){ $('input[name="taxonomy[parent_id]"]').attr('value', this.value); });
-      });
-    });
-  </script>
+  <input name='_dummy'>
+
 </div>
 
 <fieldset id='advanced'>
@@ -30,7 +21,7 @@
       <%= f.input :"slug(#{l})", :caption => mat(:taxonomy, :slug), :as => :string %>
     </div>
   <% end -%>
-  <p><b>Attenzione</b> i parametri <em>permalink</em> (o <em>slug</em>) sono automaticamente generati via javascript. Normalmente non si avr&agrave; bisogno di modificarli</p>
+  <div><p><b>Attenzione</b> i parametri <em>permalink</em> (o <em>slug</em>) sono automaticamente generati via javascript. Normalmente non si avr&agrave; bisogno di modificarli</p><div>
 </fieldset>
 
 
