@@ -11,6 +11,10 @@ Admin.controllers :pages do
 
   post :create do
     @page = Page.new(params[:page])
+    @page.taxonomy = params[:taxonomy].map { |t|
+      Taxonomy.find(t)
+    }
+
     if @page.save
       flash[:notice] = t'created'
       redirect url(:pages, :index)
@@ -26,6 +30,10 @@ Admin.controllers :pages do
 
   put :update, :with => :id do
     @page = Page.find(params[:id])
+    @page.taxonomy = params[:taxonomy].map { |t|
+      Taxonomy.find(t)
+    }
+
     if @page.update_attributes(params[:page])
       flash[:notice] = t'updated'
       redirect url(:pages, :edit, :id => @page.id)

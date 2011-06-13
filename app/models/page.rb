@@ -14,7 +14,7 @@ class Page
 
   key :position, Integer, :default => 0
 
-  key :taxonomy, Taxonomy::Embeddable
+  many :taxonomy, :class_name => 'Taxonomy::Embeddable'
 
   #validations
   validates_presence_of  :title, :lead, :text

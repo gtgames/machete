@@ -26,7 +26,7 @@ class Taxonomy
   end
 
   def self.threaded(path='', json = false)
-    taxons = where({ :"path.#{Cfg.locale}" => %r{#{path}} }).order("path asc, weight desc")
+    taxons = where({ :path_id => %r{#{path}} }).order("path asc, weight desc")
     results, map  = [], {}
     taxons.each do |taxon|
       if taxon.parent_id.blank?
@@ -69,7 +69,6 @@ class Taxonomy
     list
   end
 
-
   before_save :set_path
   private
   # Store the taxon's path.
@@ -84,7 +83,7 @@ class Taxonomy
       self['depth']   = parent.depth + 1
       self['path_id'] = parent.path_id + ":" + parent.id.to_s
       Cfg[:locales].each{|l|
-        self['path'][l] = parent.path[l] + "/" + parent.slug[l]
+        self['path'][l] = parent.path[l] + "/" + self['slug'][l]
       }
     end
     #save

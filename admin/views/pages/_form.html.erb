@@ -1,5 +1,3 @@
-<%= f.object.errors %>
-
 <div class="module_content">
   <% Cfg[:locales].each do |l| %>
     <div class="language <%=l%>">
@@ -9,9 +7,8 @@
     </div>
   <% end %>
 
-  <div>TODO: </div>
-  <%= f.input :taxon, :as => :string %>
-
+  <h1>Tassonomia</h1>
+  <%= partial "taxonomy/chooser", :locals => { :f => f, :taxons => Taxonomy.threaded } %>
 </div>
 
 <fieldset id='advanced'>

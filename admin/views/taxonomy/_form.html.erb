@@ -27,7 +27,7 @@
   <legend>Avanzate</legend>
   <% Cfg[:locales].each do |l| -%>
     <div class="language <%= l %>">
-      <%= f.input :"slug(#{l})", :caption => mat(:taxonomy, :slug), :as => :string %>
+      <%= f.input :"slug(#{l})", :caption => mat(:taxonomy, :slug), :as => :string, :value => f.object.slug[l] %>
     </div>
   <% end -%>
   <div><p><b>Attenzione</b> i parametri <em>permalink</em> (o <em>slug</em>) sono automaticamente generati via javascript. Normalmente non si avr&agrave; bisogno di modificarli</p><div>
