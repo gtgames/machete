@@ -25,7 +25,7 @@ class Taxonomy
     where(:"path.#{Cfg.locale}" => %r{#{path}} ).first
   end
 
-  def self.threaded(path='/', json = false)
+  def self.threaded(path='', json = false)
     taxons = where({ :"path.#{Cfg.locale}" => %r{#{path}} }).order("path asc, weight desc")
     results, map  = [], {}
     taxons.each do |taxon|
@@ -82,7 +82,7 @@ class Taxonomy
     else
       parent = Taxonomy.find(self['parent_id'])
       self['depth']   = parent.depth + 1
-      self.path_id    = parent.path_id + ":" + parent.id.to_s
+      self['path_id'] = parent.path_id + ":" + parent.id.to_s
       Cfg[:locales].each{|l|
         self['path'][l] = parent.path[l] + "/" + parent.slug[l]
       }

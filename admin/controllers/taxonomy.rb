@@ -46,6 +46,6 @@ Admin.controller :taxonomy do
   end
 
   get :tree, :provides => :js do
-    Taxonomy.threaded('/', true).to_json
+    Taxonomy.threaded('', true).to_json
   end
 end
