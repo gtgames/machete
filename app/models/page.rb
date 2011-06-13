@@ -23,7 +23,7 @@ class Page
   timestamps!
 
   # Scopes
-  def self.by_taxon sl
-    return first(:"taxonomy.path.#{Cfg.locale}".in => %r{#{sl.downcase}})
+  def self.by_taxonomy sl
+    return where(:"taxonomy.path.#{Cfg.locale}" => %r{#{sl.downcase}})
   end
 end
