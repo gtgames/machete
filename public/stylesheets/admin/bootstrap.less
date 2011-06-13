@@ -66,7 +66,8 @@
 }
 
 .opacity(@op:100){
-  filter:alpha(opacity=@op);
+  //-ms-filter: %('alpha(opacity=%s)', @value);
+  //filter: e(%("alpha(opacity=%s)", @value));
   -moz-opacity:@op/100;
   -khtml-opacity:@op/100;
   opacity:@op/100;

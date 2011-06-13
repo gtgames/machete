@@ -4,11 +4,9 @@
   <meta charset="utf-8">
   <title>Admin</title>
   <link rel="stylesheet/less" href="/stylesheets/admin/layout.less" type="text/css" media="screen">
-  <link rel="stylesheet/css" href="/stylesheets/admin/ui.css" type="text/css" media="screen">
   <script src="/javascripts/libs/less.js" type="text/javascript"></script>
-  <% if PADRINO_ENV == 'development' %>
-    <script>/*less.env='development';less.watch();*/less.unwatch()</script>
-  <% end%>
+  <script>less.env='<%= PADRINO_ENV %>';</script>
+  <link rel="stylesheet/css" href="/stylesheets/admin/ui.css" type="text/css" media="screen">
   <!--[if IE ]>
     <script src="/javascripts/libs/selectivizr.js" type="text/javascript"></script>
   <![endif]-->

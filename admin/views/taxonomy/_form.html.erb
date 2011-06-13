@@ -8,10 +8,19 @@
 </div>
 
 <div>
-  <%= f.input :parent_id, :as => :string %>
+  <%= f.input :parent_id, :type => :hidden %>
 
-  <input name='_dummy'>
+  <% if not f.object.parent_id.blank? -%>
+    <div class="taxonomy_path">
+      <% f.object.path.to_s.split('/').each do |p| -%>
+        <% unless p.blank? -%>
+          <span><%= p %></span>
+        <% end -%>
+      <% end -%>
+    </div>
+  <% end -%>
 
+  <input name='_dummy' type="hidden">
 </div>
 
 <fieldset id='advanced'>

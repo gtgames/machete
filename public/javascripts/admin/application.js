@@ -73,7 +73,8 @@
   if($("#taxonomy_parent_id").length){
     $.getJSON('/taxonomy/tree.js', function(tree) {
       $('input[name=_dummy]').optionTree(tree, {
-        preselect: {'_dummy': "---"},
+        choose: "Scegli...",
+        preselect: {'_dummy': "---"}
       }).change(function(){ $('input[name="taxonomy[parent_id]"]').attr('value', this.value); });
     });
   }
