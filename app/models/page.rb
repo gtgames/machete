@@ -17,7 +17,7 @@ class Page
   key :taxonomy, Taxonomy::Embeddable
 
   #validations
-  validates_presence_of  :title, :lead, :text, :taxonomy
+  validates_presence_of  :title, :lead, :text
 
   # additional methods
   timestamps!
