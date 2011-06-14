@@ -76,7 +76,7 @@ class Taxonomy
     if self['parent_id'].blank?
       self['path_id'] = ''
       Cfg[:locales].each{|l|
-        self['path'][l] = ''
+        self['path'][l] = self['slug'][l]
       }
     else
       parent = Taxonomy.find(self['parent_id'])
