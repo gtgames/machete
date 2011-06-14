@@ -25,7 +25,7 @@ module Frenz
       # This reload the page changing the I18n.locale
       #
       def switch_to_lang(lang)
-        request.path_info.sub(/\/#{I18n.locale}/, "/#{lang}") if options.locales.include?(lang)
+        request.path_info.sub(%r{/#{Cfg.locale}}, "/#{lang}") if Cfg[:locales].locales.include?(lang)
       end
 
       def get_browser_locale
@@ -37,7 +37,7 @@ module Frenz
           }.first
           locale = request.env['locale'] = lang.first.split("-").first
         else
-          locale = request.env['locale'] = I18n.default_locale
+          locale = request.env['locale'] = Cfg.default_locale
         end
         locale
       end
@@ -46,14 +46,15 @@ module Frenz
 
     def self.registered(app)
       app.helpers Frenz::AutoLocale::Helpers
-      #app.set :locales, [:en]
+
       app.before do
         if request.env['REQUEST_URI'] == '/'
           redirect "/#{get_browser_locale}/"
-        elsif request.path_info.match(/^\/(\w{2})\//) && options.locales.include?($1)
+        elsif request.path_info.match(/^\/(\w{2})\//) && Cfg[:locales].include?($1)
           I18n.locale = $1.to_sym
         else
-          redirect request.env['REQUEST_URI'].sub(/^\/\w{2}\//, '/'+I18n.default_locale.to_s+'/')
+          redirect (request.env['REQUEST_URI'] =~ /^\/\w{2}\//)?
+            request.env['REQUEST_URI'].sub(/^\/\w{2}/, "/#{Cfg.default_locale.to_s}") : "/#{Cfg.default_locale.to_s}#{request.env['REQUEST_URI']}"
         end
       end
     end # self.registered

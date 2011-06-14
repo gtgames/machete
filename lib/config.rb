@@ -54,6 +54,9 @@ module Cfg
     def locale
       (self[:locales].include? I18n.locale)? I18n.locale : self[:locales].first
     end
+    def default_locale
+      Cfg[:locales].first
+    end
   end
 end
 
