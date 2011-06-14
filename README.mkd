@@ -1,0 +1,10 @@
+Machete
+-------
+
+Un CMS in perma-_beta_ fin quando  non troveremo stabilita'
+
+
+== Sviluppato da ==
+
+* [GTGames](http://gtgames.it)
+
