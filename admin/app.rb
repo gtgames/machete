@@ -11,8 +11,6 @@ class Admin < Padrino::Application
     config.label_required_marker_position = :append
   end
 
-  #use Rack::PostBodyContentTypeParser
-
   enable  :sessions
 
   set :session_secret, '28a4a90b149121c14172404245efdc8cb57a71d5679b487834f5b2dc1772105e'
@@ -26,13 +24,13 @@ class Admin < Padrino::Application
   end
 
   access_control.roles_for :root do |role|
-    role.project_module :links,     "/links"
-    role.project_module :photos,    "/photos"
-    role.project_module :posts,     "/posts"
-    role.project_module :pages,     "/pages"
-    role.project_module :taxonomy,  "/taxonomy"
-    role.project_module :configurations, "/configurations"
-    role.project_module :accounts,  "/accounts"
+    role.project_module :links,           "/links"
+    role.project_module :photos,          "/photos"
+    role.project_module :posts,           "/posts"
+    role.project_module :pages,           "/pages"
+    role.project_module :taxonomy,        "/taxonomy"
+    role.project_module :configurations,  "/configurations"
+    role.project_module :accounts,        "/accounts"
   end
 
   ## ACL built from database or config.json
@@ -42,5 +40,10 @@ class Admin < Padrino::Application
         role.project_module m.to_sym, m
       end
     end
+  end
+
+  before do
+    headers 'Last-Modified' => Time.now.httpdate
+    response['Cache-Control'] = "private, max-age=30"
   end
 end
