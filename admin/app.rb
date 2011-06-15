@@ -43,7 +43,9 @@ class Admin < Padrino::Application
   end
 
   before do
-    headers 'Last-Modified' => Time.now.httpdate
-    response['Cache-Control'] = "private, max-age=30"
+    headers 'Last-Modified' => Time.now.httpdate,
+      "Expires" => "Fri, 01 Jan 1990 00:00:00 GMT",
+      "Pragma" => "no-cache",
+      "Cache-Control" => "no-cache, no-storem max-age=0, must-revalidate"
   end
 end
