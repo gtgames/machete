@@ -1,10 +1,15 @@
 Machete
 -------
 
-Un CMS in perma-_beta_ fin quando  non troveremo stabilita'
+Un CMS in perma-_alpha_ fin quando non troveremo stabilita'
 
 
-== Sviluppato da ==
+---
 
-* [GTGames](http://gtgames.it)
+Sviluppato da: [GTGames](http://gtgames.it)
 
+con il grande aiuto di [Padrino](http://padrinorb.com/), [MongoMapper](http://mongomapper.com), [MongoDB](http://mongodb.com/) e molti altri.
+
+---
+
+Don't fork me, I'm very alpha right now
