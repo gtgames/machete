@@ -12,10 +12,11 @@ class SimpleUploader < HashWithIndifferentAccess
     tempfile = self["path"]
     subfolder = (/^image\/.*/.match(self['content_type']).nil?)? 'assets' : 'pictures'
 
+    self["ext"]  = ::File.extname(self['name']).slice!(1..-1)
+    self["name"] = self["name"].sub(/\.\w+$/, '').to_slug + '.' + self["ext"]
     self["time"] = ::Time.new.to_i
     self["url"]  = "/media/#{subfolder}/#{self['time']}/#{self["name"]}"
     self["path"] = "#{media_folder}/#{subfolder}/#{self['time']}/#{self['name']}"
-    self["ext"]  = ::File.extname(self['name']).slice!(1..-1)
 
     FileUtils.mkdir_p ::File.dirname(self['path'])
     FileUtils.cp tempfile, self['path']
