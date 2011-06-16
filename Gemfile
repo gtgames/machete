@@ -6,10 +6,8 @@ gem 'rack-flash'
 gem 'eventmachine'
 gem 'thin'
 
-gem 'em-net-http'
-gem 'em-resolv-replace'
-gem 'rack-fiber_pool'
 gem 'em-synchrony', '>=0.2.0'
+gem 'sinatra-synchrony'
 
 # Component requirements
 gem 'erubis'
