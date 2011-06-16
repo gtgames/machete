@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/config/boot.rb'
+require ::File.expand_path('../config/boot.rb', __FILE__)
 require 'thor'
 require 'padrino-core/cli/rake'
 

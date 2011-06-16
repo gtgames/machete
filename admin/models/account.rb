@@ -30,7 +30,7 @@ class Account
   # This method is for authentication purpose
   #
   def self.authenticate(username, password)
-    account = first(:username => username) if username.present?
+    account = first(:$or => [{:username => username}, {:email => username}])
     account && account.has_password?(password) ? account : nil
   end
 

@@ -7,14 +7,10 @@ unless $LOAD_PATH.include? File.join(PADRINO_ROOT, 'lib_core')
 end
 
 # Load Bundler
-require 'rubygems'
+require 'rubygems' unless defined?(Gem)
 require 'bundler'
-# Only have default and environemtn gems
-Bundler.setup(:default, PADRINO_ENV.to_sym)
-# Only require default and environment gems
-Bundler.require(:default, PADRINO_ENV.to_sym)
-puts "=> Located #{Padrino.bundle} Gemfile for #{Padrino.env}"
-
+Bundler.setup(:default, PADRINO_ENV)
+Bundler.require(:default, PADRINO_ENV)
 ##
 # Add here your before load hooks
 #

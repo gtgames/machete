@@ -1,5 +1,10 @@
+#!/usr/bin/env rackup
+
 $LOAD_PATH.unshift ::File.expand_path('../lib_core', __FILE__) # this sucks ... but what can i do?
 require 'eventmachine'
+
+require 'rack/fiber_pool'
+use Rack::FiberPool
 
 APP_ROOT = ::File.expand_path('../', __FILE__)
 

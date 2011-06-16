@@ -10,4 +10,7 @@ case Padrino.env
   when :test        then MongoMapper.database = settings['mongo']['name'] + '_test'
 end
 
-MongoMapper.database.authenticate(settings['mongo']['user'], settings['mongo']['password']) unless (settings['mongo']['user']).nil?
+MongoMapper.database.authenticate(
+  settings['mongo']['user'],
+  settings['mongo']['password']
+) unless (settings['mongo']['user']).nil?
