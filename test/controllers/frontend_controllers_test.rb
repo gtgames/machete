@@ -1,26 +1,29 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
 
-context "IndexController" do
-  context "index response" do
-    setup do
-      get "/"
-    end
+context "Frontend" do
+  app Machete
+
+  context "GET /" do
+    setup { get "/" }
+
+    asserts("the response status") { last_response.status }.equals 302
+  end
+
+
+  context "GET /:lang/" do
+    setup { get "/it/" }
 
     asserts("the response status") { last_response.status }.equals 200
   end
 
-  context "html sitemap response" do
-    setup do
-      get "/sitemap.html"
-    end
+  context "GET /it/:sitemap" do
+    setup { get "/it/sitemap.html" }
     asserts("the response status") { last_response.status }.equals 200
     asserts("the content type") { last_response.headers["Content-Type"] }.equals "text/html;charset=utf-8"
   end
 
-  context "xml sitemap response" do
-    setup do
-      get "/sitemap.xml"
-    end
+  context "GET /it/:sitemap.xml" do
+    setup { get "/it/sitemap.xml" }
     asserts("the response status") { last_response.status }.equals 200
     asserts("the content type") { last_response.headers["Content-Type"] }.equals "application/xml;charset=utf-8"
   end

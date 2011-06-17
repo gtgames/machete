@@ -6,7 +6,16 @@ Machete.controllers :pages, :lang => I18n.locale do
     render 'pages/index'
   end
 
-  get :show, :map => '/:lang/:taxon', :matching => [:id =>  %r{[\w\-_/]+}] do
+  get :show, :map => "/:lang/pages/:slug" do
+    if (@page = Page.by_slug(params[:slug]))
+      etag @page.updated_at.to_i
+      render 'pages/show'
+    else
+      404
+    end
+  end
+
+  get :taxon, :map => '/:lang/:taxon', :matching => [:id =>  %r{[\w\-_/]+}] do
     @pages = Page.by_taxonomy(params[:taxon]).all
     if (@pages.size > 0)
       if @pages.size == 1
@@ -19,31 +28,5 @@ Machete.controllers :pages, :lang => I18n.locale do
       404
     end
   end
-=begin
-  get :taxonomy, :map => "/:lang/:taxonomy" do
-    if (@pages = Page.where(:tax => /#{params[:taxonomy]}/).all)
-      render 'pages/index'
-    else
-      404
-    end
-  end
 
-  get :taxon, :map => "/:lang/:taxonomy/:taxon" do
-    if (@pages = Page.where(:tax => /#{params[:taxonomy]}\/#{params[:taxon]}/).all)
-      etag @pages.last.updated_at.to_i
-      render 'pages/index'
-    else
-      404
-    end
-  end
-
-  get :show, :map => "/:lang/:taxonomy/:taxon/:slug" do
-    if (@page = Page.by_slug(params[:slug]))
-      etag @page.updated_at.to_i
-      render 'pages/show'
-    else
-      404
-    end
-  end
-=end
 end

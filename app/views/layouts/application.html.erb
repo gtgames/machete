@@ -9,10 +9,12 @@
 
     <link rel="stylesheet/less" href="/stylesheets/layout.less" type="text/css" media="screen">
     <script src="/javascripts/libs/less.js" type="text/javascript"></script>
-    <script type="text/javascript" charset="utf-8">
-      less.env = 'development';
-      less.watch();
-    </script>
+    <% if PADRINO_ENV == :development -%>
+      <script type="text/javascript" charset="utf-8">
+        less.env = 'development';
+        less.watch();
+      </script>
+    <% end -%>
 
     <script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
     <title><%= Cfg[:title] %> <%= yield_content(:title) %></title>
@@ -20,6 +22,7 @@
   <body>
     <nav class="row">
       <ul class="column grid_12">
+        <li><a href="/<%= Cfg['locale'] %>/">Home</a></li>
         <% menu.each do |m| %>
           <li><a href="<%= m.url %>"><%= m.title %></a></li>
         <% end %>

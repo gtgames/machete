@@ -12,8 +12,8 @@ context "Link Model" do
   context "definition" do
     setup { Link.make }
 
-    asserts_topic.has_key :title,   Translation
-    asserts_topic.has_key :url,    Translation
+    asserts_topic.has_key :title, Translation
+    asserts_topic.has_key :url,   Translation
 
     asserts_topic.has_plugin MongoMapper::Plugins::HashParameterAttributes
   end

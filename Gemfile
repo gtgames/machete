@@ -10,7 +10,6 @@ gem 'em-synchrony', :require => ['em-synchrony','em-synchrony/em-http']
 gem 'em-net-http'
 gem 'em-resolv-replace'
 gem 'rack-fiber_pool', :require => 'rack/fiber_pool'
-#gem 'sinatra-synchrony', :require => 'sinatra/synchrony'
 
 # Component requirements
 gem 'erubis'
@@ -23,8 +22,6 @@ gem 'bson_ext', '>=1.3.1', :require => nil
 
 gem 'mongo_mapper', '>=0.9.1'
 #gem 'hunt'
-#
-#gem 'mm-embeddable', :git => "https://github.com/aliem/mm-embeddable.git"
 
 gem 'promise'
 

@@ -57,5 +57,5 @@ end
 
 Link.blueprint do
   title   { Sham.title }
-  url     { Sham.url }
+  url     { {"it" => Sham.url} }
 end
