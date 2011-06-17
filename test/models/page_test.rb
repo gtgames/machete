@@ -7,21 +7,26 @@ context "Page" do
   context "definition" do
     setup { Page.make }
 
-    asserts_topic.has_key :title,   String
-    asserts_topic.has_key :slug,    String
-    asserts_topic.has_key :lead,    String
-    asserts_topic.has_key :text,    String
-    asserts_topic.has_key :tags,    Array
+    asserts_topic.has_key :title,   Translation
+    asserts_topic.has_key :slug,    Translation
+    asserts_topic.has_key :lead,    Translation
+    asserts_topic.has_key :text,    Translation
+
+    asserts_topic.has_key :position,          Integer
+    asserts_topic.has_key :meta_keyword
+    asserts_topic.has_key :meta_description
+    asserts_topic.has_key :browser_title
+
+    asserts_topic.has_association :many, :taxonomy
 
     # validations
     asserts_topic.has_validation :validates_presence_of,  :title
     asserts_topic.has_validation :validates_presence_of,  :lead
-    asserts_topic.has_validation :validates_uniqueness_of,  :title
-    asserts_topic.has_validation :validates_uniqueness_of,  :slug
+    asserts_topic.has_validation :validates_presence_of,  :text
+
+    # Plugins
+    asserts_topic.has_plugin MongoMapper::Plugins::HashParameterAttributes
+
   end
-  
-  context "slug is equal to title.to_slug" do
-    setup { Page.make :title => 'foo bar' }
-    asserts(:slug).equals 'foo-bar'
-  end
+
 end

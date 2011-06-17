@@ -4,6 +4,7 @@ class Post
 
   key :title, String
   key :slug,  String
+  key :lead,  String
   key :text,  String
   key :photo, SimpleUploader
   key :tags,  Array
@@ -12,12 +13,6 @@ class Post
 
   scope :by_slug, lambda { |slug| where(:slug => slug) }
 
-  validates_presence_of     :title, :lead, :text
-  validates_uniqueness_of   :slug, :title
-
-  before_save :generate_slug
-  protected
-  def generate_slug
-    self[:slug] = title.to_slug
-  end
+  validates_presence_of     :title, :slug, :lead, :text
+  validates_uniqueness_of   :title, :slug
 end
