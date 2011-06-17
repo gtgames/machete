@@ -32,6 +32,7 @@ end
 
 # Test requirements
 group :test do
+  gem 'watchr'
   gem 'faker'
   gem 'rr'
   gem 'riot'
