@@ -1,3 +1,6 @@
+#!/usr/bin/env watchr
+# vim: ft=ruby
+#
 # install watchr
 # $ gem install watchr
 #
@@ -29,7 +32,7 @@ watch("^test/(.*)/controllers_test.rb") { |m| run("test/#{m[1]}/controllers_test
 watch("^(.*)/models/(.*).rb") { |m| run("test/#{m[1]}/models/#{m[2]}_test.rb") }
 watch("^test/(.*)/(.*)_test.rb") { |m| run("test/#{m[1]}/models/#{m[2]}_test.rb") }
 
-watch("test.*/test_config\.rb") { system( "padrino rake test" ) }
+watch("test.*/test_config\.rb") { system( "rake test" ) }
 watch("^test/(.*)_test\.rb") { |m| run("test/#{m[1]}_test.rb") }
 
 

@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
+require File.expand_path(File.dirname(__FILE__) + '/../../test_config.rb')
 
 context "Frontend" do
   app Machete
@@ -8,7 +8,6 @@ context "Frontend" do
 
     asserts("the response status") { last_response.status }.equals 302
   end
-
 
   context "GET /:lang/" do
     setup { get "/it/" }

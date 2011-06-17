@@ -8,10 +8,9 @@ I18n.load_path += Dir[Padrino.root('*', 'locale', '*.yml')]
 require File.join(File.dirname(__FILE__),'blueprints')
 require 'riot/rr'
 
-require 'rack/test'
 # Monkeypatch to provide EM within tests.
 # If you have a better approach, please send a pull request!
-
+require 'rack/test'
 module Rack
   class MockSession
     def request(uri, env)

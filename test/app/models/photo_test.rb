@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
+require File.expand_path(File.dirname(__FILE__) + '/../../test_config.rb')
 
 context "Photo Model" do
   setup { Photo.delete_all }

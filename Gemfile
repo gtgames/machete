@@ -37,8 +37,7 @@ group :test do
   gem 'rr'
   gem 'riot'
   gem 'riot-mongo_mapper', '>=0.1.0'
-  gem 'machinist_mongo'
-  gem 'machinist', :require => 'machinist/mongo_mapper'
+  gem 'machinist_mongo', :require => 'machinist/mongo_mapper'
   gem 'rack-test', :require => "rack/test"
 end
 
