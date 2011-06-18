@@ -21,8 +21,6 @@ end
 # Add here your after load hooks
 #
 Padrino.after_load do
-  Configuration.ensure_index :key, :unique => true
-
   I18n.default_locale = Cfg[:locales].first
 end
 

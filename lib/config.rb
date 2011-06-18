@@ -24,7 +24,7 @@ module Cfg
     def fetch
       conf = Hash.new
       MongoMapper.database['configurations'].find({}).find_all.to_a.each do |c|
-        conf[c["key"]] = c["value"]
+        conf[c["_id"]] = c["val"]
       end
       @config = @config.merge conf
       @cache = Time.new
