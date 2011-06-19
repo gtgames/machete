@@ -6,7 +6,7 @@ class Post
   key :slug,  String
   key :lead,  String
   key :text,  String
-  key :photo, SimpleUploader
+  key :photo, MediaFile::Embeddable
   key :tags,  Array
 
   timestamps!

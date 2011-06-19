@@ -55,7 +55,7 @@ module MongoMapper
           self.const_set(:Embeddable, Class.new(::MongoMapper::Plugins::Embeddable::EmbeddableDocument))
 
           self.const_get(:Embeddable).full_class = self
-          self.const_get(:Embeddable).key :_id, ObjectId
+          #self.const_get(:Embeddable).key :_id, String, :default => lambda { BSON::ObjectId.new }
 
           ckeys.each do |k|
             self.const_get(:Embeddable).key k

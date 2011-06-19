@@ -14,7 +14,7 @@ context "Post Model" do
     asserts_topic.has_key :slug,  String
     asserts_topic.has_key :lead,  String
     asserts_topic.has_key :text,  String
-    asserts_topic.has_key :photo, SimpleUploader
+    asserts_topic.has_key :photo, MediaFile::Embeddable
     asserts_topic.has_key :tags,  Array
 
 

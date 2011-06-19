@@ -3,7 +3,6 @@ class Photo
   plugin MongoMachete::Taggable
 
   key :title, String
-
-  key :file, SimpleUploader
-
+  key :file, MediaFile::Embeddable
 end
+

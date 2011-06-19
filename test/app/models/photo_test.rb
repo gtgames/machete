@@ -9,15 +9,19 @@ context "Photo Model" do
   end
 
   context 'definition' do
-    setup { Photo.make(:file => Sham.image) }
+    setup {
+      media = MediaFile::Embeddable.from_full  MediaFile.make(:file => Sham.image)
+      Photo.make(:file => media ) }
 
     asserts_topic.has_key :title,   String
-    asserts_topic.has_key :file,    SimpleUploader
+    asserts_topic.has_key :file,    MediaFile::Embeddable
 
-    asserts("that file has 'content_type'") { !topic.file['content_type'].nil? }
+
     asserts("that file has 'name'")         { !topic.file['name'].nil? }
-    asserts("that file has 'path'")         { !topic.file['path'].nil? }
     asserts("that file has 'url'")          { !topic.file['url'].nil? }
     asserts("that can generate a thumb link") { topic.file.thumb(:small) }
+
+    asserts("that file's 'content_type' can be retrieved") { !topic.file.content_type.nil? }
   end
 end
+
