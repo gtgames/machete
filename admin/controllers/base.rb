@@ -10,7 +10,16 @@ Admin.controllers :base do
   end
 
   post :upload do
-    %{<script>window.parent.eval('$("##{params["form_id"]}").trigger("success", [#{params["file"].to_json}]);');</script>}
+    file = MediaFile.new({
+        :name => params["file"]["filename"],
+        :content_type => params["file"]["type"],
+        :path => params["file"]["tempfile"]
+    })
+    if file.save
+      %{<script>window.parent.$("##{params["form_id"]}").trigger("success", #{file.id});</script>}
+    else
+      %{<script>window.parent.$("##{params["form_id"]}").trigger("error", [#{file.errors.to_json}]);</script>}
+    end
   end
 
   get :reboot do
