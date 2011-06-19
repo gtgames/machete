@@ -13,8 +13,10 @@
 # --------------------------------------------------
 
 def run(cmd)
-  puts(cmd)
   system("clear")
+  puts("\n"*1)
+  puts(cmd)
+  puts("\n"*3)
   system("ruby #{cmd}")
 end
 

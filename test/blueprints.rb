@@ -51,6 +51,9 @@ Taxonomy.blueprint do
   description { Sham.text }
 end
 
+MediaFile.blueprint do
+end
+
 Photo.blueprint do
   title   { Sham.title }
 end
@@ -59,3 +62,4 @@ Link.blueprint do
   title   { Sham.title }
   url     { {"it" => Sham.url} }
 end
+

@@ -8,8 +8,7 @@ end
 
 # Load Bundler
 require 'rubygems' unless defined?(Gem)
-require 'bundler'
-Bundler.setup(:default, PADRINO_ENV)
+require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 ##
 # Add here your before load hooks

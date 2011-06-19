@@ -1,4 +1,4 @@
-PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
+PADRINO_ENV = 'test' # unless defined?(PADRINO_ENV)
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 
 # fixing faker issues :? ... don't care if it's not really italian :P
