@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../test_config.rb')
+require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
 
 context "Photo Model" do
   setup { Photo.delete_all }
@@ -10,8 +10,7 @@ context "Photo Model" do
 
   context 'definition' do
     setup {
-      media = MediaFile::Embeddable.from_full  MediaFile.make(:file => Sham.image)
-      Photo.make(:file => media ) }
+      Photo.make(:file => MediaFile.make) }
 
     asserts_topic.has_key :title,   String
     asserts_topic.has_key :file,    MediaFile::Embeddable

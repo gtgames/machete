@@ -34,8 +34,8 @@ watch("^test/(.*)/controllers_test.rb") { |m| run("test/#{m[1]}/controllers_test
 watch("^(.*)/models/(.*).rb") { |m| run("test/#{m[1]}/models/#{m[2]}_test.rb") }
 watch("^test/(.*)/(.*)_test.rb") { |m| run("test/#{m[1]}/models/#{m[2]}_test.rb") }
 
-watch("^models/(.*).rb") { |m| run("test/models/#{m[2]}_test.rb") }
-watch("^test/(.*)/(.*)_test.rb") { |m| run("test/#{m[1]}/models/#{m[2]}_test.rb") }
+watch("^models/(.*).rb") { |m| run("test/models/#{m[1]}_test.rb") }
+watch("^test/models/(.*)_test.rb") { |m| run("test/models/#{m[1]}_test.rb") }
 
 watch("test.*/test_config\.rb") { system( "rake test" ) }
 watch("^test/(.*)_test\.rb") { |m| run("test/#{m[1]}_test.rb") }

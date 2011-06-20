@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../test_config.rb')
+require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
 
 context "MediaFile Model" do
   setup { MediaFile.delete_all }
@@ -9,7 +9,7 @@ context "MediaFile Model" do
   end
 
   context 'definition' do
-    setup { MediaFile.make(:file => Sham.image) }
+    setup { MediaFile.make }
 
     asserts_topic.has_key :name, String
     asserts_topic.has_key :url, String
@@ -22,7 +22,7 @@ context "MediaFile Model" do
   end
   context 'can be deleted' do
     setup { MediaFile.make }
-    asserts("that record can be deleted") { !topic.delete }
+    asserts("that record can be deleted") { !!topic.destroy }
     asserts("that file is being deleted") { !::File.file?(topic.path) }
   end
 end

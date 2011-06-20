@@ -47,11 +47,14 @@ Page.blueprint do
 end
 
 Taxonomy.blueprint do
-  title       { Sham.title }
+  title
   description { Sham.text }
 end
 
 MediaFile.blueprint do
+  name          { Sham.image['name'] }
+  content_type  { Sham.image['content_type'] }
+  path          { Sham.image['path'] }
 end
 
 Photo.blueprint do

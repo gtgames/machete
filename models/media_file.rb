@@ -46,37 +46,32 @@ class MediaFile
   key :url,           String
   key :path,          String
   key :content_type,  String
+  key :ext,           String
 
   before_create :take_care
   after_destroy :handle_deletion
 
   embeds :name, :url
 
-  def file=(d)
-    self['name'] = d['name']
-    self['content_type'] = d['content_type']
-    self['path'] = d['path']
-  end
-
   private
   def take_care
     media_folder = Padrino.root('public', 'media')
-    subfolder = (/^image\/.*/.match(self['content_type']).nil?)? 'assets' : 'pictures'
-    temp_path = self['path'] if self.new?
-    if self.new? && self['path'].match(%r{#{media_folder}}).nil?
+    subfolder = (/^image\/.*/.match( self.content_type ).nil?)? 'assets' : 'pictures'
+    temp_path = self.path if self.new?
+    if self.new? && self.path.match(%r{#{ media_folder }}).nil?
 
-      self['name'] = self['name'].downcase.to_ascii.gsub(/\s+/,'_')
-      self['url']  = "/media/#{subfolder}/#{self['_id']}/#{self['name']}"
-      self['path'] = "#{media_folder}/#{subfolder}/#{self['_id']}/#{self['name']}"
-      self['ext']  = ::File.extname(self['name']).slice!(1..-1)
+      self.name = self.name.downcase.to_ascii.gsub(/\s+/,'_')
+      self.url  = "/media/#{ subfolder }/#{ self._id }/#{ self.name }"
+      self.path = "#{ media_folder }/#{ subfolder }/#{ self._id }/#{ self.name }"
+      self.ext  = ::File.extname( self.name ).slice!( 1..-1 )
 
-      FileUtils.mkdir_p ::File.dirname(self['path'])
-      FileUtils.cp temp_path, self['path']
+      FileUtils.mkdir_p ::File.dirname(self.path)
+      FileUtils.cp temp_path, self.path
     end
   end
   def handle_deletion
-    if ::File.file? self['path']
-      FileUtils.rm_rf self['path'].sub(%r{#{self['name']}$}, '')
+    if ::File.file? self.path
+      FileUtils.rm_rf self.path.sub(%r{#{self.name}$}, '')
     end
   end
 end
