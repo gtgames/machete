@@ -1,10 +1,10 @@
 <img id="chart" src="" width="360" height="120" alt="Grafico contatti sul sito web">
 
-<div id="stats">
-  <div class="domain"></div>
-  <div class="uniques"></div>
-  <div class="pings"></div>
-</div>
+<ul id="stats">
+  <li>Dominio <b class="domain">n/a</b></li>
+  <li>Visitatori unici <b class="uniques">n/a</b></li>
+  <li>visualizzazioni <b class="pings">n/a</b></li>
+</ul>
 
 
 <script>
@@ -12,9 +12,9 @@
 $(function(){
   $.getJSON("http://analyst.machete.it/<%= Cfg[:analyst] %>.js?callback=?",
   function(data) {
-    $('#stats.domain').attr('html', data.domain);
-    $('#stats.uniques').attr('html', data.uniques);
-    $('#stats.pings').attr('html', data.pings);
+    $('#stats .domain').attr('html', data.domain);
+    $('#stats .uniques').attr('html', data.uniques);
+    $('#stats .pings').attr('html', data.pings);
 
     this.url = (function(){
       var pi = parseFloat(data.pings),

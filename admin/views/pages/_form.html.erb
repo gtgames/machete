@@ -2,13 +2,15 @@
   <% Cfg[:locales].each do |l| %>
     <div class="language <%=l%>">
       <%= f.input :"title(#{l})", :value => "#{f.object.title[l]}", :caption => "Titolo" %>
-      <%= f.input :"lead(#{l})", :value => "#{f.object.lead[l]}", :caption => "Introduzione", :as => :string %>
+      <%= f.input :"lead(#{l})", :value => "#{f.object.lead[l]}", :caption => "Introduzione", :as => :text %>
       <%= f.input :"text(#{l})", :value => "#{f.object.text[l]}", :caption => "Testo", :as => :text, :class => :editor %>
     </div>
   <% end %>
 
-  <h1>Tassonomia</h1>
-  <%= partial "taxonomy/chooser", :locals => { :f => f, :taxons => Taxonomy.threaded } %>
+  <div class="taxonomy">
+    <h2>Tassonomia</h2>
+    <%= partial "taxonomy/chooser", :locals => { :f => f, :taxons => Taxonomy.threaded } %>
+  </div>
 </div>
 
 <fieldset id='advanced'>

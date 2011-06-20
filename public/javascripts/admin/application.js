@@ -79,5 +79,6 @@
     });
   }
 
+  $('#site_link').attr('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/')
 })(jQuery);
 

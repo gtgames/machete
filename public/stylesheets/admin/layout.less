@@ -243,18 +243,56 @@ th.actions {
 }
 
 // Taxonomy Tree
-.taxonomy_path{
-  padding: 0 4px;
-  margin-bottom: 8px;
-  span {
-    background: @face_color;
-    color: @bg_color;
-    display: inline-block;
-    float: left;
-    margin-right: 8px;
-    padding: 8px 4px;
-    .border-radius();
-    .box-shadow();
+.taxonomy {
+  .border-radius(3px);
+  border: 1px solid @bg_color;
+  width: 600px;
+  margin: 18px auto;
+  padding: 0 0 18px;
+  h2 {
+    color: lighten(@face_color, 10%);
+    background-color: @bg_color;
+    border-bottom: 1px solid @bg_color;
+    margin-top: 0px;
+    padding-left: 18px;
   }
-  .clearfix();
+  input {
+    margin-left: 18px;
+  }
+  .taxonomy_path{
+    padding: 0 4px;
+    margin-bottom: 8px;
+    span {
+      background: @face_color;
+      color: @bg_color;
+      display: inline-block;
+      float: left;
+      margin-right: 8px;
+      padding: 8px 4px;
+      .border-radius();
+      .box-shadow();
+    }
+    .clearfix();
+  }
+}
+
+ul#stats {
+  padding-top: 20px;
+  width: 100%;
+  li {
+    width: 360px;
+    margin: 0 auto;
+    display: block;
+    b {
+      display: inline-block;
+      float:right;
+    }
+    .clearfix();
+  }
+}
+#chart {
+  background-color: @face_color;
+  padding: 5px;
+  display: block;
+  margin: 0 auto;
 }
