@@ -7,15 +7,17 @@ Machete.controllers :pages, :lang => I18n.locale do
   end
 
   get :show, :map => "/:lang/pages/:slug" do
-    if (@page = Page.by_slug(params[:slug]))
-      etag @page.updated_at.to_i
+    ap "foo is very bar"
+    if !(@pages = Page.by_slug(params[:slug])).nil?
+      etag @pages.updated_at.to_i
       render 'pages/show'
     else
       404
     end
   end
 
-  get :taxon, :map => '/:lang/:taxon', :matching => [:id =>  %r{[\w\-_/]+}] do
+  get :taxon, :map => '/:lang/:taxon', :matching => [:id => /^[\w\-_\/]+/] do
+    ap params[:taxon]
     @pages = Page.by_taxonomy(params[:taxon]).all
     if (@pages.size > 0)
       if @pages.size == 1

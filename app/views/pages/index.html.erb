@@ -1,7 +1,7 @@
 <h1>Pagine:</h1>
 <% @pages.each do |p| %>
   <div>
-    <h1><%= p.title %></h1>
+    <h1><%= link_to p.title, url(:pages, :show, :slug => p.slug.to_s) %></h1>
     <p><%= p.lead %></p>
   </div>
 <% end %>
