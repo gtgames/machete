@@ -51,3 +51,8 @@ it:
       even: "deve essere pari"
       record_invalid: "Validazione fallita: %{errors}"
       content_type: "il seguente tipo di file non è supportato"
+  created: "Creato con successo"
+  updated: "Aggiornato con successo"
+  destroy:
+    fail: "Non &egrave; stato possibile eliminare l'oggetto"
+    success: "Eliminato con successo"
