@@ -12,7 +12,7 @@ Admin.controllers :configurations do
 
   post :create do
     @configuration = Configuration.new(params[:configuration])
-    if @configuration.save!
+    if @configuration.save
       flash[:notice] = 'Configuration was successfully created.'
       redirect url(:configurations, :index)
     else

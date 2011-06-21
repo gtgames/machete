@@ -1,6 +1,6 @@
 <div class="module_content">
   <%= f.input :_id, :as => :string %>
-  <%= f.input :val, :as => :string %>
+  <%= f.input :val, :value => f.object.val.to_json, :as => :text %>
 </div>
 
 <div class='submit_link'>
