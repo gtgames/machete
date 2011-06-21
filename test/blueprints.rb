@@ -66,3 +66,7 @@ Link.blueprint do
   url     { {"it" => Sham.url} }
 end
 
+Configuration.blueprint do
+  _id   { Sham.name.downcase }
+  val   { {:foo => "bar"}.to_json }
+end

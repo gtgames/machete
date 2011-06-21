@@ -11,10 +11,10 @@ Admin.controllers :configurations do
   end
 
   post :create do
-    @configuration = Configuration.new(:_id => params[:configuration][:_id], :val => JSON.parse(params[:configuration][:val]))
-    if @configuration.save
+    @configuration = Configuration.new(params[:configuration])
+    if @configuration.save!
       flash[:notice] = 'Configuration was successfully created.'
-      redirect url(:configurations, :edit, :id => @configuration.id)
+      redirect url(:configurations, :index)
     else
       logger.error @configuration.errors
       render 'configurations/new'
@@ -28,8 +28,8 @@ Admin.controllers :configurations do
 
   put :update, :with => :id do
     @configuration = Configuration.find(params[:id])
-    if @configuration.update_attributes(:_id => params[:configuration][:_id], :val => JSON.parse(params[:configuration][:val]))
-      flash[:notice] = 'Configuration was successfully updated.'
+    if @configuration.update_attributes(params[:configuration])
+      flash[:notice] = t'updated'
       redirect url(:configurations, :edit, :id => @configuration.id)
     else
       render 'configurations/edit'
@@ -39,9 +39,9 @@ Admin.controllers :configurations do
   delete :destroy, :with => :id do
     configuration = Configuration.find(params[:id])
     if configuration.destroy
-      flash[:notice] = 'Configuration was successfully destroyed.'
+      flash[:notice] = t'destroy.success'
     else
-      flash[:error] = 'Impossible destroy Configuration!'
+      flash[:error] = t'destroy.failure'
     end
     redirect url(:configurations, :index)
   end
