@@ -12,20 +12,20 @@
 $(function(){
   $.getJSON("http://analyst.machete.it/<%= Cfg[:analyst] %>.js?callback=?",
   function(data) {
-    $('#stats .domain').attr('html', data.domain);
-    $('#stats .uniques').attr('html', data.uniques);
-    $('#stats .pings').attr('html', data.pings);
+    console.log(data);
+    $('#stats .domain').html(data.domain);
+    $('#stats .uniques').html(data.uniques);
+    $('#stats .pings').html(data.pings);
 
-    this.url = (function(){
-      var pi = parseFloat(data.pings),
-      un = parseFloat(data.uniques);
+    var url = (function(){
+      var pi = parseInt(data.pings), un = parseInt(data.uniques);
       var tot = pi+un;
       return "http://chart.apis.google.com/chart" +
       "?chs=360x120&cht=p&chco=72D5FF" +
-      "&chds=0," + max + "&chd=t:" + pi + "," + un +
+      "&chds=0," + tot + "&chd=t:" + pi + "," + un +
       "&chl=Contatti|Unici&chma=5,5,5,5"
     })();
-    $('#chart').attr('src', this.url);
+    $('#chart').attr('src', url);
   });
 });
 //]]>

@@ -11,9 +11,10 @@ Admin.controllers :posts do
   end
 
   post :create do
+    params[:post][:file] = MediaFile.find(params[:post][:file])
     @post = Post.new(params[:post])
     if @post.save
-      flash[:notice] = 'Post was successfully created.'
+      flash[:notice] = t'created'
       redirect url(:posts, :edit, :id => @post.id)
     else
       render 'posts/new'
@@ -26,6 +27,7 @@ Admin.controllers :posts do
   end
 
   put :update, :with => :id do
+    params[:post][:file] = MediaFile.find(params[:post][:file]) if params[:post][:file]
     @post = Post.find(params[:id])
     if @post.update_attributes(params[:post])
       flash[:notice] = 'Post was successfully updated.'
