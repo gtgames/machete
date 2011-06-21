@@ -1,29 +1,33 @@
-<script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
-<script type="text/javascript">
-function loadVideo(playerUrl, autoplay) {
-  swfobject.embedSWF(
-      playerUrl + '&rel=1&border=0&fs=1&autoplay=' + 
-      (autoplay?1:0), 'player', '290', '250', '9.0.0', false, 
-      false, {allowfullscreen: 'true'});
-}
+<iframe id="player" type="text/html" width="640" height="390"
+  src="http://www.youtube.com/embed/<%= Cfg['youtube']['video'] %>?enablejsapi=1&origin=<%= Cfg[:domain] %>"
+  frameborder="0"></iframe>
 
+<script type="text/javascript">
+  function loadVideo(id) {
+    var iframe = document.getElementById('player');
+    iframe.src = "http://www.youtube.com/embed/" + id + "?enablejsapi=1&origin=<%= Cfg[:domain] %>";
+  }
 function showIt(data) {
-  var feed = data.feed;
-  var entries = feed.entry || [];
+  console.log(data);
+
+  var items = data.data.items;
   var html = ['<ul class="videos">'];
-  for (var i = 0; i < entries.length; i++) {
-    var entry = entries[i];
-    var title = entry.title.$t.substr(0, 20);
-    var thumbnailUrl = entries[i].media$group.media$thumbnail[0].url;
-    var playerUrl = entries[i].media$group.media$content[0].url;
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var title = item.title;
+    
+    var thumbnailUrl = items[i].thumbnail.sqDefault;
+    var playerUrl = items[i].id;
     html.push('<li onclick="loadVideo(\'', playerUrl, '\', true)">',
-              '<span class="titlec">', title, '...</span><br /><img src="', 
-              thumbnailUrl, '" width="130" height="97"/>', '</span></li>');
+        '<span class="titlec">', title, '...</span><br /><img src="',
+        thumbnailUrl,
+        '" width="130" height="97"/>',
+        '</span></li>');
   }
   html.push('</ul><br style="clear: left;"/>');
   document.getElementById('videos2').innerHTML = html.join('');
   if (entries.length > 0) {
-    loadVideo(entries[0].media$group.media$content[0].url, false);
+    loadVideo(items[0].id);
   }
 }
 </script>
@@ -33,6 +37,4 @@ function showIt(data) {
     <object id="player"></object>
 </div>
 <div id="videos2"></div>
-<script type="text/javascript" src="http://gdata.youtube.com/feeds/users/<%= Cfg[:youtube] %>/uploads?alt=json-in-script&callback=showIt&max-results=30">
-</script>
-
+<script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/<%= Cfg['youtube']['user'] %>/uploads?v=2&alt=jsonc&callback=showIt"></script>
