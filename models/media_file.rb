@@ -32,7 +32,7 @@ module MediaFileThumber
       else
         width = "#{t}"
       end
-      return self['url'].sub(/\.\w+$/, "_#{width}.#{self['ext']}")
+      return self.url.sub(/\.(\w+)$/, "_#{width}.#{self.url.match(/\.(\w+)$/)[1]}")
     end
   end
 end

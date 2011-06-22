@@ -19,6 +19,8 @@ context "MediaFile Model" do
 
     asserts("that topic responds to 'file='") { !topic.respond_to?(:'file=').nil? }
     asserts("that topic responds to 'thumb'") { !topic.respond_to?(:thumb).nil? }
+
+    asserts("that 'thumb' outputs an url") { topic.thumb() =~ %r{^/media/} }
   end
   context 'can be deleted' do
     setup { MediaFile.make }

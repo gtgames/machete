@@ -11,7 +11,7 @@ Admin.controllers :posts do
   end
 
   post :create do
-    params[:post][:file] = MediaFile.find(params[:post][:file])
+    params[:post]['file'] = MediaFile.find(params[:post]['file'])
     @post = Post.new(params[:post])
     if @post.save
       flash[:notice] = t'created'
@@ -27,7 +27,7 @@ Admin.controllers :posts do
   end
 
   put :update, :with => :id do
-    params[:post][:file] = MediaFile.find(params[:post][:file]) if params[:post][:file]
+    params[:post]['file'] = MediaFile.find(params[:post]['file']) if !params[:post]['file'].nil?
     @post = Post.find(params[:id])
     if @post.update_attributes(params[:post])
       flash[:notice] = 'Post was successfully updated.'

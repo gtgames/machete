@@ -11,7 +11,7 @@ Admin.controllers :photos do
   end
 
   post :create do
-    params[:photo][:file] = MediaFile.find(params[:photo][:file])
+    params[:photo]['file'] = MediaFile.find(params[:photo]['file'])
     @photo = Photo.new(params[:photo])
     if @photo.save
       flash[:notice] = 'Photo was successfully created.'
@@ -27,7 +27,7 @@ Admin.controllers :photos do
   end
 
   put :update, :with => :id do
-    params[:photo][:file] = MediaFile.find(params[:photo][:file]) if params[:photo][:file]
+    params[:photo]['file'] = MediaFile.find(params[:photo]['file']) if !params[:photo]['file'].nil?
     @photo = Photo.find(params[:id])
     if @photo.update_attributes(params[:photo])
       flash[:notice] = 'Photo was successfully updated.'
