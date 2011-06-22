@@ -7,6 +7,7 @@ Adapter.define(:configuration, Adapter::Memory) do
   def []=(k, v)
     write k, v
   end
+
   def refresh!
     clear
     JSON.parse(File.read(Padrino.root("config", "config.json")))['site'].each do |k,v|
@@ -17,15 +18,16 @@ Adapter.define(:configuration, Adapter::Memory) do
     end
   end
   def locale
-    (read('locales').includes? I18n.locale)? I18n.locale : read['locales'].first
+    (read('locales').include? I18n.locale)? I18n.locale : read('locales').first
   end
   def acl role
-    read[role]
+    read(role)
   end
   def roles
-    t = read['roles']
+    t = read('roles')
     return (t.nil?)? t['admin'] : t
   end
+
 end
 
 Cfg = Adapter[:configuration].new({})
