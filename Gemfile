@@ -20,6 +20,7 @@ gem 'builder'
 gem 'mongo', '>=1.3.1', :require => nil
 gem 'bson_ext', '>=1.3.1', :require => nil
 
+gem 'adapter'
 gem 'mongo_mapper', '>=0.9.1'
 #gem 'hunt'
 
