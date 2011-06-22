@@ -25,6 +25,8 @@ context "LIB: Cfg" do
     asserts("Cfg.locale should be defined") { Cfg.respond_to? :locale }
     asserts("Cfg.locale should return 'it'") { Cfg.locale == "it" }
 
+    asserts("Cfg.default_locale should be defined") { Cfg.respond_to? :default_locale }
+
     asserts("Cfg.acl should be defined") { Cfg.respond_to? :acl }
 
     asserts("Cfg.roles should be defined") { Cfg.respond_to? :roles }

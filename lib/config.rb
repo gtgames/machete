@@ -27,6 +27,9 @@ Adapter.define(:configuration, Adapter::Memory) do
     t = read('roles')
     return (t.nil?)? t['admin'] : t
   end
+  def default_locale
+    read('locales').first
+  end
 
 end
 
