@@ -13,7 +13,7 @@ Admin.controllers :pages do
     @page = Page.new(params[:page])
     @page.taxonomy = params[:taxonomy].map { |t|
       Taxonomy.find(t)
-    }
+    } unless params[:taxonomy].nil?
 
     if @page.save
       flash[:notice] = t'created'
@@ -32,7 +32,7 @@ Admin.controllers :pages do
     @page = Page.find(params[:id])
     @page.taxonomy = params[:taxonomy].map { |t|
       Taxonomy.find(t)
-    }
+    } unless params[:taxonomy].nil?
 
     if @page.update_attributes(params[:page])
       flash[:notice] = t'updated'
