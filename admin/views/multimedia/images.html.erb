@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Browser</title>
+
+    <link rel="stylesheet/less" href="/stylesheets/admin/layout.less" type="text/css" media="screen">
+    <script src="http://frenzart.com/js/less.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="http://frenzart.com/js/jquery/1.6.1.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.js"></script>
+    <link rel="stylesheet/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/base/jquery-ui.css" type="text/css" media="screen">
+
+    <script src="http://frenzart.com/js/upload.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="http://cdn.<%= Cfg["domain"] %>/tiny_mce/tiny_mce_popup.js"></script>
+  </head>
+  <body>
+    <img id="preview" src=''>
+    <ul id="list">
+      <% @files.each do |i| -%>
+        <li id="<%= i._id %>"><%= image_tag(i.thumb(), :id => i._id, :"data-link" => i.url) %></li>
+      <% end -%>
+    </ul>
+
+    <form id="upload">
+      <input type='file'>
+    </form>
+    <script type="text/javascript">
+      $(function(){
+          $('input[type=file]').jsUpload();
+          $('#list img').dblclick(function(e){
+              FileBrowserDialogue.fileSubmit($(e.target).attr('data-link'))
+          });
+      });
+
+      var FileBrowserDialogue = {
+        init : function () {
+          // remove tinymce stylesheet.
+          var allLinks = document.getElementsByTagName("link");
+          allLinks[allLinks.length-1].parentNode.removeChild(allLinks[allLinks.length-1]);
+        },
+        fileSubmit : function (FileURL) {
+                       var URL = FileURL;
+                       var win = tinyMCEPopup.getWindowArg("window");
+                       // insert information now
+                       win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
+                       // change width/height & show preview
+                       if (win.ImageDialog){
+                         if (win.ImageDialog.getImageData)
+                           win.ImageDialog.getImageData();
+                         if (win.ImageDialog.showPreviewImage)
+                           win.ImageDialog.showPreviewImage(URL);
+                       }
+                       // close popup window
+                       tinyMCEPopup.close();
+                     }
+      }
+      tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
+    </script>
+  </body>
+</html>
