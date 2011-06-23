@@ -30,27 +30,30 @@ end
 
 shell.say ""
 
-shell.say 'Creating tree random taxonomies ...', :green
-3.times do
-  data = {}
-  data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
-  data[:"slug(it)"] = data[:"title(it)"].to_slug
-  data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
+if Padrino.env == :development
+  shell.say 'Creating tree random taxonomies ...', :green
+  3.times do
+    data = {}
+    data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
+    data[:"slug(it)"] = data[:"title(it)"].to_slug
+    data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
 
-  Taxonomy.new(data).save
-end
+    Taxonomy.new(data).save
+  end
 
-shell.say 'Creating ten random pages ...', :green
-10.times do
-  data = {}
-  data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
-  data[:"slug(it)"] = data[:"title(it)"].to_slug
-  data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
-  data[:"lead(it)"] = Faker::Lorem.words(50).join(' ')
+  shell.say 'Creating ten random pages ...', :green
+  10.times do
+    data = {}
+    data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
+    data[:"slug(it)"] = data[:"title(it)"].to_slug
+    data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
+    data[:"lead(it)"] = Faker::Lorem.words(50).join(' ')
 
-  data[:taxonomy] = [Taxonomy[Random.rand(0..2)]]
+    data[:taxonomy] = [Taxonomy[Random.rand(0..2)]]
 
-  Page.new(data).save
+    Page.new(data).save
+  end
+
 end
 
 
