@@ -1,6 +1,10 @@
+<article>
+
 <iframe id="player" type="text/html" width="640" height="390"
   src="http://www.youtube.com/embed/<%= Cfg['youtube']['video'] %>?enablejsapi=1&origin=<%= Cfg[:domain] %>"
   frameborder="0"></iframe>
+</article>
+
 
 <script type="text/javascript">
   function loadVideo(id) {
@@ -19,7 +23,7 @@ function showIt(data) {
     var thumbnailUrl = items[i].thumbnail.sqDefault;
     var playerUrl = items[i].id;
     html.push('<li onclick="loadVideo(\'', playerUrl, '\', true)">',
-        '<span class="titlec">', title, '...</span><br /><img src="',
+        '<span class="titlec">', title, '</span><br /><img src="',
         thumbnailUrl,
         '" width="130" height="97"/>',
         '</span></li>');
@@ -31,10 +35,7 @@ function showIt(data) {
   }
 }
 </script>
-</head>
-<body>
-<div id="playerContainer" style="width: 20em; height: 180px; float: left;">
-    <object id="player"></object>
-</div>
-<div id="videos2"></div>
+<article>
+  <div id="videos2"></div>
+</article>
 <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/<%= Cfg['youtube']['user'] %>/uploads?v=2&alt=jsonc&callback=showIt"></script>
