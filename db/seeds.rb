@@ -30,14 +30,27 @@ end
 
 shell.say ""
 
-if File.exists? Padrino.root('Application.json')
-  JSON.parse( File.read( Padrino.root('Application.json') )).each do |c|
-    begin
-      Configuration.new(c).save
-    rescue e
-      shell.say "An error occurred creating the Configuration collection: #{e}"
-    end
-  end
-else
-  shell.say "No Application.json found, cannot continue building Configuration."
+shell.say 'Creating tree random taxonomies ...', :green
+3.times do
+  data = {}
+  data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
+  data[:"slug(it)"] = data[:"title(it)"].to_slug
+  data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
+
+  Taxonomy.new(data).save
 end
+
+shell.say 'Creating ten random pages ...', :green
+10.times do
+  data = {}
+  data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
+  data[:"slug(it)"] = data[:"title(it)"].to_slug
+  data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
+  data[:"lead(it)"] = Faker::Lorem.words(50).join(' ')
+
+  data[:taxonomy] = [Taxonomy[Random.rand(0..2)]]
+
+  Page.new(data).save
+end
+
+
