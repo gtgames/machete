@@ -9,10 +9,14 @@
   <%= f.input :tags,  :as => :text %>
 
   <h2>Galleria</h2>
-  <%= f.select :gallery, :options => Photo.galleries %>
-  <div>
-    <input type='text' id='photo_gallery_add_input'> <a id="photo_gallery_add">Aggiungi</a>
-  </div>
+  <% if (galleries = Photo.galleries).size > 0 -%>
+    <%= f.select :gallery, :options => Photo.galleries %>
+    <div>
+      <input type='text' id='photo_gallery_add_input'> <a id="photo_gallery_add">Aggiungi</a>
+    </div>
+  <% else -%>
+    <%= f.input :gallery, :as => :string, :caption => nil %>
+  <% end -%>
 </div>
 
 <div class='submit_link'>
