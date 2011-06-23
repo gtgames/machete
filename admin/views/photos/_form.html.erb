@@ -1,12 +1,35 @@
 <div class="module_content">
   <%= f.input :title, :as => :string %>
-  <%= f.input :file, :as => :file %>
+  <% if f.object.file.nil? -%>
+    <%= f.input :file, :as => :file %>
+  <% else -%>
+    <%= f.input :file, :value => f.object.file.id.to_s, :type => :hidden %>
+    <%= image_tag(f.object.file.thumb('200xx200')) %>
+  <% end -%>
   <%= f.input :tags,  :as => :text %>
+
+  <h2>Galleria</h2>
+  <%= f.select :gallery, :options => Photo.galleries %>
+  <div>
+    <input type='text' id='photo_gallery_add_input'> <a id="photo_gallery_add">Aggiungi</a>
+  </div>
 </div>
 
-<footer>
-  <div class='submit_link'>
-    <%= f.submit pat(:save), :class => :alt_btn %>
-    <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
-  </div>
-</footer>
+<div class='submit_link'>
+  <%= f.submit pat(:save), :class => :alt_btn %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#photo_gallery_add').click(function(e){
+        var v = $('#photo_gallery_add_input').attr('value');
+        if (v.length > 0){
+          $('<option value="' + v + '" selected>' + v + '</option>').appendTo($('#photo_gallery'));
+          $('#photo_gallery option:selected').val(v)
+        }
+        return false;
+      });
+  });
+</script>

@@ -1,7 +1,10 @@
 Admin.controllers :photos do
 
   get :index do
-    @photos = Photo.all
+    @photos = Photo.galleries.map do |g|
+      { :gallery => g.to_s,
+        :photos => Photo.where( :gallery => %r{#{g}}) }
+    end
     render 'photos/index'
   end
 
@@ -27,7 +30,7 @@ Admin.controllers :photos do
   end
 
   put :update, :with => :id do
-    params[:photo]['file'] = MediaFile.find(params[:photo]['file']) if !params[:photo]['file'].nil?
+    params[:photo]['file'] = MediaFile.find(params[:photo]['file']) unless params[:photo]['file'].nil?
     @photo = Photo.find(params[:id])
     if @photo.update_attributes(params[:photo])
       flash[:notice] = 'Photo was successfully updated.'

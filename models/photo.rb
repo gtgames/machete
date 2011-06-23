@@ -3,6 +3,20 @@ class Photo
   plugin MongoMachete::Taggable
 
   key :title, String
-  key :file, MediaFile::Embeddable
-end
+  key :gallery, String
 
+  key :file, MediaFile::Embeddable
+
+  def self.galleries
+    fields(:gallery).distinct(:gallery)
+  end
+
+  # hooks
+  before_destroy :killall
+  private
+  def killall
+    files.each do |f|
+      f.destroy
+    end
+  end
+end
