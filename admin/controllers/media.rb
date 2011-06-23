@@ -16,11 +16,11 @@ Admin.controllers :multimedia do
   get :dialog, :with => :kind do
     case params[:kind]
     when 'image' then
-      @files = MultiMedia.where(:content_type => /^image\/\w+/).all
-      render 'multimedia/dialog/image'
+      @files = MediaFile.where(:content_type => /^image\/\w+/).all
+      render 'multimedia/images', :layout => false
     when 'file' then
-      @files = MultiMedia.all
-      render 'multimedia/dialog/file'
+      @files = MediaFile.all
+      render 'multimedia/files', :layout => false
     end
   end
 end
