@@ -49,7 +49,7 @@ watch("^test/(.*)_test\.rb") { |m| run("test/#{m[1]}_test.rb") }
 Signal.trap('QUIT') do
   system("clear")
   puts " --- Running all tests ---\n\n"
-  system "padrino rake test"
+  system "rake test"
 end
 
 # Ctrl-C

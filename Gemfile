@@ -24,6 +24,8 @@ gem 'adapter'
 gem 'mongo_mapper', '>=0.9.1'
 #gem 'hunt'
 
+gem 'httparty'
+
 gem 'promise'
 
 group :development do

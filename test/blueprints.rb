@@ -18,6 +18,10 @@ Sham.define do
     { "name" => Faker::Name.first_name.to_s+'.png',
       "path" => "#{Padrino.root('tmp', 'test.png')}",
       "content_type" => "image/png" }                                                       }
+  ip          { Faker::Internet.ip_v4_address }
+  ua          { 'Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20100101 Firefox/5.0' }
+  ref         { 'http://' + Faker::Internet.domain_name + '/' }
+  phone       { Faker::PhoneNumber.phone_number }
 end
 
 
@@ -69,4 +73,15 @@ end
 Configuration.blueprint do
   _id   { Sham.name.downcase }
   val   { {:foo => "bar"}.to_json }
+end
+
+Message.blueprint do
+  author  { Sham.name + ' ' + Sham.surname }
+  email
+  text
+  phone
+
+  ip
+  ua
+  ref
 end
