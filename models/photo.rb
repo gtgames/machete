@@ -8,7 +8,7 @@ class Photo
   key :file, MediaFile::Embeddable
 
   def self.galleries
-    fields(:gallery).distinct(:gallery)
+    fields(:gallery).distinct(:gallery).delete_if(&:nil?)
   end
 
   # hooks

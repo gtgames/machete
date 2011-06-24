@@ -45,8 +45,12 @@ class TagCloud
   end
 
   def self.build(kollection)
-    kollection.map_reduce(map, reduce, {:out => "tagcloud"})
-    MongoMapper.database.collection('tagcloud').find({}).to_a
+    if kollection.find().count > 0
+      kollection.map_reduce(map, reduce, {:out => "tagcloud"})
+      MongoMapper.database.collection('tagcloud').find({}).to_a
+    else
+      []
+    end
   end
 
 end

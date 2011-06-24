@@ -1,0 +1,34 @@
+<form class="form" method="post" action="/photos/import_it" accept-charset="UTF-8">
+  <div class="module_content">
+    <% @files.each_with_index do |f,n| -%>
+      <div class="string">
+        <label class="string">Title
+          <input class="string" name="import[photo][<%= n %>][title]" type="text" value="<%= f %>" /></label>
+      </div>
+      <div class="file">
+        <label class="file">File
+          <input class="file" name="import[photo][<%= n %>][file]" type="text" value="<%= f %>" disabled /></label>
+        <input class="file" name="import[photo][<%= n %>][file]" type="hidden" value="<%= f %>" />
+      </div>
+    <% end -%>
+
+    <div class="text">
+      <label class="text" for="photo_tags">Tags</label>
+      <textarea class="text" id="photo_tags" name="import[tags]" rows="" cols=""></textarea>
+    </div>
+
+    <h2>Galleria</h2>
+      <div class="string">
+        <label class="string" for="photo_gallery" />
+        <input class="string" id="photo_gallery" name="import[gallery]" type="text" />
+      </div>
+    </div>
+
+<div class='submit_link'>
+  <input class="alt_btn" value="Salva" type="submit" />
+  <input onclick="window.location='/photos';return false" class="button" value="Annulla" type="submit" />
+</div>
+
+
+<% content_for :actions, partial("photos/actions") %>
+<% content_for :title, 'Importazione di massa per Foto' %>
