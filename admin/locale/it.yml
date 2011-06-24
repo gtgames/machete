@@ -22,12 +22,16 @@ it:
         text: 'Testo'
         created_at: 'Creazione'
         updated_at: 'Aggiornamento'
-
     gallery:
       attributes:
         lead: 'Introduzione'
         created_at: 'Creazione'
         updated_at: 'Aggiornamento'
+    message:
+      attributes:
+        author: 'Nome'
+        email: 'email'
+        text: 'Messaggio'
   errors:
     messages:
       inclusion: "non è incluso nella lista"
@@ -56,3 +60,5 @@ it:
   destroy:
     fail: "Non &egrave; stato possibile eliminare l'oggetto"
     success: "Eliminato con successo"
+  message:
+    sent: "Il messaggio &egrave; stato inviato con successo, presto riceverete una risposta. Buona navigazione!"
