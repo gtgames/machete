@@ -37,7 +37,7 @@ class Admin < Padrino::Application
   Cfg[:acl].each_pair do |name, modules|
     access_control.roles_for name.to_sym do |role|
       modules.each do |m|
-        role.project_module m.to_sym, m
+        role.project_module m.to_sym, "/#{m}"
       end
     end
   end
