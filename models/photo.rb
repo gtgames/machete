@@ -15,8 +15,6 @@ class Photo
   before_destroy :killall
   private
   def killall
-    files.each do |f|
-      f.destroy
-    end
+    file.destroy
   end
 end
