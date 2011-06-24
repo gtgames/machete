@@ -1,4 +1,4 @@
-Machete.controller :contact, :lang => I18n.language do
+Machete.controller :contact, :lang => I18n.locale do
   get :index do
     @message = Message.new
     render 'contact/index'
