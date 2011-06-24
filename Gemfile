@@ -30,6 +30,7 @@ gem 'promise'
 
 group :development do
   gem 'awesome_print'
+  gem 'faker'
   gem 'ruby-debug19'
 end
 

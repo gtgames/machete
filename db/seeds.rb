@@ -11,7 +11,7 @@ password  = 'N0str4PWD'
 
 shell.say ""
 
-account = Account.new( :username => username, :email => email, :name => "GT", :surname => "Games", :password => password, :password_confirmation => password, :role => "admin")
+account = Account.new( :username => username, :email => email, :name => "GT", :surname => "Games", :password => password, :password_confirmation => password, :role => "root")
 
 if account.valid?
   shell.say "================================================================="
@@ -30,6 +30,8 @@ end
 
 shell.say ""
 
+I18n.locale = :en
+
 if Padrino.env == :development
   shell.say 'Creating tree random taxonomies ...', :green
   3.times do
@@ -37,8 +39,8 @@ if Padrino.env == :development
     data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
     data[:"slug(it)"] = data[:"title(it)"].to_slug
     data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
-
-    Taxonomy.new(data).save
+    ap data
+    Taxonomy.create(data)
   end
 
   shell.say 'Creating ten random pages ...', :green
@@ -48,10 +50,10 @@ if Padrino.env == :development
     data[:"slug(it)"] = data[:"title(it)"].to_slug
     data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
     data[:"lead(it)"] = Faker::Lorem.words(50).join(' ')
+    ap data
+    data[:taxonomy] = [Taxonomy.all[Random.rand(2)]]
 
-    data[:taxonomy] = [Taxonomy[Random.rand(0..2)]]
-
-    Page.new(data).save
+    Page.create(data)
   end
 
 end
