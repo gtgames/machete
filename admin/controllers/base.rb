@@ -16,9 +16,9 @@ Admin.controllers :base do
         :path => params["file"]["tempfile"]
     })
     if file.save
-      %{<script>window.parent.$("##{params["form_id"]}").trigger("success", #{file.id.to_s.to_json});</script>}
+      %{<html><head><script>document.domain=#{Cfg["domain"]};</script></head><body>{"success":#{file.id.to_s.to_json}}</body></html>}
     else
-      %{<script>window.parent.$("##{params["form_id"]}").trigger("error", [#{file.errors.to_json}]);</script>}
+      %{<html><head><script>document.domain=#{Cfg["domain"]};</script></head><body>{"error":[#{file.errors.to_json}]}</body></html>}
     end
   end
 

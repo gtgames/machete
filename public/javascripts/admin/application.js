@@ -25,7 +25,30 @@
       });
     }
     // Async Upload iFrame based
-    $('input[type=file]').jsUpload();
+    $('input[type=file]').each(function(i,el){
+      var myid = $(el).attr('id'),
+          myname = $(el).attr('name'),
+          input = $('<input type="hidden" value="">').appendTo($(el).parent()),
+          div = $('<div class="upload_button">Upload</div>').appendTo($(el).parent());
+
+      $(el).remove();
+      div.attr('id', myid);
+      input.attr('name', myname);
+
+      new AjaxUpload(myid, {
+        action: '/base/upload',
+        name: "file",
+        autoSubmit: true,
+        responseType: 'json',
+        onComplete : function(file, resp){
+          if (resp.error){
+          }else {
+            $('<span></span>').appendTo($('#'+myid).parent()).html(file + ' caricato con successo');
+            input.attr('value', resp.success)
+          }
+        }
+      });
+    });
   });
 
   $.fn.slugify = function(target){
