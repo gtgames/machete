@@ -1,8 +1,15 @@
+<% if @taxonomy -%>
+  <div class="taxonomy">
+    <h1><%= @taxonomy.title %></h1>
+    <%= @taxonomy.text %>
+  </div>
+<% end -%>
 <% @pages.each do |p| %>
   <article>
   <div>
     <h1><%= link_to p.title, url(:pages, :show, :slug => p.slug.to_s) %></h1>
-    <p><%= p.lead %></p>
+    <p class="lead"><%= p.lead %></p>
+    <%= p.text %>
   </div>
   </article>
 <% end %>

@@ -17,7 +17,7 @@ Machete.controllers :pages, :lang => I18n.locale do
   end
 
   get :taxon, :map => '/:lang/:taxon', :matching => [:id => /^[\w\-_\/]+/] do
-    ap params[:taxon]
+    @taxonomy = Taxonomy.where(:"path.#{Cfg.locale}" => %r{#{params[:taxon]}}).first
     @pages = Page.by_taxonomy(params[:taxon]).all
     if (@pages.size > 0)
       if @pages.size == 1
