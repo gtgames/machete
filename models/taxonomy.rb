@@ -21,6 +21,10 @@ class Taxonomy
   validates_presence_of :title, :description
   validates_uniqueness_of :title, :slug
 
+  def parent
+    (self.parent_id != '' )? find(self.parent_id) : nil
+  end
+
   def self.by_path(path)
     where(:"path.#{Cfg.locale}" => %r{#{path}} ).first
   end
@@ -52,7 +56,7 @@ class Taxonomy
     results.each do |result|
       if map[result.id.to_s]
         list << result
-        list += assemble(map[result.id.to_s], map)
+        list << assemble(map[result.id.to_s], map)
       else
         list << result
       end
