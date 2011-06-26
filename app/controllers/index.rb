@@ -3,6 +3,11 @@ Machete.controllers :index, :lang => I18n.locale do
     render 'index/index'
   end
 
+  get :gallery, :map => '/:lang/gallery' do
+    @photos = Photo.all
+    render 'index/gallery'
+  end
+
   get :youtube, :map => '/:lang/video' do
     pp Cfg['youtube']
     if ! Cfg[:youtube].nil?
