@@ -12,7 +12,7 @@
           <td><input type="checkbox" checked></td>
           <td>
             <div class="string">
-              <label class="string">Nome<input class="string" name="import[photo][<%= n %>][title]" type="text" value="<%= f %>" /></label>
+              <label class="string">Nome<input class="string" name="import[photo][<%= n %>][title]" type="text" value="<%= ::File.basename(f) %>" /></label>
             </div>
             <div class="file">
               File: <b><%= ::File.basename(f) %></b>
