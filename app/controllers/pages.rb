@@ -7,7 +7,6 @@ Machete.controllers :pages, :lang => I18n.locale do
   end
 
   get :show, :map => "/:lang/pages/:slug" do
-    ap "foo is very bar"
     if !(@pages = Page.by_slug(params[:slug])).nil?
       etag @pages.updated_at.to_i
       render 'pages/show'

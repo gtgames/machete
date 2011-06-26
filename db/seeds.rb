@@ -58,4 +58,3 @@ if Padrino.env == :development
 
 end
 
-

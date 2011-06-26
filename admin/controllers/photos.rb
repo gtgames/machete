@@ -59,7 +59,6 @@ Admin.controllers :photos do
     render 'photos/import'
   end
   post :import_it do
-    ap params['import']
     params['import']['photo'].each do |i|
       i = i[1]
       type =  case ::File.extname(i["file"]).slice!(1..-1)

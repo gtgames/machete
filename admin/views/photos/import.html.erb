@@ -1,16 +1,27 @@
 <form class="form" method="post" action="/photos/import_it" accept-charset="UTF-8">
   <div class="module_content">
-    <% @files.each_with_index do |f,n| -%>
-      <div class="string">
-        <label class="string">Title
-          <input class="string" name="import[photo][<%= n %>][title]" type="text" value="<%= f %>" /></label>
-      </div>
-      <div class="file">
-        <label class="file">File
-          <input class="file" name="import[photo][<%= n %>][file]" type="text" value="<%= f %>" disabled /></label>
-        <input class="file" name="import[photo][<%= n %>][file]" type="hidden" value="<%= f %>" />
-      </div>
-    <% end -%>
+    <table cellspacing="0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nome/File</th>
+        </tr>
+      </thead>
+      <% @files.each_with_index do |f,n| -%>
+        <tr>
+          <td><input type="checkbox" checked></td>
+          <td>
+            <div class="string">
+              <label class="string">Nome<input class="string" name="import[photo][<%= n %>][title]" type="text" value="<%= f %>" /></label>
+            </div>
+            <div class="file">
+              File: <b><%= ::File.basename(f) %></b>
+              <input class="file" name="import[photo][<%= n %>][file]" type="hidden" value="<%= f %>" />
+            </div>
+          </td>
+        </tr>
+      <% end -%>
+    </table>
 
     <div class="text">
       <label class="text" for="photo_tags">Tags</label>
@@ -29,6 +40,14 @@
   <input onclick="window.location='/photos';return false" class="button" value="Annulla" type="submit" />
 </div>
 
+
+<script type="text/javascript">
+  $(function(){
+    $('input[type=checkbox]').bind('change',function(e){
+      $(this).parent().parent().find('input[type=text], input[type=hidden]').attr('disabled', !$(this).is(':checked'));
+    });
+  });
+</script>
 
 <% content_for :actions, partial("photos/actions") %>
 <% content_for :title, 'Importazione di massa per Foto' %>
