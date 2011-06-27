@@ -1,5 +1,10 @@
+<% if @taxonomy -%>
+  <div class="taxonomy">
+    <h1><%= @taxonomy.title %></h1>
+    <div class="description"><%= @taxonomy.description %></div>
+  </div>
+<% end -%>
 <article>
-
 <h1><%= @pages.title %></h1>
 <div class='lead'>
   <%= @pages.lead %>
@@ -7,5 +12,4 @@
 <div class='text'>
   <%= @pages.text %>
 </div>
-
 </article>
