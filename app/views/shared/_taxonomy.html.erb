@@ -1,7 +1,7 @@
 <ul>
   <% for i in Range.new(0,taxons.size - 1 ) -%>
     <li>
-      <%= link_to(taxons[i].title, url(:pages_taxon, :taxon => taxons[i].path[Cfg.locale])) unless taxons[i].class == Array %>
+      <%= link_to(taxons[i].title, "/#{Cfg.locale}/#{taxons[i].path[Cfg.locale]}) unless taxons[i].class == Array %>
       <% if taxons[i+1].class == Array  -%>
         <%= partial("shared/taxonomy", :locals => { :taxons => taxons[i+1] }) %>
       <% end -%>
