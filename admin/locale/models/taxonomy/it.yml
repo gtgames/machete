@@ -1,0 +1,9 @@
+it:
+  models:
+    taxonomy:
+      name: Tassonomia
+      attributes:
+        slug: Permalink
+        title: Titolo
+        description: Descrizione
+        weight: Peso

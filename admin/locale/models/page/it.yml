@@ -1,0 +1,15 @@
+it:
+  models:
+    page:
+      name: Pagina
+      attributes:
+        title: Titolo
+        slug: Permalink
+        lead: Introduzione
+        text: Testo
+        meta_keyword: Keyword
+        meta_description: Descrizione
+        browser_title: Titolo Pagina
+        position: Posizione
+        created_at: Creato il
+        updated_at: Aggiornato il

@@ -1,0 +1,7 @@
+it:
+  models:
+    link:
+      name: Link
+      attributes:
+        title: Titolo
+        url: URL

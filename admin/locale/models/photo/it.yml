@@ -1,0 +1,8 @@
+it:
+  models:
+    photo:
+      name: Foto
+      attributes:
+        title: Titolo
+        gallery: Galleria
+        file: File

@@ -1,0 +1,10 @@
+it:
+  models:
+    media_file:
+      name: File
+      attributes:
+        name: Nome
+        url: URL
+        path: PATH
+        content_type: Tipo
+        ext: Estenzione

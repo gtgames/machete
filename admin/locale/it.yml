@@ -10,28 +10,6 @@ it:
         galleries: 'Gallerie'
         taxonomy: 'Tassonomia'
         configurations: 'Configurazioni'
-  models:
-    page:
-      attributes:
-        lead: 'Introduzione'
-        created_at: 'Creazione'
-        updated_at: 'Aggiornamento'
-    post:
-      attributes:
-        lead: 'Introduzione'
-        text: 'Testo'
-        created_at: 'Creazione'
-        updated_at: 'Aggiornamento'
-    gallery:
-      attributes:
-        lead: 'Introduzione'
-        created_at: 'Creazione'
-        updated_at: 'Aggiornamento'
-    message:
-      attributes:
-        author: 'Nome'
-        email: 'email'
-        text: 'Messaggio'
   errors:
     messages:
       inclusion: "non è incluso nella lista"
