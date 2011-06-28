@@ -13,7 +13,7 @@ module Rack
         return redirect(get_browser_locale)
       elsif @blacklist and @blacklist.include?(@req.env['REQUEST_URI'])
         @app.call env
-      elsif @req.env['REQUEST_URI'].match(/^\/(\w{2})\/$/) && Cfg[:locales].include?($1)
+      elsif @req.env['REQUEST_URI'].match(/^\/(\w{2})\//) && Cfg[:locales].include?($1)
         I18n.locale = $1.to_sym
         @app.call env
       else
