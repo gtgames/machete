@@ -208,19 +208,27 @@ td {
 }
 table {
   .border-radius(3px);
-  width: @inside_width;
+  .box-sizing();
+  width: 100%;
   border-top: 1px solid @border_color;
   border-right: 1px solid @border_color;
   border-left: 1px solid @border_color;
 }
 tr td {
+  vertical-align: middle;
   border-bottom: 1px solid @border_color;
 }
 thead {
   background-color: darken(@bg_color, 10%);
 }
-th.actions {
-  width: 74px;
+th{
+  &.actions {
+    vertical-align: middle;
+    width: 74px;
+  }
+  &.first {
+    width: 20px
+  }
 }
 
 // Modal
@@ -261,10 +269,4 @@ ul#stats {
   padding: 5px;
   display: block;
   margin: 0 auto;
-}
-
-
-// FIXME
-td input[type="text"] {
-  width: 950px !important;
 }

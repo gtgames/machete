@@ -31,6 +31,13 @@
 @purple: #7a43b6;
 */
 
+.box-sizing(@b:border-box){
+  -moz-box-sizing: @b;
+  -webkit-box-sizing: @b;
+  -ms-box-sizing: @b;
+  box-sizing: @b;
+}
+
 // Clearfix for clearing floats like a boss
 .clearfix() {
   zoom: 1;

@@ -20,14 +20,17 @@
   input[type="datetimelocal"],
   input[type="number"],
   input[type="color"] {
-    width: @input_width;
+    margin-bottom: 9px;
+    width: 100%;
     padding: 10px;
     color:#707070;
     font-size:14px;
     border: 1px solid @border_color;
+    .box-sizing();
     .box-shadow(0px 0px 8px #d0d0d0 inset);
   }
   textarea {
+    margin-bottom: 9px;
     height: 8em;
   }
 
