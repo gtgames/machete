@@ -2,6 +2,7 @@ class Admin < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
   register Padrino::Admin::AccessControl
+  register Padrino::Rendering
 
   register PadrinoFields
   set :default_builder, 'PadrinoFieldsBuilder'

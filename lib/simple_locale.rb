@@ -1,62 +1,43 @@
-##
-# This extension give to padrino the ability to change
-# their locale inspecting.
-#
-# ==== Usage
-#
-#   class MyApp < Padrino::Application
-#     register Frenz::AutoLocale
-#     set :locales, [:en, :ru, :de] # First locale is the default locale
-#   end
-#
-# So when we call an url like: /ru/blog/posts this extension set for you :ru as I18n.locale
-# to add more spice you can define your controllers like:
-#
-#   MyApp.controllers :foo, :lang => I18n.locale do
-#     get :index, :map => '/:lang/' do
-#       render 'foo/foo'
-#     end
-#   end
-#
-module Frenz
-  module AutoLocale
-    module Helpers
-      ##
-      # This reload the page changing the I18n.locale
-      #
-      def switch_to_lang(lang)
-        request.path_info.sub(%r{/#{Cfg.locale}}, "/#{lang}") if Cfg[:locales].locales.include?(lang)
+# TODO aggiungere il supporto alle sessioni
+
+module Rack
+  class AutoLocale
+    def initialize(app, opts={})
+      @app = app
+      @blacklist = opts[:blacklist]
+    end
+    def call(env)
+      @req = Rack::Request.new env
+
+      if @req.env['REQUEST_URI'] == '/'
+        return redirect(get_browser_locale)
+      elsif @blacklist and @blacklist.include?(@req.env['REQUEST_URI'])
+        @app.call env
+      elsif @req.env['REQUEST_URI'].match(/^\/(\w{2})\/$/) && Cfg[:locales].include?($1)
+        I18n.locale = $1.to_sym
+        @app.call env
+      else
+        return redirect get_browser_locale, @req.env['REQUEST_URI']
       end
+    end
 
-      def get_browser_locale
-        # http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4
-        if lang = request.env['HTTP_ACCEPT_LANGUAGE']
-          lang = lang.split(",").map { |l|
-            l += ';q=1.0' unless l =~ /;q=\d+\.\d+$/
-            l.split(';q=')
-          }.first
-          locale = request.env['locale'] = lang.first.split("-").first
-        else
-          locale = request.env['locale'] = Cfg.default_locale
-        end
-        locale
+    private
+    def get_browser_locale
+      if lang = @req.env['HTTP_ACCEPT_LANGUAGE']
+        lang = lang.split(",").map { |l|
+          l += ';q=1.0' unless l =~ /;q=\d+\.\d+$/
+          l.split(';q=')
+        }.first
+        locale = @req.env['locale'] = lang.first.split("-").first
+      else
+        locale = @req.env['locale'] = Cfg.default_locale
       end
+      locale
+    end
 
-    end # Helpers
+    def redirect locale, path=''
+      [301, {'Location' => "/#{locale}/#{path}"}, '']
+    end
+  end
+end
 
-    def self.registered(app)
-      app.helpers Frenz::AutoLocale::Helpers
-
-      app.before do
-        if request.env['REQUEST_URI'] == '/'
-          redirect "/#{get_browser_locale}/"
-        elsif request.path_info.match(/^\/(\w{2})\//) && Cfg[:locales].include?($1)
-          I18n.locale = $1.to_sym
-        else
-          redirect (request.env['REQUEST_URI'] =~ /^\/\w{2}\//)?
-            request.env['REQUEST_URI'].sub(/^\/\w{2}/, "/#{Cfg.default_locale.to_s}") : "/#{Cfg.default_locale.to_s}#{request.env['REQUEST_URI']}"
-        end
-      end
-    end # self.registered
-  end # AutoLocale
-end # Frenz
