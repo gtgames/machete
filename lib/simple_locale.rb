@@ -36,7 +36,7 @@ module Rack
     end
 
     def redirect locale, path=''
-      [301, {'Location' => "/#{locale}/#{path}"}, '']
+      [301, {'Location' => "/#{locale}#{path}"}, '']
     end
   end
 end
