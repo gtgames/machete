@@ -1,3 +1,6 @@
+require "find"
+require "fileutils"
+
 
 # Imports site configuration from /config/config.json
 task :import do
@@ -40,4 +43,20 @@ task :photo_import do
       :tags => tags
     })
   end
+end
+
+desc "mass-import MediaFiles from ENV['ROOT']/tmp/mediafiles/"
+task :massimport do
+  Find.find(Padrino.root('tmp','mediafiles')).each{|f|
+    if f.match(/\.(jpe?g|png|gif)$/i)
+      p "Processing: #{f}"
+      MediaFile.create({
+        :name => ::File.basename(f),
+        :path => f,
+        :content_type => Wand.wave(f)
+      })
+    else
+      p "!Skipping #{f}"
+    end
+  }
 end
