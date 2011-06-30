@@ -1,0 +1,9 @@
+<article>
+<h1><%= @photos.first.gallery %></h1>
+
+<% @photos.each do |p| -%>
+  <div class="photo">
+    <%= link_to image_tag(p.thumb), p.url %>
+  </div>
+<% end -%>
+</article>

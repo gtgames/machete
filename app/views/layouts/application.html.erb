@@ -25,6 +25,8 @@
     <nav class="row">
       <ul class="column grid_12">
         <li><a href="/<%= Cfg['locale'] %>/">Home</a></li>
+        <li><a href="/<%= Cfg['locale'] %>/gallery"><%= t'gallery' %></a></li>
+        <li><a href="/<%= Cfg['locale'] %>/contact"><%= t'contact' %></a></li>
         <% menu.each do |m| %>
           <li><a href="<%= m.url %>"><%= m.title %></a></li>
         <% end %>

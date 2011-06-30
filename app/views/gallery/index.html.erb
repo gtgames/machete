@@ -1,0 +1,7 @@
+<article>
+<% @galleries.each do |p| -%>
+  <div class="gallery">
+    <%= link_to image_tag(p.thumb), url(:gallery, :show, :gallery => p.gallery) %>
+  </div>
+<% end -%>
+</article>
