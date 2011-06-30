@@ -41,7 +41,7 @@
     <section class="row">
       <div class="column grid_8 content">
         <%= yield %>
-        <div class="column grid_4"><%= partial('shared/taxonomy', :locals =>(:taxons => Taxonomy.threaded)) %></div>
+        <div class="column grid_4"><%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %></div>
       </div>
     </section>
     <section class="row">
