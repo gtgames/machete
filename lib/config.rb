@@ -2,10 +2,10 @@ require 'adapter/memory'
 
 Adapter.define(:configuration, Adapter::Memory) do
   def [] k
-    read k
+    read k.to_s
   end
   def []=(k, v)
-    write k, v
+    write k.to_s, v
   end
 
   def refresh!

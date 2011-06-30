@@ -5,10 +5,10 @@
 
 <div class="social_button">
   <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=160529920684339&amp;xfbml=1"></script>
-  <fb:like href="<%= Cfg[:domain] %>" send="true" layout="button_count" width="180" show_faces="false" font=""></fb:like>
+  <fb:like href="http://<%= Cfg[:domain] %>/" send="true" layout="button_count" width="180" show_faces="false" font=""></fb:like>
 </div>
 
 <% if Cfg[:twitter] -%>
-  <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="<%= Cfg[:twitter] %>" data-lang="<%= Cfg.language %>">Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="<%= Cfg[:twitter]['user'] %>" data-lang="<%= Cfg.language %>">Tweet</a>
   <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 <% end -%>
