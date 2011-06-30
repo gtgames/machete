@@ -22,5 +22,10 @@ context "Photo Model" do
 
     asserts("that file's 'content_type' can be retrieved") { !topic.file.content_type.nil? }
   end
+  context 'definition' do
+    setup { Photo.make(:gallery => 'Foo Bar', :file => MediaFile.make) }
+
+    asserts("that :gallery_slug is generated") { topic.gallery_slug == 'foo-bar' }
+  end
 end
 

@@ -21,6 +21,6 @@ class Photo
     file.destroy
   end
   def slugify
-    self.gallery_slug = self.gallery.to_slug
+    self.gallery_slug = self.gallery.to_slug unless self.gallery.nil?
   end
 end
