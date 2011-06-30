@@ -18,7 +18,7 @@ class Photo
   before_destroy :killall
   private
   def killall
-    file.destroy
+    self.file.destroy unless self.file.nil?
   end
   def slugify
     self.gallery_slug = self.gallery.to_slug unless self.gallery.nil?

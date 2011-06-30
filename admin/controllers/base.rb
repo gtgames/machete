@@ -16,9 +16,9 @@ Admin.controllers :base do
         :path => params["file"]["tempfile"]
     })
     if file.save
-      %{<html><head><script>document.domain=#{Cfg["domain"]};</script></head><body>{"success":#{file.id.to_s.to_json}}</body></html>}
+      %{<html><head><script>document.domain="#{Cfg["domain"]}";</script></head><body>{"success":#{file.id.to_s.to_json}}</body></html>}
     else
-      %{<html><head><script>document.domain=#{Cfg["domain"]};</script></head><body>{"error":[#{file.errors.to_json}]}</body></html>}
+      %{<html><head><script>document.domain="#{Cfg["domain"]}";</script></head><body>{"error":[#{file.errors.to_json}]}</body></html>}
     end
   end
 
