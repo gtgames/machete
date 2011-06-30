@@ -39,13 +39,14 @@
     <section class="row">
       <div class="column grid_8 content">
         <%= yield %>
-        <div class="column grid_4"></div>
+        <div class="column grid_4"><%= partial('shared/taxonomy', :locals =>(:taxons => Taxonomy.threaded)) %></div>
       </div>
     </section>
     <section class="row">
       <div class="column grid_12" id="tags"></div>
     </section>
     <footer>
+      <div class="row"><div class="column grid_12 social"><%= partial('shared/social') %></div></div>
       <div class="row">
         <div class="column grid_12">
           <%= partial("shared/footer") %>
@@ -53,15 +54,20 @@
       </div>
     </footer>
     <script>
+    //<![CDATA[
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', '<%= Cfg['analytics'] %>']);
-      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAccount', '<%= Cfg['analytics'] %>']);_gaq.push(['_setDomainName', 'none']);
       _gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
       head.js(
         "http://frenzart.com/js/mootools/1.3.js",
         "/javascripts/application.js",
         ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'
       );
+      (function(w,d) {
+        w._analyst = '<%= Cfg["analyst"] %>';var t = d.createElement('script'),s = d.getElementsByTagName('script')[0];
+        t.type='text/javascript';t.async=true;t.id = 'analyst-tracker';t.src = 'http://analyst.machete.it/al.js';s.parentNode.insertBefore(t, s);
+      })(window,document);
+    //]]>
     </script>
   </body>
 </html>
