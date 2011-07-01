@@ -32,7 +32,7 @@ module Rack
       else
         locale = @req.env['locale'] = Cfg.default_locale
       end
-      locale
+      (Cfg[:locales].include?(locale))? locale : Cfg.default_locale
     end
 
     def redirect locale, path=''
