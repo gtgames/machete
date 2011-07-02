@@ -74,7 +74,6 @@ GEM
       padrino-helpers (= 0.10.0pre)
     padrino-cache (0.10.0pre)
       padrino-core (= 0.10.0pre)
-    padrino-contrib (0.0.6)
     padrino-core (0.10.0pre)
       activesupport (~> 3.0.0)
       http_router (~> 0.8.10)
@@ -162,7 +161,6 @@ DEPENDENCIES
   mongo_mapper (>= 0.9.1)
   nokogiri
   padrino (= 0.10.0pre)
-  padrino-contrib
   promise
   rack-fiber_pool
   rack-flash

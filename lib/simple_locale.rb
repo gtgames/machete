@@ -4,7 +4,7 @@ module Rack
   class AutoLocale
     def initialize(app, opts={})
       @app = app
-      @blacklist = opts[:blacklist]
+      @blacklist = opts[:blacklist] || []
       @host = opts[:host]
       @host = Regexp.new("^#{Regexp.quote(@host)}$", true, 'n') unless @host.nil? || @host.is_a?(Regexp)
     end
