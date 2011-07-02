@@ -18,6 +18,12 @@ class Lang < Padrino::Application
 end
 
 Padrino.configure_apps do
+  set :delivery_method, :smtp => {
+    :address              => "frenz",
+    :port                 => 25,
+    :enable_starttls_auto => false
+  }
+  set :mailer_defaults, :from => "noreply@#{Cfg[:domain]}"
   set :session_secret, "5a46f60cd9f36863c475b15ee1a745fc45d37b22c93434d714e7d94a188c9aaf"
 end
 

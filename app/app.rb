@@ -1,7 +1,7 @@
 class Machete < Padrino::Application
+  register Padrino::Rendering
   register Padrino::Mailer
   register Padrino::Helpers
-  register Padrino::Rendering
 
   register PadrinoFields
   set :default_builder, 'PadrinoFieldsBuilder'
