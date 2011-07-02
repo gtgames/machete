@@ -11,11 +11,6 @@ class Machete < Padrino::Application
     config.label_required_marker_position = :append
   end
 
-  #register Frenz::AutoLocale
-  #set :locales, promise { Cfg[:locales] }
-
-  use Rack::AutoLocale
-
   enable :sessions
   enable :flash
 

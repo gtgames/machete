@@ -5,9 +5,13 @@ module Rack
     def initialize(app, opts={})
       @app = app
       @blacklist = opts[:blacklist]
+      @host = opts[:host]
+      @host = Regexp.new("^#{Regexp.quote(@host)}$", true, 'n') unless @host.nil? || @host.is_a?(Regexp)
     end
     def call(env)
       @req = Rack::Request.new env
+
+      @app.call(env) if @blacklist.include?(@req.env['REQUEST_URI']) or @req.env['HTTP_HOST'] =~ @host
 
       if @req.env['REQUEST_URI'] == '/'
         return redirect(get_browser_locale)

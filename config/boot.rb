@@ -14,6 +14,8 @@ Bundler.require(:default, PADRINO_ENV)
 # Add here your before load hooks
 #
 Padrino.before_load do
+  require Padrino.root('lib', 'config')
+  Cfg.refresh!
 end
 
 ##

@@ -1,10 +1,10 @@
-Machete.controllers :blog, :lang => I18n.locale do
-  get :index, :map => '/:lang/blog/' do
+Machete.controllers :blog do
+  get :index do
     @posts = Post.all
     render 'blog/index'
   end
 
-  get :show, :map => '/:lang/blog/:slug' do
+  get :show, :map => '/blog/:slug' do
     if (@post = Post.find({:slug => params[:slug]}).first)
       render 'blog/show'
     else

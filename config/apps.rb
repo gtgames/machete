@@ -11,13 +11,21 @@ class Imaging < Padrino::Application
     UNICORN
   end
 end
-
-Padrino.configure_apps do
-  #TODO: make this dynamic per restart or per application
-  set :session_secret, "5a46f60cd9f36863c475b15ee1a745fc45d37b22c93434d714e7d94a188c9aaf"
-#  register Sinatra::Synchrony
+class Lang < Padrino::Application
+  disable :sessions
+  disable :flash
+  use Rack::AutoLocale
 end
 
-Padrino.mount("Machete").to('/').host(/^(?!(admin|www\.admin)).*$/)
+Padrino.configure_apps do
+  set :session_secret, "5a46f60cd9f36863c475b15ee1a745fc45d37b22c93434d714e7d94a188c9aaf"
+end
+
+Padrino.mount("Lang").to("/").host(/^(?!(admin|www\.admin)).*$/)
+
+Cfg[:locales].each do |l|
+  Padrino.mount("Machete").to("/#{l}").host(/^(?!(admin|www\.admin)).*$/)
+end
+
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 Padrino.mount("Imaging").to('/media/')

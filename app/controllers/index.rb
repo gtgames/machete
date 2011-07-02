@@ -1,14 +1,9 @@
-Machete.controllers :index, :lang => I18n.locale do
-  get :index, :map => '/:lang/' do
+Machete.controllers :index do
+  get :index, :map => '/' do
     render 'index/index'
   end
 
-  get :gallery, :map => '/:lang/gallery' do
-    @photos = Photo.all
-    render 'index/gallery'
-  end
-
-  get :youtube, :map => '/:lang/video' do
+  get :youtube, :map => '/video' do
     pp Cfg['youtube']
     if ! Cfg[:youtube].nil?
       render 'index/youtube'
@@ -17,7 +12,7 @@ Machete.controllers :index, :lang => I18n.locale do
     end
   end
 
-  get :sitemap, :provides => [:xml, :html], :map => '/:lang/sitemap' do
+  get :sitemap, :provides => [:xml, :html] do
     @posts = Post.sort(:_id.desc).all
     @pages = Page.sort(:_id.desc).all
     render 'sitemap', :layout => false if content_type == :xml
