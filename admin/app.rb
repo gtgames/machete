@@ -12,6 +12,12 @@ class Admin < Padrino::Application
     config.label_required_marker_position = :append
   end
 
+  register Padrino::Contrib::ExceptionNotifier
+  set :exceptions_from, "mail@#{Cfg[:domain]}"
+  set :exceptions_to, "god@progettoca.se"
+  set :exceptions_subject, "[machete][#{Cfg[:domain]}]"
+  set :exceptions_page, :errors
+
   enable  :sessions
 
   set :session_secret, '28a4a90b149121c14172404245efdc8cb57a71d5679b487834f5b2dc1772105e'
