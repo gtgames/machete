@@ -32,6 +32,5 @@ Padrino.mount("Lang").to("/").host(/^(?!(admin|www\.admin)).*$/)
 Cfg[:locales].each do |l|
   Padrino.mount("Machete").to("/#{l}").host(/^(?!(admin|www\.admin)).*$/)
 end
-
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 Padrino.mount("Imaging").to('/media/')

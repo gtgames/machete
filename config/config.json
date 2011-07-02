@@ -6,7 +6,7 @@
     "password":"machete"
   },
   "site":{
-    "locales":["it"],
+    "locales":["it","en"],
     "acl":{
       "admin":["links","photos","posts","pages","taxonomy"]
     }

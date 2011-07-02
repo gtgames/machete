@@ -1,5 +1,5 @@
 <article>
-<% form_for :booking, url(:booking, :new), :class => :form do |f| -%>
+<% form_for :booking, "/#{Cfg.locale}/booking/new", :class => :form do |f| -%>
   <%= f.input :name %>
   <%= f.input :surname %>
   <%= f.input :email %>
