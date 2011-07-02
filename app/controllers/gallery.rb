@@ -9,7 +9,7 @@ Machete.controllers :gallery do
 
   get :show, :map => '/gallery/:gallery' do
     Photo.where(:gallery_slug => params[:gallery]).all
-    render 'gellery/show'
+    render 'gallery/show'
   end
 
 end
