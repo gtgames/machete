@@ -1,10 +1,10 @@
 require 'adapter/memory'
 
 Adapter.define(:configuration, Adapter::Memory) do
-  def [] k
-    read k.to_s
-  end
-  def []=(k, v)
+  def insert(k, v)
+    MongoMapper.database["configurations"].update(
+      {'_id' => k.to_s},
+      {"_id" => k.to_s, "val" => v}, {:upsert => true, :safe => true})
     write k.to_s, v
   end
 

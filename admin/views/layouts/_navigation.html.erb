@@ -1,12 +1,15 @@
 <ul>
-  <% project_modules.each do |project_module| %>
-    <li>
-    <%= link_to project_module.human_name, project_module.path("/"), :class => (request.path_info =~ /^#{project_module.path}/)? 'active' : '' %>
-      <ul>
-        <li class="icn_new_article"><%= link_to 'Nuovo', project_module.path("/")+'/new' %></li>
-        <li class="icn_categories"><%= link_to 'Lista', project_module.path("/") %></li>
-      </ul>
-    </li>
+	<% project_modules.each do |project_module| %>
+		<% ap project_module -%>
+		<li>
+			<%= link_to project_module.human_name, project_module.path("/"), :class => (request.path_info =~ /^#{project_module.path}/)? 'active' : '' %>
+			<% unless project_module.name == :'configurations' -%>
+			<ul>
+				<li class="icn_new_article"><%= link_to 'Nuovo', project_module.path("/")+'/new' %></li>
+				<li class="icn_categories"><%= link_to 'Lista', project_module.path("/") %></li>
+			</ul>
+			<% end -%>
+		</li>
   <% end %>
   <!--
   <li>

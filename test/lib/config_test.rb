@@ -31,4 +31,10 @@ context "LIB: Cfg" do
 
     asserts("Cfg.roles should be defined") { Cfg.respond_to? :roles }
   end
+
+  context "insertions" do
+    setup { Cfg.insert("foo".to_s, "bar") }
+    asserts('Cfg inserts crap inside the database') {
+      MongoMapper.database['configurations'].find({ _id: "foo" }).first['val'] == Cfg['foo'] }
+  end
 end

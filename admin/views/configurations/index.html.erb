@@ -1,29 +1,45 @@
-<table cellspacing="0"> 
-  <thead>
-    <tr>
-      <th>&nbsp;</th>
-      <th><%= mat(:configuration, :key) %></th>
-      <th><%= mat(:configuration, :value) %></th>
-      <th class="actions"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @configurations.each do |c| %>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td><%= c._id %></td>
-        <td><%= c.val %></td>
-        <td>
-          <%= button_to pat(:edit), url(:configurations, :edit, :id => c.id), :method => :get, :class => 'button_to edit' %>
-          <%= button_to pat(:delete), url(:configurations, :destroy, :id => c.id), :method => :delete, :class => 'button_to trash' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<form method="post" action="/configurations/update" accept-charset="UTF-8">
+  <div class="module_content">
+    <div class="string">
+      <label class="string" for="author">Autore</label>
+      <input class="string" id="author" name="author" type="text" value="<%= Cfg['author'] %>" />
+      <p class="description">Autore dei contenuti del sito web, detentore e responsabile legale del Copyright sui contenuti</p>
+    </div>
+    <div class="string">
+      <label class="string" for="title">Titolo</label>
+      <input class="string" id="title" name="title" type="text" value="<%= Cfg['title'] %>" />
+      <p class="description">Titolo del sito web, apparir&agrave; all'inizio di tutte le pagine del sito web</p>
+    </div>
+    <div class="text">
+      <label class="editor" for="homepage">Prima Pagina</label>
+      <textarea class="text" id="homepage" name="homepage" rows="" cols=""><%= Cfg['homepage'] %></textarea>
+      <p class="description">Contenuto della pagina iniziale (se configurabile)</p>
+    </div>
+  </div>
 
-<footer></footer>
+  <fieldset id='advanced'>
+    <legend>Avanzate</legend>
+    <div class="string">
+      <label class="string" for="analytics">ID Google Analytics</label>
+      <input class="string" id="analytics" name="analytics" type="text" value="<%= Cfg['analytics'] %>" />
+    </div>
+    <div class="string">
+      <label class="string" for="analytics">ID Analista</label>
+      <input class="string" id="analytics" name="analyst" type="text" value="<%= Cfg['analyst'] %>" />
+    </div>
+    <div class="string">
+      <label class="string" for="keywords">Keyword META</label>
+      <input class="string" id="keywords" name="keywords" type="text" value="<%= Cfg['keywords'] %>" />
+    </div>
+    <div class="string">
+      <label class="string" for="description">Descrizione META</label>
+      <input class="string" id="description" name="description" type="text" value="<%= Cfg['description'] %>" />
+    </div>
+  </fieldset>
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :configurations }) %>
-
-<% content_for :title, 'Impostazioni' %>
+  <div class='submit_link'>
+    <input class="alt_btn" value="Salva" type="submit" />
+    <input onclick="window.location='/';return false" class="button" value="Annulla" type="submit" />
+  </div>
+</form>
+<% content_for :title, 'Impostazioni Generali' %>
