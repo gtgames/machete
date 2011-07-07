@@ -29,7 +29,7 @@ Admin.controller :taxonomy do
     @taxonomy = Taxonomy.find(params[:id])
     if @taxonomy.update_attributes(params[:taxonomy])
       flash[:notice] = t'updated'
-      redirect url(:taxonomy, :edit, :id => @taxonomy.id)
+      redirect url(:taxonomy, :index)
     else
       render 'taxonomy/edit'
     end

@@ -36,7 +36,7 @@ Admin.controllers :pages do
 
     if @page.update_attributes(params[:page])
       flash[:notice] = t'updated'
-      redirect url(:pages, :edit, :id => @page.id)
+      redirect url(:pages, :index)
     else
       render 'pages/edit'
     end

@@ -14,7 +14,7 @@ Admin.controllers :links do
     @link = Link.new(params[:link])
     if @link.save
       flash[:notice] = 'Link was successfully created.'
-      redirect url(:links, :edit, :id => @link.id)
+      redirect url(:links, :index)
     else
       render 'links/new'
     end
@@ -29,7 +29,7 @@ Admin.controllers :links do
     @link = Link.find(params[:id])
     if @link.update_attributes(params[:link])
       flash[:notice] = 'Link was successfully updated.'
-      redirect url(:links, :edit, :id => @link.id)
+      redirect url(:links, :index)
     else
       render 'links/edit'
     end

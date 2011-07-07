@@ -15,7 +15,7 @@ Admin.controllers :posts do
     @post = Post.new(params[:post])
     if @post.save
       flash[:notice] = t'created'
-      redirect url(:posts, :edit, :id => @post.id)
+      redirect url(:posts, :index)
     else
       render 'posts/new'
     end
@@ -31,7 +31,7 @@ Admin.controllers :posts do
     @post = Post.find(params[:id])
     if @post.update_attributes(params[:post])
       flash[:notice] = 'Post was successfully updated.'
-      redirect url(:posts, :edit, :id => @post.id)
+      redirect url(:posts, :index)
     else
       render 'posts/edit'
     end

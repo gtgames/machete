@@ -14,7 +14,7 @@ Admin.controllers :accounts do
     @account = Account.new(params[:account])
     if @account.save
       flash[:notice] = t'created'
-      redirect url(:accounts, :edit, :id => @account.id)
+      redirect url(:accounts, :index)
     else
       render 'accounts/new'
     end
@@ -29,7 +29,7 @@ Admin.controllers :accounts do
     @account = Account.find(params[:id])
     if @account.update_attributes(params[:account])
       flash[:notice] = t'updated'
-      redirect url(:accounts, :edit, :id => @account.id)
+      redirect url(:accounts, :index)
     else
       render 'accounts/edit'
     end

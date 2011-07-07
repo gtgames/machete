@@ -34,7 +34,7 @@ Admin.controllers :photos do
     @photo = Photo.find(params[:id])
     if @photo.update_attributes(params[:photo])
       flash[:notice] = 'Photo was successfully updated.'
-      redirect url(:photos, :edit, :id => @photo.id)
+      redirect url(:photos, :index)
     else
       render 'photos/edit'
     end
