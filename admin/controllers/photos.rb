@@ -51,7 +51,11 @@ Admin.controllers :photos do
   end
 
   get :import do
-    @files = Dir.glob(Padrino.root('tmp', 'import', '*'))
+    require "find"
+    @files = Find.find(File.expand_path("~/tmp/#{Cfg[:domain]}")).map{|f|
+      f unless f.match(/\.(jpe?g|png|gif)$/i).nil?
+    }.compact
+
     if @files.size == 0
       flash[:notice] = 'Nessun file da importare'
       redirect url(:photos, :index)
@@ -61,18 +65,10 @@ Admin.controllers :photos do
   post :import_it do
     params['import']['photo'].each do |i|
       i = i[1]
-      type = case ::File.extname(i["file"]).slice!(1..-1)
-             when /png$/i
-               'image/png'
-             when /jpe?g$/i
-               'image/jpeg'
-             else
-               'image/image'
-             end
       mf = MediaFile.new({
         :name => ::File.basename(i["file"]),
         :path => i["file"],
-        :content_type => type
+        :content_type => Wand.wave(i["file"])
       })
       mf.save
       p = Photo.new({
