@@ -18,7 +18,7 @@ Adapter.define(:configuration, Adapter::Memory) do
     end
   end
   def locale
-    (read('locales').include? I18n.locale.to_s)? I18n.locale : read('locales').first
+    (read('locales').include?(I18n.locale.to_s))? I18n.locale : read('locales').first
   end
   alias :language :locale
 

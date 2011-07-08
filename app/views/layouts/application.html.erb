@@ -24,9 +24,9 @@
   <body>
     <nav class="row">
       <ul class="column grid_12">
-        <li><a href="/<%= Cfg['locale'] %>/">Home</a></li>
-        <li><a href="/<%= Cfg['locale'] %>/gallery"><%= t'gallery' %></a></li>
-        <li><a href="/<%= Cfg['locale'] %>/contact"><%= t'contact' %></a></li>
+        <li><a href="/<%= Cfg.locale %>/">Home</a></li>
+        <li><a href="/<%= Cfg.locale %>/gallery"><%= t'gallery' %></a></li>
+        <li><a href="/<%= Cfg.locale %>/contact"><%= t'contact' %></a></li>
         <% menu.each do |m| %>
           <li><a href="<%= m.url %>"><%= m.title %></a></li>
         <% end %>
@@ -34,15 +34,15 @@
     </nav>
     <header id="header" class="row">
       <img src="/images/logo.png">
-      <div class="column">
-        <h1>Titolo</h1>
+      <div class="column grid_12">
+        <h1><%= Cfg[:title] %></h1>
       </div>
     </header>
     <section class="row">
       <div class="column grid_8 content">
         <%= yield %>
-        <div class="column grid_4"><%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %></div>
       </div>
+      <div class="column grid_4"><%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %></div>
     </section>
     <section class="row">
       <div class="column grid_12" id="tags"></div>

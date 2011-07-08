@@ -17,6 +17,9 @@ class Machete < Padrino::Application
   set :exceptions_subject, "[machete][#{Cfg[:domain]}]"
   set :exceptions_page, :errors
 
+  use Rack::AutoLocale,
+    :blacklist => ['/sitemap.xml', '/sitemap']
+
   enable :sessions
   enable :flash
 

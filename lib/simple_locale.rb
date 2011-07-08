@@ -19,7 +19,7 @@ module Rack
         @app.call env
       elsif @req.env['REQUEST_URI'].match(/^\/(\w{2})/) && Cfg[:locales].include?($1)
         I18n.locale = $1.to_sym
-        @app.call env
+        @app.call cleanup_env(env)
       else
         return redirect get_browser_locale, @req.env['REQUEST_URI']
       end
@@ -39,8 +39,18 @@ module Rack
       (Cfg[:locales].include?(locale))? locale : Cfg.default_locale
     end
 
+    def cleanup_env env
+      %w{REQUEST_URI REQUEST_PATH PATH_INFO}.each do |key|
+        if !env[key].nil? && env[key].length > 1 && tmp = env[key].split("/")
+          tmp.delete_at(1) if tmp[1] =~ %r{^([a-zA-Z]{2})$}
+          env[key] = tmp.join("/")
+        end
+      end
+      env
+    end
+
     def redirect locale, path=''
-      [301, {'Location' => "/#{locale}/#{path.sub(/^\//, '')}"}, '']
+      [302, {'Location' => "/#{locale}/#{path.sub(/^\//, '')}"}, '']
     end
   end
 end

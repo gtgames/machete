@@ -23,6 +23,7 @@ end
 #
 Padrino.after_load do
   I18n.default_locale = Cfg['locales'].first
+  I18n.locale = Cfg['locales'].first
 end
 
 Padrino.load!
