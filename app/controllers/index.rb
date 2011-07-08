@@ -6,7 +6,7 @@ Machete.controllers :index do
   get :youtube, :map => '/video' do
     pp Cfg['youtube']
     if ! Cfg[:youtube].nil?
-      render 'index/youtube'
+      render 'index/youtube', :layout => Cfg.layout('video')
     else
       404
     end
@@ -16,6 +16,6 @@ Machete.controllers :index do
     @posts = Post.sort(:_id.desc).all
     @pages = Page.sort(:_id.desc).all
     render 'sitemap', :layout => false if content_type == :xml
-    render 'sitemap'
+    render 'sitemap', :layout => Cfg.layout('video')
   end
 end

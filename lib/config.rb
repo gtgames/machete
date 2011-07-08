@@ -17,6 +17,7 @@ Adapter.define(:configuration, Adapter::Memory) do
       write c["_id"], c["val"]
     end
   end
+
   def locale
     (read('locales').include?(I18n.locale.to_s))? I18n.locale : read('locales').first
   end
@@ -33,6 +34,13 @@ Adapter.define(:configuration, Adapter::Memory) do
     read('locales').first
   end
 
+  def layout(controller)
+    unless read('layouts').nil?
+      read('layouts')[controller].to_sym || :"application.html"
+    else
+      :"application.html"
+    end
+  end
 end
 
 Cfg = Adapter[:configuration].new({})

@@ -1,12 +1,12 @@
 Machete.controllers :blog do
   get :index do
     @posts = Post.all
-    render 'blog/index'
+    render 'blog/index', :layout => Cfg.layout('blog')
   end
 
   get :show, :map => '/blog/:slug' do
     if (@post = Post.find({:slug => params[:slug]}).first)
-      render 'blog/show'
+      render 'blog/show', :layout => Cfg.layout('blog')
     else
       404
     end

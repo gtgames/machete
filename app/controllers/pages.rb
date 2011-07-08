@@ -3,13 +3,13 @@ Machete.controllers :pages do
   get :index do
     @pages = Page.sort(:_id.desc).all
     etag @pages.last.updated_at.to_i
-    render 'pages/index'
+    render 'pages/index', :layout => Cfg.layout('pages')
   end
 
   get :show, :map => "/page/:slug" do
     if !(@pages = Page.by_slug(params[:slug])).nil?
       etag @pages.updated_at.to_i
-      render 'pages/show'
+      render 'pages/show', :layout => Cfg.layout('pages')
     else
       404
     end
@@ -20,9 +20,9 @@ Machete.controllers :pages do
     @pages = Page.by_taxonomy(params[:taxon]).all
     if @pages.size == 1
       @pages = @pages.first
-      render 'pages/show'
+      render 'pages/show', :layout => Cfg.layout('pages')
     else
-      render 'pages/index'
+      render 'pages/index', :layout => Cfg.layout('pages')
     end
   end
 

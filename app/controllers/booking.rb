@@ -1,14 +1,14 @@
 Machete.controllers :booking do
   get :index do
     @booking = Booking.new
-    render 'booking/index'
+    render 'booking/index', :layout => Cfg.layout('booking')
   end
   post :new do
     @booking = Booking.new params[:booking]
     if @booking.save
-      render 'booking/sent'
+      render 'booking/sent', :layout => Cfg.layout('booking')
     else
-      render 'booking/index'
+      render 'booking/index', :layout => Cfg.layout('booking')
     end
   end
 end

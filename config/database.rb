@@ -14,3 +14,5 @@ MongoMapper.database.authenticate(
   settings['mongo']['user'],
   settings['mongo']['password']
 ) unless (settings['mongo']['user']).nil?
+
+Grid = Mongo::Grid.new(MongoMapper.database)
