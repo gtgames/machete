@@ -23,12 +23,10 @@ gem 'bson_ext', '>=1.3.1', :require => nil
 gem 'adapter'
 gem 'mongo_mapper', '>=0.9.1'
 #gem 'hunt'
-
+#
 gem 'wand'
 
-
 gem 'httparty'
-gem 'promise'
 
 group :development do
   gem 'awesome_print'
@@ -57,5 +55,5 @@ gem 'unidecode'
 gem 'yajl-ruby', :require => "yajl/json_gem"
 # Padrino
 #gem 'padrino', "0.9.29"
-gem 'padrino', "0.10.0pre"
+gem 'padrino', "0.10.0"
 
