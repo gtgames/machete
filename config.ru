@@ -1,6 +1,4 @@
 #!/usr/bin/env rackup
-
-$LOAD_PATH.unshift ::File.expand_path('../lib_core', __FILE__) # this sucks ... but what can i do?
 require 'eventmachine'
 
 require 'rack/fiber_pool'
@@ -9,7 +7,7 @@ use Rack::FiberPool
 APP_ROOT = ::File.expand_path('../', __FILE__)
 
 if ENV['RACK_ENV'] == 'development'
-  require 'gc_stats'
+  require ::File.expand_path('../lib/gc_stat.rb', __FILE__)
   require 'logger'
   use Rack::MemoryBloat, Logger.new(STDOUT)
 
