@@ -7,7 +7,7 @@
   },
   "site":{
 	"domain":"machete.it",
-    "locales":["it","en"],
+    "locales":["it"],
     "acl":{
       "admin":["links","photos","posts","pages","taxonomy"]
     }
