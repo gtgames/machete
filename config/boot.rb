@@ -16,14 +16,13 @@ Bundler.require(:default, PADRINO_ENV)
 Padrino.before_load do
   require Padrino.root('lib', 'config')
   Cfg.refresh!
+  I18n.default_locale = Cfg['locales'].first
 end
 
 ##
 # Add here your after load hooks
 #
 Padrino.after_load do
-  I18n.default_locale = Cfg['locales'].first
-  I18n.locale = Cfg['locales'].first
 end
 
 Padrino.load!

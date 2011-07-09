@@ -24,8 +24,10 @@ class Machete < Padrino::Application
   set :exceptions_page, :errors
 
   # Middleware for locale redirection
-  use Rack::AutoLocale,
-    :blacklist => ['/sitemap.xml', '/sitemap']
+  if Cfg['locales'].length > 1
+    use Rack::AutoLocale,
+      :blacklist => ['/sitemap.xml', '/sitemap']
+  end
 
   # Session Support
   enable :sessions
