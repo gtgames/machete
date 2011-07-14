@@ -33,6 +33,7 @@ class Admin < Padrino::Application
   access_control.roles_for :root do |role|
     role.project_module :links,           "/links"
     role.project_module :photos,          "/photos"
+    role.project_module :multimedia,      "/multimedia"
     role.project_module :posts,           "/posts"
     role.project_module :pages,           "/pages"
     role.project_module :taxonomy,        "/taxonomy"

@@ -1,7 +1,30 @@
+<div id="file-uploader"><noscript><p>Please enable JavaScript to use file uploader.</p></noscript>
+</div>
+<script type="text/javascript">$(function(){new qq.FileUploader({element: document.getElementById('file-uploader'),action: '/base/upload',onComplete: function(){window.location.href=window.location.href;}});});</script>
 
-lista,......
-
-
-<% content_for :actions, partial("base/actions", :locals => { :p => :multimedia }) %>
+<table>
+  <thead>
+    <tr>
+      <th>nome/thumb</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @media.each do |m| -%>
+      <tr>
+        <td>
+          <% if m.content_type =~ /^image\/.+/ -%>
+            <%= image_tag m.thumb(:small) %>
+          <% else -%>
+            <%= m.url %>
+          <% end -%>
+        </td>
+        <td>
+          <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'button_to trash' %>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
 
 <% content_for :title, 'Multimedia' %>

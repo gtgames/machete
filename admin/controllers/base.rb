@@ -12,7 +12,7 @@ Admin.controllers :base do
   post :upload do
     file = MediaFile.new({
         :name => params["file"]["filename"] || params["filename"],
-        :content_type => params["file"]["type"] || params["type"],
+        :content_type => Wand.wave(params["file"]["tempfile"] || params['tempfile']),
         :path => params["file"]["tempfile"] || params['tempfile']
     })
     if file.save
