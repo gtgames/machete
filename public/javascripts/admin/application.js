@@ -35,14 +35,18 @@
 			div.attr('id', myid);
 			input.attr('name', myname);
 
-			new AjaxUpload(myid, {
+			var uploader = new qq.FileUploader({
+				debug:true,
+				element: div[0],
 				action: '/base/upload',
-				name: "file",
-				autoSubmit: true,
-				responseType: 'json',
-				onComplete: function(file, resp) {
-					if (resp.error) {} else {
-						$('<span></span>').appendTo($('#' + myid).parent()).html(file + ' caricato con successo');
+				onComplete: function(id, name, resp) {
+					if (resp.error) {
+						var ul = $('<ul class="errors">');
+						$.each(resp.error, function(el){
+							$('<li>').html(el).appendTo(ul);
+						});
+						ul.appendTo(div);
+					} else {
 						input.attr('value', resp.success)
 					}
 				}
