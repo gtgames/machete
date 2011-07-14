@@ -34,6 +34,6 @@ class Machete < Padrino::Application
   enable :flash
 
   error 404 do
-    render 'errors/404', :layout => 'layouts/application'
+    render 'errors/404', :layout => 'layouts/application.html'
   end
 end

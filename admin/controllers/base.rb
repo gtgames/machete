@@ -11,9 +11,9 @@ Admin.controllers :base do
 
   post :upload do
     file = MediaFile.new({
-        :name => params["file"]["filename"],
-        :content_type => params["file"]["type"],
-        :path => params["file"]["tempfile"]
+        :name => params["file"]["filename"] || params["filename"],
+        :content_type => params["file"]["type"] || params["type"],
+        :path => params["file"]["tempfile"] || params['tempfile']
     })
     if file.save
       %{<html><head><script>document.domain="#{Cfg["domain"]}";</script></head><body>{"success":#{file.id.to_s.to_json}}</body></html>}
