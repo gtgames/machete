@@ -35,8 +35,8 @@ Adapter.define(:configuration, Adapter::Memory) do
   end
 
   def layout(controller)
-    unless read('layouts').nil?
-      read('layouts')[controller].to_sym || :"application.html"
+    unless read('layouts')[controller].nil?
+      read('layouts')[controller].to_sym
     else
       :"application.html"
     end
