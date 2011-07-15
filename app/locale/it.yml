@@ -1,3 +1,8 @@
 it:
+  save: "Invia"
+  cancel: "Annulla"
   gallery: "Fotografie"
   contact: "Contatti"
+  booking:
+    terms: "Termini ..."
+
