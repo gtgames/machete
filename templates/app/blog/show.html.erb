@@ -1,13 +1,13 @@
 <article>
   <h1><%= @post.title %></h1>
 
-  <div class='lead'><%= @post.subtitle %></div>
+  <div class='lead'><%= @post.lead %></div>
 
-  <% unless @post.photo.empty? %>
+  <% unless @post.photo.nil? %>
     <img src="<%= @post.photo.thumb(:big) %>" title="<%= @post.title %>">
   <% end %>
 
-  <div>
+  <div class="text">
     <%= @post.text %>
   </div>
 </article>

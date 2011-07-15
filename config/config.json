@@ -10,6 +10,8 @@
     "locales":["it"],
     "acl":{
       "admin":["links","photos","posts","pages","taxonomy"]
-    }
+    },
+	"layouts":{
+	}
   }
 }
