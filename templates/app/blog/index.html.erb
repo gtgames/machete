@@ -1,7 +1,7 @@
 <%- @posts.each do |p| %>
   <article>
   <div class='headline'>
-    <img src="<%= p.photo.thumb.url %>">
+    <img src="<%= p.photo.thumb %>">
     <h1><%= p.title %></h1>
     <p><%= p.lead %></p>
   </div>

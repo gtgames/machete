@@ -4,7 +4,7 @@
   <div class='lead'><%= @post.subtitle %></div>
 
   <% unless @post.photo.empty? %>
-    <img src="<%= @post.photo.url %>" title="<%= @post.title %>">
+    <img src="<%= @post.photo.thumb(:big) %>" title="<%= @post.title %>">
   <% end %>
 
   <div>
