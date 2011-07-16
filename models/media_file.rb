@@ -61,7 +61,7 @@ class MediaFile
     if self.new? && self.path.match(%r{#{ media_folder }}).nil?
 
       self.ext  = ::File.extname( self.name ).slice!( 1..-1 )
-      self.name = self.name.to_slug.sub(/-[a-z]+/, ".#{self.ext}")
+      self.name = self.name.gsub(/\%20/, ' ').to_slug.sub(/-[a-z]+$/, ".#{self.ext}")
       self.url  = "/media/#{ subfolder }/#{ self._id }/#{ self.name }"
       self.path = "#{ media_folder }/#{ subfolder }/#{ self._id }/#{ self.name }"
 
