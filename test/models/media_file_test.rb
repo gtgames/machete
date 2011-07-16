@@ -17,6 +17,8 @@ context "MediaFile Model" do
     asserts_topic.has_key :content_type, String
 
 
+    asserts("that filename is slugified") { topic.name == topic.name.to_slug.sub(/-[a-z]+/, ".#{topic.ext}") }
+
     asserts("that topic responds to 'file='") { !topic.respond_to?(:'file=').nil? }
     asserts("that topic responds to 'thumb'") { !topic.respond_to?(:thumb).nil? }
 

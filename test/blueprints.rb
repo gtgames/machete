@@ -9,7 +9,7 @@ Sham.define do
   title       { {"it" => Faker::Lorem.words(5).join(' ')}                                   }
   lead        { {"it" => Faker::Lorem.words(8).join(' ')}                                   }
   text        { {"it" => Faker::Lorem.words(20).join(' ')}                                  }
-  slug        { {"it" => Faker::Lorem.words(5).map(&:downcase).map(&:to_ascii).join('-')}   }
+  slug        { {"it" => Faker::Lorem.words(5).join(' ').to_slug}   }
   tags        { Faker::Lorem.words(3)                                                       }
   url         { Faker::Internet.domain_name                                                 }
   image       {
@@ -68,11 +68,6 @@ end
 Link.blueprint do
   title   { Sham.title }
   url     { {"it" => Sham.url} }
-end
-
-Configuration.blueprint do
-  _id   { Sham.name.downcase }
-  val   { {:foo => "bar"}.to_json }
 end
 
 Message.blueprint do

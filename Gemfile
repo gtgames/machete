@@ -50,7 +50,7 @@ end
 
 gem 'nokogiri'
 gem 'sanitize'
-gem 'unidecode'
+gem 'to_slug'
 
 #gem 'rack-thumb', :git => 'https://github.com/vidibus/rack-thumb.git'
 #gem 'mapel', :git => 'https://github.com/vidibus/mapel.git'
