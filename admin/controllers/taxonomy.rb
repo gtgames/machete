@@ -25,7 +25,6 @@ Admin.controller :taxonomy do
   end
 
   put :update, :with => :id do
-    ap(params)
     @taxonomy = Taxonomy.find(params[:id])
     if @taxonomy.update_attributes(params[:taxonomy])
       flash[:notice] = t'updated'
