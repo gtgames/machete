@@ -8,7 +8,7 @@ class Translation < HashWithIndifferentAccess
   end
 
   def to_s
-    self[Cfg.locale]
+    self[Cfg.locale] || self[Cfg.default_locale] || "..."
   end
 
   def in_current_locale=(value)
