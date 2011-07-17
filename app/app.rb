@@ -23,6 +23,11 @@ class Machete < Padrino::Application
   set :exceptions_subject, "[machete][#{Cfg[:domain]}]"
   set :exceptions_page, :errors
 
+  # Cache
+  register Padrino::Cache
+  set :cache, Padrino::Cache::Store::Mongo.new( MongoMapper.database, :size => 2, :collection => 'cache')
+  enable :caching
+
   # Middleware for locale redirection
   if Cfg['locales'].length > 1
     use Rack::AutoLocale,

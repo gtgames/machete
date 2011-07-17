@@ -42,7 +42,11 @@
       <div class="column grid_8 content">
         <%= yield %>
       </div>
-      <div class="column grid_4"><%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %></div>
+      <div class="column grid_4">
+        <% cache('taxonomy_tree', :expires_in => 60) do %>
+          <%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %>
+        <% end -%>
+      </div>
     </section>
     <section class="row">
       <div class="column grid_12" id="tags"></div>
