@@ -2,15 +2,15 @@
   padding: 0;
   width: @w;
   height: @h;
-  background: e(%("url(%s/images/%s)", @lib_path, @i)) @pl @pt;
+  background: e(%("url(%s)", @i)) @pl @pt;
   text-indent: -9999px;
 }
 
 .iconr_trash(){
-  .image_replace('icons.png', 0px, -64px);
+  .image_replace('/stylesheets/lib/images/icons.png', 0px, -64px);
 }
 .iconr_edit(){
-  .image_replace('icons.png', 0px, -32px);
+  .image_replace('/stylesheets/lib/images/icons.png', 0px, -32px);
 }
 
 .before_icon(@i, @pl:0px, @pt:0px, @w:16px, @h:16px) {
@@ -22,7 +22,7 @@
     width: @w;
     height: @h;
     left: 1px;
-    background: e(%("url(%s/images/%s)", @lib_path, @i)) @pl @pt;
+    background: e(%("url(%s)",@i)) @pl @pt;
   }
 }
 
