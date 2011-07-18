@@ -11,9 +11,9 @@ Admin.controllers :base do
 
   post :upload do
     file = MediaFile.new({
-        :name => params["file"]["filename"] || params["filename"],
-        :content_type => Wand.wave(params["file"]["tempfile"] || params['tempfile']),
-        :path => params["file"]["tempfile"] || params['tempfile']
+        :name => params["filename"],
+        :content_type => Wand.wave(params['tempfile']),
+        :path => params['tempfile']
     })
     if file.save
       {success:file.id.to_s}.to_json

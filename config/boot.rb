@@ -17,6 +17,8 @@ Padrino.before_load do
   require Padrino.root('lib', 'config')
   Cfg.refresh!
   I18n.default_locale = Cfg['locales'].first
+
+  Wand.executable = '/usr/bin/file'
 end
 
 ##
