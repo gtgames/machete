@@ -1,1 +1,3 @@
-<article><%= Cfg[:homepage] %></article>
+<article>
+<%= Cfg[:homepage][Cfg.locale] || Cfg[:homepage][Cfg.default_locale] || "nulla in home page" %>
+</article>
