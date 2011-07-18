@@ -14,11 +14,12 @@ Bundler.require(:default, PADRINO_ENV)
 # Add here your before load hooks
 #
 Padrino.before_load do
-  require Padrino.root('lib', 'config')
-  Cfg.refresh!
+  require Padrino.root('lib','config')
   I18n.default_locale = Cfg['locales'].first
 
   Wand.executable = '/usr/bin/file'
+
+  Padrino.cache = Padrino::Cache::Store::Mongo.new( MongoMapper.database, :size => 2, :max => 100, :collection => 'cache')
 end
 
 ##

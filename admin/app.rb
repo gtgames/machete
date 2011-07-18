@@ -20,7 +20,7 @@ class Admin < Padrino::Application
 
   # Cache
   register Padrino::Cache
-  set :cache, Padrino::Cache::Store::Mongo.new( MongoMapper.database, :size => 2, :collection => 'cache')
+  set :cache, Padrino.cache
   disable :caching
 
   enable  :sessions

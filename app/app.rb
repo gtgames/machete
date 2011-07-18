@@ -25,8 +25,10 @@ class Machete < Padrino::Application
 
   # Cache
   register Padrino::Cache
-  set :cache, Padrino::Cache::Store::Mongo.new( MongoMapper.database, :size => 2, :collection => 'cache')
+  set :cache, Padrino.cache
   enable :caching
+
+  enable  :sessions
 
   # Middleware for locale redirection
   if Cfg['locales'].length > 1
