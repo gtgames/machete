@@ -5,16 +5,20 @@
       <input class="string" id="author" name="author" type="text" value="<%= Cfg['author'] %>" />
       <p class="description">Autore dei contenuti del sito web, detentore e responsabile legale del Copyright sui contenuti</p>
     </div>
-    <div class="string">
-      <label class="string" for="title">Titolo</label>
-      <input class="string" id="title" name="title" type="text" value="<%= Cfg['title'] %>" />
-      <p class="description">Titolo del sito web, apparir&agrave; all'inizio di tutte le pagine del sito web</p>
-    </div>
-    <div class="text">
-      <label class="editor" for="homepage">Prima Pagina</label>
-      <textarea class="text" id="homepage" name="homepage" rows="" cols=""><%= Cfg['homepage'] %></textarea>
-      <p class="description">Contenuto della pagina iniziale (se configurabile)</p>
-    </div>
+
+    <% Cfg[:locales].each do |l| -%>
+      <div class="string <%= l -%>">
+        <label class="string" for="title_<%= l -%>">Titolo</label>
+        <input class="string" id="title_<%= l -%>" name="title[<%= l -%>]" type="text" value="<%= Cfg['title'][l] || '' %>" />
+        <p class="description">Titolo del sito web, apparir&agrave; all'inizio di tutte le pagine del sito web</p>
+      </div>
+      <div class="text <%= l -%>">
+        <label class="editor" for="homepage_<%= l -%>">Prima Pagina</label>
+        <textarea class="text" id="homepage_<%= l -%>" name="homepage[<%= l -%>]" rows="" cols=""><%= Cfg['homepage'][l] || '' %></textarea>
+        <p class="description">Contenuto della pagina iniziale (se configurabile)</p>
+      </div>
+    <% end -%>
+
   </div>
 
   <fieldset id='advanced'>
