@@ -1,12 +1,14 @@
 Admin.controllers :base do
+  enable :caching
 
   get :index, :map => "/" do
     render "base/index"
   end
 
   get :tagblob, :provides => :js do
-    # Array union: |
-    (Post.tagging | Photo.tagging).to_json
+    cache('tagblob', :expires_in => 10*60) do
+      (Post.tagging | Photo.tagging).to_json
+    end
   end
 
   post :upload do

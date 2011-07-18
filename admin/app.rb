@@ -18,6 +18,11 @@ class Admin < Padrino::Application
   set :exceptions_subject, "[machete][#{Cfg[:domain]}]"
   set :exceptions_page, :errors
 
+  # Cache
+  register Padrino::Cache
+  set :cache, Padrino::Cache::Store::Mongo.new( MongoMapper.database, :size => 2, :collection => 'cache')
+  disable :caching
+
   enable  :sessions
 
   set :session_secret, '28a4a90b149121c14172404245efdc8cb57a71d5679b487834f5b2dc1772105e'
