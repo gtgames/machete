@@ -6,6 +6,10 @@ Admin.controllers :multimedia do
     render 'multimedia/index'
   end
 
+  get :new do
+    redirect url(:multimedia, :index)
+  end
+
   post :create do
     media = Media.new(params[:media])
     render 'multimedia/new'
