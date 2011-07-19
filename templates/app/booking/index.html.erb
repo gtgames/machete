@@ -1,30 +1,29 @@
 <article>
-<% form_for :booking, "/#{Cfg.locale}/booking/new", :class => :form do |f| -%>
-  <%= f.input :name %>
-  <%= f.input :surname %>
-  <%= f.input :email %>
-  <%= f.input :city %>
-  <%= f.input :phone %>
-  <%= f.input :fax %>
-  <%= f.input :adults %>
-  <%= f.input :children %>
+<% form_for :booking, url(:booking, :new), :class => :form do |f| -%>
+	<%= f.input :name %>
+	<%= f.input :surname %>
+	<%= f.input :email %>
+	<%= f.input :city %>
+	<%= f.input :phone %>
+	<%= f.input :fax %>
+	<%= f.input :adults %>
+	<%= f.input :children %>
+	<hr>
+	<%= f.input :business_name %>
+	<%= f.input :address %>
+	<%= f.input :vat %>
+	<%= f.input :snn %>
+	<hr>
+	<%= f.input :date_arrival %>
+	<%= f.input :date_departure %>
+	<hr>
+	<%= f.input :notes,  :as => :text %>
 
-  <%= f.input :business_name %>
-  <%= f.input :address %>
-  <%= f.input :vat %>
-  <%= f.input :snn %>
-
-  <%= f.input :date_arrival %>
-  <%= f.input :date_departure %>
-
-
-  <%= f.input :notes,  :as => :text %>
-
-  <div><%= t'booking.terms' %></div>
-  <div class='submit_link'>
-    <%= f.submit t(:save), :class => :alt_btn %>
-    <%= f.submit t(:cancel), :onclick => "window.location='/#{Cfg.locale}/'", :class => :button %>
-  </div>
+	<div><%= t'booking.terms' %></div>
+	<div class='submit_link'>
+		<%= f.submit t(:save), :class => :alt_btn %>
+		<%= f.submit t(:cancel), :onclick => "window.location='#{url(:index, :index)}'", :class => :button %>
+	</div>
 
 <% end -%>
 </article>
