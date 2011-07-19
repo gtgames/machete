@@ -5,7 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>nome/thumb</th>
+      <th>thumb</th>
+      <th>nome</th>
       <th></th>
     </tr>
   </thead>
@@ -18,6 +19,9 @@
           <% else -%>
             <%= m.url %>
           <% end -%>
+        </td>
+        <td>
+          <%= m.name %>
         </td>
         <td>
           <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'button_to trash' %>
