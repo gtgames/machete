@@ -1,5 +1,8 @@
 Admin.controllers :configurations do
   get :index do
+    Cfg.insert 'title', {} if Cfg[:title].nil?
+    Cfg.insert 'homepage', {} if Cfg[:homepage].nil?
+
     render 'configurations/index'
   end
   post :update do
@@ -23,10 +26,18 @@ Admin.controllers :configurations do
   end
 
   get :vcard do
+    Cfg.insert 'card', {} if Cfg[:card].nil?
+
     render 'configurations/vcard'
   end
   post :vcard_update do
+    card = {}
+    params["card"].each{|k, v| card[k] = v }
+
+    Cfg.insert 'card',  card
     Cfg.insert 'vcard', params["vcard"]
     Cfg.insert 'hcard', params["hcard"]
+
+    render 'configurations/vcard'
   end
 end

@@ -47,3 +47,7 @@
   </div>
 </form>
 <% content_for :title, 'Impostazioni Generali' %>
+<% content_for :actions do -%>
+  <%= link_to "generali", url(:configurations, :index) %> | 
+  <%= link_to "vCard", url(:configurations, :vcard) %>
+<% end -%>

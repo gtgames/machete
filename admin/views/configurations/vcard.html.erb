@@ -1,0 +1,105 @@
+<form class="card" method="post" action="/configurations/vcard_update">
+
+  <div class="row">
+    <div class="field column grid_4">
+      <label for="givenname">Nome</label>
+      <input type="text" id="givenname" name="card[givenname]" value="<%= Cfg['card']['givenname'] %>" />
+    </div>
+    <div class="field column grid_4">
+      <label for="additionalname">Secondo Nome</label>
+      <input type="text" id="additionalname" name="card[additionalname]" value="<%= Cfg['card']['additionalname'] %>" />
+    </div>
+    <div class="field column grid_4">
+      <label for="familyname">Cognome</label>
+      <input type="text" id="familyname" name="card[familyname]" value="<%= Cfg['card']['familyname'] %>" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field column grid_12">
+      <label for="vorg">Organizzazione</label>
+      <input type="text" id="org" name="card[org]" value="<%= Cfg['card']['org'] %>" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field column grid_4">
+      <label for="street">Via</label>
+      <input type="text" id="street" name="card[street]" value="<%= Cfg['card']['street'] %>" />
+    </div>
+    <div class="field column grid_4">
+      <label for="city">Citt&agrave;</label>
+      <input type="text" id="city" name="card[city]" value="<%= Cfg['card']['city'] %>" />
+    </div>
+    <div class="field column grid_2">
+      <label for="region">Provicia</label>
+      <input type="text" id="region" name="card[region]" value="<%= Cfg['card']['region'] %>" />
+    </div>
+    <div class="field column grid_2">
+      <label for="postal">CAP</label>
+      <input type="text" id="postal" name="card[postal]" value="<%= Cfg['card']['postal'] %>" />
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="field column grid_12">
+      <label for="country">Nazione</label>
+      <input type="text" id="country" name="card[country]" value="<%= Cfg['card']['country'] %>" />
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="field column grid_6">
+      <label for="phone">Telefoni</label>
+      <input type="text" id="phone" name="card[phone]" value="<%= Cfg['card']['phone'] %>" />
+      <p>Numeri di telefono divisi da virgola</p>
+    </div>
+    <div class="field column grid_6">
+      <label for="email">Email</label>
+      <input type="text" id="email" name="card[email]" value="<%= Cfg['card']['email'] %>" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field column grid_6">
+      <label for="url">URL sito web o resum&egrave;</label>
+      <input type="text" id="url" name="card[url]" value="<%= Cfg['card']['url'] %>" />
+    </div>
+    <div class="field column grid_6">
+      <label for="photo">URL foto personale</label>
+      <input type="text" id="photo" name="card[photo]" value="<%= Cfg['card']['photo'] %>" />
+    </div>
+  </div>
+
+  <input type="hidden" id="hcard" name="hcard" />
+  <input type="hidden" id="vcard" name="hcard" />
+
+
+  <div class="row">
+    <div class="submit column grid_8">
+      <input class="grid_3" type="reset" />
+      <button class="grid_5" type="submit">Salva</button>
+    </div>
+  </div>
+
+</form>
+</div>
+<div class="row">
+  <div class="column grid_12">
+    <h2>Preview</h2>
+    <hr>
+    <div id="target"></div>
+    <hr>
+  </div>
+</div>
+
+
+<% content_for :title do -%>
+  Creatore <a href="http://microformats.org/wiki/hcard">hCard</a> e <a href="http://microformats.org/wiki/vcard">vCard</a>
+<% end -%>
+<% content_for :actions do -%>
+  <%= link_to "generali", url(:configurations, :index) %> |
+  <%= link_to "vCard", url(:configurations, :vcard) %>
+<% end -%>
