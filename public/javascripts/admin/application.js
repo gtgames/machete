@@ -146,10 +146,7 @@
           '  <span class="country-name"><%= country %></span>'+
           ' <% _.each(phone,function(tel){%> <div class="tel"><%= tel %></div> <% }); %>'+
           '</div>');
-      $('form.card input').change(
-          function(e) {
-            e.preventDefault();
-
+        function fillCard(e) {
             var params = {
               given_name: $('#givenname').val(),
               additional_name: $('#additionalname').val(),
@@ -177,6 +174,8 @@
             $('#target').html(template(params));
             $('#hcard').val(template(params));
           });
+      $('form.card input').change(fillCard);
+      $('form.card').submit(fillCard);
     })();
   });
 })(jQuery);
