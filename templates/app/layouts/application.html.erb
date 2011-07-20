@@ -46,6 +46,7 @@
         <% cache('taxonomy_tree', :expires_in => 60) do %>
           <%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %>
         <% end -%>
+		<%= partial('booking/widget') %>
       </div>
     </section>
     <section class="row">
@@ -68,6 +69,7 @@
         "http://frenzart.com/js/rightjs/right.js",
         "http://frenzart.com/js/rightjs/right/jquerysh.js",
         "http://frenzart.com/js/rightjs/right/calendar.js",
+        "http://frenzart.com/js/rfc3339date.js",
         "http://frenzart.com/js/rightjs/right/i18n/<%= Cfg.locale %>.js",
         "/javascripts/application.js",
         ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'

@@ -20,8 +20,15 @@ class Booking
   key :snn, String
 
   # TimeDate
-  key :date_arrival, Date, :default => lambda { Time.now.strftime("%Y-%m-%d %H:%M") }
-  key :date_departure, Date, :default => lambda { Time.now.strftime("%Y-%m-%d %H:%M") }
+  key :date_arrival, Time, :default => lambda { Time.now.xmlschema }
+  key :date_departure, Time, :default => lambda { Time.now.xmlschema }
+  def date_arrival
+    self[:date_arrival].xmlschema
+  end
+  def date_departure
+    self[:date_departure].xmlschema
+  end
+
 
   # various
   key :ip,  String

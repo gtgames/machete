@@ -24,7 +24,6 @@ public/images/*
 public/attachments/*
 
 app/views/shared/_footer.haml
-public/javascripts/application.js
 public/stylesheets/imagination.css
 public/stylesheets/style.css
 public/media/*
