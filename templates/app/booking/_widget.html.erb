@@ -1,0 +1,24 @@
+<form action="<%= url(:booking, :new) %>" method="POST" id="booking_widget">
+
+	<div class="string">
+		<label class="string" for="booking_date_arrival">Arrivo</label>
+		<input class="string" value="" id="booking_date_arrival" name="booking[date_arrival]" type="text" />
+	</div>
+	<div class="string">
+		<label class="string" for="booking_date_departure">Partenza</label>
+		<input class="string" value="" id="booking_date_departure" name="booking[date_departure]" type="text" />
+	</div>
+
+	<div class="string">
+		<label class="string" for="booking_adults">Adulti</label>
+		<input class="string" value="" id="booking_adults" name="booking[adults]" type="text" />
+	</div>
+	<div class="string">
+		<label class="string" for="booking_children">Bambini</label>
+		<input class="string" value="0" id="booking_children" name="booking[children]" type="text" />
+	</div>
+
+	<div class="actions">
+		<input type="submit" value="<%= t"submit" %>">
+	</div>
+</form>
