@@ -20,8 +20,8 @@ class Booking
   key :snn, String
 
   # TimeDate
-  key :date_arrival, Date, :default => lambda { Time.now }
-  key :date_departure, Date, :default => lambda { Time.now }
+  key :date_arrival, Date, :default => lambda { Time.now.strftime("%Y-%m-%d %H:%M") }
+  key :date_departure, Date, :default => lambda { Time.now.strftime("%Y-%m-%d %H:%M") }
 
   # various
   key :ip,  String

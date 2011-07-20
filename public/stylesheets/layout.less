@@ -131,3 +131,14 @@ footer {
   color: white;
   background-color: @face_color;
 }
+
+input, textarea {
+  width: 100%;
+  .box-sizing();
+}
+input {
+  &[type=submit],
+  &[type=reset] {
+    width: 120px;
+  }
+}

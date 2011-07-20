@@ -65,7 +65,10 @@
       _gaq.push(['_setAccount', '<%= Cfg['analytics'] %>']);_gaq.push(['_setDomainName', 'none']);
       _gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
       head.js(
-        "http://frenzart.com/js/mootools/1.3.js",
+        "http://frenzart.com/js/rightjs/right.js",
+        "http://frenzart.com/js/rightjs/right/jquerysh.js",
+        "http://frenzart.com/js/rightjs/right/calendar.js",
+        "http://frenzart.com/js/rightjs/right/i18n/<%= Cfg.locale %>.js",
         "/javascripts/application.js",
         ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'
       );
