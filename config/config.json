@@ -1,17 +1,17 @@
 {
-  "mongo":{
-    "host":"127.0.0.1",
-    "name":"machete",
-    "user":"machete",
-    "password":"machete"
-  },
-  "site":{
-	"domain":"machete.it",
-    "locales":["it"],
-    "acl":{
-      "admin":["links","photos","posts","pages","taxonomy"]
-    },
-	"layouts":{
-	}
-  }
+	"mongo":{
+		"host":"127.0.0.1",
+			"name":"machete",
+			"user":"machete",
+			"password":"machete"
+	},
+		"site":{
+			"domain":"machete.it",
+			"locales":["it"],
+			"acl":{
+				"admin":["links","photos","posts","pages","taxonomy"]
+			},
+			"layouts":{
+			}
+		}
 }
