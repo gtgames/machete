@@ -5,7 +5,7 @@
 
 def write_to_database(path, value)
   key = path.join('.')
-  @store[key] = value.gsub(/\\"/, '')
+  @store[key] = value.gsub(/\\"/, '').to_json
 end
 
 # traverse through hash
