@@ -24,9 +24,9 @@
   <body>
     <nav class="row">
       <ul class="column grid_12">
-        <li><a href="/<%= Cfg.locale %>/">Home</a></li>
-        <li><a href="/<%= Cfg.locale %>/gallery"><%= t'gallery' %></a></li>
-        <li><a href="/<%= Cfg.locale %>/contact"><%= t'contact' %></a></li>
+		  <li><%= link_to t('home'), url(:index, :index) %></li>
+        <li><%= link_to t('gallery'), url(:gallery, :index) %></li>
+		<li><%= link_to t('contact'), url(:contact, :index) %></li>
         <% menu.each do |m| %>
           <li><a href="<%= m.url %>"><%= m.title %></a></li>
         <% end %>

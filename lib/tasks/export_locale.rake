@@ -5,7 +5,7 @@
 
 def write_to_database(path, value)
   key = path.join('.')
-  @store[key] = value.gsub(/\\"/, '').to_json
+  @store[key] = value.gsub(/\\"/, '')
 end
 
 # traverse through hash
@@ -30,7 +30,7 @@ namespace :locale do
   task :read_files do
     @store = MongoI18n::Store.new(I18NDB['strings'])
 
-    Dir[File.join(Padrino.root, "**", '*.yml')].each do |f|
+    (Dir[File.join(Padrino.root, "app/**", '*.yml')] | Dir[File.join(Padrino.root, "admin/**", '*.yml')]).each do |f|
       p f
       dump = YAML::load(File.open(f))
       traverse(dump, [])
