@@ -306,16 +306,19 @@ form {
 	width: 100%;
 }
 .qq-upload-button {
+	.border-radius(5px);
 	display:inline-block;
 	width: 105px;
 	padding: 7px 0;
 	text-align:center;
-	background:#880000;
+	background:#555;
 	border-bottom:1px solid #ddd;
 	color:#fff;
+	cursor: pointer !important;
 }
 .qq-upload-button-hover {
-	background:#cc0000;
+	color: black;
+	background:#ccc;
 }
 .qq-upload-button-focus {
 	outline:1px dotted black;
@@ -373,4 +376,15 @@ form {
 }
 .qq-upload-fail .qq-upload-failed-text {
 	display:inline;
+}
+
+
+div.rui-tags ul.list {
+	li {
+		background-color: #555555 !important;
+		color: #fff;
+	}
+	input {
+		.box-shadow(0 0 0);
+	}
 }

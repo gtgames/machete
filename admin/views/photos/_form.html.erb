@@ -1,12 +1,14 @@
 <div class="module_content">
   <%= f.input :title, :as => :string %>
+
   <% if f.object.file.nil? -%>
     <%= f.input :file, :as => :file %>
   <% else -%>
     <%= f.input :file, :value => f.object.file.id.to_s, :type => :hidden %>
     <%= image_tag(f.object.file.thumb('200xx200')) %>
   <% end -%>
-  <%= f.input :tags,  :as => :text %>
+
+  <%= f.input :tag_list, :as => :string %>
 
   <h2>Galleria</h2>
   <% if (galleries = Photo.galleries).size > 0 -%>
@@ -26,12 +28,12 @@
 
 
 <script type="text/javascript">
-  $(document).ready(function(){
-      $('#photo_gallery_add').click(function(e){
-        var v = $('#photo_gallery_add_input').attr('value');
-        if (v.length > 0){
-          $('<option value="' + v + '" selected>' + v + '</option>').appendTo($('#photo_gallery'));
-          $('#photo_gallery option:selected').val(v)
+  $(document).on('ready',function(){
+      $('photo_gallery_add').on('click', function(e){
+        var v = $('photo_gallery_add_input').get('value');
+		if (v.length > 0){
+		$('photo_gallery').append( new Element('option', { value: v, selected: true, html: v }) );
+          $$('#photo_gallery option:selected').first().set('value', v)
         }
         return false;
       });

@@ -6,27 +6,27 @@
   <li>visualizzazioni <b class="pings">n/a</b></li>
 </ul>
 
-
-<script>
+<script type="text/javascript">
 //<![CDATA[
-$(function(){
-  $.getJSON("http://analyst.machete.it/<%= Cfg[:analyst] %>.js?callback=?",
-  function(data) {
-    console.log(data);
-    $('#stats .domain').html(data.domain);
-    $('#stats .uniques').html(data.uniques);
-    $('#stats .pings').html(data.pings);
+$(document).on('ready', function(){
+    Xhr.load("http://analyst.machete.it/<%= Cfg[:analyst] %>.js",{
+        jsonp: 'callback',
+        onSuccess: function() {
+            var data = this.responseJSON;
+            $$('#stats .domain').first().set('html', data.domain);
+            $$('#stats .uniques').first().set('html', data.uniques);
+            $$('#stats .pings').first().set('html', data.pings);
 
-    var url = (function(){
-      var pi = parseInt(data.pings), un = parseInt(data.uniques);
-      var tot = pi+un;
-      return "http://chart.apis.google.com/chart" +
-      "?chs=360x120&cht=p&chco=72D5FF" +
-      "&chds=0," + tot + "&chd=t:" + pi + "," + un +
-      "&chl=Contatti|Unici&chma=5,5,5,5"
-    })();
-    $('#chart').attr('src', url);
-  });
+            var url = (function(){
+                var pi = parseInt(data.pings), un = parseInt(data.uniques);
+                var tot = pi+un;
+                return "http://chart.apis.google.com/chart?chs=360x120&cht=p&chco=72D5FF" +
+                       "&chds=0," + tot + "&chd=t:" + pi + "," + un +
+                       "&chl=Contatti|Unici&chma=5,5,5,5";
+            })();
+            $('chart').set('src', url);
+        }
+    });
 });
 //]]>
 </script>

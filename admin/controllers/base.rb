@@ -6,12 +6,14 @@ Admin.controllers :base do
   end
 
   get :tagblob, :provides => :js do
+    content_type :json
     cache('tagblob', :expires_in => 10*60) do
       (Post.tagging | Photo.tagging).to_json
     end
   end
 
   post :upload do
+    content_type :json
     file = MediaFile.new({
         :name => params["filename"],
         :content_type => Wand.wave(params['tempfile']),
