@@ -13,9 +13,9 @@ $(document).on('ready', function(){
         jsonp: 'callback',
         onSuccess: function() {
             var data = this.responseJSON;
-            $$('#stats .domain').first().set('html', data.domain);
-            $$('#stats .uniques').first().set('html', data.uniques);
-            $$('#stats .pings').first().set('html', data.pings);
+            $$('#stats .domain').first().html(data.domain);
+            $$('#stats .uniques').first().html(data.uniques);
+            $$('#stats .pings').first().html(data.pings);
 
             var url = (function(){
                 var pi = parseInt(data.pings), un = parseInt(data.uniques);
