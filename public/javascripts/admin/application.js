@@ -123,6 +123,27 @@
 
 		$('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
 
+		/*(function() {
+			if (!$$('textarea.text').length) return false;
+			var rte_opts = {
+				minimal: {
+					toolbar: 'small',
+					tags: {
+						Bold: 'b',
+						Italic: 'i',
+						Underline: 'u',
+						Strike: 's',
+						Quote: 'blockquote',
+					},
+
+				},
+				full: {}
+			}
+			$$('textarea.text').each(function(el) {
+				new Rte(el, {});
+			});
+		})();*/
+
 		(function() {
 			if ($$('#hcard').length == 0) return;
 			var template = _.template('<div id="<%= id %>" class="vcard">' + '  <span class="given-name"><%= given_name %></span>' + '  <span class="additional-name"><%= additional_name %></span>' + '  <span class="family-name"><%= family_name %></span>' + '  <% if (photo.length > 3) {%><img src="<%= photo %>" alt="photo of <%= given_name %> <%= additional_name %> <%= family_name %>" class="photo"/><% } %>' + '  <div class="org"><%= org %></div>' + '  <a class="email" href="mailto:<%= email %>"><%= email %></a>' + '  <div class="street-address"><%= street_address %></div>' + '  <span class="locality"><%= city %></span>' + '  <span class="region"><%= region %></span>' + '  <span class="postal-code"><%= postal_code %></span>' + '  <span class="country-name"><%= country %></span>' + ' <% _.each(phone,function(tel){%> <div class="tel"><%= tel %></div> <% }); %>' + '</div>');
@@ -161,5 +182,60 @@
 			});
 		})();
 	});
+
+	Rte.Tools.Image = new Class(Rte.Tool, {
+		command: 'insertimage',
+		attr: 'src',
+
+		element: function() {
+			var image = this.rte.selection.element();
+			return image !== null && image.tagName === "IMG" ? image: null;
+		},
+		// the url-attribute 'src', 'href', etc.
+		exec: function(url) {
+			if (url === undefined) {
+				this.prompt();
+			} else {
+				if (url) {
+					this[this.element() ? 'url': 'create'](url);
+				} else {
+					this.rte.editor.removeElement(this.element());
+				}
+			}
+		},
+
+		active: function() {
+			return this.element() !== null;
+		},
+
+		prompt: function() {
+            var diag = new Dialog({
+                closeable: false,
+                title: 'Inserisci Immagine'
+            });
+            diag.load('/multimedia/dialog');
+			var url = prompt(Rte.i18n.UrlAddress, this.url() || 'http://some.url.com');
+
+			if (url !== null) {
+				this.exec(url);
+			}
+		},
+
+		// protected
+		url: function(url) {
+			if (this.element()) {
+				if (url !== undefined) {
+					this.element()[this.attr] = url;
+				} else {
+					return this.element()[this.attr];
+				}
+			}
+		},
+
+		create: function(url) {
+			this.rte.selection.exec(this.command, url);
+		}
+	});
+
 })(RightJS);
 
