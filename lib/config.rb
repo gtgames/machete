@@ -46,7 +46,7 @@ Adapter.define(:configuration, Adapter::Memory) do
     Yajl::Encoder.encode(value)
   end
   def decode(value)
-    Yajl::Parser.parse(value)
+    Yajl::Parser.parse(value.to_s)
   end
 end
 
