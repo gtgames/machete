@@ -6,7 +6,7 @@ Admin.helpers do
   def tax_checked? id, list
     s = ''
     list.each { |t|
-      s = 'checked="1"' if(t._id == id)
+      s = 'checked' if(t._id.to_s == id)
     }
     s
   end

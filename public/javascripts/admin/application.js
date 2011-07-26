@@ -7,27 +7,26 @@
 	Xhr = RightJS.Xhr,
 	Object = RightJS.Object;
 
-	String.include({
-		to_slug: function() {
-			str = Object.clone(this);
-			str = str.replace(/^\s+|\s+$/g, '').toLowerCase();
+	var to_slug = function(str) {
+		str = str.replace(/^\s+|\s+$/g, '').toLowerCase();
 
-			// remove accents, swap ñ for n, etc
-			var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-			var to = "aaaaeeeeiiiioooouuuunc------";
-			for (var i = 0, l = from.length; i < l; i++) {
-				str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-			}
-			str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
-			return str;
+		// remove accents, swap ñ for n, etc
+		var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+		var to = "aaaaeeeeiiiioooouuuunc------";
+		for (var i = 0, l = from.length; i < l; i++) {
+			str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		}
-	});
+		str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+		return str;
+	}
 
 	$(document).onReady(function() {
+		$('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
+
 		if ($('advanced')) {
 			$$('#advanced>div').each('toggle');
 			$$('#advanced>legend').first().on('click', function(e) {
-				this.parent().find('div').each('toggle');
+				$$('#advanced>div').each('toggle');
 			});
 		}
 
@@ -91,37 +90,28 @@
 			});
 		});
 
-		var slug = $$('input[name*="[slug"]'); //$('input[name*="slug"').filter(function() { return this.id.match(/_slug[\(a-z\)]*/); });
-		if (slug.length) {
-			slug.each(function(el) {
-				var title = el.get('name').replace(/slug/, 'title');
-				function to_slug(event) {
-					el.set('value', this.get('value').to_slug())
-				};
-				$$('input[name="' + title + '"]').each(function(el) {
+		var slugs = $$('input[name*="[slug"]'); //$('input[name*="slug"').filter(function() { return this.id.match(/_slug[\(a-z\)]*/); });
+		if (slugs.length) {
+			slugs.each(function(slug) {
+				function slugify(el) {
+					slug.set('value', to_slug(el.get('value')))
+				}
+				$$('input[name="' + slug.get('name').replace(/slug/, 'title') + '"]').each(function(el) {
+					console.log(el);
 					el.on({
-						change: "to_slug",
-						keyup: "to_slug",
-						blur: "to_slug"
+						change: function() {
+							slugify(el)
+						},
+						keyup: function() {
+							slugify(el)
+						},
+						blur: function() {
+							slugify(el)
+						}
 					});
 				});
 			});
 		}
-
-		if ($$("#taxonomy_parent_id").length) {
-			$.getJSON('/taxonomy/tree.js', function(tree) {
-				$('input[name=_dummy]').optionTree(tree, {
-					choose: "Scegli...",
-					preselect: {
-						'_dummy': "---"
-					}
-				}).change(function() {
-					$('input[name="taxonomy[parent_id]"]').set('value', this.get("value"));
-				});
-			});
-		}
-
-		$('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
 
 		/*(function() {
 			if (!$$('textarea.text').length) return false;
@@ -209,11 +199,11 @@
 		},
 
 		prompt: function() {
-            var diag = new Dialog({
-                closeable: false,
-                title: 'Inserisci Immagine'
-            });
-            diag.load('/multimedia/dialog');
+			var diag = new Dialog({
+				closeable: false,
+				title: 'Inserisci Immagine'
+			});
+			diag.load('/multimedia/dialog');
 			var url = prompt(Rte.i18n.UrlAddress, this.url() || 'http://some.url.com');
 
 			if (url !== null) {
