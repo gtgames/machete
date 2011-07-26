@@ -10,7 +10,7 @@ Adapter.define(:configuration, Adapter::Memory) do
 
   def refresh!
     clear
-    JSON.parse(File.read(Padrino.root("config", "config.json")))['site'].each do |k,v|
+    Yajl::Parser.parse(File.read(Padrino.root("config", "config.json")))['site'].each do |k,v|
       write k,v
     end
     MongoMapper.database['configurations'].find({}).each do |c|
@@ -40,6 +40,13 @@ Adapter.define(:configuration, Adapter::Memory) do
     else
       :"application.html"
     end
+  end
+
+  def encode(value)
+    Yajl::Encoder.encode(value)
+  end
+  def decode(value)
+    Yajl::Parser.parse(value)
   end
 end
 
