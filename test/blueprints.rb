@@ -1,27 +1,27 @@
 APP_ROOT = Padrino.root()
 
 Sham.define do
-  name        { Faker::Name.first_name                                                      }
-  surname     { Faker::Name.last_name                                                       }
-  username    { Faker::Internet.user_name                                                   }
+  name        { Random.firstname                                                            }
+  surname     { Random.lastname                                                             }
+  username    { Random.firstname.to_slug                                                    }
   password    { (1..10).map { ('a'..'z').to_a.rand }.join                                   }
-  email       { Faker::Internet.email                                                       }
-  title       { {"it" => Faker::Lorem.words(5).join(' ')}                                   }
-  lead        { {"it" => Faker::Lorem.words(8).join(' ')}                                   }
-  text        { {"it" => Faker::Lorem.words(20).join(' ')}                                  }
-  slug        { {"it" => Faker::Lorem.words(5).join(' ').to_slug}   }
-  tags        { Faker::Lorem.words(3)                                                       }
-  url         { Faker::Internet.domain_name                                                 }
+  email       { Random.email                                                                }
+  title       { {"it" => "#{ Random.alphanumeric(Random.rand(10)) } "*3 }                   }
+  lead        { {"it" => Random.paragraphs(3) }                                             }
+  text        { {"it" => Random.paragraphs(10) }                                            }
+  slug        { {"it" => ("#{ Random.alphanumeric(Random.rand(10)) } "*3).to_slug }         }
+  tags        { [Random.alphanumeric(Random.rand(10)), Random.alphanumeric(Random.rand(10))]}
+  url         { Random.lastname.to_slug + '.com'                                            }
   image       {
     # creating a new temp PNG
     %x{convert -size 600x600  gradient:blue #{Padrino.root('tmp','test.png')} }
-    { "name" => Faker::Name.first_name.to_s+'.png',
+    { "name" => Random.firstname.to_s+'.png',
       "path" => "#{Padrino.root('tmp', 'test.png')}",
       "content_type" => "image/png" }                                                       }
-  ip          { Faker::Internet.ip_v4_address }
-  ua          { 'Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20100101 Firefox/5.0' }
-  ref         { 'http://' + Faker::Internet.domain_name + '/' }
-  phone       { Faker::PhoneNumber.phone_number }
+  ip          { '127.0.0.1'                                                                 }
+  ua          { 'Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20100101 Firefox/5.0'        }
+  ref         { 'http://' + Random.lastname.to_slug + '.com/'                               }
+  phone       { Random.phone                                                                }
 end
 
 
