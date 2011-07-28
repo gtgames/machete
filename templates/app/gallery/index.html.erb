@@ -2,7 +2,7 @@
 <% @galleries.each do |p| -%>
   <div class="gallery">
     <h2><%= p.gallery %></h2>
-    <%= link_to image_tag(p.file.thumb), url(:gallery, :show, :gallery => p.gallery) %>
+    <%= link_to image_tag(p.file.thumb), url(:gallery, :show, :gallery => p.gallery_slug) %>
   </div>
 <% end -%>
 </article>

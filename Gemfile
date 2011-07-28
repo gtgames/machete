@@ -33,14 +33,14 @@ gem 'httparty'
 
 group :development do
   gem 'awesome_print'
-  gem 'faker'
+  gem 'random_data'
   gem 'ruby-debug19'
 end
 
 # Test requirements
 group :test do
   gem 'watchr'
-  gem 'faker'
+  gem 'random_data'
   gem 'rr'
   gem 'riot'
   gem 'riot-mongo_mapper', '>=0.1.0'

@@ -30,30 +30,36 @@ end
 
 shell.say ""
 
-I18n.locale = :en
-
 if Padrino.env == :development
+  shell.say 'Pupulating Configuration data', :green
+  Cfg[:homepage] = {}
+  Cfg[:title] = {}
+  Cfg[:locales].each do |l|
+    Cfg[:homepage][l] = Random.paragraphs
+    Cfg[:title][l] = "#{Random.firstname} #{Random.lastname}'s awesome WebSite"
+  end
+
   shell.say 'Creating tree random taxonomies ...', :green
   3.times do
     data = {}
-    data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
+    data[:"title(it)"] = "#{Random.alphanumeric(5)} " * 5
     data[:"slug(it)"] = data[:"title(it)"].to_slug
-    data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
-    ap data
-    Taxonomy.create(data)
+    data[:"description(it)"] = Random.paragraphs(5)
+    t = Taxonomy.new(data)
+    t.save
   end
 
   shell.say 'Creating ten random pages ...', :green
   10.times do
     data = {}
-    data[:"title(it)"] = Faker::Lorem.words(5).join(' ')
+    data[:"title(it)"] = "#{Random.alphanumeric(5)} " * 5
     data[:"slug(it)"] = data[:"title(it)"].to_slug
-    data[:"text(it)"] = Faker::Lorem.words(150).join(' ')
-    data[:"lead(it)"] = Faker::Lorem.words(50).join(' ')
-    ap data
-    data[:taxonomy] = [Taxonomy.all[Random.rand(2)]]
+    data[:"text(it)"] = Random.paragraphs(2)
+    data[:"lead(it)"] = Random.paragraphs(5)
+    data[:taxonomy] = [ Taxonomy.all[ Random.rand(Taxonomy.count()) ] ]
 
-    Page.create(data)
+    p = Page.new(data)
+    p.save
   end
 
 end
