@@ -6,6 +6,8 @@
 			"password":"machete"
 	},
 		"site":{
+      "homepage":"",
+      "title":"",
 			"domain":"machete.it",
 			"locales":["it"],
 			"acl":{

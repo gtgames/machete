@@ -6,23 +6,23 @@ context "Frontend" do
   context "GET /" do
     setup { get "/" }
 
-    asserts("the response status") { last_response.status }.equals 302
+    if Cfg[:locales].size > 1
+      asserts("the response status") { last_response.status }.equals 302
+    else
+      asserts("the response status") { last_response.status }.equals 200
+    end
   end
 
-  context "GET /:lang/" do
-    setup { get "/it/" }
+  context "GET /:sitemap" do
+    setup { get( (Cfg[:locales].size > 1 )? "/it/sitemap.html" : "/sitemap.html" ) }
 
-    asserts("the response status") { last_response.status }.equals 200
-  end
-
-  context "GET /it/:sitemap" do
-    setup { get "/it/sitemap.html" }
     asserts("the response status") { last_response.status }.equals 200
     asserts("the content type") { last_response.headers["Content-Type"] }.equals "text/html;charset=utf-8"
   end
 
-  context "GET /it/:sitemap.xml" do
-    setup { get "/it/sitemap.xml" }
+  context "GET /:sitemap.xml" do
+    setup { get( (Cfg[:locales].size > 1 )? "/it/sitemap.xml" : "/sitemap.xml" ) }
+
     asserts("the response status") { last_response.status }.equals 200
     asserts("the content type") { last_response.headers["Content-Type"] }.equals "application/xml;charset=utf-8"
   end

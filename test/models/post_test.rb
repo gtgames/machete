@@ -22,10 +22,6 @@ context "Post Model" do
     asserts_topic.has_validation :validates_presence_of, :lead
     asserts_topic.has_validation :validates_presence_of, :text
 
-
-    asserts_topic.has_validation :validates_uniqueness_of, :title
-    asserts_topic.has_validation :validates_uniqueness_of, :slug
-
     asserts_topic.has_plugin MongoMachete::Taggable
   end
 end
