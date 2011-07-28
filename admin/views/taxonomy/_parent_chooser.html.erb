@@ -1,0 +1,8 @@
+<% taxons.each do |t| -%>
+  <% if t.class == Array -%>
+    <%= partial "taxonomy/parent_chooser", :locals => { :f => f, :taxons => t } %>
+  <% else -%>
+    <span style="margin-left: <%= 15*t.depth %>px">&nbsp;</span>
+    <input type='radio' name="taxonomy[parent_id]" value="<%= t.id %>" <% if f.object.parent_id == t._id.to_s %> checked <% end %>><%= t.title %><br>
+  <% end -%>
+<% end -%>
