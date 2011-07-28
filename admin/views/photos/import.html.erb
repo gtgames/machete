@@ -24,8 +24,8 @@
     </table>
 
     <div class="text">
-      <label class="text" for="photo_tags">Tags</label>
-      <textarea class="text" id="photo_tags" name="import[tags]" rows="" cols=""></textarea>
+      <label class="text" for="photo_tag_list">Tags</label>
+      <input class="text" id="photo_tag_list" name="import[tag_list]" type="text">
     </div>
 
     <h2>Galleria</h2>
@@ -42,10 +42,15 @@
 
 
 <script type="text/javascript">
-  $(function(){
-    $('input[type=checkbox]').bind('change',function(e){
-      $(this).parent().parent().find('input[type=text], input[type=hidden]').attr('disabled', !$(this).is(':checked'));
-    });
+  $(document).on('ready', function(){
+       $$('input[type=checkbox]').each(function(el){
+         el.on('change',function(e){
+           var that = this;
+           this.parent().parent().find('input[type=text], input[type=hidden]').each(function(imp){
+             imp.set('disabled', !that.get('checked'));
+            });
+        });
+      });
   });
 </script>
 
