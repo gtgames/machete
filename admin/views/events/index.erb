@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="sortable"><%= mat(:event, :title) %></th>
+      <th class="sortable"><%= mat(:event, :from) %></th>
+      <th class="sortable"><%= mat(:event, :to) %></th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td class="first"><%= event.title %></td>
+        <td><%= event.from %></td>
+        <td><%= event.to %></td>
+        <td class="last">
+          <%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => :button_to %> |
+          <%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% content_for :actions, partial("base/actions", :locals => { :p => :events }) %>
+
+<% content_for :title, 'Eventi' %>
