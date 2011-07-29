@@ -1,22 +1,56 @@
-require 'adapter/memory'
+class MuStore
+  attr_reader :client, :options
 
-Adapter.define(:configuration, Adapter::Memory) do
-  def insert(k, v)
-    MongoMapper.database["configurations"].update(
-      {'_id' => k.to_s},
-      {"_id" => k.to_s, "val" => v}, {:upsert => true, :safe => true})
-    write k.to_s, v
+  def initialize(options={})
+    @client = Hash.new
+    @options = options
+    refresh!
+  end
+
+  def read(key)
+    decode(client[key.to_s])
+  end
+
+  def write(key, value)
+    client[key.to_s] = encode(value)
+    @options[:collection].update(
+      {'_id' => key.to_s},
+      {'_id' => key.to_s, 'val' => value}, {:upsert => true, :safe => true})
+  end
+
+  def delete(key)
+    read(key).tap { client.delete(key.to_s) }
+  end
+
+  def clear
+    client.clear
   end
 
   def refresh!
     clear
-    Yajl::Parser.parse(File.read(Padrino.root("config", "config.json")))['site'].each do |k,v|
-      write k,v
+    Yajl::Parser.parse( File.read( Padrino.root("config", "config.json") ) )['site'].each do |k,v|
+      client[k.to_s] = encode(v)
     end
-    MongoMapper.database['configurations'].find({}).each do |c|
-      write c["_id"], c["val"]
+    @options[:collection].find({}).each do |c|
+      client[c["_id"]] = encode(c["val"])
     end
   end
+
+  def encode(value)
+    Marshal.dump(value)
+  end
+  def decode(value)
+    Marshal.load(value.to_s)
+  end
+
+  alias get read
+  alias set write
+  alias insert write
+
+  alias []  read
+  alias []= write
+
+  # more methods
 
   def locale
     ( read('locales').include?(I18n.locale.to_s) )? I18n.locale.to_s : default_locale
@@ -42,13 +76,8 @@ Adapter.define(:configuration, Adapter::Memory) do
     end
   end
 
-  def encode(value)
-    Yajl::Encoder.encode(value)
-  end
-  def decode(value)
-    Yajl::Parser.parse(value.to_s)
-  end
 end
 
-Cfg = Adapter[:configuration].new({})
-Cfg.refresh!
+Cfg = MuStore.new({
+  collection: MongoMapper.database['configuration']
+})
