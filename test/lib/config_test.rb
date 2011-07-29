@@ -9,7 +9,12 @@ context "LIB: Cfg" do
     asserts("that Cfg['foo'] can be retrieved") { ! Cfg['foo'].nil? }
     asserts("that Cfg['foo'] has alpha and beta keys") { (Cfg['foo']['alpha'] == "Alpha") and (Cfg['foo']['beta'] == "Beta" ) }
 
-    asserts("that a new value can be inserted via Cfg[]") { Cfg['key']= 'value' }
+    asserts("that Cfg['bar'] is nil") { Cfg['bar'].nil? }
+
+    asserts("that a new value can be inserted via Cfg[]") {
+      Cfg['key'] = 'value'
+      Cfg['key'] == 'value'
+    }
   end
 
   context "various methods" do
