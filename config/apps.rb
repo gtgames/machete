@@ -18,8 +18,8 @@ Padrino.configure_apps do
     :enable_starttls_auto => false
   }
   set :mailer_defaults, :from => "noreply@#{Cfg[:domain]}"
-  set :session_secret, SecureRandom.base64(64) # Randomize cookies on start
-  #"5a46f60cd9f36863c475b15ee1a745fc45d37b22c93434d714e7d94a188c9aaf"
+
+  set :session_secret, SecureRandom.base64(64)
 end
 
 Padrino.mount("Machete").to("/").host(/^(?!(admin|www\.admin)).*$/)

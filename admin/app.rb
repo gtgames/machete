@@ -25,7 +25,6 @@ class Admin < Padrino::Application
 
   enable  :sessions
 
-  set :session_secret, '28a4a90b149121c14172404245efdc8cb57a71d5679b487834f5b2dc1772105e'
   set :login_page, "/sessions/new"
 
   enable :store_location
