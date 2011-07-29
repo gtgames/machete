@@ -79,5 +79,5 @@ class MuStore
 end
 
 Cfg = MuStore.new({
-  collection: MongoMapper.database['configuration']
+  collection: MongoMapper.database['configurations']
 })
