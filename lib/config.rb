@@ -40,7 +40,7 @@ class MuStore
     Marshal.dump(value)
   end
   def decode(value)
-    Marshal.load(value.to_s)
+    value && Marshal.load(value)
   end
 
   alias get read
