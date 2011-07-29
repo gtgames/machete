@@ -4,10 +4,10 @@ Admin.helpers do
   end
 
   def tax_checked? id, list
-    s = ''
-    list.each { |t|
-      s = 'checked' if(t._id.to_s == id)
-    }
-    s
+    l = false
+    list.each do |t|
+       l = true if(t._id.to_s == id.to_s)
+    end
+    l
   end
 end

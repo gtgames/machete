@@ -3,7 +3,7 @@
     <%= partial "taxonomy/chooser", :locals => { :f => f, :taxons => t } %>
   <% else -%>
     <span style="margin-left: <%= 15*t.depth %>px">&nbsp;</span>
-    <input type='checkbox' name="taxonomy[]" value="<%= t.id %>" <%= tax_checked?(t.id, f.object.taxonomy) %> ><%= t.title %><br>
+    <input type='checkbox' name="taxonomy[]" value="<%= t.id %>" <% if tax_checked? t.id, f.object.taxonomy -%> checked <% end -%> ><%= t.title %><br>
   <% end -%>
 <% end -%>
 
