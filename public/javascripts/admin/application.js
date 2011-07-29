@@ -208,8 +208,10 @@
     // the url-attribute 'src', 'href', etc.
     exec: function(url) {
       if (url === undefined) {
+        // handle it!
         this.prompt();
       } else {
+        this.diag.hide();
         if (url) {
           this[this.element() ? 'url': 'create'](url);
         } else {
@@ -223,18 +225,22 @@
     },
 
     prompt: function() {
-      var diag = new Dialog({
+      this.diag = new Dialog({
         closeable: true,
         expandable:  true,
         title: 'Inserisci Immagine',
         url: '/multimedia/dialog/image'
       });
-      //var url = prompt(Rte.i18n.UrlAddress, this.url() || 'http://some.url.com');
-      //if (url !== null) {
-      //  this.exec(url);
-      //}
-      diag.on('load',function(e){
+
+      var that = this;
+
+      this.diag.on('load',function(e){
         console.log('dialog ready');
+        $$('#filebrowser_list img').each(function(img){
+          img.on('click', function(e){
+            that.exec(this.get('data-link'));
+          });
+        });
       });
     },
 
