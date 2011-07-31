@@ -194,7 +194,65 @@ if ($('multimedia_file-uploader')) {
     el.on('submit', fillCard);
   });
 })();
-});
+  });
+
+  var BrowserDialog = new Class(Dialog, {
+    image: '',
+    thumb_size: '400x',
+    thumb: function(){
+      var e = this.image.match(/\.([a-z]+)$/i);
+      if (e !== null) {
+        e = e[1];
+      } else {
+        e = 'png'
+      }
+      return this.image.replace(/\.[a-z]+$/i, '_' + this.thumb_size + '.' + e );
+    },
+
+    preview: function(url) {
+      if (url === undefined) { return false; }
+      $('filebrowser_preview').html('');
+      this.image = url;
+      var dialog = this;
+      this.expand();
+
+      $('filebrowser_list').morph({
+        height: '140px',
+        position: 'absolute',
+        bottom: '0',
+        overflow: 'auto'
+      });
+      var imagePreview = new Element('img', {
+        style: {
+          display: 'block',
+          margin: '0 auto',
+        }
+      }).set('src', this.thumb()).insertTo( $E('div', {
+        style: {
+          width: '99%',
+          height: (this.find('div.rui-dialog-body').first().size().y - 200) + 'px',
+          overflow: 'auto'
+        }
+      }).insertTo( $('filebrowser_preview')) ); // imagePreview
+
+      var thumbSelect = new Selectable({
+        options: {
+          '100xx100': "Small",
+          '300xx300': "Normal",
+          '400x':     "Medium",
+          '900xx700': "Huge"
+        },
+        multiple: false,
+        selected: 1
+      }).insertTo(
+        $E('div',{ style: { width: '180px', margin: '0 auto' } }).insertTo($('filebrowser_preview'))
+      ).on('select', function(){
+        dialog.thumb_size = this.getValue();
+        imagePreview.set('src', dialog.thumb() );
+      });
+    }
+
+  });
 
   Rte.Tools.Image = new Class(Rte.Tool, {
     command: 'insertimage',
@@ -212,6 +270,7 @@ if ($('multimedia_file-uploader')) {
         this.prompt();
       } else {
         this.dialog.hide();
+        this.dialog = null;
         if (url) {
           this[this.element() ? 'url': 'create'](url);
         } else {
@@ -226,12 +285,13 @@ if ($('multimedia_file-uploader')) {
 
     prompt: function() {
       var that = this;
-      this.dialog = new Dialog({
+      this.dialog = new BrowserDialog({
         closeable: true,
         expandable:  true,
         title: 'Inserisci Immagine',
-        url: '/multimedia/dialog/image',
-        onLoad: function(e){
+        url: '/multimedia/dialog/image'
+      }).on({
+        load: function(e){
           var dialog = this;
           $$('#filebrowser_list img').each(function(img){
             img.on('click', function(e){
@@ -239,67 +299,10 @@ if ($('multimedia_file-uploader')) {
             });
           });
         },
-        onOk: function(e){
-          that.exec(this.domain + this.thumb());
+        ok: function(e){
+          that.exec(this.thumb().replace(/admin\./, ''));
         }
       });
-      this.dialog.image= '';
-      this.dialog.domain = 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0];
-      this.dialog.thumbSelect = new Selectable({
-          options: {
-            '100xx100': "Small",
-            '300xx300': "Normal",
-            '400x':     "Medium",
-            '900xx700': "Huge"
-          },
-          multiple: false,
-          selected: 1
-        });
-      this.dialog.imagePreview = new Element('img', {
-          style: {
-            display: 'block',
-            margin: '0 auto',
-          }
-        });
-      this.dialog.thumb = function(){
-          var size = this.thumbSelect.getValue();
-          var e = this.image.match(/\.([a-z]+)$/i);
-          if (e !== null) {
-            e = e[1];
-          } else {
-            e = 'png'
-          }
-          return this.image.replace(/\.[a-z]+$/i, '_' + size + '.' + e );
-        },
-        
-      this.dialog.preview = function(url) {
-          if (url === undefined) { return false; }
-          $('filebrowser_preview').html('');
-          this.image = url;
-          var dialog = this;
-          this.expand();
-
-          $('filebrowser_list').morph({
-            height: '140px',
-            position: 'absolute',
-            bottom: '0',
-            overflow: 'auto'
-          });
-
-          this.imagePreview.set('src', this.thumb()).insertTo( $E('div', {
-            style: {
-              width: '99%',
-              height: (this.find('div.rui-dialog-body').first().size().y - 200) + 'px',
-              overflow: 'auto'
-            }
-          }).insertTo( $('filebrowser_preview')) ); // imagePreview
-
-          this.thumbSelect.insertTo(
-            $E('div',{ style: { width: '180px', margin: '0 auto' } }).insertTo($('filebrowser_preview'))
-          ).on('select', function(){
-            dialog.imagePreview.set('src', dialog.thumb() );
-          });
-        };
     },
 
     // protected
@@ -313,8 +316,8 @@ if ($('multimedia_file-uploader')) {
       }
     },
 
-    create: function() {
-      this.rte.selection.exec(this.command, this.dialog.thumb())
+    create: function(url) {
+      this.rte.selection.exec(this.command, url);
     }
   });
 
