@@ -254,7 +254,7 @@ if ($('multimedia_file-uploader')) {
 
   });
 
-  Rte.Tools.Image = new Class(Rte.Tool, {
+  Rte.Tools.Image = new Class(Rte.Tool.Url, {
     command: 'insertimage',
     attr: 'src',
 
@@ -263,28 +263,10 @@ if ($('multimedia_file-uploader')) {
       return image !== null && image.tagName === "IMG" ? image: null;
     },
 
-    // the url-attribute 'src', 'href', etc.
-    exec: function(url) {
-      if (url === undefined ) {
-        // handle it!
-        this.prompt();
-      } else {
-        this.dialog.hide();
-        this.dialog = null;
-        if (url) {
-          this[this.element() ? 'url': 'create'](url);
-        } else {
-          this.rte.editor.removeElement(this.element());
-        }
-      }
-    },
-
-    active: function() {
-      return this.element() !== null;
-    },
-
     prompt: function() {
       var that = this;
+      var myRange = this.rte.selection.range();
+
       this.dialog = new BrowserDialog({
         closeable: true,
         expandable:  true,
@@ -300,25 +282,14 @@ if ($('multimedia_file-uploader')) {
           });
         },
         ok: function(e){
+          that.rte.focused = true;
+          that.rte.selection.range(myRange);
+
           that.exec(this.thumb().replace(/admin\./, ''));
+          this.hide();
         }
       });
     },
-
-    // protected
-    url: function(url) {
-      if (this.element()) {
-        if (url !== undefined) {
-          this.element()[this.attr] = url;
-        } else {
-          return this.element()[this.attr];
-        }
-      }
-    },
-
-    create: function(url) {
-      this.rte.selection.exec(this.command, url);
-    }
   });
 
 })(RightJS);
