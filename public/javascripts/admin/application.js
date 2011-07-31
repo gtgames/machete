@@ -127,20 +127,33 @@ if ($('multimedia_file-uploader')) {
   if (!$$('textarea.text').length) return false;
   var rte_opts = {
     minimal: {
-      toolbar: 'small',
+      toolbar: ["Bold Italic Underline Strike Ttext|Cut Copy Paste|Header Code Quote|Link Image|Source|Format"],
       tags: {
         Bold: 'b',
         Italic: 'i',
         Underline: 'u',
         Strike: 's',
         Quote: 'blockquote',
-      },
-
+      }
     },
-    full: {}
+    full: {
+      toolbar: [
+        "Clear|Cut Copy Paste|Undo Redo|Bold Italic Underline Strike Ttext|Left Center Right Justify",
+        "Code Quote|Link Image|Subscript Superscript|Dotlist Numlist|Indent Outdent",
+        "Format|Fontsize|Forecolor Backcolor|Source"
+      ],
+      tags: {
+        Bold: 'b',
+        Italic: 'i',
+        Underline: 'u',
+        Strike: 's',
+        Quote: 'blockquote',
+      }
+
+    }
   }
   $$('textarea.text').each(function(el) {
-    new Rte(el, {});
+    new Rte(el, ( el.parent().find('label.editor').length )? rte_opts.full : rte_opts.minimal);
   });
 })();
 

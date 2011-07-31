@@ -1,83 +1,86 @@
 <!DOCTYPE html>
 <html class='no-js'>
-	<head>
-		<meta charset="utf-8">
-		<meta name="description" content="<%= Cfg[:description] %> <%= yield_content(:description) %>">
-		<meta name="keywords"    content="<%= Cfg[:keywords] %> <%= yield_content(:keywords) %>">
-		<meta name="author"      content="<%= Cfg[:author] %>">
-		<meta name="generator"   content="Machete ( http://machete.it ) by gtgames.it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="<%= Cfg[:description] %> <%= yield_content(:description) %>">
+    <meta name="keywords"    content="<%= Cfg[:keywords] %> <%= yield_content(:keywords) %>">
+    <meta name="author"      content="<%= Cfg[:author] %>">
+    <meta name="generator"   content="Machete ( http://machete.it ) by gtgames.it">
 
-		<link rel="canonical" href="http://<%= Cfg[:domain] %>/" />
+    <link rel="canonical" href="http://<%= Cfg[:domain] %>/" />
 
-		<link rel="stylesheet/less" href="/stylesheets/layout.less" type="text/css" media="screen">
-		<script src="http://frenzart.com/js/less.js" type="text/javascript"></script>
-		<% if PADRINO_ENV == :development -%>
-			<script type="text/javascript" charset="utf-8">less.env = 'development';less.watch();</script>
-		<% end -%>
+    <link rel="stylesheet/less" href="/stylesheets/layout.less" type="text/css" media="screen">
+    <script src="http://frenzart.com/js/less.js" type="text/javascript"></script>
+    <% if PADRINO_ENV == :development -%>
+      <script type="text/javascript" charset="utf-8">less.env = 'development';less.watch();</script>
+    <% end -%>
 
-		<script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
-		<title><%= Cfg[:title][Cfg.locale] %> <%= yield_content(:title) %></title>
-	</head>
-	<body>
-		<nav class="row">
-		<ul class="column grid_12">
-			<% cache("nav_#{Cfg.locale}") do -%>
-				<li><%= link_to t('home'), url(:index, :index) %></li>
-				<% menu.each do |m| %>
-					<li><a href="<%= m.url %>"><%= m.title %></a></li>
-				<% end %>
-				<li><%= link_to t('gallery'), url(:gallery, :index) %></li>
-				<li><%= link_to t('contact'), url(:contact, :index) %></li>
-			<% end -%>
-		</ul>
-		</nav>
-		<header id="header" class="row">
-		<img src="/images/logo.png">
-		<div class="column grid_12">
-			<h1><%= Cfg[:title][Cfg.locale] %></h1>
-		</div>
-		</header>
-		<section class="row">
-		<div class="column grid_8 content">
-			<%= yield %>
-		</div>
-		<div class="column grid_4">
-			<% cache("taxonomy_tree_#{Cfg.locale}", :expires_in => 60) do %>
-				<%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %>
-			<% end -%>
-			<%= partial('booking/widget') %>
-		</div>
-		</section>
-		<section class="row">
-		<div class="column grid_12" id="tags"></div>
-		</section>
-		<footer>
-		<div class="row"><div class="column grid_12 social"><%= partial('shared/social') %></div></div>
-		<div class="row">
-			<div class="column grid_12">
-				<%= partial("shared/footer") %>
-			</div>
-		</div>
-		</footer>
-		<script>
-			//<![CDATA[
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', '<%= Cfg['analytics'] %>']);_gaq.push(['_setDomainName', 'none']);
-			_gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
-			head.js(
-			"http://frenzart.com/js/rightjs/right.js",
-			"http://frenzart.com/js/rightjs/right/jquerysh.js",
-			"http://frenzart.com/js/rightjs/right/calendar.js",
-			"http://frenzart.com/js/rfc3339date.js",
-			"http://frenzart.com/js/rightjs/right/i18n/<%= Cfg.locale %>.js",
-			"/javascripts/application.js",
-			('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'
-			);
-			(function(w,d) {
-				w._analyst = '<%= Cfg["analyst"] %>';var t = d.createElement('script'),s = d.getElementsByTagName('script')[0];
-				t.type='text/javascript';t.async=true;t.id = 'analyst-tracker';t.src = 'http://analyst.machete.it/al.js';s.parentNode.insertBefore(t, s);
-			})(window,document);
-			//]]>
-		</script>
-	</body>
+    <script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
+    <title><%= Cfg[:title][Cfg.locale] %> <%= yield_content(:title) %></title>
+  </head>
+  <body>
+
+    <nav class="row">
+    <ul class="column grid_12">
+      <% cache("nav_#{Cfg.locale}") do -%>
+        <li><%= link_to t('home'), url(:index, :index) %></li>
+        <% menu.each do |m| %>
+          <li><a href="<%= m.url %>"><%= m.title %></a></li>
+        <% end %>
+        <li><%= link_to t('gallery'), url(:gallery, :index) %></li>
+        <li><%= link_to t('contact'), url(:contact, :index) %></li>
+      <% end -%>
+    </ul>
+    </nav>
+
+    <header id="header" class="row">
+    <img src="/images/logo.png">
+    <div class="column grid_12">
+      <h1><%= Cfg[:title][Cfg.locale] %></h1>
+    </div>
+    </header>
+
+    <section class="row">
+    <div class="column grid_8 content">
+      <%= yield %>
+    </div>
+
+    <div class="column grid_4">
+      <% cache("taxonomy_tree_#{Cfg.locale}", :expires_in => 120) do %>
+        <%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %>
+      <% end -%>
+      <%= partial('booking/widget') %>
+    </div>
+    </section>
+
+    <footer>
+    <div class="row"><div class="column grid_12 social"><%= partial('shared/social') %></div></div>
+    <div class="row">
+      <div class="column grid_12">
+        <%= partial("shared/footer") %>
+      </div>
+    </div>
+    </footer>
+
+    <script>
+      //<![CDATA[
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '<%= Cfg[:analytics] %>']);_gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);_gaq.push(['_trackPageview']);
+      head.js(
+      "http://frenzart.com/js/rightjs/right.js",
+      "http://frenzart.com/js/rightjs/right/jquerysh.js",
+      "http://frenzart.com/js/rightjs/right/calendar.js",
+      "http://frenzart.com/js/rfc3339date.js",
+      "http://frenzart.com/js/rightjs/right/i18n/<%= Cfg.locale %>.js",
+      "/javascripts/application.js",
+      ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'
+      );
+      (function(w,d) {
+        w._analyst = '<%= Cfg[:analyst] %>';var t = d.createElement('script'),s = d.getElementsByTagName('script')[0];
+        t.type='text/javascript';t.async=true;t.id = 'analyst-tracker';t.src = 'http://analyst.machete.it/al.js';s.parentNode.insertBefore(t, s);
+      })(window,document);
+      //]]>
+    </script>
+  </body>
 </html>
