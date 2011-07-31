@@ -5,16 +5,15 @@
   </head>
   <body>
     <div id="filebrowser_preview"></div>
-    <ul id="filebrowser_list">
+    <div id="filebrowser_list">
       <% @files.each do |i| -%>
-        <li id="<%= i._id %>"><%= image_tag(i.thumb(), :id => i._id, :"data-link" => i.url) %></li>
+        <%= image_tag(i.thumb(), :"data-link" => i.url) %>
       <% end -%>
-    </ul>
+    </div>
 
     <div id="filebrowser_upload"></div>
     <style type="text/css">
-      #filebrowser_list ul { list-style: none; margin: 0; padding: 0; }
-      #filebrowser_list li { float: left; display: inline-block; padding: 10px; margin: 0;}
+      #filebrowser_list img { float: left; display: inline-block; padding: 10px; margin: 0;}
     </style>
   </body>
 </html>
