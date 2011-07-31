@@ -2,7 +2,8 @@ Admin.controllers :multimedia do
   layout false
 
   get :index do
-    @media = MediaFile.all
+    @photos = Photo.fields(:'file._id').all.map{|e| e['file']['_id'].to_s  }
+    @media = MediaFile.where(:_id => {:$nin => @photos}).all
     render 'multimedia/index'
   end
 
