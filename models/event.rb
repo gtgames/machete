@@ -6,4 +6,6 @@ class Event
 
   key :from, Time, :default => lambda{ Time.now }
   key :to, Time, :default => lambda { Time.now }
+
+  key :file, MediaFile::Embeddable
 end

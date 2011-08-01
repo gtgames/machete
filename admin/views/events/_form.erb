@@ -1,8 +1,11 @@
 <%= f.input :title %>
+
+<%= f.input :file, :as => :file %>
+
 <%= f.input :description, :as => :text %>
 
-<%= f.input :from, :class => :date %>
-<%= f.text_field :to, :class => :date %>
+<%= f.input :from %>
+<%= f.input :to %>
 
 <div class="group navform wat-cf">
   <%= f.submit pat(:save), :class => :button %>

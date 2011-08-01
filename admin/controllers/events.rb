@@ -11,6 +11,7 @@ Admin.controllers :events do
   end
 
   post :create do
+    params[:event]['file'] = MediaFile.find(params[:event]['file']) unless params[:event]['file'].nil?
     @event = Event.new(params[:event])
     if @event.save
       flash[:notice] = 'Event was successfully created.'
@@ -26,6 +27,7 @@ Admin.controllers :events do
   end
 
   put :update, :with => :id do
+    params[:event]['file'] = MediaFile.find(params[:event]['file']) unless params[:event]['file'].nil?
     @event = Event.find(params[:id])
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'

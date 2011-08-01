@@ -6,8 +6,8 @@
     <link rel="stylesheet/less" href="/stylesheets/admin/layout.less" type="text/css" media="screen">
     <link rel="stylesheet/css" href="/stylesheets/admin/ui.css" type="text/css" media="screen">
     <script src="http://frenzart.com/js/less.js" type="text/javascript"></script>
-    <% if PADRINO_ENV == 'development' %>
-      <script>/*less.env='development';less.watch();*/less.unwatch()</script>
+    <% if Padrino.env == :development %>
+      <script>less.env='development';less.watch();</script>
     <% end%>
     <!--[if IE ]>
     <script src="/javascripts/libs/selectivizr.js" type="text/javascript"></script>
@@ -15,6 +15,7 @@
     <script src="http://frenzart.com/js/modernizr.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="http://frenzart.com/js/underscore.js" type="text/javascript"></script>
+    <script src="http://frenzart.com/js/date/<%= Cfg.locale %>.js" type="text/javascript"></script>
     <script src="http://frenzart.com/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="http://frenzart.com/js/rightjs/right.js" type="text/javascript" charset="utf-8"></script>
@@ -44,7 +45,6 @@
     </div>
     <nav>
     <%= partial 'layouts/navigation' %>
-    <!--<input id="filterform" type="search" placeholder="filtra i contenuti" class="search_box" name="search">-->
     </nav>
     </header>
 

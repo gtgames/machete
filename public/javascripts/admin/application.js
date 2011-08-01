@@ -96,6 +96,25 @@
       });
     });
 
+    $$('input#event_from, input#event_to').each(function(el){
+        var min_date = new Date();
+        var cal = new Calendar({
+            format: "ISO",
+            minDate: min_date,
+            numberOfMonths: 1,
+            timePeriod: 15,
+            showTime: true,
+            update: el
+        });
+        cal.on('change', function(){
+            console.log(this.getDate().toRFC3339UTCString());
+            el.set('value', this.getDate().toRFC3339UTCString());
+        });
+        cal.setDate(new Date.parse(el.get('value')));
+        el.set('type','hidden');
+        cal.insertTo(el.parent());
+    });
+
     if ($('multimedia_file-uploader')) {
       new qq.FileUploader({
         element: document.getElementById('multimedia_file-uploader'),
