@@ -2,7 +2,7 @@ Machete.controller :events do
   layout Cfg.layout(:events)
 
   get :index do
-    @events = Event.order(:from)
+    @events = Event.sort(:from.gt)
     render 'events/index'
   end
   
