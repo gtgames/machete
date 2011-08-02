@@ -22,6 +22,11 @@
   $(document).onReady(function() {
     $('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
 
+    $$('.date').each(function(el){
+      var date = Date.parseRFC3339(el.html());
+      el.html(date.toString("d/M/yyyy HH:mm"));
+    });
+
     if($('advanced') !== null) {
       $$('#advanced>div').each('toggle');
       $$('#advanced>legend').first().on('click', function(e) {
@@ -108,6 +113,13 @@
             el.set('value', this.getDate().toISOString());
         }).setDate(new Date.parse(el.get('value'))).insertTo(el.parent());
         el.set('type','hidden');
+        el.parent().set({
+          style:{
+            'text-align': 'center',
+            'width': '50%',
+            'float': 'left'
+          }
+        });
     });
 
     if ($('multimedia_file-uploader')) {
