@@ -1,8 +1,7 @@
 <% @events.each do |e| -%>
   <div class="event">
     <h1><%= e.title%></h1>
-    <div>
-      dalle ore: <span class="date"><%= e.from %></span> alle <span class="date"><%= e.to %></span>
+    <div class="dates"><%= t'events.from' %><span class="date"><%= e.from %></span> <%= t'events.to' %> <span class="date"><%= e.to %></span>
     </div>
 	<%= image_tag(e.file.thumb('400x')) if !e.file.nil? %>
 
