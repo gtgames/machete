@@ -24,7 +24,7 @@
 
     $$('.date').each(function(el){
       var date = Date.parseRFC3339(el.html());
-      el.html(date.toString("d/M/yyyy HH:mm"));
+      if (date !== null) el.html(date.toString("d/M/yyyy HH:mm"));
     });
 
     if($('advanced') !== null) {
