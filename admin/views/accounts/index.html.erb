@@ -5,7 +5,7 @@
       <th class="sortable"><%= mat(:account, :name) %></th>
       <th class="sortable"><%= mat(:account, :surname) %></th>
       <th class="sortable"><%= mat(:account, :role) %></th>
-      <th class="actions"></th>
+      <th class="actions">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,7 @@
         <td><%= account.role %></td>
         <td>
           <%= button_to pat(:edit), url(:accounts, :edit, :id => account.id), :method => :get, :class => 'button_to edit' %>
-          <%= button_to pat(:delete), url(:accounts, :destroy, :id => account.id), :method => :delete, :class => 'button_to trash' %>
+          <%= button_to pat(:delete), url(:accounts, :destroy, :id => account.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
         </td>
       </tr>
     <% end %>

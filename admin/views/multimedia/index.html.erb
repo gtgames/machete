@@ -8,7 +8,7 @@
     <tr>
       <th class="sortable">thumb</th>
       <th class="sortable">nome</th>
-      <th></th>
+      <th class="actions">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +25,7 @@
           <%= m.name %>
         </td>
         <td>
-          <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'button_to trash' %>
+          <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
         </td>
       </tr>
     <% end -%>
