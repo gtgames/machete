@@ -56,6 +56,5 @@ gem 'to_slug'
 
 gem 'yajl-ruby', :require => "yajl/json_gem"
 # Padrino
-#gem 'padrino', "0.9.29"
-gem 'padrino', "0.10.0"
+gem 'padrino', "0.10.1"
 
