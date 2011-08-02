@@ -4,7 +4,7 @@
     <div>
       dalle ore: <span class="date"><%= e.from %></span> alle <span class="date"><%= e.to %></span>
     </div>
-	<%= image_tag(e.file.thumb('400xx')) if !e.file.nil? %>
+	<%= image_tag(e.file.thumb('400x')) if !e.file.nil? %>
 
     <div class="description"><%= e.description %></div>
   </div>
