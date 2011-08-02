@@ -2,6 +2,8 @@ class Event
   include MongoMapper::Document
 
   key :title, String
+  key :slug, String
+
   key :description, String
 
   key :from, Time, :default => lambda { Time.now.xmlschema }
@@ -15,4 +17,10 @@ class Event
   end
 
   key :file, MediaFile::Embeddable
+  
+  before_save :slugify
+  protected
+  def slugify
+    self[:slug] = self[:title].to_slug
+  end
 end

@@ -54,11 +54,4 @@ class Admin < Padrino::Application
       end
     end
   end
-
-  before do
-    headers 'Last-Modified' => Time.now.httpdate,
-      "Expires" => "Fri, 01 Jan 1990 00:00:00 GMT",
-      "Pragma" => "no-cache",
-      "Cache-Control" => "no-cache, no-storem max-age=0, must-revalidate"
-  end
 end
