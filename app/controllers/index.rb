@@ -13,8 +13,8 @@ Machete.controllers :index do
   end
 
   get :sitemap, :provides => [:xml, :html] do
-    @posts = Post.sort(:_id.desc).all
-    @pages = Page.sort(:_id.desc).all
+    @posts = Post.sort(:_id.desc)
+    @pages = Page.sort(:_id.desc)
     render 'sitemap', :layout => false if content_type == :xml
     render 'sitemap', :layout => Cfg.layout('video')
   end

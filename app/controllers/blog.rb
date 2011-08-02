@@ -1,6 +1,6 @@
 Machete.controllers :blog do
   get :index do
-    @posts = Post.all
+    @posts = Post.sort(:_id.desc)
     render 'blog/index', :layout => Cfg.layout('blog')
   end
 
