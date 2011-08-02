@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th class="sortable"><%= mat(:event, :title) %></th>
+      <th class="sortable"><%= mat(:event, :file) %></th>
       <th class="sortable"><%= mat(:event, :from) %></th>
       <th class="sortable"><%= mat(:event, :to) %></th>
       <th class="actions">&nbsp;</th>
@@ -9,15 +10,16 @@
   </thead>
   <tbody>
     <% @events.each do |event| %>
-      <tr>
-        <td class="first"><%= event.title %></td>
-        <td class="date"><%= event.from %></td>
-        <td class="date"><%= event.to %></td>
-        <td class="last">
-          	<%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => 'button_to edit' %>
-          	<%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
-        </td>
-      </tr>
+    <tr>
+      <td class="first"><%= event.title %></td>
+      <td><%= event.file.thumb('50x') if !event.file.nil? %></td>
+      <td class="date"><%= event.from %></td>
+      <td class="date"><%= event.to %></td>
+      <td class="last">
+        <%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => 'button_to edit' %>
+        <%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+      </td>
+    </tr>
     <% end %>
   </tbody>
 </table>
