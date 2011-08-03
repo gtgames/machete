@@ -2,12 +2,17 @@ Machete.controller :events do
   layout Cfg.layout(:events)
 
   get :index do
-    @events = Event.sort(:from.gt)
+    @events = Event.where(:from.gt => Time.now ).sort(:from.lt)
     render 'events/index'
   end
-  
-  get :show, :with => :slug do
-    @event = Event.find(:slug => params[:slug])
-    render 'events/index'
+
+  get :archive do
+    @event = Event.where(:from.lt => Time.now).sort(:from.gt)
+    render 'events/archive'
+  end
+
+  get :tag, :with => :tag do
+    @event = Event.where(:tags.in => params[:tag].split(','))
+    render 'events/archive'
   end
 end

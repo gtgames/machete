@@ -1,10 +1,13 @@
 class Event
   include MongoMapper::Document
+  plugin MongoMachete::Taggable 
 
   key :title, String
   key :slug, String
 
   key :description, String
+
+  key :place, String
 
   key :from, Time, :default => lambda { Time.now.xmlschema }
   key :to, Time, :default => lambda { Time.now.xmlschema }
@@ -17,7 +20,7 @@ class Event
   end
 
   key :file, MediaFile::Embeddable
-  
+
   before_save :slugify
   protected
   def slugify

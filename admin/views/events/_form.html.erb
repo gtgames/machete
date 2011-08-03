@@ -7,6 +7,8 @@
 <%= f.input :from %>
 <%= f.input :to %>
 
+<%= f.input :tag_list %>
+
 <div class="group navform wat-cf">
   <%= f.submit pat(:save), :class => :button %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:events, :index)}';return false", :class => :button %>

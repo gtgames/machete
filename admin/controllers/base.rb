@@ -7,8 +7,8 @@ Admin.controllers :base do
 
   get :tagblob, :provides => :js do
     content_type :json
-    cache('tagblob', :expires_in => 10*60) do
-      (Post.tagging | Photo.tagging).to_json
+    cache('tagblob', :expires_in => 15*60) do
+      (Post.tagging | Photo.tagging | Event.tagging).to_json
     end
   end
 
