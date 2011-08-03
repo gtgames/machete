@@ -12,7 +12,7 @@
     <% @events.each do |event| %>
     <tr>
       <td class="first"><%= event.title %></td>
-      <td><%= event.file.thumb('50x') if !event.file.nil? %></td>
+      <td><%= image_tag(event.file.thumb('50x')) if !event.file.nil? %></td>
       <td class="date"><%= event.from %></td>
       <td class="date"><%= event.to %></td>
       <td class="last">
