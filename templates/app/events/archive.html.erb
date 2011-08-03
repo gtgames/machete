@@ -1,18 +1,19 @@
-<% @events.each_with_index do |e, idx| -%>
-  <% cache("e#{idx}_#{e.id.generation_time.to_i}", :expires_in => 10*60) do -%>
-    <div class="event <%= 'first' if idx == 1 %>">
+<% @events.each do |e| -%>
+  <% cache("e_#{e.id.generation_time.to_i}", :expires_in => 10*60) do -%>
+    <div class="event archive">
       <h1><%= e.title%></h1>
       <div class="dates">
         <%= t'events.from' %> <span class="date"><%= e.from %></span>
         <%= t'events.to' %> <span class="date"><%= e.to %></span>
       </div>
-  	  <%= image_tag(e.file.thumb((idx > 0 )? '400x' : '100x')) if !e.file.nil? %>
+
+  	  <%= image_tag(e.file.thumb('100x')) if !e.file.nil? %>
 
       <div class="description"><%= e.description %></div>
     
       <div class="slideshow">
         <% event_photos(e.tag_list).each do |p| -%>
-          <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{idx}]") %>
+          <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{e.id}]") %>
         <% end -%>
       </div>
     </div>
