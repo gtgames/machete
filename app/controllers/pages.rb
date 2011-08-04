@@ -16,8 +16,10 @@ Machete.controllers :pages do
   end
 
   get :taxonomy, :map => '/:taxon', :matching => [:taxon => /^[a-z0-9\-_\/]+$/], :priority => :low  do
-    @taxonomy = Taxonomy.where(:"path.#{Cfg.locale}" => %r{#{params[:taxon]}}).first
-    @pages = Page.by_taxonomy(params[:taxon])
+    t = params[:taxon].join('/')
+    
+    @taxonomy = Taxonomy.where(:"path.#{Cfg.locale}" => %r{#{t}}).first
+    @pages = Page.by_taxonomy(t)
     
     size = @pages.size
     
