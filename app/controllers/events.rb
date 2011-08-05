@@ -3,6 +3,9 @@ Machete.controller :events do
 
   get :index do
     @events = Event.where(:from.gt => Time.now ).sort(:from.lt)
+    unless @events.count > 0
+      404
+    end
     etag @events.last.id.generation_time.to_i
 
     render 'events/index'
