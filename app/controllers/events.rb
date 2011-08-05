@@ -12,14 +12,20 @@ Machete.controller :events do
   end
 
   get :archive do
-    @event = Event.where(:from.lt => Time.now).sort(:from.gt)
+    @events = Event.where(:from.lt => Time.now).sort(:from.gt)
+    unless @events.count > 0
+      404
+    end
     etag @events.first.id.generation_time.to_i
 
     render 'events/archive'
   end
 
   get :tag, :with => :tag do
-    @event = Event.where(:tags.in => params[:tag].split(','))
+    @events = Event.where(:tags.in => params[:tag].split(','))
+    unless @events.count > 0
+      404
+    end
 
     render 'events/archive'
   end
