@@ -4,7 +4,7 @@ Machete.controllers :blog do
     if @posts.count == 0
       404
     else
-      etag @post.first.id.generation_time.to_i
+      etag @posts.first.id.generation_time.to_i
       render 'blog/index', :layout => Cfg.layout('blog')
     end
   end
