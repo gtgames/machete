@@ -1,7 +1,7 @@
 Machete.controllers :blog do
   get :index do
     @posts = Post.sort(:_id.desc).limit(10)
-    if @posts.count > 0
+    if @posts.count == 0
       404
     else
       etag @post.first.id.generation_time.to_i
