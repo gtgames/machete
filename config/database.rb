@@ -16,3 +16,8 @@ MongoMapper.database.authenticate(
 ) unless (settings['mongo']['user']).nil?
 
 Grid = Mongo::Grid.new(MongoMapper.database)
+
+# clean caches
+MongoMapper.database['cache'].find().each{ |e|
+  MongoMapper.database['cache'].update({:_id => e[:_id]},{:value => nil, :expires_in => Time.now})
+}
