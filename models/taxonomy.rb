@@ -73,6 +73,11 @@ class Taxonomy
     list
   end
 
+  # Setters
+  def slug= text
+    self['slug'] = text.to_slug
+  end
+
   before_save :set_path
   private
   # Store the taxon's path.
