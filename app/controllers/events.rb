@@ -12,7 +12,7 @@ Machete.controller :events do
   end
 
   get :archive do
-    @events = Event.where(:from.lt => Time.now).sort(:from.gt)
+    @events = Event.sort(:from.gt)
     unless @events.count > 0
       404
     else

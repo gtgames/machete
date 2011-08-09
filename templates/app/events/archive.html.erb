@@ -1,5 +1,5 @@
-<% @events.each do |e| -%>
-  <% cache("e_#{e.id.generation_time.to_i}", :expires_in => 10*60) do -%>
+<% cache("e_#{e.first.id.generation_time.to_i}", :expires_in => 10*60) do -%>
+  <% @events.each do |e| -%>
     <div class="event archive">
       <h1><%= e.title%></h1>
       <div class="dates">
