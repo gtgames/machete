@@ -2,7 +2,7 @@ Machete.controller :events do
   layout Cfg.layout(:events)
 
   get :index do
-    @events = Event.where(:from.gt => Time.now ).sort(:from.lt)
+    @events = Event.where(:to.gt => ( Time.now - 7.day )  ).sort(:from.lt)
     if @events.count == 0
       404
     else
