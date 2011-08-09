@@ -1,9 +1,10 @@
 Machete.helpers do
   def event_photos taglist
-    if taglist.blank?
+    taglist = taglist.split(', ')
+    if taglist.size == 0
       []
     else
-      Photos.where(:tags.in => taglist.split(', '))
+      Photo.where(:tags.in => taglist)
     end
   end
 end
