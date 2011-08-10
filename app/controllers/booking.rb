@@ -6,7 +6,7 @@ Machete.controllers :booking do
   post :new do
     @booking = Booking.new params[:booking]
     if @booking.save
-      deliver(:mailer, :booking, @booking)
+      deliver(:booking, :new, @booking)
 
       render 'booking/sent', :layout => Cfg.layout('booking')
     else
