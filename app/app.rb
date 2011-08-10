@@ -28,7 +28,16 @@ class Machete < Padrino::Application
   set :cache, Padrino.cache
   enable :caching
 
+
+  # Mailer
+  set :delivery_method, :smtp => {
+    :address              => "127.0.0.1",
+    :port                 => 25,
+    :enable_starttls_auto => false
+  }
   enable  :sessions
+
+
 
   # Middleware for locale redirection
   if Cfg['locales'].length > 1
