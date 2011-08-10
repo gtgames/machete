@@ -1,5 +1,5 @@
-<% @events.each_with_index do |e, idx| -%>
-  <% cache("e#{idx}_#{e.id.generation_time.to_i}", :expires_in => 10*60) do -%>
+<% cache("e_#{@events.first.id.generation_time.to_i}", :expires_in => 10*60) do -%>
+  <% @events.each_with_index do |e, idx| -%>
     <div class="event <%= 'first' if idx == 1 %>">
       <h1><%= e.title%></h1>
       <div class="dates">
@@ -19,6 +19,6 @@
   <% end -%>
 <% end -%>
 
-<%= link_to t'events.archive', url(:events, :archive), :class => "goto_event_archive" %>
+<%= link_to t('events.archive'), url(:events, :archive), :class => "goto_event_archive" %>
 
 <% content_for :title, t('events.title') -%>

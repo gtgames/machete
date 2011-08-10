@@ -1,8 +1,12 @@
 Machete.controllers :blog do
   get :index do
-    @posts = Post.sort(:_id.desc)
-    etag @post.first.id.generation_time.to_i
-    render 'blog/index', :layout => Cfg.layout('blog')
+    @posts = Post.sort(:_id.desc).limit(10)
+    if @posts.count == 0
+      404
+    else
+      etag @posts.first.id.generation_time.to_i
+      render 'blog/index', :layout => Cfg.layout('blog')
+    end
   end
 
   get :show, :map => '/blog/:slug' do
