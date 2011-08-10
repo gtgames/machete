@@ -1,0 +1,35 @@
+<h1>Dati generali:</h1>
+
+<div>
+  Nome.......<%= booking.name %><br />
+  Cognome....<%= booking.surname %><br />
+  email......<%= booking.email %><br />
+  Città......<%= booking.city %><br />
+  Telefono...<%= booking.phone %><br />
+  FAX........<%= booking.fax %><br />
+</div>
+
+<h1>COMPONENTI</h1>
+
+<div>
+  Adulti.....<%= booking.adults %><br />
+  Bambini....<%= booking.children %><br />
+</div>
+
+<h1>AZIENDA</h1>
+
+<div>
+  Nome Azienda....<%= booking.business_name %><br />
+  Indirizzo.......<%= booking.address %><br />
+  PI..............<%= booking.vat %><br />
+  CF..............<%= booking.snn %><br />
+</div>
+
+<h1>NOTE:</h1>
+<hr />
+<div>
+<%= h booking.notes %>
+</div>
+<hr>
+
+---
