@@ -23,17 +23,19 @@ Machete.controllers :pages do
 
     size = @pages.size
 
-    404 if @taxonomy.count == 0 && size == 0 # no match = 404
+    if @taxonomy.size == 0 && size == 0 # no match = 404
+      404
+    else
+      etag @pages.first.updated_at.to_i if size >= 1
 
-    etag @pages.first.updated_at.to_i if size >= 1
-    
-    if size > 1
-      render 'pages/index', :layout => Cfg.layout('pages')
-    elsif size == 1
-      @pages = @pages.first
-      render 'pages/show', :layout => Cfg.layout('pages')
-    elsif size == 0
-      render 'pages/index', :layout => Cfg.layout('pages')
+      if size > 1
+        render 'pages/index', :layout => Cfg.layout('pages')
+      elsif size == 1
+        @pages = @pages.first
+        render 'pages/show', :layout => Cfg.layout('pages')
+      elsif size == 0
+        render 'pages/index', :layout => Cfg.layout('pages')
+      end
     end
   end
 
