@@ -21,9 +21,9 @@ Machete.mailer :contact do
     reply_to "#{contact.email}"
     to  "info@#{Cfg[:domain]}"
     subject "Nuova richiesta di informazioni da #{contact.email}"
-    locals :contact => contact
-    render 'contacts/email'
     content_type 'multipart/alternative'
     provides :plain, :html 
+    locals :contact => contact
+    render 'contacts/email'
   end
 end

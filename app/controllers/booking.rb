@@ -22,8 +22,8 @@ Machete.mailer :booking do
     to  "info@#{Cfg[:domain]}"
     subject "Nuova richiesta di prenotazione da #{booking.email}"
     locals :booking => booking
-    render 'booking/email'
     content_type 'multipart/alternative'
     provides :plain, :html
+    render 'booking/email'
   end
 end
