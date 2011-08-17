@@ -16,6 +16,7 @@ class Taxonomy
   key :weight, Integer, :default => 1
 
 
+  # Keys to be embedded in objects
   embeds :slug, :path
 
   validates_presence_of :title, :description

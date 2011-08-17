@@ -29,9 +29,4 @@ class Page
   def self.by_taxonomy sl
     return where(:"taxonomy.path.#{Cfg.locale}" => %r{#{sl.downcase}})
   end
-  
-  # Setters
-  def slug= text
-    self['slug'] = text.to_slug
-  end
 end
