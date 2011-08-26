@@ -21,9 +21,9 @@ Machete.controllers :pages do
     @taxonomy = Taxonomy.where(:"path.#{Cfg.locale}" => %r{#{t}}).first
     @pages = Page.by_taxonomy(t)
 
-    size = @pages.size
-
-    if @taxonomy.size == 0 && size == 0 # no match = 404
+    if @pages.nil?
+      404
+    elsif @taxonomy.size == 0 && @pages.size == 0 # no match = 404
       404
     else
       etag @pages.first.updated_at.to_i if size >= 1
