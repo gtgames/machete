@@ -17,13 +17,11 @@ Machete.controllers :pages do
 
   get :taxonomy, :map => '/:taxon', :matching => [:taxon => /^[a-z0-9\-_\/]+$/], :priority => :low  do
     t = (params[:taxon].is_a? String)? params[:taxon] : params[:taxon].join('/')
-    
+
     @taxonomy = Taxonomy.where(:"path.#{Cfg.locale}" => %r{#{t}}).first
     @pages = Page.by_taxonomy(t)
 
     if @pages.nil? or @taxonomy.nil?
-      404
-    elsif @taxonomy.size == 0 && @pages.size == 0 # no match = 404
       404
     else
       etag @pages.first.updated_at.to_i if size >= 1
