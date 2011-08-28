@@ -24,11 +24,11 @@ Machete.controllers :pages do
     if @pages.nil? or @taxonomy.nil?
       404
     else
-      etag @pages.first.updated_at.to_i
+      etag @pages.first.updated_at.to_i if @pages.size > 1
 
-      if size > 1
+      if @pages.size > 1
         render 'pages/index', :layout => Cfg.layout('pages')
-      elsif size == 1
+      elsif @pages.size == 1
         @pages = @pages.first
         render 'pages/show', :layout => Cfg.layout('pages')
       elsif size == 0
