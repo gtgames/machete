@@ -1,4 +1,10 @@
 $(function(){
+
+  $('.date').each(function(el){
+    var date = Date.parseRFC3339(el.html());
+    if (date !== null) el.html(date.toString("d/M/yyyy HH:mm"));
+  });
+
     $('input[id^=booking_date]').each(function(el){
         var min_date = new Date();
         var max_date = new Date();
