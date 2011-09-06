@@ -81,4 +81,13 @@ Admin.controllers :photos do
     end
     redirect url(:photos, :index)
   end
+
+
+  post :rename do
+    if params[:gallery]
+      Photo.set({:gallery => params[:gallery]}, {:gallery => params[:name], :gallery_slug => params[:name].to_slug})
+      params[:name]
+    end
+    params[:name]
+  end
 end

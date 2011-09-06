@@ -23,7 +23,7 @@
 
 <div class='submit_link'>
   <%= f.submit pat(:save), :class => :alt_btn %>
-  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:photos, :index)}';return false", :class => :button %>
 </div>
 
 
@@ -31,8 +31,8 @@
   $(document).on('ready',function(){
       $('photo_gallery_add').on('click', function(e){
         var v = $('photo_gallery_add_input').get('value');
-		if (v.length > 0){
-		$('photo_gallery').append( new Element('option', { value: v, selected: true, html: v }) );
+        if (v.length > 0){
+        $('photo_gallery').append( new Element('option', { value: v, selected: true, html: v }) );
           $$('#photo_gallery option:selected').first().set('value', v)
         }
         return false;
