@@ -23,8 +23,7 @@
     $('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
 
     $$('.date').each(function(el){
-      var date = Date.parseRFC3339(el.html());
-      if (date !== null) el.html(date.toString("d/M/yyyy HH:mm"));
+      el.html(_date(el.html()).localize());
     });
 
     if($('advanced') !== null) {
@@ -109,9 +108,8 @@
             showTime: true,
             update: el
         }).on('change', function(){
-            console.log(this.getDate().toISOString());
-            el.set('value', this.getDate().toISOString());
-        }).setDate(new Date.parse(el.get('value'))).insertTo(el.parent());
+            el.set('value', _date(this.getDate()).toISO());
+        }).setDate( _date(el.get('value')).date ).insertTo(el.parent());
         el.set('type','hidden');
         el.parent().set({
           style:{

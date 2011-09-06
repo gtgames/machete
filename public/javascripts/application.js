@@ -1,14 +1,18 @@
 $(function(){
 
   $('.date').each(function(el){
-    var date = Date.parseRFC3339(el.html());
-    if (date !== null) el.html(date.toString("d/M/yyyy HH:mm"));
+    var d = _date(el.html())
+    if (d.date != 'Invalid Date') {
+        el.html( d.format("d/M/yyyy HH:mm") );
+    }
   });
 
     $('input[id^=booking_date]').each(function(el){
-        var min_date = new Date();
-        var max_date = new Date();
-        max_date.setMonth(max_date.getMonth() + 1)
+        el.set('type','hidden');
+        var min_date = _date().date,
+            max_date = _date().add({M: 1}).date,
+            dummy = $E('input');
+
         var cal = new Calendar({
             format: "ISO",
             minDate: min_date,
@@ -16,18 +20,18 @@ $(function(){
             numberOfMonths: 1,
             timePeriod: 15,
             showTime: true,
-            update: el
+            update: dummy
         });
         cal.on('change', function(){
-            console.log(this.getDate().toRFC3339UTCString());
-            el.set('value', this.getDate().toRFC3339UTCString());
+            dummy.set('value', _date(this.getDate()).localize())
+            el.set('value', _date( this.getDate() ).toISO() );
         });
-        cal.setDate(new Date.parse(el.get('value')));
+        cal.setDate( _date(el.get('value')).date );
 
-        if (el.parent().parent().get('id') == "booking_widget"){
+        if (el.parent().parent().get('id') == "booking_widget") {
+            dummy.appendTo( el.parent() );
             cal.assignTo(el.parent());
         } else {
-            el.set('type','hidden');
             cal.insertTo(el.parent());
         }
     });
