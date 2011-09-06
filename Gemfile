@@ -20,7 +20,7 @@ gem 'builder'
 gem 'mongo', '>=1.3.1', :require => nil
 gem 'bson_ext', '>=1.3.1', :require => nil
 
-gem 'mongo_mapper', '>=0.9.1'
+gem 'mongo_mapper', '0.9.2'
 #gem 'hunt'
 #
 gem 'wand'
@@ -56,5 +56,5 @@ gem 'to_slug'
 
 gem 'yajl-ruby', :require => "yajl/json_gem"
 # Padrino
-gem 'padrino', "0.10.1"
+gem 'padrino', "0.10.2"
 
