@@ -1,7 +1,0 @@
-it:
-  models:
-    configuration:
-      name: Nome
-      attributes:
-        _id: Chiave
-        val: Valore
