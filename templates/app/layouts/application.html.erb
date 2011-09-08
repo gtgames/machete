@@ -74,7 +74,8 @@
       "http://frenzart.com/js/underscore.date.js",
       "http://frenzart.com/js/rightjs/right/i18n/<%= Cfg.locale %>.js",
       "/javascripts/application.js",
-      ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js', function(){ _date.translate('<%= Cfg.locale %>'); }
+      ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js',
+      function(){ _date.translate('<%= Cfg.locale %>'); }
       );
       (function(w,d) {
         w._analyst = '<%= Cfg[:analyst] %>';var t = d.createElement('script'),s = d.getElementsByTagName('script')[0];

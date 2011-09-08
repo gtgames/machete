@@ -1,25 +1,52 @@
-<% cache("e_#{@events.first.id.generation_time.to_i}", :expires_in => 10*60) do -%>
-  <% @events.each_with_index do |e, idx| -%>
-    <div class="event <%= 'first' if idx == 1 %>">
-      <h1><%= e.title%></h1>
-      <div class="dates">
-        <%= t'events.from' %> <span class="date"><%= e.from %></span>
-        <%= t'events.to' %> <span class="date"><%= e.to %></span>
+<div class="event">
+  <h1><%= @event.title %></h1>
+
+  <div class="dates">
+    <%= t'events.from' %> <span class="date"><%= @event.from %></span>
+    <%= t'events.to' %> <span class="date"><%= @event.to %></span>
+  </div>
+
+  <%= image_tag(@event.file.thumb('400x')) if !@event.file.nil? %>
+
+  <div class="description"><%= @event.description %></div>
+
+  <div class="slideshow">
+    <% event_photos(@event.tag_list).each do |p| -%>
+      <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{idx}]") %>
+    <% end -%>
+  </div>
+</div>
+
+<% if !@next.nil? -%>
+  <div class="events_next">
+    <h1><%= t('events.next') %></h1>
+
+    <% @next.each do |e| -%>
+      <div class="event_next">
+        <h1><%= link_to(e.title, url(:events_show, :slug => e.slug || '')) %></h1>
+        <div class="dates">
+          <%= t'events.from' %> <span class="date"><%= e.from %></span>
+          <%= t'events.to' %> <span class="date"><%= e.to %></span>
+        </div>
       </div>
-
-      <%= image_tag(e.file.thumb((idx > 0 )? '400x' : '100x')) if !e.file.nil? %>
-
-      <div class="description"><%= e.description %></div>
-
-      <div class="slideshow">
-        <% event_photos(e.tag_list).each do |p| -%>
-          <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{idx}]") %>
-        <% end -%>
-      </div>
-    </div>
-  <% end -%>
+    <% end -%>
+  </div>
 <% end -%>
 
-<%= link_to t('events.archive'), url(:events, :archive), :class => "goto_event_archive" %>
+<% if @past.count > 0 -%>
+  <div class="events_past">
+    <h1><%= t('events.past') %></h1>
+
+    <% @past.each do |e| -%>
+      <div class="event_next">
+        <h1><%= link_to(e.title, url(:events_show, :slug => e.slug || '')) %></h1>
+        <div class="dates">
+          <%= t'events.from' %> <span class="date"><%= e.from %></span>
+          <%= t'events.to' %> <span class="date"><%= e.to %></span>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>
 
 <% content_for :title, t('events.title') -%>

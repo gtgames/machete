@@ -3,7 +3,7 @@ $(function(){
   $('.date').each(function(el){
     var d = _date(el.html())
     if (d.date != 'Invalid Date') {
-        el.html( d.format("d/M/yyyy HH:mm") );
+        el.html( d.format("d/M/YYYY HH:mm") );
     }
   });
 

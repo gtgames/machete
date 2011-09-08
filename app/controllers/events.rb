@@ -2,22 +2,33 @@ Machete.controller :events do
   layout Cfg.layout(:events)
 
   get :index do
-    @events = Event.where(:to.gt => ( Time.now - 7.day )  ).sort(:from.lt)
-    if @events.count == 0
+    if Event.count == 0
       404
     else
-      etag @events.last.id.generation_time.to_i unless @events.last.nil?
+      @event = Event.where(:to.gt => ( Time.now )  ).sort(:from.lt).limit(1)
+
+      if (@event.first.nil?)
+        @event = Event.sort(:from.lt)
+
+        @next = []
+        @past = @event[1...-1]
+        @event = @event.first
+      else
+        @next = @event[1...-1]
+        @event = @event.first
+        @past = Event.where(:to.lt => ( @event['to'] )  ).sort(:from.lt)
+      end
+
       render 'events/index'
     end
   end
 
-  get :archive do
-    @events = Event.sort(:from.gt)
+  get :show, :with => :slug do
+    @events = Event.by_slug(params[:slug])
     if @events.count == 0
       404
     else
-      etag @events.first.id.generation_time.to_i unless @events.first.nil?
-      render 'events/archive'
+      render 'events/show'
     end
   end
 

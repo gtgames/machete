@@ -1,23 +1,20 @@
-<% cache("e_#{@events.first.id.generation_time.to_i}", :expires_in => 10*60) do -%>
-  <% @events.each do |e| -%>
-    <div class="event archive">
-      <h1><%= e.title%></h1>
-      <div class="dates">
-        <%= t'events.from' %> <span class="date"><%= e.from %></span>
-        <%= t'events.to' %> <span class="date"><%= e.to %></span>
-      </div>
+<% @events.each do |e| -%>
+<div class="event">
+  <h1><%= e.title %></h1>
 
-  	  <%= image_tag(e.file.thumb('100x')) if !e.file.nil? %>
+  <div class="dates">
+    <%= t'events.from' %> <span class="date"><%= e.from %></span>
+    <%= t'events.to' %> <span class="date"><%= e.to %></span>
+  </div>
 
-      <div class="description"><%= e.description %></div>
-    
-      <div class="slideshow">
-        <% event_photos(e.tag_list).each do |p| -%>
-          <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{e.id}]") %>
-        <% end -%>
-      </div>
-    </div>
-  <% end -%>
+  <%= image_tag(e.file.thumb('400x')) if !e.file.nil? %>
+
+  <div class="description"><%= e.description %></div>
+
+  <div class="slideshow">
+    <% event_photos(e.tag_list).each do |p| -%>
+      <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{idx}]") %>
+    <% end -%>
+  </div>
+</div>
 <% end -%>
-
-<% content_for :title, t('events.title') -%>
