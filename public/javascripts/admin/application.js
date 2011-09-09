@@ -23,7 +23,10 @@
     $('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
 
     $$('.date').each(function(el){
-      el.html(_date(el.html()).localize());
+      el.html(_date(el.html()).format('YYYY-MM-DD'));
+    });
+    $$('.date_hour').each(function(el){
+      el.html(_date(el.html()).format('YYYY-MM-DD HH:mm'));
     });
 
     if($('advanced') !== null) {

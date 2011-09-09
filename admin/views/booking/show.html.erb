@@ -1,0 +1,66 @@
+<table>
+	<thead>
+		<tr><th colspan="2">Dati generali</th></tr>
+	</thead>
+	<tbody>
+		<tr><td style="width:300px">Nome</td><td><%= @book.name %></td></tr>
+		<tr><td style="width:300px">Cognome</td><td><%= @book.surname %></td></tr>
+		<tr><td style="width:300px">email</td><td><%= @book.email %></td></tr>
+		<tr><td style="width:300px">Città</td><td><%= @book.city %></td></tr>
+		<tr><td style="width:300px">Telefono</td><td><%= @book.phone %></td></tr>
+		<tr><td style="width:300px">FAX</td><td><%= @book.fax %></td></tr>
+	</tbody>
+</table>
+
+<br>
+
+<table>
+	<thead>
+		<tr><th colspan="2">Periodo</th></tr>
+	</thead>
+	<tbody>
+		<tr><td style="width:300px">Arrivo</td><td class="date_hour"><%= @book.date_arrival %></td></tr>
+		<tr><td style="width:300px">Partenza</td><td class="date_hour"><%= @book.date_departure %></td></tr>
+	</tbody>
+</table>
+
+<br>
+
+<table>
+	<thead>
+		<tr><th colspan="2">Componenti</th></tr>
+	</thead>
+	<tbody>
+		<tr><td style="width:300px">Adulti</td><td><%= @book.adults %></td></tr>
+		<tr><td style="width:300px">Bambini</td><td><%= @book.children %></td></tr>
+	</tbody>
+</table>
+
+<br>
+
+<table>
+	<thead>
+		<tr><th colspan="2">Azienda</th></tr>
+	</thead>
+	<tbody>
+		<tr><td style="width:300px">Nome Azienda</td><td><%= @book.business_name %></td></tr>
+		<tr><td style="width:300px">Indirizzo</td><td><%= @book.address %></td></tr>
+		<tr><td style="width:300px">PI</td><td><%= @book.vat %></td></tr>
+		<tr><td style="width:300px">CF</td><td><%= @book.snn %></td></tr>
+	</tbody>
+</table>
+
+
+<h1>NOTE:</h1>
+<hr />
+<div>
+<%= @book.notes %>
+</div>
+<hr>
+
+
+<% content_for :title, "Prenotazione di #{@book.name} #{@book.surname}" %>
+<% content_for :actions do -%>
+  <%= link_to "Lista", url(:booking, :index) %> | 
+  <%= link_to "Cestino", url(:booking, :trash) %>
+<% end -%>

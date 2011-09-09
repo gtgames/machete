@@ -42,6 +42,7 @@ class Admin < Padrino::Application
     role.project_module :pages,           "/pages"
     role.project_module :taxonomy,        "/taxonomy"
     role.project_module :events,          "/events"
+    role.project_module :booking,         "/booking"
     role.project_module :configurations,  "/configurations"
     role.project_module :accounts,        "/accounts"
   end

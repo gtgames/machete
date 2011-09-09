@@ -1,0 +1,33 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="sortable"><%= mat(:booking, :name) %></th>
+      <th class="sortable"><%= mat(:booking, :business_name) %></th>
+      <th class="sortable"><%= mat(:booking, :date_arrival) %></th>
+      <th class="sortable"><%= mat(:booking, :date_departure) %></th>
+      <th class="actions">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each do |book| %>
+    <tr class="">
+      <td class="first"><%= book.name %> <%= book.surname %> </td>
+      <td><em><%= book.business_name %></em></td>
+      <td class="date"><%= book.date_arrival %></td>
+      <td class="date"><%= book.date_departure %></td>
+      <td class="last">
+        <%= button_to pat(:show), url(:booking, :show, :id => book.id), :method => :get, :class => 'button_to edit' %>
+        <%= button_to pat(:delete), url(:booking, :destroy, :id => book.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% content_for :actions do -%>
+  <%= link_to "Lista", url(:booking, :index) %> | 
+  <%= link_to "Cestino", url(:booking, :trash) %>
+<% end -%>
+
+<% content_for :title, 'Prenotazioni' %>

@@ -1,7 +1,7 @@
 Admin.controllers :events do
 
   get :index do
-    @events = Event.all
+    @events = Event.order(:from).all
     render 'events/index'
   end
 
