@@ -24,9 +24,6 @@ gem 'mongo_mapper', '0.9.2'
 
 gem 'wand'
 
-gem 'ffi'
-gem 'gd2-ffij'
-
 gem 'httparty'
 
 group :development do

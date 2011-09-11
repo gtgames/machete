@@ -1,6 +1,6 @@
 <% @photos.each do |g| -%>
 
-  <h2><span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span> <a onclick="$('<%= g[:gallery].to_slug %>').inEdit({toggle: this, url:'<%= url(:photos, :rename, :gallery => g[:gallery]) %>', name:'name', method:'post'}); return false;">&para;</a></h2>
+  <h2><span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span> <a class="button_to edit" onclick="$('<%= g[:gallery].to_slug %>').inEdit({toggle: this, url:'<%= url(:photos, :rename, :gallery => g[:gallery]) %>', name:'name', method:'post'}); return false;">&para;</a></h2>
   <table cellspacing="0">
     <thead>
       <tr>
