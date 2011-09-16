@@ -5,16 +5,16 @@ Machete.controller :events do
     if Event.count == 0
       404
     else
-      @event = Event.where(:to.gt => ( Time.now )  ).sort(:from.lt).limit(1)
+      @event = Event.where(:to.gt => ( Time.now )  ).sort(:from.asc).all
 
       if (@event.first.nil?)
         @event = Event.sort(:from.lt)
 
         @next = []
-        @past = @event[1...-1]
+        @past = @event[1..-1]
         @event = @event.first
       else
-        @next = @event[1...-1]
+        @next = @event[1..-1]
         @event = @event.first
         @past = Event.where(:to.lt => ( @event['to'] )  ).sort(:from.lt)
       end
@@ -24,7 +24,7 @@ Machete.controller :events do
   end
 
   get :show, :with => :slug do
-    @events = Event.by_slug(params[:slug])
+    @events = Event.where(:slug => params[:slug])
     if @events.count == 0
       404
     else
