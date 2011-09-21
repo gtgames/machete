@@ -2,7 +2,7 @@ Admin.controllers :base do
   enable :caching
 
   get :index, :map => "/" do
-    render "base/index"
+    render "admin/base/index"
   end
 
   get :tagblob, :provides => :js do

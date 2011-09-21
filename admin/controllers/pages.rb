@@ -1,12 +1,12 @@
 Admin.controllers :pages do
   get :index do
     @pages = Page.sort(:_id.desc).all
-    render 'pages/index'
+    render 'admin/pages/index'
   end
 
   get :new do
     @page = Page.new
-    render 'pages/new'
+    render 'admin/pages/new'
   end
 
   post :create do
@@ -19,13 +19,13 @@ Admin.controllers :pages do
       flash[:notice] = t'created'
       redirect url(:pages, :index)
     else
-      render 'pages/new'
+      render 'admin/pages/new'
     end
   end
 
   get :edit, :with => :id do
     @page = Page.find(params[:id])
-    render 'pages/edit'
+    render 'admin/pages/edit'
   end
 
   put :update, :with => :id do
@@ -38,7 +38,7 @@ Admin.controllers :pages do
       flash[:notice] = t'updated'
       redirect url(:pages, :index)
     else
-      render 'pages/edit'
+      render 'admin/pages/edit'
     end
   end
 

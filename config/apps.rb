@@ -26,3 +26,7 @@ Padrino.mount("Machete").to("/").host(/^(?!(admin|www\.admin)).*$/)
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 Padrino.mount("Imaging").to('/media/')
 
+Cfg['apps'].each do |mountpoint, app|
+  puts "Mounting App: #{app}"
+  Padrino.mount("#{app}").to("/#{mountpoint.downcase}/")
+end unless Cfg['apps'].nil?

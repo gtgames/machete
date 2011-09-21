@@ -1,12 +1,12 @@
 Admin.controller :taxonomy do
   get :index do
     @taxonomy = Taxonomy.sort(:_id.desc).all
-    render 'taxonomy/index'
+    render 'admin/taxonomy/index'
   end
 
   get :new do
     @taxonomy = Taxonomy.new
-    render 'taxonomy/new'
+    render 'admin/taxonomy/new'
   end
 
   post :create do
@@ -15,13 +15,13 @@ Admin.controller :taxonomy do
       flash[:notice] = t 'created'
       redirect url(:taxonomy, :index)
     else
-      render 'taxonomy/new'
+      render 'admin/taxonomy/new'
     end
   end
 
   get :edit, :with => :id do
     @taxonomy = Taxonomy.find(params[:id])
-    render 'taxonomy/edit'
+    render 'admin/taxonomy/edit'
   end
 
   put :update, :with => :id do
@@ -30,7 +30,7 @@ Admin.controller :taxonomy do
       flash[:notice] = t'updated'
       redirect url(:taxonomy, :index)
     else
-      render 'taxonomy/edit'
+      render 'admin/taxonomy/edit'
     end
   end
 

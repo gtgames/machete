@@ -11,8 +11,10 @@
 			"domain":"machete.it",
 			"locales":["it"],
 			"acl":{
-				"admin":["links","photos","posts","pages","taxonomy"]
-			},
+				"admin":["links","photos","posts","pages","taxonomy"],
+				"root":["links","photos","multimedia","posts","pages","taxonomy","events","booking","configurations","accounts"]
+				},
+			"apps":{ "cercahotel":"Cercahotel" },
 			"layouts":{
 			}
 		}

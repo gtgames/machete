@@ -1,9 +1,9 @@
 Admin.controllers :advanced do
   get :index do
     @title = Cfg[:title]
-    render "advanced/index"
+    render "admin/advanced/index"
   end
   put :update do
-    render "advanced/index"
+    render "admin/advanced/index"
   end
 end

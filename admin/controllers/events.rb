@@ -2,12 +2,12 @@ Admin.controllers :events do
 
   get :index do
     @events = Event.where().order(:from.desc).all
-    render 'events/index'
+    render 'admin/events/index'
   end
 
   get :new do
     @event = Event.new
-    render 'events/new'
+    render 'admin/events/new'
   end
 
   post :create do
@@ -17,13 +17,13 @@ Admin.controllers :events do
       flash[:notice] = 'Event was successfully created.'
       redirect url(:events, :edit, :id => @event.id)
     else
-      render 'events/new'
+      render 'admin/events/new'
     end
   end
 
   get :edit, :with => :id do
     @event = Event.find(params[:id])
-    render 'events/edit'
+    render 'admin/events/edit'
   end
 
   put :update, :with => :id do
@@ -33,7 +33,7 @@ Admin.controllers :events do
       flash[:notice] = 'Event was successfully updated.'
       redirect url(:events, :edit, :id => @event.id)
     else
-      render 'events/edit'
+      render 'admin/events/edit'
     end
   end
 

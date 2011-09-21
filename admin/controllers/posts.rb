@@ -2,12 +2,12 @@ Admin.controllers :posts do
 
   get :index do
     @posts = Post.all
-    render 'posts/index'
+    render 'admin/posts/index'
   end
 
   get :new do
     @post = Post.new
-    render 'posts/new'
+    render 'admin/posts/new'
   end
 
   post :create do
@@ -17,13 +17,13 @@ Admin.controllers :posts do
       flash[:notice] = t'created'
       redirect url(:posts, :index)
     else
-      render 'posts/new'
+      render 'admin/posts/new'
     end
   end
 
   get :edit, :with => :id do
     @post = Post.find(params[:id])
-    render 'posts/edit'
+    render 'admin/posts/edit'
   end
 
   put :update, :with => :id do
@@ -33,7 +33,7 @@ Admin.controllers :posts do
       flash[:notice] = 'Post was successfully updated.'
       redirect url(:posts, :index)
     else
-      render 'posts/edit'
+      render 'admin/posts/edit'
     end
   end
 

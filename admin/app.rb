@@ -1,5 +1,8 @@
 class Admin < Padrino::Application
   register Padrino::Rendering
+  set :views, Padrino.root('templates')
+
+
   register Padrino::Mailer
   register Padrino::Helpers
   register Padrino::Admin::AccessControl
@@ -32,19 +35,6 @@ class Admin < Padrino::Application
   access_control.roles_for :any do |role|
     role.protect "/"
     role.allow "/sessions"
-  end
-
-  access_control.roles_for :root do |role|
-    role.project_module :links,           "/links"
-    role.project_module :photos,          "/photos"
-    role.project_module :multimedia,      "/multimedia"
-    role.project_module :posts,           "/posts"
-    role.project_module :pages,           "/pages"
-    role.project_module :taxonomy,        "/taxonomy"
-    role.project_module :events,          "/events"
-    role.project_module :booking,         "/booking"
-    role.project_module :configurations,  "/configurations"
-    role.project_module :accounts,        "/accounts"
   end
 
   ## ACL built from database or config.json

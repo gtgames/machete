@@ -2,12 +2,12 @@ Admin.controllers :links do
 
   get :index do
     @links = Link.all
-    render 'links/index'
+    render 'admin/links/index'
   end
 
   get :new do
     @link = Link.new
-    render 'links/new'
+    render 'admin/links/new'
   end
 
   post :create do
@@ -16,13 +16,13 @@ Admin.controllers :links do
       flash[:notice] = 'Link was successfully created.'
       redirect url(:links, :index)
     else
-      render 'links/new'
+      render 'admin/links/new'
     end
   end
 
   get :edit, :with => :id do
     @link = Link.find(params[:id])
-    render 'links/edit'
+    render 'admin/links/edit'
   end
 
   put :update, :with => :id do
@@ -31,7 +31,7 @@ Admin.controllers :links do
       flash[:notice] = 'Link was successfully updated.'
       redirect url(:links, :index)
     else
-      render 'links/edit'
+      render 'admin/links/edit'
     end
   end
 

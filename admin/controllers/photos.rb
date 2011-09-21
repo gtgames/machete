@@ -5,12 +5,12 @@ Admin.controllers :photos do
       { :gallery => g.to_s,
         :photos => Photo.where( :gallery => %r{#{g}}) }
     end
-    render 'photos/index'
+    render 'admin/photos/index'
   end
 
   get :new do
     @photo = Photo.new
-    render 'photos/new'
+    render 'admin/photos/new'
   end
 
   post :create do
@@ -20,13 +20,13 @@ Admin.controllers :photos do
       flash[:notice] = 'Photo was successfully created.'
       redirect url(:photos, :edit, :id => @photo.id)
     else
-      render 'photos/new'
+      render 'admin/photos/new'
     end
   end
 
   get :edit, :with => :id do
     @photo = Photo.find(params[:id])
-    render 'photos/edit'
+    render 'admin/photos/edit'
   end
 
   put :update, :with => :id do
@@ -36,7 +36,7 @@ Admin.controllers :photos do
       flash[:notice] = 'Photo was successfully updated.'
       redirect url(:photos, :index)
     else
-      render 'photos/edit'
+      render 'admin/photos/edit'
     end
   end
 
