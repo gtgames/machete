@@ -1,7 +1,7 @@
 &nbsp;
-<% form_for :account, url(:accounts, :update, :id => @account.id), :method => :put, :class => :form do |f| %>
-  <%= partial "accounts/form", :locals => { :f => f } %>
+<% form_for :account, url(:accounts, :update, :id => @account.id), :method => :put, :class => "form-stacked span16" do |f| %>
+  <%= partial "admin/accounts/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :accounts }) %>
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :accounts }) %>
 <% content_for :title, 'Modifica Utente' %>

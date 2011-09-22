@@ -1,11 +1,11 @@
-<table class="table">
+<table class="zebra-striped">
   <thead>
     <tr>
       <th class="sortable"><%= mat(:booking, :name) %></th>
       <th class="sortable"><%= mat(:booking, :business_name) %></th>
       <th class="sortable"><%= mat(:booking, :date_arrival) %></th>
       <th class="sortable"><%= mat(:booking, :date_departure) %></th>
-      <th class="actions">&nbsp;</th>
+      <th class="last">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -16,8 +16,8 @@
       <td class="date"><%= book.date_arrival %></td>
       <td class="date"><%= book.date_departure %></td>
       <td class="last">
-        <%= button_to pat(:show), url(:booking, :show, :id => book.id), :method => :get, :class => 'button_to edit' %>
-        <%= button_to pat(:delete), url(:booking, :destroy, :id => book.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+        <%= link_to pat(:show), url(:booking, :show, :id => book.id), :method => :get, :class => 'btn edit' %>
+        <%= button_to pat(:delete), url(:booking, :destroy, :id => book.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
       </td>
     </tr>
     <% end %>

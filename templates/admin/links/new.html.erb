@@ -1,8 +1,8 @@
 &nbsp;
-<% form_for :link, url(:links, :create), :class => :form do |f| %>
-  <%= partial "links/form", :locals => { :f => f } %>
+<% form_for :link, url(:links, :create), :class => "form-stacked span16" do |f| %>
+  <%= partial "admin/links/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :links }) %>
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :links }) %>
 
 <% content_for :title, 'Nuovo Link' %>

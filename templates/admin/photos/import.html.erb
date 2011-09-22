@@ -3,7 +3,7 @@
     <table cellspacing="0">
       <thead>
         <tr>
-          <th class="actions">&nbsp;</th>
+          <th class="last">&nbsp;</th>
           <th>Nome/File</th>
         </tr>
       </thead>
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-<div class='submit_link'>
+<div class='actions'>
   <input class="alt_btn" value="Salva" type="submit" />
   <input onclick="window.location='/photos';return false" class="button" value="Annulla" type="submit" />
 </div>
@@ -54,5 +54,5 @@
   });
 </script>
 
-<% content_for :actions, partial("photos/actions") %>
+<% content_for :actions, partial("admin/photos/actions") %>
 <% content_for :title, 'Importazione di massa per Foto' %>

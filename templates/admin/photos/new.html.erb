@@ -1,7 +1,7 @@
-<% form_for :photo, url(:photos, :create), :class => :form do |f| %>
-  <%= partial "photos/form", :locals => { :f => f } %>
+<% form_for :photo, url(:photos, :create), :class => "form-stacked span16" do |f| %>
+  <%= partial "admin/photos/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("photos/actions", :locals => { :p => :photos }) %>
+<% content_for :actions, partial("admin/photos/actions", :locals => { :p => :photos }) %>
 
 <% content_for :title, 'Nuova Foto' %>

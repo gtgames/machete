@@ -1,7 +1,7 @@
-<% form_for @taxonomy, url(:taxonomy, :update, :id => @taxonomy.id), :method => :put, :class => :form do |f| %>
-  <%= partial "taxonomy/form", :locals => { :f => f } %>
+<% form_for @taxonomy, url(:taxonomy, :update, :id => @taxonomy.id), :method => :put, :class => "form-stacked span16" do |f| %>
+  <%= partial "admin/taxonomy/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :taxonomy }) %>
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :taxonomy }) %>
 
 <% content_for :title, 'Modifica Tassonomia' %>

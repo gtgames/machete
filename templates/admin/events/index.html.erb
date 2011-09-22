@@ -1,11 +1,11 @@
-<table class="table">
+<table class="zebra-striped">
   <thead>
     <tr>
       <th class="sortable"><%= mat(:event, :title) %></th>
       <th class="sortable"><%= mat(:event, :file) %></th>
       <th class="sortable"><%= mat(:event, :from) %></th>
       <th class="sortable"><%= mat(:event, :to) %></th>
-      <th class="actions">&nbsp;</th>
+      <th class="last">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -16,8 +16,8 @@
       <td class="date"><%= event.from %></td>
       <td class="date"><%= event.to %></td>
       <td class="last">
-        <%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => 'button_to edit' %>
-        <%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+        <%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => 'btn edit' %>
+        <%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => 'btn trash', :onclick => "return confirm('#{pat(:confirm)}')" %>
       </td>
     </tr>
     <% end %>
@@ -25,6 +25,6 @@
 </table>
 
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :events }) %>
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :events }) %>
 
 <% content_for :title, 'Eventi' %>

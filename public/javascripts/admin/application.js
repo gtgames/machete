@@ -47,7 +47,7 @@
       Xhr.load('/base/tagblob.js', {
         onSuccess: function(r) {
           new Tags(el, {
-            vertical: true,
+            vertical: false,
             tags: r.responseJSON
           });
         }

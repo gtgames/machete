@@ -1,7 +1,7 @@
-<% form_for :page, url(:pages, :update, :id => @page.id), :method => :put, :class => :form do |f| %>
-  <%= partial "pages/form", :locals => { :f => f } %>
+<% form_for :page, url(:pages, :update, :id => @page.id), :method => :put, :class => "form-stacked span16" do |f| %>
+  <%= partial "admin/pages/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :pages }) %>
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :pages }) %>
 
 <% content_for :title, 'Modifica Documento' %>

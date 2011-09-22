@@ -1,0 +1,193 @@
+@import "lib/bootstrap.less";
+
+p#actions {
+  font-size: 140%;
+}
+
+.admin textarea {
+  width: 100%;
+  height: 300px;
+}
+
+th.last {
+  width: 140px;
+}
+
+div.rui-calendar .timepicker select {
+  width: 70px;
+}
+
+#content {
+  margin-top: 50px;
+}
+
+form {
+  .it label {
+    .before_icon("http://frenzart.com/images/flags.png", 0px, 1*11px, 16px, 11px);
+    &:before { margin-top: 5px; }
+  }
+  .en label {
+    .before_icon("http://frenzart.com/images/flags.png", 0px, 2*11px, 16px, 11px);
+    &:before { margin-top: 5px; }
+  }
+  .fr label {
+    .before_icon('http://frenzart.com/images/flags.png', 0px, 3*11px, 16px, 11px);
+    &:before { margin-top: 5px; }
+  }
+  .es label {
+    .before_icon('http://frenzart.com/images/flags.png', 0px, 4*11px, 16px, 11px);
+    &:before { margin-top: 5px; }
+  }
+  
+  &.btn {
+    margin-bottom: 0px;
+    border: none;
+    padding: 0;
+  }
+}
+
+#chart {
+  padding: 5px;
+  display: block;
+  margin: 0 auto;
+}
+.qq-uploader {
+  position:relative;
+  width: 100%;
+}
+.qq-upload-button {
+  .border-radius(5px);
+  display:inline-block;
+  width: 105px;
+  padding: 7px 0;
+  text-align:center;
+  background:#555;
+  border-bottom:1px solid #ddd;
+  color:#fff;
+  cursor: pointer !important;
+}
+.qq-upload-button-hover {
+  color: black;
+  background:#ccc;
+}
+.qq-upload-button-focus {
+  outline:1px dotted black;
+}
+.qq-upload-drop-area {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  min-height: 70px;
+  z-index:2;
+  background:#FF9797;
+  text-align:center;
+}
+.qq-upload-drop-area span {
+  display:block;
+  position:absolute;
+  top: 50%;
+  width:100%;
+  margin-top:-8px;
+  font-size:16px;
+}
+.qq-upload-drop-area-active {
+  background:#FF7171;
+}
+.qq-upload-list {
+  margin:15px 35px;
+  padding:0;
+  list-style:disc;
+}
+.qq-upload-list li {
+  margin:0;
+  padding:0;
+  line-height:15px;
+  font-size:12px;
+}
+.qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
+  margin-right: 7px;
+}
+.qq-upload-file {
+}
+.qq-upload-spinner {
+  display:inline-block;
+  background: url("loading.gif");
+  width:15px;
+  height:15px;
+  vertical-align:text-bottom;
+}
+.qq-upload-size,.qq-upload-cancel {
+  font-size:11px;
+}
+.qq-upload-failed-text {
+  display:none;
+}
+.qq-upload-fail .qq-upload-failed-text {
+  display:inline;
+}
+
+
+div.rui-tags ul.list {
+  li {
+    background-color: #555555 !important;
+    color: #fff;
+  }
+  input {
+    .box-shadow(0 0 0);
+  }
+}
+
+
+div.rui-rte-toolbar {
+  div.with-options {
+    ul.options {
+      z-index: 4;
+    }
+  }
+}
+
+div.rui-calendar-inline {
+  margin: 0 auto;
+}
+
+.rui-in-edit {
+  input[type=text] {
+    width: 300px !important;
+  }
+}
+
+
+div.rui-tags ul.list li{
+  div.close {
+    margin-left: .25em;
+    cursor: pointer;
+    font-family: Arial;
+    font-weight: normal;
+    opacity: 0.5;
+    position: absolute;
+    right: 0em;
+    top: 0.1em;
+  }
+}
+
+
+form {
+  #advanced {
+    margin-top: 1.5em;
+    legend {
+      display: block;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 180%;
+      text-shadow: 0 1px 1px lighten(#EEE, 30%);
+      .border-radius(3px);
+      padding: 2px 10px;
+      .before_icon('/stylesheets/lib/images/icons.png', 0px, 6* -32px, 32px, 32px);
+    }
+    >fieldset {
+      display: none;
+    }
+  }
+}

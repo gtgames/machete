@@ -1,5 +1,5 @@
 <article>
-<% form_for :booking, url(:booking, :new), :class => :form do |f| -%>
+<% form_for :booking, url(:booking, :new), :class => "form-stacked span16" do |f| -%>
   <div class="row">
     <div class="column grid_4">
       <%= f.input :name %>
@@ -70,9 +70,9 @@
   </div>
 
   <div><%= t'booking.terms' %></div>
-  <div class='submit_link'>
-    <%= f.submit t(:save), :class => :alt_btn %>
-    <%= f.submit t(:cancel), :onclick => "window.location='#{url(:index, :index)}'", :class => :button %>
+  <div class='actions'>
+    <%= f.submit t(:save), :class => :btn %>
+    <%= f.submit t(:cancel), :onclick => "window.location='#{url(:index, :index)}'", :class => :btn %>
   </div>
 
 <% end -%>

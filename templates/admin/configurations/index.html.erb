@@ -41,11 +41,12 @@
     </div>
   </fieldset>
 
-  <div class='submit_link'>
+  <div class='actions'>
     <input class="alt_btn" value="Salva" type="submit" />
-    <input onclick="window.location='/';return false" class="button" value="Annulla" type="submit" />
+    <input onclick="window.location='/';return false" class="btn" value="Annulla" type="submit" />
   </div>
 </form>
+
 <% content_for :title, 'Impostazioni Generali' %>
 <% content_for :actions do -%>
   <%= link_to "generali", url(:configurations, :index) %> | 

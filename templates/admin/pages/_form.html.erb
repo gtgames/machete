@@ -23,8 +23,8 @@
 </fieldset>
 
 
-<div class='submit_link'>
-  <%= f.submit pat(:save), :class => :alt_btn %>
-  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :button %>
+<div class='actions'>
+  <%= f.submit pat(:save), :class => "btn primary" %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :btn %>
 </div>
 

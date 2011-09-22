@@ -4,10 +4,10 @@
   <table cellspacing="0">
     <thead>
       <tr>
-        <th>&nbsp;</th>
+        <th class="last">&nbsp;</th>
         <th class="sortable"><%= mat(:page, :title) %></th>
         <th class="sortable"><%= mat(:page, :file) %></th>
-        <th class="actions">&nbsp;</th>
+        <th class="last">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -17,8 +17,8 @@
           <td><%= photo.title %></td>
           <td><%= link_to(image_tag( photo.file.thumb('50xx50') ), photo.file.url) unless photo.file.nil? %></td>
           <td>
-            <%= button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => 'button_to edit' %>
-            <%= button_to pat(:delete), url(:photos, :destroy, :id => photo.id), :method => :delete, :class => 'button_to trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+            <%= button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => 'btn edit' %>
+            <%= button_to pat(:delete), url(:photos, :destroy, :id => photo.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
           </td>
         </tr>
       <% end %>
@@ -26,6 +26,6 @@
   </table>
 <% end -%>
 
-<% content_for :actions, partial("photos/actions") %>
+<% content_for :actions, partial("admin/photos/actions") %>
 
 <% content_for :title, 'Foto' %>

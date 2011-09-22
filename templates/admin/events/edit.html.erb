@@ -1,7 +1,7 @@
-<% form_for :event, url(:events, :update, :id => @event.id), :method => :put, :class => :form do |f| %>
-  <%= partial "events/form", :locals => { :f => f } %>
+<% form_for :event, url(:events, :update, :id => @event.id), :method => :put, :class => "form-stacked span16" do |f| %>
+  <%= partial "admin/events/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("base/actions", :locals => { :p => :events }) %>
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :events }) %>
 
 <% content_for :title, 'Modifica Evento' %>

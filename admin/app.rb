@@ -30,6 +30,8 @@ class Admin < Padrino::Application
 
   set :login_page, "/sessions/new"
 
+  layout "/admin/layouts/application"
+
   enable :store_location
 
   access_control.roles_for :any do |role|
