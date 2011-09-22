@@ -27,6 +27,15 @@ end
 # Add here your after load hooks
 #
 Padrino.after_load do
+  # compile less files
+  puts 'Compiling less files'
+  path = Padrino.root('public', 'stylesheets')
+  #`cd #{} && lessc admin.less > admin.css && 2`
+  Dir.glob(Padrino.root('public', 'stylesheets', '*.less')) {|f|
+    f = f.sub(Padrino.root('public', 'stylesheets'), '').sub(/^\//, '')
+    puts "compiling #{path} / #{f}" 
+    `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
+  }
 end
 
 Padrino.load!

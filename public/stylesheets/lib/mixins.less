@@ -216,6 +216,15 @@
 	       opacity: @opacity / 100;
 }
 
+
+// Sometimes usefull box-sizing model
+.box-sizing(@b:border-box){
+  -moz-box-sizing: @b;
+  -webkit-box-sizing: @b;
+  -ms-box-sizing: @b;
+  box-sizing: @b;
+}
+
 // Image replacements
 .image_replace(@i, @pl:0px, @pt:0px, @w:32px, @h:32px) {
   padding: 0;

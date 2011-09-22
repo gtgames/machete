@@ -2,12 +2,12 @@ Admin.controllers :cerca_hotel do
 
   get :index do
     @accounts = Hotel.all
-    render 'cercahotel/index'
+    render 'cercahotel/admin/index'
   end
 
   get :new do
     @account = Account.new
-    render 'accounts/new'
+    render 'cercahotel/admin/new'
   end
 
   post :create do
@@ -16,13 +16,13 @@ Admin.controllers :cerca_hotel do
       flash[:notice] = t'created'
       redirect url(:accounts, :index)
     else
-      render 'accounts/new'
+      render 'cercahotel/admin/new'
     end
   end
 
   get :edit, :with => :id do
     @account = Account.find(params[:id])
-    render 'accounts/edit'
+    render 'cercahotel/admin/edit'
   end
 
   put :update, :with => :id do
@@ -31,7 +31,7 @@ Admin.controllers :cerca_hotel do
       flash[:notice] = t'updated'
       redirect url(:accounts, :index)
     else
-      render 'accounts/edit'
+      render 'cercahotel/admin/edit'
     end
   end
 
