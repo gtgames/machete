@@ -1,0 +1,2 @@
+Blog.helpers do
+end

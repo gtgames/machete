@@ -1,4 +1,10 @@
-Machete.controllers :booking do
+class Booking < Padrino::Application
+  set :views, Padrino.root('templates')
+
+  layout Cfg.layout(:booking)
+end
+
+Booking.controllers do
   get :index do
     @booking = Booking.new
     render 'booking/index', :layout => Cfg.layout('booking')
@@ -15,7 +21,7 @@ Machete.controllers :booking do
   end
 end
 
-Machete.mailer :booking do
+Booking.mailer :booking do
   email :new do |booking|
     from "info@#{Cfg[:domain]}"
     reply_to "#{booking.email}"

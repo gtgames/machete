@@ -1,10 +1,6 @@
 class Admin < Padrino::Application
-  register Padrino::Rendering
   set :views, Padrino.root('templates')
 
-
-  register Padrino::Mailer
-  register Padrino::Helpers
   register Padrino::Admin::AccessControl
 
   register PadrinoFields
@@ -14,17 +10,6 @@ class Admin < Padrino::Application
     config.label_required_marker = "<abbr>*</abbr>"
     config.label_required_marker_position = :append
   end
-
-  register Padrino::Contrib::ExceptionNotifier
-  set :exceptions_from, "mail@#{Cfg[:domain]}"
-  set :exceptions_to, "god@progettoca.se"
-  set :exceptions_subject, "[machete][#{Cfg[:domain]}]"
-  set :exceptions_page, :errors
-
-  # Cache
-  register Padrino::Cache
-  set :cache, Padrino.cache
-  disable :caching
 
   enable  :sessions
 
@@ -46,5 +31,12 @@ class Admin < Padrino::Application
         role.project_module m.to_sym, "/#{m}"
       end
     end
+  end
+  
+  error 404 do
+    render 'errors/404'
+  end
+  error 500 do
+    render 'errors/500'
   end
 end

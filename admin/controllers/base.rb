@@ -27,7 +27,18 @@ Admin.controllers :base do
   end
 
   get :reboot do
-    require 'fileutils'
-    FileUtils.touch(Padrino.root('tmp', 'restart')) if Padrino.env == :development
+    if Padrino.env == :development
+      require 'fileutils'
+      FileUtils.touch(Padrino.root('tmp', 'restart'))
+      'touched $root/tmp/restart !!!'
+    else
+      redirect '/'
+    end
+  end
+  
+  get :reload do
+    Padrino.reload!
+    flash[:notice] = 'reloading code base!'
+    redirect '/'
   end
 end

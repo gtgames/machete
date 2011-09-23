@@ -1,4 +1,4 @@
-Machete.helpers do
+Gallery.helpers do
   def photos_by_keywords(kwd, max=5)
     photos = Photo.where(:tags.in => kwd.to_s.split(',').map(&:downcase).uniq.map(&:strip)).limit(max).all
 

@@ -1,2 +1,2 @@
-Cercahotel.helpers do
+CercaHotel.helpers do
 end

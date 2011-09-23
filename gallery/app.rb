@@ -1,3 +1,9 @@
+class Cercahotel < Padrino::Application
+  set :views, Padrino.root('templates')
+
+  layout Cfg.layout(:gallery)
+end
+
 Machete.controllers :gallery do
 
   get :index do

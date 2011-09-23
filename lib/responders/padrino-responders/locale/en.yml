@@ -1,7 +1,0 @@
-en:
-  responder:
-    messages:
-      default:
-        destroy: "%{model} has been successfully deleted."
-        create: "%{model} has been successfully created."
-        update: "%{model} has been successfully updated."

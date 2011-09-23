@@ -1,6 +1,11 @@
-Machete.controller :events do
-  layout Cfg.layout(:events)
+class Events < Padrino::Application
+  set :views, Padrino.root('templates')
 
+  layout Cfg.layout(:events)
+end
+
+
+Events.controllers do
   get :index do
     if Event.count == 0
       404
@@ -23,7 +28,7 @@ Machete.controller :events do
     end
   end
 
-  get :show, :with => :slug do
+  get :show, :with => :slug, :map => '/:slug' do
     @events = Event.where(:slug => params[:slug])
     if @events.count == 0
       404
