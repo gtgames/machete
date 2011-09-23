@@ -1,5 +1,37 @@
 @import "lib/bootstrap.less";
 
+.topbar {
+  position: relative;
+  margin-bottom: 9px;
+}
+
+#login_box {
+  width: 400px;
+  margin-top: 40px;
+  border: 1px solid @grayLight;
+  padding: 0;
+  .center-block();
+  .box-shadow();
+  .actions, form {
+    margin-bottom: 0px !important;
+  }
+  input {
+    margin-left: 20px;
+  }
+  h1 {
+    text-align: center;
+    padding-top: 9px;
+  }
+}
+
+ul#stats {
+  list-style: none;
+  padding: 0;
+  li {
+    text-align: center;
+  }
+}
+
 p#actions {
   font-size: 140%;
 }
@@ -9,16 +41,24 @@ p#actions {
   height: 300px;
 }
 
-th.last {
-  width: 140px;
+.alert-message {
+  .center-block();
+  width: 400px;
+  text-align: center;
+}
+
+
+table {
+  th {
+    cursor: pointer;
+    &.last {
+      width: 140px;
+    }
+  }
 }
 
 div.rui-calendar .timepicker select {
   width: 70px;
-}
-
-#content {
-  margin-top: 50px;
 }
 
 form {

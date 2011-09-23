@@ -9,7 +9,7 @@
 <script type="text/javascript">
 //<![CDATA[
 $(document).on('ready', function(){
-    Xhr.load("http://analyst.machete.it/<%= Cfg[:analyst] %>.js",{
+    Xhr.load("http://analyst.machete.it/<%= Cfg[:analyst] %>",{
         jsonp: 'callback',
         onSuccess: function() {
             var data = this.responseJSON;

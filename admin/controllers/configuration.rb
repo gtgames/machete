@@ -3,7 +3,7 @@ Admin.controllers :configurations do
     Cfg.insert 'title', {} if Cfg[:title].nil?
     Cfg.insert 'homepage', {} if Cfg[:homepage].nil?
 
-    render 'configurations/index'
+    render 'admin/configurations/index'
   end
   post :update do
     title = {}
@@ -28,7 +28,7 @@ Admin.controllers :configurations do
   get :vcard do
     Cfg.insert 'card', {} if Cfg[:card].nil?
 
-    render 'configurations/vcard'
+    render 'admin/configurations/vcard'
   end
   post :vcard_update do
     card = {}
@@ -38,6 +38,6 @@ Admin.controllers :configurations do
     Cfg.insert 'vcard', params["vcard"]
     Cfg.insert 'hcard', params["hcard"]
 
-    render 'configurations/vcard'
+    render 'admin/configurations/vcard'
   end
 end
