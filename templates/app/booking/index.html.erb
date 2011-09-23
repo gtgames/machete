@@ -1,80 +1,28 @@
 <article>
-<% form_for :booking, url(:booking, :new), :class => "form-stacked span16" do |f| -%>
-  <div class="row">
-    <div class="column grid_4">
-      <%= f.input :name %>
-    </div>
-    <div class="column grid_4">
-      <%= f.input :surname %>
-    </div>
-  </div>
+	<% form_for :booking, url(:booking, :new), :class => "span10" do |f| -%>
+		<%= f.input :name %>
+		<%= f.input :surname %>
+		<%= f.input :city %>
+		<%= f.input :email %>
+		<%= f.input :phone %>
+		<%= f.input :fax %>
+		<%= f.input :adults %>
+		<%= f.input :children %>
+		<%= f.input :business_name %>
+		<%= f.input :address %>
+		<%= f.input :vat %>
+		<%= f.input :snn %>
+		<hr>
+		<%= f.input :date_arrival %>
+		<%= f.input :date_departure %>
+		<hr>
+		<%= f.input :notes, :as => :text %>
+		<div><%= t'booking.terms' %></div>
+		<div class='actions'>
+			<%= f.submit t(:save), :class => "btn primary" %>
+			<%= f.submit t(:cancel), :onclick => "window.location='#{url(:index, :index)}'", :class => :btn %>
+		</div>
 
-  <div class="row">
-    <div class="column grid_8">
-      <%= f.input :city %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="column grid_4">
-      <%= f.input :email %>
-    </div>
-    <div class="column grid_2">
-      <%= f.input :phone %>
-    </div>
-    <div class="column grid_2">
-      <%= f.input :fax %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="column grid_4">
-      <%= f.input :adults %>
-    </div>
-    <div class="column grid_4">
-      <%= f.input :children %>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="column grid_4">
-      <%= f.input :business_name %>
-    </div>
-    <div class="column grid_4">
-      <%= f.input :address %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="column grid_4">
-      <%= f.input :vat %>
-    </div>
-    <div class="column grid_4">
-      <%= f.input :snn %>
-    </div>
-  </div>
-  <hr>
-
-  <div class="row">
-    <div class="column grid_4">
-
-      <%= f.input :date_arrival %>
-    </div>
-    <div class="column grid_4">
-      <%= f.input :date_departure %>
-    </div>
-  </div>
-  <hr>
-
-  <div class="row">
-    <div class="column grid_8">
-      <%= f.input :notes, :as => :text %>
-    </div>
-  </div>
-
-  <div><%= t'booking.terms' %></div>
-  <div class='actions'>
-    <%= f.submit t(:save), :class => :btn %>
-    <%= f.submit t(:cancel), :onclick => "window.location='#{url(:index, :index)}'", :class => :btn %>
-  </div>
-
-<% end -%>
+	<% end -%>
 </article>
 
