@@ -27,3 +27,4 @@ app/views/shared/_footer.haml
 public/stylesheets/imagination.css
 public/stylesheets/style.css
 public/media/*
+public/stylesheets/layout.css

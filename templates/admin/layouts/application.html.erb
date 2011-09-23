@@ -32,19 +32,19 @@
 	<header class="topbar">
 	  <div class="topbar-inner">
 		<div class="container-fluid">
-		  <a class="brand" href="/">Machete</a>
-		  <ul class="nav">
-			<%= partial "admin/layouts/navigation" %>
-		  </ul>
-		  <div class="pull-right">
-			  <ul>
-				<li><% if Padrino.env == :development -%><a href='/base/reboot'>REBOOT</a><% end -%></li>
-				<li><%= link_to 'Configurazione', url(:configurations, :index) %></li>
-				<li><%= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id) %></li>
-				<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>">View Site</a></li>
-				<li><%= link_to pat(:logout), url(:sessions, :destroy), :method => :delete, :class => :logout_user %></li>
-			  </ul>
-		  </div>
+			<a class="brand" href="/">Machete</a>
+			<ul class="nav">
+				<%= partial "admin/layouts/navigation" %>
+			</ul>
+			<div class="pull-right">
+				<ul>
+					<li><% if Padrino.env == :development -%><a href='/base/reboot'>REBOOT</a><% end -%></li>
+					<li><%= link_to 'Configurazione', url(:configurations, :index) %></li>
+					<li><%= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id) %></li>
+					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>">View Site</a></li>
+					<li><%= link_to pat(:logout), url(:sessions, :destroy), :method => :delete, :class => :logout_user %></li>
+				</ul>
+			</div>
 		</div>
 	  </div>
 	</header>
