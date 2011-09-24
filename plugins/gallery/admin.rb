@@ -5,12 +5,12 @@ Admin.controllers :photos do
       { :gallery => g.to_s,
         :photos => Photo.where( :gallery => %r{#{g}}) }
     end
-    render 'admin/photos/index'
+    render 'gallery/admin/index'
   end
 
   get :new do
     @photo = Photo.new
-    render 'admin/photos/new'
+    render 'gallery/admin/new'
   end
 
   post :create do
@@ -20,13 +20,13 @@ Admin.controllers :photos do
       flash[:notice] = 'Photo was successfully created.'
       redirect url(:photos, :edit, :id => @photo.id)
     else
-      render 'admin/photos/new'
+      render 'gallery/admin/new'
     end
   end
 
   get :edit, :with => :id do
     @photo = Photo.find(params[:id])
-    render 'admin/photos/edit'
+    render 'gallery/admin/edit'
   end
 
   put :update, :with => :id do
@@ -36,7 +36,7 @@ Admin.controllers :photos do
       flash[:notice] = 'Photo was successfully updated.'
       redirect url(:photos, :index)
     else
-      render 'admin/photos/edit'
+      render 'gallery/admin/edit'
     end
   end
 
@@ -52,9 +52,13 @@ Admin.controllers :photos do
 
   get :import do
     require "find"
-    @files = Find.find(File.expand_path("~/tmp/#{Cfg[:domain]}")).map{|f|
-      f unless f.match(/\.(jpe?g|png|gif)$/i).nil?
-    }.compact
+    begin
+      @files = Find.find(File.expand_path("~/tmp/#{Cfg[:domain]}")).map{|f|
+        f unless f.match(/\.(jpe?g|png|gif)$/i).nil?
+      }.compact
+    rescue Errno::ENOENT
+      @files = []
+    end
 
     if @files.size == 0
       flash[:notice] = 'Nessun file da importare'

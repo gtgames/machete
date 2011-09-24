@@ -7,26 +7,6 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 
-#
-# Machete Plugins
-#
-# TODO: Make something cleaner
-JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
-  unless File.directory?( "#{PADRINO_ROOT}/module_#{plugin}" )
-    puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/module_#{plugin} => #{PADRINO_ROOT}/module_#{plugin}"
-    File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/module_#{plugin}", "#{PADRINO_ROOT}/module_#{plugin}"
-    
-    puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
-    File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
-
-    if File.directory? "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}"
-      puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
-      File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
-    end
-  end
-end
-###
-
 ##
 # Add here your before load hooks
 #
@@ -50,6 +30,7 @@ Padrino.before_load do
       `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
     }
   }.call()
+
 end
 
 ##

@@ -1,4 +1,4 @@
-Admin.controllers :blog do
+Admin.controllers :posts do
 
   get :index do
     @posts = Post.all

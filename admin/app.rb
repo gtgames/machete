@@ -46,7 +46,6 @@ class Admin < Padrino::Application
   end
 end
 
-# load modules admin actions
-Dir.glob(Padrino.root('*', 'admin.rb')).each do |e|
-  require e.sub(/\.rb$/, '')
+JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
+  require "#{PADRINO_ROOT}/plugins/#{plugin}/admin"
 end

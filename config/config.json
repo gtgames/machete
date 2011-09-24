@@ -1,7 +1,9 @@
 {
   // Plugin Installation
   "plugins":[
-    "blog"
+    "blog",
+    "gallery",
+    "cercahotel"
   ],
 	"mongo":{
 		"host":"127.0.0.1",
@@ -15,11 +17,12 @@
 			"domain":"machete.it",
 			"locales":["it"],
 			"acl":{
-				"admin":["links","photos","posts","pages","taxonomy"],
+				"admin":["links","photos","posts","pages","taxonomy","configurations"],
 				"root":["links","photos","multimedia","posts","pages","taxonomy","events","booking","configurations","accounts"]
 			},
 			// Plugin Routing
 			"apps": {
+			  "Blog":"/blog",
 			  "CercaHotel":"/cercahotel",
 			  "Events":"/events",
 			  "Booking":"/booking",

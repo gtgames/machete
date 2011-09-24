@@ -39,6 +39,30 @@ Padrino.configure_apps do
   set :session_secret, SecureRandom.base64(64)
 end
 
+#
+# Machete Plugins
+#
+# TODO: Make something cleaner
+JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
+  unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
+    puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
+    File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
+
+    if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}") and not File.directory?("#{PADRINO_ROOT}/templates/mailer/#{plugin}")
+      puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
+      File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
+    end
+  end
+
+  Padrino.set_load_paths("#{PADRINO_ROOT}/plugins/#{plugin}", "#{PADRINO_ROOT}/plugins/#{plugin}/models")
+  require "#{PADRINO_ROOT}/plugins/#{plugin}/app"
+  Dir.glob("#{PADRINO_ROOT}/plugins/#{plugin}/models/*.rb").each{|r| require r.sub(/\.rb$/, '') }
+end
+###
+
+
+
+
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 
 Cfg['apps'].each do |app, mountpoint|
@@ -49,6 +73,7 @@ Cfg['apps'].each do |app, mountpoint|
     Padrino.mount("#{app}").to("#{mountpoint.downcase}").host(/^(?!(admin|www\.admin)).*$/)
   rescue NameError
     # do nothing
+    logger.error "not mounting #{app}"
   end
 end unless Cfg['apps'].nil?
 
