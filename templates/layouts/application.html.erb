@@ -51,10 +51,9 @@
 				<%= yield %>
 			</div>
 			<div class="column span6">
-			  <% cache("taxonomy_tree_#{Cfg.locale}", :expires_in => 120) do %>
+			<% cache("taxonomy_tree_#{Cfg.locale}", :expires_in => 120) do %>
 				<%= partial('shared/taxonomy', :locals =>{:taxons => Taxonomy.threaded}) %>
-				<% end -%>
-				<%= partial('booking/widget') %>
+			<% end -%>
 			</div>
 		</div>
 	</section>

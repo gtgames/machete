@@ -42,8 +42,14 @@ end
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 
 Cfg['apps'].each do |app, mountpoint|
-  puts "Mounting App: #{app}..."
-  Padrino.mount("#{app}").to("#{mountpoint.downcase}").host(/^(?!(admin|www\.admin)).*$/)
+  begin
+    Object.const_get(app) # testing app existance
+
+    puts "Mounting App: #{app}..."
+    Padrino.mount("#{app}").to("#{mountpoint.downcase}").host(/^(?!(admin|www\.admin)).*$/)
+  rescue NameError
+    # do nothing
+  end
 end unless Cfg['apps'].nil?
 
 # This should have low priority
