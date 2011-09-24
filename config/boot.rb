@@ -21,12 +21,7 @@ Padrino.before_load do
   Wand.executable = '/usr/bin/file'
 
   Padrino.cache = Padrino::Cache::Store::Mongo.new( MongoMapper.database, :size => 2, :max => 100, :collection => 'cache')
-end
 
-##
-# Add here your after load hooks
-#
-Padrino.after_load do
   -> {
     # compile less files in a closure :P
     puts 'Compiling less files'
@@ -37,7 +32,12 @@ Padrino.after_load do
       `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
     }
   }.call()
+end
 
+##
+# Add here your after load hooks
+#
+Padrino.after_load do
   # Middleware for locale redirection
   if Cfg['locales'].length > 1
     use Rack::AutoLocale,

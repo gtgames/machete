@@ -1,4 +1,4 @@
-class Blog < Padrino::Application
+class Blog < BasicApplication
   set :views, Padrino.root('templates')
 
   layout Cfg.layout(:blog)

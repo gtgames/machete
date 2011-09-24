@@ -1,7 +1,9 @@
-Padrino.configure_apps do
+class BasicApplication < Padrino::Application
   register Padrino::Rendering
   register Padrino::Mailer
   register Padrino::Helpers
+
+  set :views, Padrino.root('templates')
 
   # Cache
   register Padrino::Cache
@@ -23,9 +25,6 @@ Padrino.configure_apps do
   set :exceptions_subject, "[#{Cfg[:domain]}]"
   set :exceptions_page, :errors
 
-
-  set :session_secret, SecureRandom.base64(64)
-  
   # error handling
   error 404 do
     render 'errors/404'
@@ -35,11 +34,16 @@ Padrino.configure_apps do
   end
 end
 
+Padrino.configure_apps do
+  enable :sessions
+  set :session_secret, SecureRandom.base64(64)
+end
+
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 
 Cfg['apps'].each do |app, mountpoint|
   puts "Mounting App: #{app}..."
-  Padrino.mount("#{app}").to("#{mountpoint.downcase}")
+  Padrino.mount("#{app}").to("#{mountpoint.downcase}").host(/^(?!(admin|www\.admin)).*$/)
 end unless Cfg['apps'].nil?
 
 # This should have low priority

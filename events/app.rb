@@ -1,6 +1,4 @@
-class Events < Padrino::Application
-  set :views, Padrino.root('templates')
-
+class Events < BasicApplication
   layout Cfg.layout(:events)
 end
 

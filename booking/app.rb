@@ -1,4 +1,4 @@
-class Booking < Padrino::Application
+class Booking < BasicApplication
   set :views, Padrino.root('templates')
 
   layout Cfg.layout(:booking)
@@ -6,11 +6,11 @@ end
 
 Booking.controllers do
   get :index do
-    @booking = Booking.new
+    @booking = BookRequest.new
     render 'booking/index', :layout => Cfg.layout('booking')
   end
   post :new do
-    @booking = Booking.new params[:booking]
+    @booking = BookRequest.new params[:booking]
     if @booking.save
       deliver(:booking, :new, @booking)
 

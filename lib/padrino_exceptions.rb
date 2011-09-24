@@ -4,7 +4,7 @@
 #
 # ==== Usage
 #
-#   class MyApp < Padrino::Application
+#   class MyApp < BasicApplication
 #     register Padrino::Contrib::ExceptionNotifier
 #     set :exceptions_from,    "errors@localhost.local"
 #     set :exceptions_to,      "foo@bar.local"

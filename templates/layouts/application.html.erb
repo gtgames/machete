@@ -26,12 +26,12 @@
 				<a class="brand" href="/">Machete</a>
 				<ul class="nav">
 					<% cache("nav_#{Cfg.locale}") do -%>
-						<li><%= link_to t('home'), url(:index, :index) %></li>
+						<li><%= link_to t('home'), '/' %></li>
 						<% menu.each do |m| %>
-							<li><a href="<%= m.url %>"><%= m.title %></a></li>
+							<li><%= link_to m.title, m.url %></li>
 						<% end %>
-						<li><%= link_to t('gallery'), url(:gallery, :index) %></li>
-						<li><%= link_to t('contact'), url(:contact, :index) %></li>
+						<li><%= link_to t('gallery'), '/gallery' %></li>
+						<li><%= link_to t('contact'), '/contact' %></li>
 					<% end -%>
 				</ul>
 			</div>

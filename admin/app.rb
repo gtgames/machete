@@ -1,6 +1,11 @@
 class Admin < Padrino::Application
+  register Padrino::Rendering
   set :views, Padrino.root('templates')
-
+  
+  register Padrino::Mailer
+  register Padrino::Helpers
+  register Padrino::Contrib::ExceptionNotifier
+  
   register Padrino::Admin::AccessControl
 
   register PadrinoFields
@@ -39,4 +44,9 @@ class Admin < Padrino::Application
   error 500 do
     render 'errors/500'
   end
+end
+
+# load modules admin actions
+Dir.glob(Padrino.root('*', 'admin.rb')).each do |e|
+  require e.sub(/\.rb$/, '')
 end

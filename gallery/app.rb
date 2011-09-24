@@ -1,10 +1,9 @@
-class Cercahotel < Padrino::Application
+class Gallery < BasicApplication
   set :views, Padrino.root('templates')
-
   layout Cfg.layout(:gallery)
 end
 
-Machete.controllers :gallery do
+Gallery.controllers :gallery do
 
   get :index do
     @galleries = Photo.galleries.map do |g|

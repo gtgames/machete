@@ -1,6 +1,4 @@
-class CercaHotel < Padrino::Application
-  set :views, Padrino.root('templates')
-
+class CercaHotel < BasicApplication
   layout Cfg.layout(:cercahotel)
 end
 

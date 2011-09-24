@@ -1,5 +1,6 @@
-class Booking
+class BookRequest
   include MongoMapper::Document
+  set_collection_name 'bookings' # legacy updates
 
   key :name, String
   key :surname, String
@@ -29,11 +30,15 @@ class Booking
     (self[:date_departure].is_a? String)? self[:date_departure] : self[:date_departure].xmlschema
   end
 
-
   # various
   key :ip,  String
   key :ua,  String
   key :ref, String
+
+  # state
+  key :st, Integer, :default => 1 # 1  - unread state
+                                  # 0  - read
+                                  # -1 - deleted
 
   ## VALIDATIONS
   validates_presence_of :name, :surname, :email, :city
