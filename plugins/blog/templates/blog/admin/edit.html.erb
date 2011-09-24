@@ -1,5 +1,5 @@
 <% form_for :post, url(:posts, :update, :id => @post.id), :method => :put, :class => "form-stacked span16" do |f| %>
-  <%= partial "admin/posts/form", :locals => { :f => f } %>
+  <%= partial "blog/admin/form", :locals => { :f => f } %>
 <% end %>
 
 <% content_for :actions, partial("admin/base/actions", :locals => { :p => :posts }) %>

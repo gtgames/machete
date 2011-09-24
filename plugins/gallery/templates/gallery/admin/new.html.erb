@@ -2,6 +2,6 @@
   <%= partial "gallery/admin/form", :locals => { :f => f } %>
 <% end %>
 
-<% content_for :actions, partial("admin/photos/actions", :locals => { :p => :photos }) %>
+<% content_for :actions, partial("gallery/admin/actions", :locals => { :p => :photos }) %>
 
 <% content_for :title, 'Nuova Foto' %>
