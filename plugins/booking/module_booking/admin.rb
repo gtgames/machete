@@ -10,7 +10,7 @@ Admin.controllers :booking do
 
   get :show, :with => :id do
   	@book = BookRequest.find(params[:id])
-  	render 'admin/booking/show'
+  	render '/booking/admin/show'
   end
 
   delete :destroy, :with => :id do
