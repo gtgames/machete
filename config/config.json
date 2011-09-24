@@ -1,4 +1,8 @@
 {
+  // Plugin Installation
+  "plugins":[
+    "blog"
+  ],
 	"mongo":{
 		"host":"127.0.0.1",
 			"name":"machete",
@@ -14,6 +18,7 @@
 				"admin":["links","photos","posts","pages","taxonomy"],
 				"root":["links","photos","multimedia","posts","pages","taxonomy","events","booking","configurations","accounts"]
 			},
+			// Plugin Routing
 			"apps": {
 			  "CercaHotel":"/cercahotel",
 			  "Events":"/events",
