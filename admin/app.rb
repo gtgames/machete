@@ -5,7 +5,15 @@ class Admin < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
   register Padrino::Contrib::ExceptionNotifier
-  
+  # Exception mailer
+  register Padrino::Contrib::ExceptionNotifier
+  set :exceptions_from, "mail@#{Cfg[:domain]}"
+  set :exceptions_to, "god@progettoca.se"
+  set :exceptions_subject, "[#{Cfg[:domain]}]"
+
+  set :exceptions_page_500, "errors/500"
+  set :exceptions_page_404, "errors/404"
+
   register Padrino::Admin::AccessControl
 
   register PadrinoFields
@@ -36,13 +44,6 @@ class Admin < Padrino::Application
         role.project_module m.to_sym, "/#{m}"
       end
     end
-  end
-  
-  error 404 do
-    render 'errors/404'
-  end
-  error 500 do
-    render 'errors/500'
   end
 end
 

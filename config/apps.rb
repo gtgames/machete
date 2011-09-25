@@ -23,15 +23,9 @@ class BasicApplication < Padrino::Application
   set :exceptions_from, "mail@#{Cfg[:domain]}"
   set :exceptions_to, "god@progettoca.se"
   set :exceptions_subject, "[#{Cfg[:domain]}]"
-  set :exceptions_page, :errors
 
-  # error handling
-  error 404 do
-    render 'errors/404'
-  end
-  error 500 do
-    render 'errors/500'
-  end
+  set :exceptions_page_500, "errors/500"
+  set :exceptions_page_404, "errors/404"
 end
 
 Padrino.configure_apps do

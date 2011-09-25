@@ -41,12 +41,12 @@ module Padrino
           end
           response.status = 500
           content_type 'text/html', :charset => "utf-8"
-          render settings.exceptions_page
+          render settings.exceptions_page_500
         end
         app.error 404 do
           response.status = 404
           content_type 'text/html', :charset => "utf-8"
-          render settings.exceptions_page
+          render settings.exceptions_page_404
         end
       end # self.registered
     end # ExceptionNotifier

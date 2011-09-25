@@ -1,6 +1,7 @@
 <table class="zebra-striped">
   <thead>
     <tr>
+	  <th style="width:40px">&nbsp;</th>
       <th class="sortable"><%= mat(:booking, :name) %></th>
       <th class="sortable"><%= mat(:booking, :business_name) %></th>
       <th class="sortable"><%= mat(:booking, :date_arrival) %></th>
@@ -11,7 +12,16 @@
   <tbody>
     <% @books.each do |book| %>
     <tr class="">
-      <td class="first"><%= book.name %> <%= book.surname %> </td>
+	  <td>
+		<% if book.st == 0 %>
+			<span class="label">read</span>
+		<% elsif book.st == 1 %>
+			<span class="label important">new</span>
+		<% else %>
+			<span class="label">deleted</span>
+		<% end %>
+	  </td>
+      <td><%= book.name %> <%= book.surname %> </td>
       <td><em><%= book.business_name %></em></td>
       <td class="date"><%= book.date_arrival %></td>
       <td class="date"><%= book.date_departure %></td>

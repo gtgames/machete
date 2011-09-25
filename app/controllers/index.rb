@@ -4,8 +4,7 @@ Machete.controllers :index do
   end
 
   get :youtube, :map => '/video' do
-    pp Cfg['youtube']
-    if ! Cfg[:youtube].nil?
+    if not Cfg[:youtube].nil?
       render '/app/index/youtube', :layout => Cfg.layout('video')
     else
       404

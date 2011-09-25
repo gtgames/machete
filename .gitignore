@@ -31,4 +31,5 @@ public/stylesheets/layout.css
 public/stylesheets/admin.css
 templates/blog
 templates/cercahotel
-templates/gallery*.tmproj
+templates/gallery
+*.tmproj

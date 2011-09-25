@@ -1,6 +1,6 @@
 Admin.controller :taxonomy do
   get :index do
-    @taxonomy = Taxonomy.sort(:_id.desc).all
+    @taxonomy = Taxonomy.sort(:path.asc).all
     render 'admin/taxonomy/index'
   end
 

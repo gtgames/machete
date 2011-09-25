@@ -1,16 +1,14 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="last">&nbsp;</th>
       <th class="sortable"><%= mat(:taxonomy, :title) %></th>
       <th class="sortable"><%= mat(:taxonomy, :permalink) %></th>
-      <th class="last">&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <% @taxonomy.each do |tax| %>
       <tr>
-        <td><input type="checkbox"></td>
         <td><%= tax.title %></td>
         <td><%= tax.path %></td>
         <td>

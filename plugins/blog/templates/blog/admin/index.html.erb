@@ -1,25 +1,25 @@
 <table class="zebra-striped">
-  <thead>
-    <tr>
-      <th class="last">&nbsp;</th>
-      <th class="sortable"><%= mat(:post, :title) %></th>
-      <th class="sortable"><%= mat(:post, :tag_list) %></th>
-      <th class="last">&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td><%= post.title %></td>
-        <td><%= post.tag_list %></td>
-        <td>
-          <%= button_to pat(:edit), url(:posts, :edit, :id => post.id), :method => :get, :class => 'btn edit' %>
-          <%= button_to pat(:delete), url(:posts, :destroy, :id => post.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
+	<thead>
+		<tr>
+			<th class="sortable"><%= mat(:post, :title) %></th>
+			<th class="sortable"><%= mat(:post, :updated_at) %></th>
+			<th class="sortable"><%= mat(:post, :tag_list) %></th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @posts.each do |post| %>
+			<tr>
+				<td><%= post.title %></td>
+				<td class="date"><%= post.updated_at %></td>
+				<td><%= post.tag_list %></td>
+				<td>
+					<%= button_to pat(:edit), url(:posts, :edit, :id => post.id), :method => :get, :class => 'btn edit' %>
+					<%= button_to pat(:delete), url(:posts, :destroy, :id => post.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
 </table>
 
 <% content_for :actions, partial("admin/base/actions", :locals => { :p => :posts }) %>

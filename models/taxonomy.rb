@@ -74,15 +74,15 @@ class Taxonomy
     list
   end
 
-  # Setters
-  def slug= text
-    self['slug'] = text.to_slug
-  end
-
+  # Hooks
   before_save :set_path
   private
   # Store the taxon's path.
   def set_path
+    Cfg[:locales].each{|l|
+          self['slug'][l] = self['title'][l].to_slug
+    }
+
     if self['parent_id'].blank?
       self['path_id'] = ''
       Cfg[:locales].each{|l|
