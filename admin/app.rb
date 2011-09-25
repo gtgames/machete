@@ -47,6 +47,6 @@ class Admin < Padrino::Application
   end
 end
 
-JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
+JSON.parse(File.read(Padrino.root('config', 'config.json')))['plugins'].each do |plugin|
   require "#{PADRINO_ROOT}/plugins/#{plugin}/admin"
 end

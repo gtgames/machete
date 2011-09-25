@@ -37,7 +37,7 @@ end
 # Machete Plugins
 #
 # TODO: Make something cleaner
-JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
+JSON.parse(File.read(Padrino.root('config', 'config.json')))['plugins'].each do |plugin|
   begin
     unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
       puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"

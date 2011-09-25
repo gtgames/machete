@@ -28,7 +28,7 @@ class MuStore
 
   def refresh!
     clear
-    Yajl::Parser.parse( File.read( Padrino.root("config", "config.json") ) )['site'].each do |k,v|
+    JSON.parse( File.read( Padrino.root("config", "config.json") ) )['site'].each do |k,v|
       client[k.to_s] = encode(v)
     end
     @options[:collection].find({}).each do |c|

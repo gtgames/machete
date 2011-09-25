@@ -3,11 +3,11 @@ module MongoI18n
   class Store
     attr_reader :collection
 
-    def initialize(collection, options={})
-      @collection, @options = collection, options
+    def initialize(collection)
+      @collection = collection
     end
 
-    def []=(key, value, options = {})
+    def []=(key, value)
       key = key.to_s
       doc = {:_id => key, :value => value}
       collection.save(doc)
@@ -42,4 +42,6 @@ end
 
 I18NDB = Mongo::Connection.new('127.0.0.1', 27017).db('i18n')
 I18NDB.authenticate('i18n', 'i18n')
-I18n.backend = I18n::Backend::KeyValue.new(MongoI18n::Store.new(I18NDB['strings']))
+I18n.backend = I18n::Backend::Chain.new(
+  I18n::Backend::KeyValue.new(MongoI18n::Store.new(I18NDB['strings'])),
+  I18n.backend)  

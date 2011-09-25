@@ -1,6 +1,4 @@
-require 'yajl/json_gem'
-
-settings = JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))
+settings = JSON.parse(File.read(Padrino.root('config', 'config.json')))
 
 MongoMapper.connection = Mongo::Connection.new(settings['mongo']['host'], nil, :logger => logger)
 
