@@ -12,6 +12,13 @@ Bundler.require(:default, PADRINO_ENV)
 #
 Padrino.before_load do
   require Padrino.root('lib','config')
+  # Middleware for locale redirection
+  if Cfg['locales'].length > 1
+    use Rack::AutoLocale,
+      :host_blacklist => [/^(www\.)?admin\..*$/],
+      :blacklist  => ['/media','/sitemap.xml', '/sitemap']
+  end
+
   I18n.default_locale = Cfg['locales'].first
 
   Wand.executable = '/usr/bin/file'
@@ -31,23 +38,10 @@ Padrino.before_load do
   }.call()
 
 end
-
 ##
 # Add here your after load hooks
 #
 Padrino.after_load do
-  # Middleware for locale redirection
-  if Cfg['locales'].length > 1
-    use Rack::AutoLocale,
-      :host_blacklist => [/^(www\.)?admin\..*$/],
-      :blacklist  => ['/media','/sitemap.xml', '/sitemap']
-  end
-
-  # Rack::Thumb thumb server
-  use Rack::Thumb,
-    :write => true,
-    :prefix => '/media'
-
 end
 
 Padrino.load!

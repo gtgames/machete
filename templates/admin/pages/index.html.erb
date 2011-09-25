@@ -1,16 +1,14 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="last">&nbsp;</th>
       <th class="sortable"><%= mat(:page, :title) %></th>
       <th class="sortable"><%= mat(:page, :taxonomy) %></th>
-      <th class="last">&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <% @pages.each do |page| %>
       <tr>
-        <td><input type="checkbox"></td>
         <td><%= page.title %></td>
         <td>
           <% if page.taxonomy.size > 0 -%>

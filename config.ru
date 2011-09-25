@@ -16,5 +16,10 @@ if ENV['RACK_ENV'] == 'development'
     :root => "public"
 end
 
+# Rack::Thumb thumb server
+require ::File.expand_path('../lib/rack_thumb', __FILE__)
+use Rack::Thumb, { :write => ENV['RACK_ENV'] == 'production' }
+
+
 require ::File.expand_path('../config/boot.rb', __FILE__)
 run Padrino.application

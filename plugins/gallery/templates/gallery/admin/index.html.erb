@@ -4,16 +4,14 @@
   <table cellspacing="0">
     <thead>
       <tr>
-        <th class="last">&nbsp;</th>
         <th class="sortable"><%= mat(:page, :title) %></th>
         <th class="sortable"><%= mat(:page, :file) %></th>
-        <th class="last">&nbsp;</th>
+        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       <% g[:photos].each do |photo| %>
         <tr>
-          <td><input type="checkbox"></td>
           <td><%= photo.title %></td>
           <td><%= link_to(image_tag( photo.file.thumb('50xx50') ), photo.file.url) unless photo.file.nil? %></td>
           <td>

@@ -1,17 +1,15 @@
-<table cellspacing="0"> 
+<table class="zebra-striped"> 
   <thead>
     <tr>
-      <th class="last">&nbsp;</th>
       <th class="sortable"><%= mat(:account, :name) %></th>
       <th class="sortable"><%= mat(:account, :surname) %></th>
       <th class="sortable"><%= mat(:account, :role) %></th>
-      <th class="last">&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <% @accounts.each do |account| %>
       <tr>
-        <td><input type="checkbox"></td>
         <td><%= account.name %></td>
         <td><%= account.surname %></td>
         <td><%= account.role %></td>

@@ -33,3 +33,4 @@ templates/blog
 templates/cercahotel
 templates/gallery
 *.tmproj
+templates/booking
