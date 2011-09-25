@@ -46,11 +46,11 @@ end
 JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
   begin
     unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
-      logger.notice "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
+      puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
       File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
 
       if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}") and not File.directory?("#{PADRINO_ROOT}/templates/mailer/#{plugin}")
-        logger.notice "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
+        puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
         File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
       end
     end
@@ -72,7 +72,7 @@ Cfg['apps'].each do |app, mountpoint|
   begin
     Object.const_get(app) # testing app existance
 
-    logger.notice "Mounting App: #{app}..."
+    puts "Mounting App: #{app}..."
     Padrino.mount("#{app}").to("#{mountpoint.downcase}").host(/^(?!(admin|www\.admin)).*$/)
   rescue NameError
     # do nothing
