@@ -44,16 +44,19 @@ end
 #
 # TODO: Make something cleaner
 JSON.parse(File.new(Padrino.root('config', 'config.json'), 'r'))['plugins'].each do |plugin|
-  unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
-    puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
-    File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
+  begin
+    unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
+      log.notice "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
+      File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
 
-    if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}") and not File.directory?("#{PADRINO_ROOT}/templates/mailer/#{plugin}")
-      puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
-      File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
+      if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}") and not File.directory?("#{PADRINO_ROOT}/templates/mailer/#{plugin}")
+        log.notice "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
+        File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
+      end
     end
+  rescue Errno::EEXIST
+    # do nothing
   end
-
   Padrino.set_load_paths("#{PADRINO_ROOT}/plugins/#{plugin}", "#{PADRINO_ROOT}/plugins/#{plugin}/models")
   require "#{PADRINO_ROOT}/plugins/#{plugin}/app"
   Dir.glob("#{PADRINO_ROOT}/plugins/#{plugin}/models/*.rb").each{|r| require r.sub(/\.rb$/, '') }
