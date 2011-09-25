@@ -1,8 +1,12 @@
-<article>
-<% @galleries.each do |p| -%>
-  <div class="gallery">
-    <h2><%= p.gallery %></h2>
-    <%= link_to image_tag(p.file.thumb), url(:gallery, :show, :gallery => p.gallery_slug) %>
-  </div>
-<% end -%>
+<article class="gallery">
+	<% @galleries.each do |p| -%>
+		<h2><%= link_to p.first.gallery, url(:show, :gallery => p.first.gallery_slug) %></h2>
+		<ul class="media-grid">
+		<% p.each do |photo| -%>
+			<li>
+				<%= link_to image_tag(photo.file.thumb('210xx60')), photo.file.url, :class => "thumbnail span3", :rel => photo.gallery %>
+			</li>
+		<% end -%>
+		</ul>
+	<% end -%>
 </article>

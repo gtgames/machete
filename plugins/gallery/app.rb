@@ -3,16 +3,16 @@ class Gallery < BasicApplication
   layout Cfg.layout(:gallery)
 end
 
-Gallery.controllers :gallery do
+Gallery.controllers do
 
   get :index do
     @galleries = Photo.galleries.map do |g|
-      Photo.where(:gallery => g).skip(rand(Photo.count(:gallery => g))).limit(1).first
+      Photo.where(:gallery => g)
     end
     render 'gallery/index', :layout => Cfg.layout('gallery')
   end
 
-  get :show, :map => '/gallery/:gallery' do
+  get :show, :map => '/:gallery' do
     @photos = Photo.where(:gallery_slug => params[:gallery])
     render 'gallery/show', :layout => Cfg.layout('gallery')
   end

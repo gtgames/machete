@@ -11,7 +11,7 @@ Machete.controllers :index do
     end
   end
 
-  get :sitemap, :provides => [:xml, :html] do
+  get :sitemap, :provides => [:xml, :html], :map => '/sitemap' do
     @posts = (defined?(Post))? Post.sort(:_id.desc) : []
     @pages = Page.sort(:_id.desc)
     render 'sitemap', :layout => false if content_type == :xml
