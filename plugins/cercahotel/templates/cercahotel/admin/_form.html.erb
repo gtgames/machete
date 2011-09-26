@@ -13,9 +13,22 @@
 	
 	<%= f.input :lat %>
 	<%= f.input :lng %>
-	
-	
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAFJC5GQPX-w6DsErzUPS_TxQfQ2HpL9heYXvk166R28mJhIGcpxQKqa7lF2TfhQRP2JKHmZ13pejsoQ" type="text/javascript"></script>
+
+
+	<% if Cfg[:domain] =~ /machete/ %>
+	<script type="text/javascript" charset="utf-8">
+		document.write([
+		  '<script src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=', {
+		    'machete.dev': 'ABQIAAAAFJC5GQPX-w6DsErzUPS_TxQfQ2HpL9heYXvk166R28mJhIGcpxQKqa7lF2TfhQRP2JKHmZ13pejsoQ',
+		    'machete.it': 'ABQIAAAAFJC5GQPX-w6DsErzUPS_TxStbnZnjxb5KRvRpJSOL3Ab1clYURTwJ8j29Itl5FMjsWQRRQcYbJctYQ'
+		  }[window.location.host.match(/(\w+\.\w+)$/)[0]],
+		  '" type="text/javascript"><\/script>'
+		].join(''));
+	</script>
+	<% else %>
+		<script src="http://maps.google.com/maps?file=api&v=2&key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
+	<% end %>
+
 	<script type="text/javascript">
 		$(document).on('ready', function(){
 			var map, center, marker,
