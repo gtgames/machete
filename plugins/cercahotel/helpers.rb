@@ -3,20 +3,20 @@ end
 
 Admin.helpers do
   def cerca_hotel_features_options
-    [ ["restaurant",  "Ristorante"],
-      ["garage",      "Garage"],
-      ["park",        "Parcheggio"],
-      ["disable",     "Strutture per disabili"],
-      ["pool",        "Piscina"],
-      ["sauna",       "Sauna"],
-      ["solarium",    "Solarium"],
-      ["beauty",      "Beauty Farm"],
-      ["dogs",        "Cani ammessi"],
-      ["garden",      "Giardino"],
-      ["suite",       "Suite"],
-      ["terrace",     "Balcone/Terrazzo"],
-      ["tv",          "Tv - Sat"],
-      ["internet",    "Internet"],
-      ["safe",        "Cassaforte"] ]
+    [ ["Ristorante"             , "restaurant" ],
+      ["Garage"                 , "garage"     ],
+      ["Parcheggio"             , "park"       ],
+      ["Strutture per disabili" , "disable"    ],
+      ["Piscina"                , "pool"       ],
+      ["Sauna"                  , "sauna"      ],
+      ["Solarium"               , "solarium"   ],
+      ["Beauty Farm"            , "beauty"     ],
+      ["Cani ammessi"           , "dogs"       ],
+      ["Giardino"               , "garden"     ],
+      ["Suite"                  , "suite"      ],
+      ["Balcone/Terrazzo"       , "terrace"    ],
+      ["Tv - Sat"               , "tv"         ],
+      ["Internet"               , "internet"   ],
+      ["Cassaforte"             , "safe"       ] ]
   end
 end

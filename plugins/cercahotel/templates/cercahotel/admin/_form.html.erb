@@ -4,8 +4,10 @@
 
 <%= f.input :description, :as => :text %>
 
-<%  %>
-
+<fieldset>
+	<legend>Attrezzatura Esercizio</legend>
+	<%= f.select :features, :options => cerca_hotel_features_options, :multiple => true %>
+</fieldset>
 <fieldset>
 	<legend>Posizione</legend>
 	

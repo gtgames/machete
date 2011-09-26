@@ -11,6 +11,8 @@ class Hotel
 
   key :photo, MediaFile::Embeddable
 
+  key :features, Array
+
   key :lat, Float
   key :lng, Float
 
