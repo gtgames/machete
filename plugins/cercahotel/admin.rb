@@ -11,10 +11,10 @@ Admin.controllers :cerca_hotel do
   end
 
   post :create do
-    @hotel = Hotel.new(params[:account])
+    @hotel = Hotel.new(params[:hotel])
     if @hotel.save
       flash[:notice] = t'created'
-      redirect url(:accounts, :index)
+      redirect url(:cerca_hotel, :index)
     else
       render 'cercahotel/admin/new'
     end
@@ -27,9 +27,9 @@ Admin.controllers :cerca_hotel do
 
   put :update, :with => :id do
     @hotel = Hotel.find(params[:id])
-    if @hotel.update_attributes(params[:account])
+    if @hotel.update_attributes(params[:hotel])
       flash[:notice] = t'updated'
-      redirect url(:accounts, :index)
+      redirect url(:cerca_hotel, :index)
     else
       render 'cercahotel/admin/edit'
     end
@@ -37,7 +37,7 @@ Admin.controllers :cerca_hotel do
 
   delete :destroy, :with => :id do
     hotel = Hotel.find(params[:id])
-    if hotel != current_account && account.destroy
+    if hotel.destroy
       flash[:notice] = t'destroy.success'
     else
       flash[:error] = t'destroy.fail'

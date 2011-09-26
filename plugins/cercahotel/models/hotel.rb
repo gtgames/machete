@@ -7,10 +7,17 @@ class Hotel
 
   key :description, String
 
-  key :place, String
+  key :address, String
 
-  key :file, MediaFile::Embeddable
+  key :photo, MediaFile::Embeddable
 
+  key :lat, Float
+  key :lng, Float
+
+  def map size='200x200'
+    "http://maps.googleapis.com/maps/api/staticmap?center=#{ self[:lat] },#{ self[:lng] }&zoom=11&size=#{ size }&sensor=false"
+  end
+  
   before_save :slugify
   protected
   def slugify

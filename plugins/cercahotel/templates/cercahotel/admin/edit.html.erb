@@ -1,0 +1,7 @@
+<% form_for :hotel, url(:cerca_hotel, :update, :id => @hotel.id), :method => :put, :class => "form-stacked span16" do |f| %>
+  <%= partial "cercahotel/admin/form", :locals => { :f => f } %>
+<% end %>
+
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :cerca_hotel }) %>
+
+<% content_for :title, 'Modifica Albergo' %>

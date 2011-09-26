@@ -1,0 +1,131 @@
+<%= f.input :title %>
+
+<%= f.input :logo, :as => :file %>
+
+<%= f.input :description, :as => :text %>
+
+<%  %>
+
+<fieldset>
+	<legend>Posizione</legend>
+	
+	<%= f.input :address %>
+	
+	<%= f.input :lat %>
+	<%= f.input :lng %>
+	
+	
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAFJC5GQPX-w6DsErzUPS_TxQfQ2HpL9heYXvk166R28mJhIGcpxQKqa7lF2TfhQRP2JKHmZ13pejsoQ" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).on('ready', function(){
+			var map, center, marker,
+				latitude = $("hotel_lat"),
+				longitude = $("hotel_lng"),
+				lat, lng;
+
+			lat = isNaN(parseFloat(latitude.get('value')))? 42.35085 : parseFloat(latitude.get('value')) ;
+			lng = isNaN(parseFloat(latitude.get('value')))? 13.40004 : parseFloat(longitude.get('value')) ;
+
+			map = new GMap2(document.getElementById("map"));
+			map.addControl(new GSmallMapControl());
+			map.addControl(new GMapTypeControl());
+			center = new GLatLng(lat,lng);
+			map.setCenter(center, 15);
+			geocoder = new GClientGeocoder();
+			marker = new GMarker(center, {draggable: true});  
+			map.addOverlay(marker);
+			latitude.set('value', center.lat().toFixed(5));
+			longitude.set('value', center.lng().toFixed(5));
+			
+			GEvent.addListener(marker, "dragend", function() {
+				var point = marker.getPoint();
+				map.panTo(point);
+				latitude.set('value', point.lat().toFixed(5));
+				longitude.set('value', point.lng().toFixed(5));
+			});
+			
+			GEvent.addListener(map, "moveend", function() {
+				map.clearOverlays();
+				var center = map.getCenter();
+					var marker = new GMarker(center, {draggable: true});
+				map.addOverlay(marker);
+				latitude.set('value', center.lat().toFixed(5));
+				longitude.set('value', center.lng().toFixed(5));
+
+				GEvent.addListener(marker, "dragend", function() {
+					var point = marker.getPoint();
+						map.panTo(point);
+					latitude.set('value', point.lat().toFixed(5));
+					longitude.set('value', point.lng().toFixed(5));
+				});
+			});
+			$('search_address').on('keypress', function(e){
+				var key = window.event ? window.event.keyCode : e.which;
+				if(key == 13){
+					$('search_address_a').fire('click');
+					return false;
+				} else return e;
+			});
+			$('search_address_a').on('click', function(){
+				var map = new GMap2(document.getElementById("map")),
+					address = $('search_address').get('value');
+				
+				map.addControl(new GSmallMapControl());
+				map.addControl(new GMapTypeControl());
+				if (geocoder) {
+					geocoder.getLatLng(
+						address,
+						function(point) {
+							if (!point) {
+								alert(address + " not found");
+							} else {
+								latitude.set('value', point.lat().toFixed(5));
+								longitude.set('value', point.lng().toFixed(5));
+								map.clearOverlays()
+								map.setCenter(point, 14);
+								var marker = new GMarker(point, {draggable: true});  
+								map.addOverlay(marker);
+
+								GEvent.addListener(marker, "dragend", function() {
+									var pt = marker.getPoint();
+									map.panTo(pt);
+									latitude.set('value', pt.lat().toFixed(5));
+									longitude.set('value', pt.lng().toFixed(5));
+								});
+
+								GEvent.addListener(map, "moveend", function() {
+									map.clearOverlays();
+									var center = map.getCenter();
+									var marker = new GMarker(center, {draggable: true});
+									map.addOverlay(marker);
+									latitude.set('value', center.lat().toFixed(5));
+									longitude.set('value', center.lng().toFixed(5));
+									
+									GEvent.addListener(marker, "dragend", function() {
+										var pt = marker.getPoint();
+										map.panTo(pt);
+										latitude.set('value', pt.lat().toFixed(5));
+										longitude.set('value', pt.lng().toFixed(5));
+									});
+								});
+							}
+						}
+					);
+				}
+			});
+		});
+	</script>
+	<div id="map"></div>
+
+	<div class="input-prepend map">
+		<label class="add-on" for="search_address">Indirizzo</label>
+		<input class="xlarge" id="search_address" name="search_address" size="16" type="text">
+		<a id="search_address_a" class="btn">Search</a>
+	</div>
+
+</fieldset>
+
+<div class="actions">
+  <%= f.submit pat(:save), :class => "btn primary" %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:cerca_hotel, :index)}';return false", :class => :btn %>
+</div>

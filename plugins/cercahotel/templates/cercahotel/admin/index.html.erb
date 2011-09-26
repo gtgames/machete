@@ -1,0 +1,26 @@
+<table class="zebra-striped">
+  <thead>
+    <tr>
+      <th class="sortable"><%= mat(:hotel, :title) %></th>
+      <th class="sortable"><%= mat(:hotel, :address) %></th>
+      <th class="last">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @hotels.each do |hotel| %>
+    <tr>
+      <td><%= hotel.title %></td>
+      <td><%= hotel.address %></td>
+      <td>
+        <%= button_to pat(:edit), url(:cerca_hotel, :edit, :id => hotel.id), :method => :get, :class => 'btn edit' %>
+        <%= button_to pat(:delete), url(:cerca_hotel, :destroy, :id => hotel.id), :method => :delete, :class => 'btn trash', :onclick => "return confirm('#{pat(:confirm)}')" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% content_for :actions, partial("admin/base/actions", :locals => { :p => :cerca_hotel }) %>
+
+<% content_for :title, 'Hotel' %>
