@@ -23,11 +23,6 @@ GEM
       em-socksify
       eventmachine (>= 1.0.0.beta.3)
       http_parser.rb (>= 0.5.2)
-    em-net-http (0.3.5)
-      addressable
-      em-http-request (>= 0.2.10)
-      eventmachine (>= 0.12.10)
-      rake
     em-resolv-replace (1.1.1)
     em-socksify (0.1.0)
       eventmachine
@@ -142,7 +137,7 @@ GEM
       mime-types
       safe_shell (~> 1.0.0)
     watchr (0.7)
-    yajl-ruby (0.8.3)
+    yajl-ruby (1.0.0)
 
 PLATFORMS
   ruby
@@ -152,7 +147,7 @@ DEPENDENCIES
   bcrypt-ruby
   bson_ext (>= 1.3.1)
   builder
-  em-net-http
+  em-http-request
   em-resolv-replace
   em-synchrony
   erubis

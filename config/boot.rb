@@ -7,6 +7,7 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 
+
 ##
 # Add here your before load hooks
 #
@@ -25,18 +26,6 @@ Padrino.before_load do
 
   Padrino.cache = Padrino::Cache::Store::Mongo.new(
     MongoMapper.database, :size => 2, :max => 100, :collection => 'cache' )
-
-  -> {
-    # compile less files in a closure :P
-    puts 'Compiling less files'
-    path = Padrino.root('public', 'stylesheets')
-    Dir.glob(Padrino.root('public', 'stylesheets', '*.less')) {|f|
-      f = f.sub(Padrino.root('public', 'stylesheets'), '').sub(/^\//, '')
-      puts "compiling #{path} / #{f}" 
-      `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
-    }
-  }.call()
-
 end
 ##
 # Add here your after load hooks

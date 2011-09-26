@@ -6,10 +6,10 @@ gem 'rack-flash'
 gem 'eventmachine'
 gem 'thin'
 
-gem 'em-synchrony', :require => ['em-synchrony','em-synchrony/em-http']
-gem 'em-net-http'
+gem 'rack-fiber_pool'
+gem 'em-http-request'
+gem 'em-synchrony'
 gem 'em-resolv-replace'
-gem 'rack-fiber_pool', :require => 'rack/fiber_pool'
 
 # Component requirements
 gem 'erubis'
@@ -50,7 +50,7 @@ gem 'to_slug'
 #gem 'rack-thumb', :git => 'https://github.com/vidibus/rack-thumb.git'
 #gem 'mapel', :git => 'https://github.com/vidibus/mapel.git'
 
-gem 'yajl-ruby', :require => "yajl/json_gem"
+gem 'yajl-ruby', :require => "yajl/json_gem" # MultiJson is damn bugged
 # Padrino
 gem 'padrino', "0.10.2"
 

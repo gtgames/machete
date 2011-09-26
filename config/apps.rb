@@ -26,6 +26,8 @@ class BasicApplication < Padrino::Application
 
   set :exceptions_page_500, "errors/500"
   set :exceptions_page_404, "errors/404"
+  
+  use Rack::Session::Cookie, :key => 'rack.session'
 end
 
 Padrino.configure_apps do

@@ -13,6 +13,7 @@
 			"password":"machete"
 	},
 		"site":{
+		  "antispam":"11acc09b0e295da754c4c9d30968b31c",
       "homepage":"",
       "title":"",
 			"domain":"machete.it",
