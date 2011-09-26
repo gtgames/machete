@@ -19,8 +19,8 @@
 			"domain":"machete.it",
 			"locales":["it"],
 			"acl":{
-				"admin":["links","photos","posts","pages","taxonomy","configurations", "cerca_hotel"],
-				"root":["links","photos","multimedia","posts","pages","taxonomy","booking","cerca_hotel","configurations","accounts"]
+				"admin":["links","photos","posts","pages","taxonomy","configurations", "cerca_hotel", "messages"],
+				"root":["links","photos","multimedia","posts","pages","taxonomy","booking","cerca_hotel","messages","configurations","accounts"]
 			},
 			// Plugin Routing
 			"apps": {
