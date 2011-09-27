@@ -58,15 +58,17 @@
 	<footer class="container">
 		<div class="row">
 			<div class="span2 social"><%= partial('shared/social') %></div>
-			<div class="span10">
+			<div class="span12">
 				<%= partial("shared/footer") %>
 			</div>
-			<div id="google_translate_element"></div><script>
+			<% if Cfg['google_translate'] -%>
+			<div id="google_translate_element" class="span16"></div><script>
 			function googleTranslateElementInit() {
 			  new google.translate.TranslateElement({
 			    pageLanguage: '<%= Cfg.locale %>'
 			  }, 'google_translate_element');
 			}</script><script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			<% end -%>
 		</div>
 	</footer>
 
