@@ -22,27 +22,22 @@
   </head>
   <body>
 
-	<nav class="topbar">
-		<div class="topbar-inner">
-			<div class="container">
-				<a class="brand" href="/">Machete</a>
-				<ul class="nav">
-					<% cache("nav_#{Cfg.locale}") do -%>
-						<li><%= link_to t('home'), '/' %></li>
-						<% Link.all.each do |m| %>
-							<li><%= link_to m.title, m.url %></li>
-						<% end %>
-						<li><%= link_to t('gallery'), '/gallery' %></li>
-						<li><%= link_to t('contact'), '/contact' %></li>
-					<% end -%>
-				</ul>
-			</div>
-		</div>
+	<nav class="container">
+		<ul class="pills span16">
+			<% cache("nav_#{Cfg.locale}") do -%>
+				<li><%= link_to t('home'), '/' %></li>
+				<% Link.all.each do |m| %>
+					<li><%= link_to m.title, m.url %></li>
+				<% end %>
+				<li><%= link_to t('gallery'), '/gallery' %></li>
+				<li><%= link_to t('contact'), '/contact' %></li>
+			<% end -%>
+		</ul>
 	</nav>
 
-	<header id="header" class="row">
+	<header id="header" class="container">
 		<img src="/images/logo.png">
-		<div class="column grid_12">
+		<div class="span16">
 	  		<h1><%= Cfg[:title][Cfg.locale] %></h1>
 		</div>
 	</header>
@@ -61,11 +56,17 @@
 	</section>
 
 	<footer class="container">
-		<div class="row"><div class="span16 social"><%= partial('shared/social') %></div></div>
 		<div class="row">
-			<div class="span16">
+			<div class="span2 social"><%= partial('shared/social') %></div>
+			<div class="span10">
 				<%= partial("shared/footer") %>
 			</div>
+			<div id="google_translate_element"></div><script>
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({
+			    pageLanguage: '<%= Cfg.locale %>'
+			  }, 'google_translate_element');
+			}</script><script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 		</div>
 	</footer>
 

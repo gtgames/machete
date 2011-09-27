@@ -13,11 +13,12 @@ class Hotel
 
   key :features, Array
 
-  key :lat, Float
-  key :lng, Float
+  key :lat, String
+  key :lng, String
+  key :elevation, String
 
-  def map size='200x200'
-    "http://maps.googleapis.com/maps/api/staticmap?center=#{ self[:lat] },#{ self[:lng] }&zoom=11&size=#{ size }&sensor=false"
+  def map
+    "http://maps.googleapis.com/maps/api/staticmap?center=#{ self[:lat] },#{ self[:lng] }&markers=color:blue%7C#{ self[:lat] },#{ self[:lng] }&zoom=15&size=400x400&sensor=false"
   end
   
   before_save :slugify

@@ -15,12 +15,14 @@
 	
 	<%= f.input :lat %>
 	<%= f.input :lng %>
+	
+	<%= f.input :elevation %>
 
 
 	<% if Cfg[:domain] =~ /machete/ %>
 	<script type="text/javascript" charset="utf-8">
 		document.write([
-		  '<script src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=', {
+		  '<script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=', {
 		    'machete.dev': 'ABQIAAAAFJC5GQPX-w6DsErzUPS_TxQfQ2HpL9heYXvk166R28mJhIGcpxQKqa7lF2TfhQRP2JKHmZ13pejsoQ',
 		    'machete.it': 'ABQIAAAAFJC5GQPX-w6DsErzUPS_TxStbnZnjxb5KRvRpJSOL3Ab1clYURTwJ8j29Itl5FMjsWQRRQcYbJctYQ'
 		  }[window.location.host.match(/(\w+\.\w+)$/)[0]],
@@ -28,52 +30,52 @@
 		].join(''));
 	</script>
 	<% else %>
-		<script src="http://maps.google.com/maps?file=api&v=2&key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?api&v=2&key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
 	<% end %>
 
 	<script type="text/javascript">
 		$(document).on('ready', function(){
-			var map, center, marker,
+			var map, center, marker, location, geocoder,
 				latitude = $("hotel_lat"),
 				longitude = $("hotel_lng"),
+				elevation = $("hotel_elevation"), ele,
 				lat, lng;
 
 			lat = isNaN(parseFloat(latitude.get('value')))? 42.35085 : parseFloat(latitude.get('value')) ;
 			lng = isNaN(parseFloat(latitude.get('value')))? 13.40004 : parseFloat(longitude.get('value')) ;
 
-			map = new GMap2(document.getElementById("map"));
-			map.addControl(new GSmallMapControl());
-			map.addControl(new GMapTypeControl());
-			center = new GLatLng(lat,lng);
-			map.setCenter(center, 15);
-			geocoder = new GClientGeocoder();
-			marker = new GMarker(center, {draggable: true});  
-			map.addOverlay(marker);
-			latitude.set('value', center.lat().toFixed(5));
-			longitude.set('value', center.lng().toFixed(5));
-			
-			GEvent.addListener(marker, "dragend", function() {
-				var point = marker.getPoint();
-				map.panTo(point);
-				latitude.set('value', point.lat().toFixed(5));
-				longitude.set('value', point.lng().toFixed(5));
-			});
-			
-			GEvent.addListener(map, "moveend", function() {
-				map.clearOverlays();
-				var center = map.getCenter();
-					var marker = new GMarker(center, {draggable: true});
-				map.addOverlay(marker);
-				latitude.set('value', center.lat().toFixed(5));
-				longitude.set('value', center.lng().toFixed(5));
+			location = new google.maps.LatLng(lat, lng);
 
-				GEvent.addListener(marker, "dragend", function() {
-					var point = marker.getPoint();
-						map.panTo(point);
-					latitude.set('value', point.lat().toFixed(5));
-					longitude.set('value', point.lng().toFixed(5));
+			map = new google.maps.Map(document.getElementById("map"),{
+				zoom: 8,
+				center: location,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			});
+
+			marker = new google.maps.Marker({
+				map: map,
+				draggable: true,
+				position: location
+			});
+			ele = new google.maps.ElevationService();
+			geocoder = new google.maps.Geocoder();
+
+			google.maps.event.addListener(map, 'center_changed', function(e) {
+				center = map.getCenter();
+				marker.setPosition(center);
+				
+				latitude.set('value', center.lat());
+				longitude.set('value', center.lng());
+
+				ele.getElevationForLocations({ locations:[center] }, function(result, status){
+					if (status == "OK")	elevation.set('value', parseInt(result[0].elevation));
+					else elevation.set('value', '');
 				});
 			});
+			google.maps.event.addListener(marker, 'dragend', function(e) {
+				map.panTo(marker.getPosition());
+			});
+
 			$('search_address').on('keypress', function(e){
 				var key = window.event ? window.event.keyCode : e.which;
 				if(key == 13){
@@ -82,51 +84,11 @@
 				} else return e;
 			});
 			$('search_address_a').on('click', function(){
-				var map = new GMap2(document.getElementById("map")),
-					address = $('search_address').get('value');
-				
-				map.addControl(new GSmallMapControl());
-				map.addControl(new GMapTypeControl());
-				if (geocoder) {
-					geocoder.getLatLng(
-						address,
-						function(point) {
-							if (!point) {
-								alert(address + " not found");
-							} else {
-								latitude.set('value', point.lat().toFixed(5));
-								longitude.set('value', point.lng().toFixed(5));
-								map.clearOverlays()
-								map.setCenter(point, 14);
-								var marker = new GMarker(point, {draggable: true});  
-								map.addOverlay(marker);
-
-								GEvent.addListener(marker, "dragend", function() {
-									var pt = marker.getPoint();
-									map.panTo(pt);
-									latitude.set('value', pt.lat().toFixed(5));
-									longitude.set('value', pt.lng().toFixed(5));
-								});
-
-								GEvent.addListener(map, "moveend", function() {
-									map.clearOverlays();
-									var center = map.getCenter();
-									var marker = new GMarker(center, {draggable: true});
-									map.addOverlay(marker);
-									latitude.set('value', center.lat().toFixed(5));
-									longitude.set('value', center.lng().toFixed(5));
-									
-									GEvent.addListener(marker, "dragend", function() {
-										var pt = marker.getPoint();
-										map.panTo(pt);
-										latitude.set('value', pt.lat().toFixed(5));
-										longitude.set('value', pt.lng().toFixed(5));
-									});
-								});
-							}
-						}
-					);
-				}
+				var address = $('search_address').get('value');
+				geocoder.geocode({address: address}, function(results, status){
+					console.log(results);
+					if (status == "OK")	map.panTo(results[0].geometry.location);
+				});
 			});
 		});
 	</script>

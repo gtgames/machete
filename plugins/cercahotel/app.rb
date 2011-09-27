@@ -6,11 +6,16 @@ end
 
 CercaHotel.controllers do
   get :index do
+    @hotels = Hotel.paginate({
+      :order    => :created_at.asc,
+      :per_page => 15, 
+      :page     => params[:p] || 0,
+    })
     render 'cercahotel/index'
   end
 
-  get :show, :with => :id do
-    @hotel = Hotel.find(params[:id])
+  get :show, :with => :slug do
+    @hotel = Hotel.where(:slug => params[:slug]).first
     render 'cercahotel/show'
   end
 
