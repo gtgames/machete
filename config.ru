@@ -5,7 +5,7 @@ require 'eventmachine'
 ##
 # Compile less to css
 #
--> {
+lambda {
   # compile less files in a fork
   puts 'Compiling less files'
   path = ::File.expand_path('../public/stylesheets', __FILE__)

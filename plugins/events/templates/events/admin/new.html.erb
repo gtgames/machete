@@ -1,5 +1,5 @@
 <% form_for :event, url(:events, :create), :class => "form-stacked span16" do |f| %>
-  <%= partial "admin/events/form", :locals => { :f => f } %>
+  <%= partial "events/admin/form", :locals => { :f => f } %>
 <% end %>
 
 <% content_for :actions, partial("admin/base/actions", :locals => { :p => :events }) %>
