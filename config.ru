@@ -5,8 +5,7 @@ require 'eventmachine'
 ##
 # Compile less to css
 #
-Process.fork do
-  #Process.detach(1)
+-> {
   # compile less files in a fork
   puts 'Compiling less files'
   path = ::File.expand_path('../public/stylesheets', __FILE__)
@@ -15,7 +14,7 @@ Process.fork do
     puts "compiling #{path} / #{f}" 
     `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
   }
-end
+}.call()
 
 use Rack::FiberPool
 
