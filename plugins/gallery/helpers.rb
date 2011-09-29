@@ -17,6 +17,6 @@ end
 
 BasicApplication.helpers do
   def latest_photos n=5
-    Photo.order(:_id.desc).limit(n)
+    Photo.where().order(:_id.desc).limit(n)
   end
 end
