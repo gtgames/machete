@@ -1,4 +1,5 @@
 class Events < BasicApplication
+  set :views, Padrino.root('templates')
   layout Cfg.layout(:events)
 end
 
@@ -26,7 +27,7 @@ Events.controllers do
     end
   end
 
-  get :show, :with => :slug, :map => '/:slug' do
+  get :show, :map => '/:slug' do
     @events = Event.where(:slug => params[:slug])
     if @events.count == 0
       404
