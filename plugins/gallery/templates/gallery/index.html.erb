@@ -4,7 +4,7 @@
 		<ul class="media-grid">
 		<% p.each do |photo| -%>
 			<li>
-				<%= link_to image_tag(photo.file.thumb('210xx60')), photo.file.url, :class => "thumbnail span3", :rel => photo.gallery %>
+        <%= link_to image_tag(photo.file.thumb('210xx60')), photo.file.url, :class => "thumbnail span3", :rel => "lightbox[#{photo.gallery}]" %>
 			</li>
 		<% end -%>
 		</ul>
