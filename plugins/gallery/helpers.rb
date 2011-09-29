@@ -14,3 +14,9 @@ Gallery.helpers do
     Photo.where(:gallery_slug => gallery)
   end
 end
+
+BasicApplication.helpers do
+  def latest_photos n=5
+    Photo.order(:_id.desc).limit(n)
+  end
+end
