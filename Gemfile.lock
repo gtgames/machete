@@ -72,6 +72,7 @@ GEM
       padrino-helpers (= 0.10.3)
     padrino-cache (0.10.3)
       padrino-core (= 0.10.3)
+    padrino-contrib (0.1.9)
     padrino-core (0.10.3)
       activesupport (~> 3.1.0)
       http_router (~> 0.10.2)
@@ -122,8 +123,6 @@ GEM
       rack (~> 1.3)
       rack-protection (~> 1.1)
       tilt (~> 1.3)
-    sinatra-flash (0.3.0)
-      sinatra (>= 1.0.0)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -161,6 +160,7 @@ DEPENDENCIES
   mongo_mapper (= 0.9.1)
   nokogiri
   padrino (= 0.10.3)
+  padrino-contrib (>= 0.1.9)
   rack-fiber_pool
   rack-test
   rake
@@ -170,7 +170,6 @@ DEPENDENCIES
   rr
   ruby-debug19
   sanitize
-  sinatra-flash
   thin
   to_slug
   wand

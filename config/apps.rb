@@ -28,6 +28,8 @@ class BasicApplication < Padrino::Application
   set :exceptions_page_404, "errors/404"
   
   use Rack::Session::Cookie, :key => 'rack.session'
+
+  register Padrino::Contrib::Helpers::Flash
 end
 
 Padrino.configure_apps do

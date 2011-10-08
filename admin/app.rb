@@ -24,6 +24,8 @@ class Admin < Padrino::Application
     config.label_required_marker_position = :append
   end
 
+  register Padrino::Contrib::Helpers::Flash
+
   enable  :sessions
 
   set :login_page, "/sessions/new"
