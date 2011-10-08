@@ -2,7 +2,6 @@ source :rubygems
 
 # Project requirements
 gem 'rake'
-gem 'rack-flash'
 gem 'eventmachine'
 gem 'thin'
 
@@ -52,5 +51,7 @@ gem 'to_slug'
 
 gem 'yajl-ruby', :require => "yajl/json_gem" # MultiJson is damn bugged
 # Padrino
-gem 'padrino', "0.10.2"
+gem 'sinatra-flash'
+
+gem 'padrino', "0.10.3"
 

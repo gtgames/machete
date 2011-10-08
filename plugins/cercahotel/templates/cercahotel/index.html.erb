@@ -5,11 +5,10 @@
 		<div class="text">
 			<%= h.description %>
 		</div>
-		<ul>
+		<ul class="media-grid">
 			<% h.features.each do |f| -%>
 				<li>
 					<%= image_tag "http://frenzart.com/machete/images/cercahotel/#{f}.png" %>
-					<%= t"cercahotel.features.#{f}" %>
 				</li>
 			<% end -%>
 		</ul>
