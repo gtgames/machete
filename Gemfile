@@ -16,8 +16,8 @@ gem 'erubis'
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'builder'
 
-gem 'mongo', '>=1.3.1', :require => nil
-gem 'bson_ext', '>=1.3.1', :require => nil
+gem 'mongo', '>=1.4.0', :require => nil
+gem 'bson_ext', '>=1.4.0', :require => nil
 
 gem 'mongo_mapper', '0.9.1'
 

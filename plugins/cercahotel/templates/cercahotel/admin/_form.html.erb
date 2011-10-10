@@ -1,5 +1,8 @@
 <%= f.input :title %>
-
+<div class="">
+	<label class=​"string" for=​"hotel_type">​Tipologia​</label>​
+	<%= f.select :type, :options => cerca_hotel_type_options %>
+</div>
 <%= f.input :logo, :as => :file %>
 
 <%= f.input :description, :as => :text %>
@@ -12,12 +15,11 @@
 	<legend>Posizione</legend>
 	
 	<%= f.input :address %>
-	
-	<%= f.input :lat %>
-	<%= f.input :lng %>
-	
+
 	<%= f.input :elevation %>
 
+	<input class="string" value="<%= f.object.loc[0] %>" id="hotel_lat" name="hotel[loc][]" type="hidden">
+	<input class="string" value="<%= f.object.loc[1] %>" id="hotel_lng" name="hotel[loc][]" type="hidden">
 
 	<% if Cfg[:domain] =~ /machete/ %>
 	<script type="text/javascript" charset="utf-8">

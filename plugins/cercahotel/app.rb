@@ -22,9 +22,9 @@ CercaHotel.controllers do
   get :search do
     if params[:q]
       @hotels = Hotel.where(params[:q])
-      render 'cercahotel/search/results'
+      render 'cercahotel/search_results'
     else
-      render 'cercahotel/search/form'
+      render 'cercahotel/search'
     end
   end
 end
