@@ -2,7 +2,7 @@
   <article>
   <div class='headline'>
     <img src="<%= p.photo.thumb unless p.photo.nil? %>">
-	<h1><%= link_to p.title, url(:blog, :show, :slug => p.slug) %></h1>
+	<h1><%= link_to p.title, url(:show, :slug => p.slug) %></h1>
     <p><%= p.lead %></p>
   </div>
   </article>
