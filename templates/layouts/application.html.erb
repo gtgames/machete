@@ -27,7 +27,7 @@
 			<% cache("nav_#{Cfg.locale}") do -%>
 				<li><%= link_to t('home'), '/' %></li>
 				<% Link.all.each do |m| %>
-					<li><%= link_to m.title, m.url %></li>
+					<li><%= link_to m.title[Cfg.locale], m.url[Cfg.locale] %></li>
 				<% end %>
 				<li><%= link_to t('gallery'), '/gallery' %></li>
 				<li><%= link_to t('contact'), '/contact' %></li>
