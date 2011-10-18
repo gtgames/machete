@@ -11,8 +11,8 @@
   <div class="description"><%= @event.description %></div>
 
   <div class="slideshow">
-    <% event_photos(@event.tag_list).each do |p| -%>
-      <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{idx}]") %>
+    <% photos_by_keywords(@event.tag_list).each do |p| -%>
+      <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox") %>
     <% end -%>
   </div>
 </div>
@@ -33,7 +33,7 @@
   </div>
 <% end -%>
 
-<% if @past.count > 0 -%>
+<% if !@past.nil? and @past.count > 0 -%>
   <div class="events_past">
     <h1><%= t('events.past') %></h1>
 

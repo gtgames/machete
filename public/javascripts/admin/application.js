@@ -1,4 +1,4 @@
-;;(function(RightJS) {
+(function(RightJS) {
   var R = RightJS,
   $ = RightJS.$,
   $$ = RightJS.$$,
@@ -15,12 +15,12 @@
     for (var i = 0, l = from.length; i < l; i++) {
       str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
-    str = str.replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+    str = str.replace(/[^a-z0-9]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
     return str;
-  }
+  };
 
   $(document).onReady(function() {
-    $('site_link').set('href', 'http://' + /(\w+)(.\w+)?$/.exec(location.hostname)[0] + '/');
+    $('site_link').set('href', 'http://' + (/(\w+)(.\w+)?$/.exec(window.location.hostname)[0]) + '/');
 
     $$('.date').each(function(el){
       el.html(_date(el.html()).format('YYYY-MM-DD'));
@@ -62,9 +62,9 @@
         name: myname
       }).insertTo(el.parent());
       var div = new Element('div', {
-        id: myid,
-        class: "upload_button",
-        html: "Upload"
+        "id": myid,
+        "class": "upload_button",
+        "html": "Upload"
       }).insertTo(el.parent());
       el.remove();
 
@@ -75,7 +75,7 @@
         onComplete: function(id, name, resp) {
           if (resp.error) {
             var ul = new Element('ul', {
-              class: "errors"
+              "class": "errors"
             });
             resp.error.each(function(el) {
               ul.append(new Element('li', {
@@ -92,13 +92,13 @@
 
     $$('input[name*="[slug"]').each(function(slug) {
       function slugify(el) {
-        slug.set('value', to_slug(el.get('value')))
+        slug.set('value', to_slug(el.get('value')));
       }
       $$('input[name="' + slug.get('name').replace(/slug/, 'title') + '"]').each(function(el) {
         el.on({
-          change: function() { slugify(el) },
-          keyup: function() {  slugify(el) },
-          blur: function() {   slugify(el) }
+          change: function() { slugify(el); },
+          keyup: function() {  slugify(el); },
+          blur: function() {   slugify(el); }
         });
       });
     });
@@ -155,7 +155,7 @@
           ],
           tags: { Bold: 'b', Italic: 'i', Underline: 'u', Strike: 's', Quote: 'blockquote' }
         }
-      }
+      };
       $$('textarea.text').each(function(el) {
         new Rte(el, ( el.parent().find('label.editor').length )? rte_opts.full : rte_opts.minimal);
       });
@@ -183,20 +183,24 @@
                                 '</div>');
       function fillCard(e) {
         var params = {
-          given_name: $('givenname').get("value"),
-          additional_name: $('additionalname').get("value"),
-          family_name: $('familyname').get("value"),
-          org: $('org').get("value"),
-          email: $('email').get("value"),
-          street_address: $("street").get("value"),
-          city: $("city").get("value"),
-          region: $("region").get("value"),
-          postal_code: $("postal").get("value"),
-          country: $("country").get("value"),
-          phone: _.map($("phone").get("value").split(','), function(e) {
-            return e.trim();
-          }),
-          photo: $("photo").get("value")
+          given_name: $('givenname').get("value")||'',
+          additional_name: $('additionalname').get("value")||'',
+          family_name: $('familyname').get("value")||'',
+          org: $('org').get("value")||'',
+          email: $('email').get("value")||'',
+          street_address: $("street").get("value")||'',
+          city: $("city").get("value")||'',
+          region: $("region").get("value")||'',
+          postal_code: $("postal").get("value")||'',
+          country: $("country").get("value")||'',
+          phone: (function(){
+            var val = $("phone").get("value");
+            if (!val) return '';
+            _.map(val.split(','), function(e) {
+              return e.trim();
+            });
+          })(),
+          photo: $("photo").get("value")||''
         };
         params.id = _.map([params.given_name, params.additional_name, params.family_name], function(el) {
           if (el) return el.replace(/\s+/g, '-');
@@ -222,11 +226,8 @@
     thumb_size: '400x',
     thumb: function(){
       var e = this.image.match(/\.([a-z]+)$/i);
-      if (e !== null) {
-        e = e[1];
-      } else {
-        e = 'png'
-      }
+      e = (e !== null)? e[1] : 'png';
+
       return this.image.replace(/\.[a-z]+$/i, '_' + this.thumb_size + '.' + e );
     },
 
@@ -234,7 +235,8 @@
       if (url === undefined) { return false; }
       $('filebrowser_preview').html('');
       this.image = url;
-      var dialog = this;
+      var dialog = this
+        , that = this;
       this.expand();
 
       $('filebrowser_list').morph({
@@ -245,8 +247,8 @@
       });
       var imagePreview = new Element('img', {
         style: {
-          display: 'block',
-          margin: '0 auto',
+          "display": 'block',
+          "margin": '0 auto'
         }
       }).set('src', this.thumb()).insertTo( $E('div', {
         style: {
@@ -327,7 +329,7 @@
           this.hide();
         }
       });
-    },
+    }
   });
 
 })(RightJS);

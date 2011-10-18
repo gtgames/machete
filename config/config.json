@@ -2,6 +2,7 @@
   // Plugin
   "plugins":[
     "blog",
+    "events",
     "gallery",
     "booking",
     "cercahotel"

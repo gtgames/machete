@@ -1,4 +1,10 @@
 Gallery.helpers do
+  def photos_by_gallery(gallery)
+    Photo.where(:gallery_slug => gallery)
+  end
+end
+
+BasicApplication.helpers do
   def photos_by_keywords(kwd, max=5)
     photos = Photo.where(:tags.in => kwd.to_s.split(',').map(&:downcase).uniq.map(&:strip)).limit(max).all
 
@@ -10,12 +16,7 @@ Gallery.helpers do
 
     photos
   end
-  def photos_by_gallery(gallery)
-    Photo.where(:gallery_slug => gallery)
-  end
-end
 
-BasicApplication.helpers do
   def latest_photos n=5
     Photo.where().order(:_id.desc).limit(n)
   end
