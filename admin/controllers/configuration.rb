@@ -22,7 +22,7 @@ Admin.controllers :configurations do
     Cfg.insert 'keywords', params['keywords']
     Cfg.insert 'author', params['author']
 
-    render 'configurations/index'
+    render 'admin/configurations/index'
   end
 
   get :vcard do
