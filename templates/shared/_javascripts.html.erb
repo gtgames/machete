@@ -1,0 +1,26 @@
+<script charset="utf-8" src="http://frenzart.com/js/modernizr.js" type="text/javascript"></script>
+<script>
+  //<![CDATA[
+  head.js(
+  "http://frenzart.com/js/rightjs/right.js",
+  "http://frenzart.com/js/rightjs/right/jquerysh.js",
+  "http://frenzart.com/js/rightjs/right/calendar.js",
+  "http://frenzart.com/js/underscore.date.js",
+  "http://frenzart.com/js/rightjs/right/i18n/<%= Cfg.locale %>.js",
+  "/javascripts/application.js",
+  function(){ _date.translate('<%= Cfg.locale %>'); }
+  );
+
+  var _gaq = [['_setAccount', '<%= Cfg[:analytics] %>'], ['_trackPageview'], ['_setAllowLinker', true]]
+    , _analyst = '<%= Cfg[:analyst] %>';
+  (function(d, t) {
+    var g = d.createElement(t),
+		a = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+	a.src = '//analyst.machete.it/al.js';
+    g.src = '//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+	s.parentNode.insertBefore(a, s);
+  }(document, 'script'));
+  //]]>
+</script>
