@@ -139,8 +139,7 @@
       });
     }
 
-    (function() {
-      /* Simple RT Editor from RightJS */
+    /*(function() {
       if (!$$('textarea.text').length) return false;
       var rte_opts = {
         minimal: {
@@ -158,6 +157,19 @@
       };
       $$('textarea.text').each(function(el) {
         new Rte(el, ( el.parent().find('label.editor').length )? rte_opts.full : rte_opts.minimal);
+      });
+    })();*/
+    
+    // Editor
+    (function() {
+      window.CKEDITOR_BASEPATH = '/js/ckeditor/';
+      $$('textarea').each(function(e) {
+        CKEDITOR.replace(e._, {
+          startupFocus: false
+        , filebrowserBrowseUrl: '/media/dialog/'
+        , filebrowserImageWindowWidth: '760'
+        , filebrowserImageWindowHeight: '480'
+        });
       });
     })();
 
@@ -221,7 +233,7 @@
     })();
   });
 
-  var BrowserDialog = new Class(Dialog, {
+  /*var BrowserDialog = new Class(Dialog, {
     image: '',
     thumb_size: '400x',
     thumb: function(){
@@ -330,7 +342,7 @@
         }
       });
     }
-  });
+  });*/
 
 })(RightJS);
 
