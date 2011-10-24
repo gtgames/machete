@@ -166,9 +166,9 @@
       $$('textarea').each(function(e) {
         CKEDITOR.replace(e._, {
           startupFocus: false
-        , filebrowserBrowseUrl: '/media/dialog/'
-        , filebrowserImageWindowWidth: '760'
-        , filebrowserImageWindowHeight: '480'
+        , filebrowserBrowseUrl: '/multimedia/dialog/image'
+        , filebrowserImageWindowWidth: '840'
+        , filebrowserImageWindowHeight: '600'
         });
       });
     })();

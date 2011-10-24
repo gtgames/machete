@@ -68,6 +68,8 @@ class MediaFile
 
       FileUtils.mkdir_p ::File.dirname(self.path)
       FileUtils.cp temp_path, self.path
+      # image conversion to max 900px x 600px
+      `convert -resize 900x600 #{self.path}`
     end
   end
   def handle_deletion
