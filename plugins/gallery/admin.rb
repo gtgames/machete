@@ -64,7 +64,7 @@ Admin.controllers :photos do
       flash[:notice] = 'Nessun file da importare'
       redirect url(:photos, :index)
     end
-    render 'photos/import'
+    render 'gallery/admin/import'
   end
   post :import_it do
     params['import']['photo'].each do |i|
