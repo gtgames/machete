@@ -1,6 +1,11 @@
 <%= f.input :title %>
 
-<%= f.input :file, :as => :file %>
+<% if f.object.file.nil? -%>
+  <%= f.input :file, :as => :file %>
+<% else -%>
+  <%= f.input :file, :value => f.object.file.id.to_s, :type => :hidden %>
+  <%= image_tag(f.object.file.thumb('200xx200')) %>
+<% end -%>
 
 <%= f.input :description, :as => :text %>
 
