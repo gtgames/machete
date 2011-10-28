@@ -12,7 +12,7 @@
       <div class="description"><%= e.description %></div>
     
       <div class="slideshow">
-        <% event_photos(e.tag_list).each do |p| -%>
+        <% photos_by_keywords(e.tag_list).each do |p| -%>
           <%= image_tag(p.file.thumb('50x50'), :rel => "lightbox[#{e.id}]") %>
         <% end -%>
       </div>

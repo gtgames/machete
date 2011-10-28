@@ -34,3 +34,4 @@ templates/cercahotel
 templates/gallery
 *.tmproj
 templates/booking
+public/javascripts/admin/lib/node_modules
