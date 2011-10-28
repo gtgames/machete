@@ -30,7 +30,8 @@ Admin.controllers :base do
     if Padrino.env == :development
       require 'fileutils'
       FileUtils.touch(Padrino.root('tmp', 'restart'))
-      'touched $root/tmp/restart !!!'
+      flash[:error] = 'touched $root/tmp/restart !!!'
+      redirect '/'
     else
       redirect '/'
     end

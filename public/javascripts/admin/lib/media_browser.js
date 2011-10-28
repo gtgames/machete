@@ -7,14 +7,15 @@ $.domReady(function () {
       image = $(image);
       
       }
-      , images = $('#filebrowser_list img');
+    , images = $('#filebrowser_list img')
+    , images_event = function (e) {
+        e.preventDefault();
+        $('.selected').toggleClass('selected');
+        $(this).toggleClass('selected');
+        vis(this);
+      };
   
-  images.on('click dblclick', function (e) {
-    e.preventDefault();
-    $('.selected').toggleClass('selected');
-    $(this).toggleClass('selected');
-    vis(this);
-  });
+  images.on('click dblclick', images_event);
   
   $('#submit').on('click', function (e) {
     var funcNum = (function (paramName) {
@@ -30,17 +31,14 @@ $.domReady(function () {
   });
   
   // uploader
-  /*new qq.FileUploader({
-    element: $('input[type="file"]')[0],
+  new qq.FileUploader({
+    element: $('#upload')[0],
     action: '/base/upload',
     onComplete: function(idx, name, data){
-      var tpl = _.template('<tr><td><img src="<%= url %>"></td><td><%= name %><td>'+
-                           '<form class="button_to trash" method="post" action="/multimedia/destroy/<%= id %>">'+
-                           '<input value="delete" name="_method" type="hidden"><input value="Delete" type="submit"></form></td></tr>');
-      $$('tbody').first().append(tpl({ url: data.url,
-                                     name: data.data.name,
-                                     id: data.data._id })
-                                );
+      var img = $('<img>').attr({
+        src: data.url
+      , 'data-link': data.data
+      }).appendTo($('#filebrowser_list')).on('click dblclick', images_event);;
     }
-  });*/
+  });
 });
