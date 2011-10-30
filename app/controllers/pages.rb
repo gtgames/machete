@@ -28,11 +28,8 @@ Machete.controllers :pages do
       etag @pages.first.updated_at.to_i if @pages.size > 1
 
       size = @pages.size
-      if size > 1
+      if size >= 1
         render 'app/pages/index'
-      elsif size == 1
-        @pages = @pages.first
-        render 'app/pages/show'
       elsif size == 0
         render 'app/pages/index'
       end
