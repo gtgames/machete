@@ -1,8 +1,16 @@
 class Admin < Padrino::Application
   register Padrino::Rendering
   set :views, Padrino.root('templates')
-  
+
+  # Mailer  
   register Padrino::Mailer
+  set :delivery_method, :smtp => {
+    :address              => "frenz",
+    :port                 => 25,
+    :enable_starttls_auto => false
+  }
+  set :mailer_defaults, :from => "noreply@#{Cfg[:domain]}"
+  
   register Padrino::Helpers
   register Padrino::Contrib::ExceptionNotifier
   # Exception mailer

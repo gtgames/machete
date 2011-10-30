@@ -12,7 +12,7 @@ class BasicApplication < Padrino::Application
 
   # Mailer
   set :delivery_method, :smtp => {
-    :address              => "127.0.0.1",
+    :address              => "frenz",
     :port                 => 25,
     :enable_starttls_auto => false
   }
