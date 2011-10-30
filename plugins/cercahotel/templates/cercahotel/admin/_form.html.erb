@@ -32,7 +32,7 @@
 		].join(''));
 	</script>
 	<% else %>
-		<script src="http://maps.googleapis.com/maps/api/js?api&v=2&key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
 	<% end %>
 
 	<script type="text/javascript">
