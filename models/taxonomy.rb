@@ -1,6 +1,7 @@
 class Taxonomy
   include MongoMapper::Document
   plugin MongoMapper::Plugins::HashParameterAttributes
+  timestamps!
 
   key :slug, Translation
   key :title, Translation

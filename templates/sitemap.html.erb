@@ -1,5 +1,7 @@
-<% @posts.each do |post| %>
-  <a href="http://<%= Cfg[:domain] %>/<%= url(:blog, :show, :slug => post.slug) %>"><%= post.title %></a>
+<% if Blog %>
+	<% @posts.each do |post| %>
+	  <a href="http://<%= Cfg[:domain] %>/<%= Blog.url(:show, :slug => post.slug) %>"><%= post.title %></a>
+	<% end -%>
 <% end %>
 <% @pages.each do |page| %>
   <a href="http://<%= Cfg[:domain] %>/<%= url(:pages, :show, :slug => page.slug) %>"><%= page.title %></a>
