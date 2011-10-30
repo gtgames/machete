@@ -1,8 +1,20 @@
 <% if Blog %>
 	<% @posts.each do |post| %>
-	  <a href="http://<%= Cfg[:domain] %>/<%= Blog.url(:show, :slug => post.slug) %>"><%= post.title %></a>
+	<div>
+		<span class="date"><%= post.updated_at %></span>
+		<a href="http://<%= Cfg[:domain] %><%= Blog.url(:show, :slug => post.slug) %>"><%= post.title %></a>
+	</div>
 	<% end -%>
 <% end %>
 <% @pages.each do |page| %>
-  <a href="http://<%= Cfg[:domain] %>/<%= url(:pages, :show, :slug => page.slug) %>"><%= page.title %></a>
+<div>
+	<span class="date"><%= page.updated_at %></span>
+	<a href="http://<%= Cfg[:domain] %><%= url(:pages, :show, :slug => page.slug[Cfg.language]) %>"><%= page.title %></a>
+</div>
+<% end %>
+<% @taxonomies.each do |taxon| %>
+<div>
+	<span class="date"><%= taxon.updated_at %></span>
+	<a href="http://<%= Cfg[:domain] %>/<%= taxon.path %>"><%= taxon.title %></a>
+</div>
 <% end %>
