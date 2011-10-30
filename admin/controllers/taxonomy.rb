@@ -1,7 +1,9 @@
 Admin.controller :taxonomy do
-  after :request_method => [ :post, :put, :delete ] do
-    Cfg[:locales].each do |l|
-      Padrino.cache.delete("taxonomy_tree_#{l}")
+  after do
+    if env["REQUEST_METHOD"] != "GET"
+      Cfg[:locales].each do |l|
+        Padrino.cache.delete("taxonomy_tree_#{l}")
+      end
     end
   end
 
