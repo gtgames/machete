@@ -29,5 +29,4 @@ Machete.controllers :pages do
       render 'app/pages/index'
     end
   end
-
 end

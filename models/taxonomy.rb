@@ -28,7 +28,7 @@ class Taxonomy
   end
 
   def self.by_path(path)
-    where(:"path.#{Cfg.locale}" => %r{#{path}} ).first
+    where(:"path.#{Cfg.locale}" => %r{#{path}} ).sort(:"path.#{Cfg.locale}".asc).first
   end
 
   def self.threaded(path='', json = false)
