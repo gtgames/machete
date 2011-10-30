@@ -1,4 +1,10 @@
 Admin.controller :taxonomy do
+  after :request_method => [ :post, :put, :delete ] do
+    Cfg[:locales].each do |l|
+      Padrino.cache.delete("taxonomy_tree_#{l}")
+    end
+  end
+
   get :index do
     @taxonomy = Taxonomy.sort(:path.asc).all
     render 'admin/taxonomy/index'

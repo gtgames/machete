@@ -1,4 +1,9 @@
 Admin.controllers :links do
+  after :request_method => [ :post, :put, :delete ] do
+    Cfg[:locales].each do |l|
+      Padrino.cache.delete("menu_#{l}")
+    end
+  end
 
   get :index do
     @links = Link.all
