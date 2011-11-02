@@ -27,7 +27,7 @@ Admin.controllers :base do
   end
 
   get :reboot do
-    if Padrino.env == :development
+    if current_account.role == :root
       require 'fileutils'
       FileUtils.touch(Padrino.root('tmp', 'restart'))
       flash[:error] = 'touched $root/tmp/restart !!!'
@@ -36,10 +36,21 @@ Admin.controllers :base do
       redirect '/'
     end
   end
-  
-  get :reload do
-    Padrino.reload!
-    flash[:notice] = 'reloading code base!'
+
+  get :reless do
+    if current_account.role == :root
+      lambda {
+        # compile less files in a fork
+        puts 'Compiling less files'
+        path = ::File.expand_path('../public/stylesheets', __FILE__)
+        Dir.glob(::File.expand_path('../public/stylesheets/*.less', __FILE__)) {|f|
+          f = f.sub(path, '').sub(/^\//, '')
+          puts "compiling #{path} / #{f}" 
+          `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
+        }
+      }.call()
+    end
+    flash[:error] = 'less files compiled!'
     redirect '/'
   end
 end
