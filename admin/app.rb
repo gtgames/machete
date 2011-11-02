@@ -24,6 +24,8 @@ class Admin < Padrino::Application
 
   register Padrino::Admin::AccessControl
 
+  register Padrino::Cache
+
   register PadrinoFields
   set :default_builder, 'PadrinoFieldsBuilder'
   PadrinoFields::Settings.configure do |config|
