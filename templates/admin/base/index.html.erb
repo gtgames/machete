@@ -33,7 +33,7 @@ $(document).on('ready', function(){
 
 <% content_for :title, 'Dashboard' %>
 
-<% if current_account.role == :root %>
+<% if current_account.role == "root" %>
 <div>
 	<h3>Azioni Cattive</h3>
 	<a href="/base/restart">Restart</a>

@@ -27,7 +27,7 @@ Admin.controllers :base do
   end
 
   get :reboot do
-    if current_account.role == :root
+    if current_account.role == "root"
       require 'fileutils'
       FileUtils.touch(Padrino.root('tmp', 'restart'))
       flash[:error] = 'touched $root/tmp/restart !!!'
@@ -38,7 +38,7 @@ Admin.controllers :base do
   end
 
   get :reless do
-    if current_account.role == :root
+    if current_account.role == "root"
       lambda {
         # compile less files in a fork
         puts 'Compiling less files'
