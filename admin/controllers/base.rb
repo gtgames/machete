@@ -42,8 +42,8 @@ Admin.controllers :base do
       lambda {
         # compile less files in a fork
         puts 'Compiling less files'
-        path = ::File.expand_path('../public/stylesheets', __FILE__)
-        Dir.glob(::File.expand_path('../public/stylesheets/*.less', __FILE__)) {|f|
+        path = Padrino.root('public','stylesheets')
+        Dir.glob(Padrino.root('public','stylesheets', '*.less')) {|f|
           f = f.sub(path, '').sub(/^\//, '')
           puts "compiling #{path} / #{f}" 
           `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
