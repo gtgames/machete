@@ -53,4 +53,10 @@ Admin.controllers :base do
     flash[:error] = 'less files compiled!'
     redirect '/'
   end
+
+  get :harakiri do
+    redirect '/' unless current_account.role == "root"
+    Process.kill(:SIGTERM, Process.getpgrp)
+    redirect '/'
+  end
 end
