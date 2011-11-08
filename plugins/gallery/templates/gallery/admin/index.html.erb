@@ -1,18 +1,19 @@
 <% @photos.each do |g| -%>
 
-  <h2><span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span> <a class="button_to edit" onclick="$('<%= g[:gallery].to_slug %>').inEdit({toggle: this, url:'<%= url(:photos, :rename, :gallery => g[:gallery]) %>', name:'name', method:'post'}); return false;">&para;</a></h2>
-  <table cellspacing="0">
+  <h2><span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span>
+	<a class="button_to edit sym" title="edit" onclick="$('<%= g[:gallery].to_slug %>').inEdit({toggle: this, url:'<%= url(:photos, :rename, :gallery => g[:gallery]) %>', name:'name', method:'post'}); return false;">?</a></h2>
+  <table class="zebra-striped">
     <thead>
       <tr>
         <th class="sortable"><%= mat(:page, :title) %></th>
         <th class="sortable"><%= mat(:page, :file) %></th>
-        <th>&nbsp;</th>
+        <th class="last">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       <% g[:photos].each do |photo| %>
         <tr>
-          <td><%= photo.title %></td>
+          <td class="first"><%= photo.title %></td>
           <td><%= link_to(image_tag( photo.file.thumb('50xx50') ), photo.file.url) unless photo.file.nil? %></td>
           <td>
             <%= button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => 'btn edit' %>

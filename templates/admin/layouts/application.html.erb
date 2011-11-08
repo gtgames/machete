@@ -39,10 +39,10 @@
 			<div class="pull-right">
 				<ul>
 					<li><% if Padrino.env == :development -%><a href='/base/reboot'>REBOOT</a><% end -%></li>
-					<li><%= link_to 'Configurazione', url(:configurations, :index) %></li>
-					<li><%= link_to pat(:profile), url(:accounts, :edit, :id => current_account.id) %></li>
-					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>">View Site</a></li>
-					<li><%= link_to pat(:logout), url(:sessions, :destroy), :method => :delete, :class => :logout_user %></li>
+					<li><%= link_to 'S', url(:configurations, :index), :class => :sym, :title => 'Configurazione' %></li>
+					<li><%= link_to 'U', url(:accounts, :edit, :id => current_account.id), :class => :sym, :title => pat(:profile) %></li>
+					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>" class="sym" title="View Site">K</a></li>
+					<li><%= link_to 'X', url(:sessions, :destroy), :method => :delete, :class => :sym, :title => pat(:logout)  %></li>
 				</ul>
 			</div>
 		</div>

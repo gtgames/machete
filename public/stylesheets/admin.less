@@ -1,8 +1,27 @@
 @import "lib/bootstrap.less";
 
+// http://www.justbenicestudio.com/studio/websymbols/
+@import "http://frenzart.com/font/symbols/stylesheet.css";
+
+.sym {
+  font-family:'WebSymbolsRegular';
+}
+
+a.button_to {
+  cursor: pointer;
+}
+
 .topbar {
   position: relative;
   margin-bottom: 9px;
+  .sym {
+    font-size: 1.5em;
+    color: @white;
+    &:hover {
+      color: @yellow;
+      text-shadow: 0px 0px 4px #999;
+    }
+  }
 }
 
 #login_box {
