@@ -24,4 +24,7 @@ class Message
   alias :comment_author_email :email
   alias :comment_content :text
 
+  def text=(t)
+    self['text'] = Rack::Utils.escape_html(t)
+  end
 end
