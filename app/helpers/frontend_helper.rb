@@ -22,7 +22,7 @@ BasicApplication.helpers do
         w: '', h: '', title: ''
     }
     o.merge(options)
-    i  = '<img class="lazy" data-src="' << thumb << '" alt="' << o[:title] << '">'
+    i  = '<img class="lazy" data-src="' << thumb << '" alt="' << o[:title] << '" width="' << o[:w] << '" height="' << o[:h] << '" >'
     ii = '<img src="' << thumb << '" alt="' << o[:title] << '">'
     if href
       '<a href="' << href << '">' << i << '</a>' << '<noscript><a href="' << href << '">' << ii << '</a></noscript>'
