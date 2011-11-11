@@ -23,7 +23,7 @@
 
     <% @next.each do |e| -%>
       <div class="event_next">
-        <h1><%= link_to(e.title, url(:events_show, :slug => e.slug || '')) %></h1>
+        <h1><%= link_to(e.title, url(:show, :slug => e.slug || '')) %></h1>
         <div class="dates">
           <%= t'events.from' %> <span class="date"><%= e.from %></span>
           <%= t'events.to' %> <span class="date"><%= e.to %></span>
@@ -39,7 +39,7 @@
 
     <% @past.each do |e| -%>
       <div class="event_next">
-        <h1><%= link_to(e.title, url(:events_show, :slug => e.slug || '')) %></h1>
+        <h1><%= link_to(e.title, url(:show, :slug => e.slug || '')) %></h1>
         <div class="dates">
           <%= t'events.from' %> <span class="date"><%= e.from %></span>
           <%= t'events.to' %> <span class="date"><%= e.to %></span>
