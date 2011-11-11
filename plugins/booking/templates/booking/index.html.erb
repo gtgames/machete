@@ -1,5 +1,5 @@
 <article>
-	<% form_for :booking, url(:booking, :new), :class => "span10" do |f| -%>
+	<% form_for :booking, url(:new), :class => "span10" do |f| -%>
 		<%= f.input :name %>
 		<%= f.input :surname %>
 		<%= f.input :city %>
@@ -20,7 +20,7 @@
 		<div><%= t'booking.terms' %></div>
 		<div class='actions'>
 			<%= f.submit t(:save), :class => "btn primary" %>
-			<%= f.submit t(:cancel), :onclick => "window.location='#{url(:index, :index)}'", :class => :btn %>
+			<%= f.submit t(:cancel), :onclick => "window.location='/'", :class => :btn %>
 		</div>
 
 	<% end -%>
