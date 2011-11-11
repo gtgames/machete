@@ -1,4 +1,10 @@
 Machete.helpers do
+end
+BasicApplication.helpers do
+  def menu
+    Link.all
+  end
+
   alias_method :url_alias, :url
   def url *args
     if Cfg['locales'].size > 1
@@ -6,11 +12,6 @@ Machete.helpers do
     else
       url_alias(*args)
     end
-  end
-end
-BasicApplication.helpers do
-  def menu
-    Link.all
   end
 
   def h text
