@@ -13,6 +13,10 @@ class Hotel
   key :description, String
 
   key :address, String
+  
+  key :email, String
+  key :fax, String
+  key :tel, String
 
   key :photo, MediaFile::Embeddable
 
