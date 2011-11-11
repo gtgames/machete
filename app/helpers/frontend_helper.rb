@@ -34,4 +34,8 @@ BasicApplication.helpers do
   def lazy_thumb(file, w, h, title = '')
     lazy_img file.thumb("#{w}x#{h}"), {w: w, h: h, title: title}, file.thumb(:big)
   end
+
+  def media_by_name(name)
+    MediaFile.where(:name => /#{name}/)
+  end
 end
