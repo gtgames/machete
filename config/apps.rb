@@ -34,7 +34,7 @@ end
 
 Padrino.configure_apps do
   enable :sessions
-  set :session_secret, SecureRandom.base64(64)
+  set :session_secret, Digest::SHA256.hexdigest(PADRINO_ROOT)
 end
 
 #
