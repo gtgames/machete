@@ -1,6 +1,14 @@
 class Booking < BasicApplication
   set :views, Padrino.root('templates')
 
+  register PadrinoFields
+  set :default_builder, 'PadrinoFieldsBuilder'
+  PadrinoFields::Settings.configure do |config|
+    config.container = :div
+    config.label_required_marker = "<abbr>*</abbr>"
+    config.label_required_marker_position = :append
+  end
+
   layout Cfg.layout(:booking)
 end
 
