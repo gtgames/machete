@@ -166,6 +166,7 @@
       $$('textarea').each(function(e) {
         CKEDITOR.replace(e._, {
           startupFocus: false
+        , contentsCss: '/stylesheets/layout.css'
         , filebrowserBrowseUrl: '/multimedia/dialog/image'
         , filebrowserImageWindowWidth: '840'
         , filebrowserImageWindowHeight: '600'
@@ -208,7 +209,7 @@
           phone: (function(){
             var val = $("phone").get("value");
             if (!val) return '';
-            _.map(val.split(','), function(e) {
+            return _.map(val.split(','), function(e) {
               return e.trim();
             });
           })(),
@@ -230,6 +231,7 @@
       $$('form.card').each(function(el) {
         el.on('submit', fillCard);
       });
+      fillCard();
     })();
   });
 
