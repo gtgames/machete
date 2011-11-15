@@ -22,7 +22,7 @@ class BasicApplication < Padrino::Application
   register Padrino::Contrib::ExceptionNotifier
   set :exceptions_from, "mail@#{Cfg[:domain]}"
   set :exceptions_to, "god@progettoca.se"
-  set :exceptions_subject, "[#{Cfg[:domain]}]"
+  set :exceptions_subject, "M][Apps][#{Cfg[:domain]}"
 
   set :exceptions_page_500, "errors/500"
   set :exceptions_page_404, "errors/404"
