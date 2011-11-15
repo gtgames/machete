@@ -46,7 +46,7 @@ Admin.controllers :base do
         Dir.glob(Padrino.root('public','stylesheets', '*.less')) {|f|
           f = f.sub(path, '').sub(/^\//, '')
           puts "compiling #{path} / #{f}" 
-          `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
+          `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')}`
         }
       }.call()
     end

@@ -12,7 +12,7 @@ lambda {
   Dir.glob(::File.expand_path('../public/stylesheets/*.less', __FILE__)) {|f|
     f = f.sub(path, '').sub(/^\//, '')
     puts "compiling #{path} / #{f}" 
-    `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')} --compress`
+    `cd #{path} && lessc #{f} > #{f.sub(/less$/, 'css')}`
   }
 }.call()
 
