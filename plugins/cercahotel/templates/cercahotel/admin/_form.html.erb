@@ -36,7 +36,7 @@
 		].join(''));
 	</script>
 	<% else %>
-		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
 	<% end %>
 
 	<script type="text/javascript">
@@ -53,7 +53,7 @@
 			location = new google.maps.LatLng(lat, lng);
 
 			map = new google.maps.Map(document.getElementById("map"),{
-				zoom: 8,
+				zoom: 16,
 				center: location,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			});
@@ -92,7 +92,6 @@
 			$('search_address_a').on('click', function(){
 				var address = $('search_address').get('value');
 				geocoder.geocode({address: address}, function(results, status){
-					console.log(results);
 					if (status == "OK")	map.panTo(results[0].geometry.location);
 				});
 			});
