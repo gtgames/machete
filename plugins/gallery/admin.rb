@@ -78,7 +78,7 @@ Admin.controllers :photos do
       p = Photo.new({
         :title => i["title"],
         :gallery => params['import']['gallery'],
-        :tags => params['import']['tags']
+        :tags => params['import']['tag_list'].gsub(',\s', ',').split(',')
       })
       p.file = mf
       p.save
