@@ -38,11 +38,10 @@
 			</ul>
 			<div class="pull-right">
 				<ul>
-					<li><% if Padrino.env == :development -%><a href='/base/reboot'>REBOOT</a><% end -%></li>
-					<li><%= link_to 'S', url(:configurations, :index), :class => :sym, :title => 'Configurazione' %></li>
-					<li><%= link_to 'U', url(:accounts, :edit, :id => current_account.id), :class => :sym, :title => pat(:profile) %></li>
-					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>" class="sym" title="View Site">K</a></li>
-					<li><%= link_to 'X', url(:sessions, :destroy), :method => :delete, :class => :sym, :title => pat(:logout)  %></li>
+					<li><%= link_to 'S', url(:configurations, :index), :class => "sym btn primary", :title => 'Configurazione' %></li>
+					<li><%= link_to 'U', url(:accounts, :edit, :id => current_account.id), :class => "sym btn info", :title => pat(:profile) %></li>
+					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>" class="sym btn success" title="View Site">K</a></li>
+					<li><%= link_to 'X', url(:sessions, :destroy), :method => :delete, :class => "sym btn danger", :title => pat(:logout)  %></li>
 				</ul>
 			</div>
 		</div>

@@ -1,7 +1,6 @@
 <table class="zebra-striped"> 
   <thead>
     <tr>
-      <th class="last">&nbsp;</th>
       <th class="sortable"><%= mat(:link, :title) %></th>
       <th class="sortable"><%= mat(:link, :url) %></th>
       <th class="last">&nbsp;</th>
@@ -10,7 +9,6 @@
   <tbody>
     <% @links.each do |link| %>
       <tr>
-        <td><input type="checkbox"></td>
         <td><%= link.title %></td>
         <td><%= link.url %></td>
         <td>
