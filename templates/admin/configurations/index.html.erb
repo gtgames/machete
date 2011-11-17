@@ -39,6 +39,12 @@
       <label class="string" for="description">Descrizione META</label>
       <input class="string" id="description" name="description" type="text" value="<%= Cfg['description'] %>" />
     </div>
+
+	<div class="text">
+      <label for="footer">Note a pi&egrave; pagina</label>
+      <textarea class="text" id="footer" name="footer" rows="" cols=""><%= Cfg['footer'] || '' %></textarea>
+      <p class="description">Note a pi&egrave; pagina (se configurabile)</p>
+    </div>
   </fieldset>
 
   <div class='actions'>

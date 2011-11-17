@@ -164,13 +164,17 @@
     (function() {
       window.CKEDITOR_BASEPATH = '/js/ckeditor/';
       $$('textarea').each(function(e) {
-        CKEDITOR.replace(e._, {
-          startupFocus: false
-        , contentsCss: '/stylesheets/layout.css'
-        , filebrowserBrowseUrl: '/multimedia/dialog/image'
-        , filebrowserImageWindowWidth: '840'
-        , filebrowserImageWindowHeight: '600'
-        });
+        if (! e.parent().find('label').first().hasClass('editor')) {
+          //noop?
+        } else {
+          CKEDITOR.replace(e._, {
+            startupFocus: false
+          , contentsCss: '/stylesheets/layout.css'
+          , filebrowserBrowseUrl: '/multimedia/dialog/image'
+          , filebrowserImageWindowWidth: '840'
+          , filebrowserImageWindowHeight: '600'
+          });
+        }
       });
     })();
 
@@ -188,11 +192,12 @@
                                 '    <a class="email" href="mailto:<%= email %>"><%= email %></a>' +
                                 '    <span class="street-address"><%= street_address %><span>' +
                                 '    <span class="locality"><%= city %></span>' +
-                                '    <span class="region"><%= region %></span>' +
+                                '   (<span class="region"><%= region %></span>)' +
                                 '    <span class="postal-code"><%= postal_code %></span>' +
                                 '    <span class="country-name"><%= country %></span>' +
                                 '  </div>' +
                                 '  <% _.each(phone,function(tel){%> <span class="tel"><%= tel %></span> <% }); %>' +
+                                '  <div><%= note%></div>' +
                                 '</div>');
       function fillCard(e) {
         var params = {
@@ -206,6 +211,7 @@
           region: $("region").get("value")||'',
           postal_code: $("postal").get("value")||'',
           country: $("country").get("value")||'',
+          note: $("note").get("value")||'',
           phone: (function(){
             var val = $("phone").get("value");
             if (!val) return '';

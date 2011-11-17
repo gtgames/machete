@@ -15,6 +15,7 @@ Admin.controllers :configurations do
     Cfg.insert 'title', title
     Cfg.insert 'homepage', homepage
 
+    Cfg.insert 'footer', params['footer']
 
     Cfg.insert 'analytics', params['analytics']
     Cfg.insert 'analyst', params['analyst']
