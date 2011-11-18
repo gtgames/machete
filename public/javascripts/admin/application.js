@@ -165,7 +165,16 @@
       window.CKEDITOR_BASEPATH = '/js/ckeditor/';
       $$('textarea').each(function(e) {
         if (! e.parent().find('label').first().hasClass('editor')) {
-          //noop?
+          CKEDITOR.replace(e._, {
+                  toolbar : [ //'Basic'
+                      ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SpellChecker']
+                    , ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat']
+                    , ['Link', 'Unlink']
+                    , ['Bold', 'Italic', 'Underline']
+                    , ['ShowBlocks', 'Source', '-', 'Preview']
+                    , ['Maximize']
+                  ]
+          });
         } else {
           CKEDITOR.replace(e._, {
             startupFocus: false
