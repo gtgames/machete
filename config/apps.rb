@@ -28,13 +28,21 @@ class BasicApplication < Padrino::Application
   set :exceptions_page_404, "errors/404"
   
   use Rack::Session::Cookie, :key => 'rack.session'
-
   register Padrino::Contrib::Helpers::Flash
+
+  # Middleware for locale redirection
+  if Cfg['locales'].length > 1
+    puts "Using Locale Middleware"
+    require Padrino.root('lib','simple_locale')
+    use Rack::AutoLocale,
+      :host_blacklist => /^(www\.)?admin\..*$/,
+      :blacklist  => ['/media','/sitemap.xml', '/sitemap']
+  end
 end
 
 Padrino.configure_apps do
   enable :sessions
-  set :session_secret, Digest::SHA256.hexdigest(PADRINO_ROOT)
+  set :session_secret, Digest::SHA256.hexdigest(Padrino.root)
 end
 
 #
