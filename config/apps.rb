@@ -36,8 +36,9 @@ class BasicApplication < Padrino::Application
     require Padrino.root('lib','simple_locale')
     
     blacklist = ['/media','/sitemap.xml', '/sitemap']
-    Cfg["apps"].each { |a| blacklist << a }
-    
+    for k,v in Cfg["apps"] do
+      blacklist << v
+    end
     use Rack::AutoLocale,
       :host_blacklist => /^(www\.)?admin\..*$/,
       :blacklist  => blacklist
