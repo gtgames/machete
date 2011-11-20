@@ -12,20 +12,17 @@ module Rack
     def call(env)
       @req = Rack::Request.new env
 
-      @app.call(env) if
-                        @blacklist.include?(@req.env['REQUEST_URI']) or
-                        @req.env['HTTP_HOST'] =~ @host or
-                        !( @req.env['HTTP_HOST'] =~ @host_blacklist )
+      @app.call(env) if (  @blacklist.include?(@req.env['PATH_INFO']) or @req.env['HTTP_HOST'] =~ @host or !!( @req.env['HTTP_HOST'] =~ @host_blacklist ) )
 
-      if @req.env['REQUEST_URI'] == '/'
+      if @req.env['PATH_INFO'] == '/'
         return redirect(get_browser_locale)
-      elsif @blacklist and @blacklist.include?(@req.env['REQUEST_URI'])
+      elsif @blacklist and @blacklist.include?(@req.env['PATH_INFO'])
         @app.call env
-      elsif @req.env['REQUEST_URI'].match(/^\/([a-z]{2})/i) && Cfg[:locales].include?($1)
+      elsif @req.env['PATH_INFO'].match(/^\/([a-z]{2})/i) && Cfg[:locales].include?($1)
         I18n.locale = $1.to_sym
         @app.call cleanup_env(env)
       else
-        return redirect get_browser_locale, @req.env['REQUEST_URI']
+        return redirect get_browser_locale, @req.env['PATH_INFO']
       end
     end
 

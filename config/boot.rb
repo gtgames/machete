@@ -15,9 +15,10 @@ Padrino.before_load do
   require Padrino.root('lib','config')
   # Middleware for locale redirection
   if Cfg['locales'].length > 1
+    puts "Using Locale Middleware"
     require Padrino.root('lib','simple_locale')
     use Rack::AutoLocale,
-      :host_blacklist => [/^(www\.)?admin\..*$/],
+      :host_blacklist => /^(www\.)?admin\..*$/,
       :blacklist  => ['/media','/sitemap.xml', '/sitemap']
   end
 
