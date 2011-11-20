@@ -34,14 +34,15 @@ class BasicApplication < Padrino::Application
   if Cfg['locales'].length > 1
     puts "Using Locale Middleware"
     require Padrino.root('lib','simple_locale')
-    
-    blacklist = ['/media','/sitemap.xml', '/sitemap']
-    for k,v in Cfg["apps"] do
-      blacklist << v
-    end
+
     use Rack::AutoLocale,
       :host_blacklist => /^(www\.)?admin\..*$/,
-      :blacklist  => blacklist
+      :blacklist  => lambda{
+        blacklist = ['/media','/sitemap.xml', '/sitemap']
+        for k,v in Cfg["apps"] do
+          blacklist << v
+        end
+      }.call()
   end
 end
 
