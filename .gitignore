@@ -29,9 +29,12 @@ public/stylesheets/style.css
 public/media/*
 public/stylesheets/layout.css
 public/stylesheets/admin.css
+*.tmproj
+
 templates/blog
 templates/cercahotel
 templates/gallery
-*.tmproj
 templates/booking
+templates/events
+
 public/javascripts/admin/lib/node_modules
