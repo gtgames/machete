@@ -5,10 +5,10 @@ Gallery.helpers do
 end
 
 BasicApplication.helpers do
-  def photos_by_keywords(kwd, max=5)
+  def photos_by_keywords(kwd, max=5, fill=false)
     photos = Photo.where(:tags.in => kwd.to_s.split(',').map(&:downcase).uniq.map(&:strip)).limit(max).all
 
-    if (count = photos.count) < max
+    if fill and (count = photos.count) < max
       ids = photos.collect(&:_id)
       Photo.where(:_id => {:$nin => ids } ).limit(max - count).each{|p| photos << p }
     end
