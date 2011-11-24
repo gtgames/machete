@@ -79,7 +79,6 @@ module Padrino
             when /email/         ; email_field(attribute, opts);
             when /password/      ; password_field(attribute, opts);
             when /tel/,/phone/   ; tel_field(attribute, opts);
-            when /url/,/website/ ; url_field(attribute, opts);
             when /search/        ; search_field(attribute, opts);
             else                 ; text_field(attribute, opts);
             end
