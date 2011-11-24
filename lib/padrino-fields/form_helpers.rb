@@ -2,7 +2,7 @@ module Padrino
   module Helpers
     module FormHelpers
       
-      %w(date date email number search tel url).each do |type|
+      %w(date date email number search tel).each do |type|
         class_eval <<-EOF
         ##
         # Constructs a #{type} field input from the given options
