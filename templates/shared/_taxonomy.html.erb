@@ -1,11 +1,13 @@
 <% if !taxons.nil? and taxons.size > 0 -%>
 <ul>
 	<% taxons.each do |t| -%>
+    <li>
 		<% if t.class == Array -%>
 			<%= partial("shared/taxonomy", :locals => { :taxons => t }) -%>
 		<% else -%>
-			<li><%= link_to(t.title, ((Cfg['locales'].size == 1)? "/": "/#{Cfg.locale}/" ) + t.path.to_s) -%></li>
-		<% end %>
+			<%= link_to(t.title, ((Cfg['locales'].size == 1)? "/": "/#{Cfg.locale}/" ) + t.path.to_s) -%>
+    <% end %>
+  </li>
 	<% end -%>
 </ul>
 <% end -%>
