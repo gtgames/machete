@@ -1,7 +1,7 @@
 <article class="gallery">
 		<h2><%= @photos.first.gallery %></h2>
 		<ul class="media-grid">
-		<% @potos.each do |photo| -%>
+		<% @photos.each do |photo| -%>
 			<li>
         <%= link_to image_tag(photo.file.thumb('210xx60')), photo.file.url, :class => "thumbnail span3", :rel => "lightbox[#{photo.gallery}]" %>
 			</li>
