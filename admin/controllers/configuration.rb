@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controllers :configurations do
   get :index do
     Cfg.insert 'title', {} if Cfg[:title].nil?

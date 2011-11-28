@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controller :taxonomy do
   after do
     if env["REQUEST_METHOD"] != "GET"

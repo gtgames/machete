@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controllers :pages do
   get :index do
     @pages = Page.sort(:_id.desc).all

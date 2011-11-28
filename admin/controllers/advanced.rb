@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controllers :advanced do
   get :index do
     @title = Cfg[:title]

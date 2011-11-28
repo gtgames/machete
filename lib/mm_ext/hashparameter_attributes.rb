@@ -1,4 +1,3 @@
-require 'pp'
 require 'mongo_mapper'
 
 module MongoMapper

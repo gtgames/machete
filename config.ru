@@ -1,4 +1,5 @@
 #!/usr/bin/env rackup
+#encoding: utf-8
 require 'rack/fiber_pool'
 require 'eventmachine'
 

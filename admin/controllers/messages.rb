@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controllers :messages do
   get :index do
     @messages = Message.where(:st => {:'$nin' => [-1]}).order(:_id)
@@ -9,14 +10,14 @@ Admin.controllers :messages do
   end
 
   get :show, :with => :id do
-  	@message = Message.find(params[:id])
-  	@message.set(:st => 0)
-  	render 'admin/messages/show'
+    @message = Message.find(params[:id])
+    @message.set(:st => 0)
+    render 'admin/messages/show'
   end
 
   delete :destroy, :with => :id do
-  	message = Message.set({:_id => params[:id]}, {:st => -1})
-  	flash[:notice] = 'Cestinato con successo.'
-  	redirect url(:messages, :index)
+    message = Message.set({:_id => params[:id]}, {:st => -1})
+    flash[:notice] = 'Cestinato con successo.'
+    redirect url(:messages, :index)
   end
 end

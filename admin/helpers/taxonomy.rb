@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.helpers do
   def taxonomy_tree
     tax = Taxonomy.all

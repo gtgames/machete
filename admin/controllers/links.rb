@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controllers :links do
   after do
     if env["REQUEST_METHOD"] != "GET"

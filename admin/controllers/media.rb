@@ -1,3 +1,4 @@
+#encoding: utf-8
 Admin.controllers :multimedia do
   layout false
 
