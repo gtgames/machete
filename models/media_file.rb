@@ -61,7 +61,7 @@ class MediaFile
     if self.new? && self.path.match(%r{#{ media_folder }}).nil?
 
       self.ext  = ::File.extname( self.name ).slice!( 1..-1 )
-      self.name = self.name.gsub(/\%20/, ' ').to_slug.sub(/-[a-z]+$/, ".#{self.ext}")
+      self.name = self.name.gsub(/\%20/, '_').to_slug.sub(/-[a-z]+$/, ".#{self.ext}")
       self.url  = "/media/#{ subfolder }/#{ self._id }/#{ self.name }"
       self.path = "#{ media_folder }/#{ subfolder }/#{ self._id }/#{ self.name }"
 
@@ -69,7 +69,8 @@ class MediaFile
       FileUtils.mkdir_p ::File.dirname(self.path)
       FileUtils.cp temp_path, self.path
       # image conversion to max 900px x 600px
-      `convert -resize 900x600 #{self.path}`
+      #`convert -resize 900x600 #{self.path}`
+      Mapel.render(self.path).resize("900xx600").to(self.path).run
     end
   end
   def handle_deletion
