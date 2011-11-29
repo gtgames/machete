@@ -67,22 +67,28 @@ Admin.controllers :photos do
     render 'gallery/admin/import'
   end
   post :import_it do
-    params['import']['photo'].each do |i|
-      i = i[1]
-      mf = MediaFile.new({
-        :name => ::File.basename(i["file"]),
-        :path => i["file"],
-        :content_type => Wand.wave(i["file"])
-      })
-      mf.save
-      p = Photo.new({
-        :title => i["title"],
-        :gallery => params['import']['gallery'],
-        :tags => params['import']['tag_list'].gsub(',\s', ',').split(',')
-      })
-      p.file = mf
-      p.save
+    Thread.new do
+      params['import']['photo'].each do |i|
+        i = i[1]
+        mf = MediaFile.new({
+          :name => ::File.basename(i["file"]),
+          :path => i["file"],
+          :content_type => Wand.wave(i["file"])
+        })
+        mf.save
+        p = Photo.new({
+          :title => i["title"],
+          :gallery => params['import']['gallery'],
+          :tags => params['import']['tag_list'].gsub(',\s', ',').split(',')
+        })
+        p.file = mf
+        p.save
+      end
+      sleep(1)
+      flash[:notice] = "Importazione terminata con successo"
     end
+
+    flash[:notice] = "Importazione iniziata in secondo piano<br>apparir&agrave; un messaggio alla fine dell'importazione"
     redirect url(:photos, :index)
   end
 
