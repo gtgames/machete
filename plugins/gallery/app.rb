@@ -13,7 +13,7 @@ Gallery.controllers do
   end
 
   get :show, :map => '/:gallery' do
-    @photos = Photo.where(:gallery_slug => params[:gallery])
+    @photos = Photo.where(:gallery_slug => params[:gallery]).all
     render 'gallery/show', :layout => Cfg.layout('gallery')
   end
 
