@@ -1,8 +1,37 @@
 <ul class="breadcrumb">
-	<li><%= link_to 'Cerca Hotel', url(:index) %> <span class="divider">/</span></li>
-	<li class="active"><%= link_to t('cerca'), url(:search) %></li>
+  <li><%= link_to 'Cerca Hotel', url(:index) %> <span class="divider">/</span></li>
+  <li class="active"><%= link_to 'Cerca', url(:search) %></li>
 </ul>
 
 <form method="GET">
-	
+  <div class="input">
+    <input type="text" name="addr" placeholder="indirizzo">
+  </div>
+
+  <div>Mappa qui per reference</div>
+  <input type="hidden" name="lat">
+  <input type="hidden" name="lng">
+
+  <div class="input">
+    <ul class="inputs-list">
+      <% cerca_hotel_type_options.each do |o| -%>
+      <li>
+        <label>
+          <input type="radio" checked="" name="t" value="<%= o %>">
+          <span><%= o %></span>
+        </label>
+      </li>
+      <% end -%>
+      <li>
+        <label>
+          <input type="radio" checked="true" name="t" value="">
+          <span>Qualsiasi tipo</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="btn default">Cerca</button>
+  </div>
 </form>

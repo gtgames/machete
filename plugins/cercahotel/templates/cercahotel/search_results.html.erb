@@ -1,0 +1,23 @@
+<ul class="breadcrumb">
+  <li><%= link_to 'Cerca Hotel', url(:index) %>
+    <span class="divider">/</span></li>
+  <li><%= link_to 'Cerca', url(:search) %>
+    <span class="divider">/</span></li>
+  <li class="active">Risultati</li>
+</ul>
+
+<div class="hotel_list">
+  <% @hotels.each do |h| -%>
+    <div>
+      <h3><%= link_to h.title, url(:show, :slug => h.slug) %></h3>
+      <span><%= h.address %></span>
+      <div>icone della feature</div>
+      <ul class="media-grid">
+        <% h.features.each do |f| -%>
+          <li><a href="#" rel="tip" data-type="<%= f %>" class="hotel feature <%= f -%>"></a></li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>
+</div>
+

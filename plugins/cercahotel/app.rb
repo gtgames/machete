@@ -8,7 +8,7 @@ CercaHotel.controllers do
   get :index do
     @hotels = Hotel.paginate({
       :order    => :created_at.asc,
-      :per_page => 15, 
+      :per_page => 15,
       :page     => params[:p] || 0,
     })
     render 'cercahotel/index'
@@ -20,8 +20,12 @@ CercaHotel.controllers do
   end
 
   get :search do
-    if params[:q]
-      @hotels = Hotel.where(params[:q])
+    if params[:lat] and params[:lng]
+      if params[:t].length
+        @hotels = Hotel.by_location(params[:lat], params[:lng], {:type => params[:t]})
+      else
+        @hotels = Hotel.by_location(params[:lat], params[:lng])
+      end
       render 'cercahotel/search_results'
     else
       render 'cercahotel/search'

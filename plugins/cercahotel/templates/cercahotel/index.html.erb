@@ -1,24 +1,26 @@
+<ul class="breadcrumb">
+  <li class="active">Cerca Hotel</li>
+</ul>
+
 <% @hotels.each do |h| -%>
-	<div class="hotel">
-		<h1><%= link_to h.title, url(:show, :slug => h.slug) %></h1>
-		<%= image_tag h.logo.thumb('300x') unless h.logo.empty? %>
-		<div class="text">
-			<%= h.description %>
-		</div>
-		<ul class="media-grid">
-			<% h.features.each do |f| -%>
-				<li>
-					<%= image_tag "http://frenzart.com/machete/images/cercahotel/#{f}.png" %>
-				</li>
-			<% end -%>
-		</ul>
-	</div>
+  <div class="hotel">
+    <h1><%= link_to h.title, url(:show, :slug => h.slug) %></h1>
+    <%= image_tag h.logo.thumb('300x') unless h.logo.empty? %>
+    <div class="text">
+      <%= h.description %>
+    </div>
+    <ul class="media-grid">
+      <% h.features.each do |f| -%>
+        <li><a href="#" rel="tip" data-type="<%= f %>" class="hotel feature <%= f -%>"></a></li>
+      <% end -%>
+    </ul>
+  </div>
 <% end -%>
 
 <div class="pagination">
-	<ul>
-		<% (1..@hotels.total_pages).each do |p| -%>
-			<li class="<%= (params[:p] == "#{p}")? "active" : ""  %>"><%= link_to p, url(:index, :p => p)%></li>
-		<% end -%>
-	</ul>
+  <ul>
+    <% (1..@hotels.total_pages).each do |p| -%>
+      <li class="<%= (params[:p] == "#{p}")? "active" : ""  %>"><%= link_to p, url(:index, :p => p)%></li>
+    <% end -%>
+  </ul>
 </div>
