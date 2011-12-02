@@ -1,18 +1,14 @@
 <% if @taxonomy %>
 <div class="taxonomy">
-	<h1><%= @taxonomy.title %></h1>
-	<%= @taxonomy.description %>
+  <h1><%= @taxonomy.title %></h1>
+  <%= @taxonomy.description %>
 </div>
 <% end %>
 
 <% @pages.each do |p| %>
-<section class="container">
-	<article class="row">
-		<div class="span16">
-			<h1><%= link_to p.title, url(:pages, :show, :slug => p.slug.to_s) %></h1>
-			<p class="lead"><%= p.lead %></p>
-			<%= p.text %>
-		</div>
-	</article>
-</section>
+  <article>
+    <h1><%= link_to p.title, url(:pages, :show, :slug => p.slug.to_s) %></h1>
+    <p class="lead"><%= p.lead %></p>
+    <%= p.text %>
+  </article>
 <% end %>

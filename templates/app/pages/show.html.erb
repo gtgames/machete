@@ -1,18 +1,16 @@
 <% if @taxonomy -%>
 <div class="taxonomy">
-	<h1><%= @taxonomy.title %></h1>
-	<div class="description"><%= @taxonomy.description %></div>
+  <h1><%= @taxonomy.title %></h1>
+  <div class="description"><%= @taxonomy.description %></div>
 </div>
 <% end -%>
 
-<section class="container">
-	<article class="row">
-		<h1><%= @pages.title %></h1>
-		<div class='span16 lead'>
-		  <%= @pages.lead %>
-		</div>
-		<div class='span16 text'>
-		  <%= @pages.text %>
-		</div>
-	</article>
-</section>
+<article>
+  <h1><%= @pages.title %></h1>
+  <div class='span16 lead'>
+    <%= @pages.lead %>
+  </div>
+  <div class='span16 text'>
+    <%= @pages.text %>
+  </div>
+</article>
