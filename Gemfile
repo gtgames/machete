@@ -28,7 +28,6 @@ gem 'httparty'
 group :development do
   gem 'awesome_print'
   gem 'random_data'
-  gem 'ruby-debug19'
 end
 
 # Test requirements
