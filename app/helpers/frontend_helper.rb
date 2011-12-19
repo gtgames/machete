@@ -17,6 +17,10 @@ BasicApplication.helpers do
   def h text
     Rack::Utils.escape_html text
   end
+
+  def hh text
+    Rack::Utils.escape text
+  end
   
   def lazy_img(thumb, options={}, href=nil)
     o = {
