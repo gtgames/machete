@@ -7,7 +7,7 @@ $(function(){
     }
   });
 
-    $('input[id^=booking_date]').each(function(el){
+    $('input[id^=booking_date], input[id^=book_request_date]').each(function(el){
         el.set('type','hidden');
         var min_date = _date().date,
             max_date = _date().add({M: 1}).date,
