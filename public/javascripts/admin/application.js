@@ -248,45 +248,60 @@
       });
       fillCard();
     })();
-  });
 
-  (function() {
-    if ($('dropbox').length == 0) return;
-    var id = 0;
-    var template = _.template(
-      '<tr><td><input type="checkbox" checked></td>'
-    + '<td><img href="<%= url %>"><td>'
-    + '<td><%= file %></td>'
-    + '<td><input name="import[photo][<%= n %>][media]" type="hidden" value="<%= success %>" /></td>'
-    + '</tr>'
-    );
+    
+    (function() {
+      if (! $('dropbox')) return;
+      var id = 0
+        , template = _.template( ''
+          + '<tr id="<%= success %>"><td><input type="checkbox" checked></td>'
+          + '<td><img src="<%= url %>"><td>'
+          + '<td><%= data %></td>'
+          + '<td><input name="import[photo][<%= id %>][media]" type="hidden" value="<%= success %>" />'
+          + '    <button class="btn danger" type="button" data-id="<%= success %>">Delete!</button></td>'
+          + '</tr>')
+        , uploader = new qq.FileUploader({
+          //  debug: true
+            allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
+          , element: $('dropbox')._
+          , action: '/base/upload'
+          , onComplete: function(id, name, resp) {
+              if (resp.error) {
+                var ul = new Element('ul', {
+                  "class": "errors"
+                });
+                resp.error.each(function(el) {
+                  ul.append(new Element('li', {
+                    html: el
+                  }));
+                });
+                div.append(ul);
+              } else {
+                id += 1;
+                console.log(resp)
+                $('__target').append(
+                  template(
+                    _.extend(resp, {
+                      id: id++
+                    })));
+              }
+            }
+          });
 
-    var uploader = new qq.FileUploader({
-    //  debug: true
-    , element: $('dropbox')._
-    , action: '/base/upload'
-    , onComplete: function(id, name, resp) {
-        if (resp.error) {
-          var ul = new Element('ul', {
-            "class": "errors"
-          });
-          resp.error.each(function(el) {
-            ul.append(new Element('li', {
-              html: el
-            }));
-          });
-          div.append(ul);
-        } else {
-          id += 1;
-          $('__target').append(
-            template(
-              _.extend(resp, {
-                id: id++
-              })));
-        }
-      }
+      $('__target').delegate('click', 'button.danger', function (ev) {
+        var self = this;
+        var _id = this.get('data-id');
+        var xhr = new Xhr('/multimedia/destroy/' + _id, {
+          method: 'delete'
+        , onSuccess: function() {
+            $(_id).hide();
+          }
+        });
+        xhr.send();
       });
-  })();
+    })();
+
+  });
 
 })(RightJS);
 

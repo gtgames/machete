@@ -56,16 +56,18 @@ Admin.controllers :photos do
   post :import_it do
     params['import']['photo'].each do |i|
       i = i[1]
-      mf = MediaFile.find()
+      puts(i)
+      puts i['media']
+      mf = MediaFile.find(i['media'])
       p = Photo.new({
-        :title => i["title"],
+        :title => mf.name,
         :gallery => params['import']['gallery'],
         :tags => params['import']['tag_list'].gsub(',\s', ',').split(',')
       })
       p.file = mf
       p.save
 
-      sleep(1)
+      sleep(0.5)
     end
     flash[:notice] = "Importazione terminata con successo"
     redirect url(:photos, :index)

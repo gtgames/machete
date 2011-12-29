@@ -21,7 +21,7 @@ Admin.controllers :multimedia do
     if MediaFile.find(params[:id]).destroy
       (request.xhr?)? 200 : redirect(url(:multimedia, :index))
     else
-      (request.xhr?)? 400 : "Error deleting File!!!"
+      (request.xhr?)? {error: 'not found ID: ' + params[:id]} : "Error deleting File!!!"
     end
   end
 

@@ -18,18 +18,19 @@
 		<div class="text">
 			<label class="text" for="photo_tag_list">Tags</label>
 			<input class="text" id="photo_tag_list" name="import[tag_list]" type="text">
+			<p></p>
 		</div>
 
-		<h2>Galleria</h2>
 		<div class="string">
-			<label class="string" for="photo_gallery" />
+			<label class="string" for="photo_gallery">Nome Galleria</label>
 			<input class="string" id="photo_gallery" name="import[gallery]" type="text" />
+			<p></p>
 		</div>
 	</div>
 
 	<div class='actions'>
-		<input class="alt_btn" value="Salva" type="submit" />
-		<input onclick="window.location='/photos';return false" class="button" value="Annulla" type="submit" />
+		<input class="btn default" value="Salva" type="submit" />
+		<input onclick="window.location='/photos';return false" class="btn danger" value="Annulla" type="submit" />
 	</div>
 </form>
 
