@@ -26,6 +26,8 @@ class Admin < Padrino::Application
   register Padrino::Admin::AccessControl
 
   register Padrino::Cache
+  set :cache, Padrino.cache
+  enable :caching
 
   register PadrinoFields
   set :default_builder, 'PadrinoFieldsBuilder'
