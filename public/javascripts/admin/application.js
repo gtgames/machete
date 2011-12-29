@@ -250,116 +250,43 @@
     })();
   });
 
-  /*var BrowserDialog = new Class(Dialog, {
-    image: '',
-    thumb_size: '400x',
-    thumb: function(){
-      var e = this.image.match(/\.([a-z]+)$/i);
-      e = (e !== null)? e[1] : 'png';
+  (function() {
+    if ($('dropbox').length == 0) return;
+    var id = 0;
+    var template = _.template(
+      '<tr><td><input type="checkbox" checked></td>'
+    + '<td><img href="<%= url %>"><td>'
+    + '<td><%= file %></td>'
+    + '<td><input name="import[photo][<%= n %>][media]" type="hidden" value="<%= success %>" /></td>'
+    + '</tr>'
+    );
 
-      return this.image.replace(/\.[a-z]+$/i, '_' + this.thumb_size + '.' + e );
-    },
-
-    preview: function(url) {
-      if (url === undefined) { return false; }
-      $('filebrowser_preview').html('');
-      this.image = url;
-      var dialog = this
-        , that = this;
-      this.expand();
-
-      $('filebrowser_list').morph({
-        height: '140px',
-        position: 'absolute',
-        bottom: '0',
-        overflow: 'auto'
-      });
-      var imagePreview = new Element('img', {
-        style: {
-          "display": 'block',
-          "margin": '0 auto'
-        }
-      }).set('src', this.thumb()).insertTo( $E('div', {
-        style: {
-          width: '99%',
-          height: (this.find('div.rui-dialog-body').first().size().y - 200) + 'px',
-          overflow: 'auto'
-        }
-      }).insertTo($('filebrowser_preview')) ); // imagePreview
-
-      new qq.FileUploader({
-        element: $E('div', {
-          style: { position: 'absolute', top: '5px', left: '5px' }
-        }).insertTo($('filebrowser_preview'))._,
-        action: '/base/upload',
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-        onComplete: function(idx, name, data){
-          $E('img',{
-            src: that._thumb(data.data.url, '100x100'),
-            'data-link': data.data.url,
-            onClick: function(){
-              that.preview(this.get('data-link'));
-            }
-          }).insertTo($('filebrowser_list'));
-        }
-      });
-
-      var thumbSelect = new Selectable({
-        options: {
-          '100xx100': "Small",
-          '300xx300': "Normal",
-          '400x':     "Medium",
-          '900xx700': "Huge"
-        },
-        multiple: false,
-        selected: 1
-      }).insertTo(
-        $E('div',{ style: { width: '180px', margin: '0 auto' } }).insertTo($('filebrowser_preview'))
-      ).on('select', function(){
-        dialog.thumb_size = this.getValue();
-        imagePreview.set('src', dialog.thumb() );
-      });
-    }
-
-  });
-
-  Rte.Tools.Image = new Class(Rte.Tool.Url, {
-    command: 'insertimage',
-    attr: 'src',
-
-    element: function() {
-      var image = this.rte.selection.element();
-      return image !== null && image.tagName === "IMG" ? image: null;
-    },
-
-    prompt: function() {
-      var that = this;
-      var myRange = this.rte.selection.range();
-
-      this.dialog = new BrowserDialog({
-        closeable: true,
-        expandable:  true,
-        title: 'Inserisci Immagine',
-        url: '/multimedia/dialog/image'
-      }).on({
-        load: function(e){
-          var dialog = this;
-          $$('#filebrowser_list img').each(function(img){
-            img.on('click', function(e){
-              dialog.preview(this.get('data-link'));
-            });
+    var uploader = new qq.FileUploader({
+    //  debug: true
+    , element: $('dropbox')._
+    , action: '/base/upload'
+    , onComplete: function(id, name, resp) {
+        if (resp.error) {
+          var ul = new Element('ul', {
+            "class": "errors"
           });
-        },
-        ok: function(e){
-          that.rte.focused = true;
-          that.rte.selection.range(myRange);
-
-          that.exec(this.thumb().replace(/admin\./, ''));
-          this.hide();
+          resp.error.each(function(el) {
+            ul.append(new Element('li', {
+              html: el
+            }));
+          });
+          div.append(ul);
+        } else {
+          id += 1;
+          $('__target').append(
+            template(
+              _.extend(resp, {
+                id: id++
+              })));
         }
+      }
       });
-    }
-  });*/
+  })();
 
 })(RightJS);
 

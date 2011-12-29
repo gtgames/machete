@@ -1,58 +1,37 @@
-<form class="form" method="post" action="/photos/import_it" accept-charset="UTF-8">
-  <div class="module_content">
-    <table cellspacing="0">
-      <thead>
-        <tr>
-          <th class="last">&nbsp;</th>
-          <th>Nome/File</th>
-        </tr>
-      </thead>
-      <% @files.each_with_index do |f,n| -%>
-        <tr>
-          <td><input type="checkbox" checked></td>
-          <td>
-            <div class="string">
-              <label class="string">Nome<br><input class="string" name="import[photo][<%= n %>][title]" type="text" value="<%= ::File.basename(f) %>" /></label>
-            </div>
-            <div class="file">
-              File: <b><%= ::File.basename(f) %></b>
-              <input class="file" name="import[photo][<%= n %>][file]" type="hidden" value="<%= f %>" />
-            </div>
-          </td>
-        </tr>
-      <% end -%>
-    </table>
-
-    <div class="text">
-      <label class="text" for="photo_tag_list">Tags</label>
-      <input class="text" id="photo_tag_list" name="import[tag_list]" type="text">
-    </div>
-
-    <h2>Galleria</h2>
-      <div class="string">
-        <label class="string" for="photo_gallery" />
-        <input class="string" id="photo_gallery" name="import[gallery]" type="text" />
-      </div>
-    </div>
-
-<div class='actions'>
-  <input class="alt_btn" value="Salva" type="submit" />
-  <input onclick="window.location='/photos';return false" class="button" value="Annulla" type="submit" />
+<div id="dropbox">
 </div>
 
+<form class="form" method="post" action="/photos/import_it" accept-charset="UTF-8">
+	<div class="module_content">
+		<table  class="zebra-striped">
+			<thead>
+				<tr>
+					<th class="last">&nbsp;</th>
+					<th>Thumb</th>
+					<th>Nome/File</th>
+				</tr>
+			</thead>
+			<tbody id="__target">
+			</tbody>
+		</table>
 
-<script type="text/javascript">
-  $(document).on('ready', function(){
-       $$('input[type=checkbox]').each(function(el){
-         el.on('change',function(e){
-           var that = this;
-           this.parent().parent().find('input[type=text], input[type=hidden]').each(function(imp){
-             imp.set('disabled', !that.get('checked'));
-            });
-        });
-      });
-  });
-</script>
+		<div class="text">
+			<label class="text" for="photo_tag_list">Tags</label>
+			<input class="text" id="photo_tag_list" name="import[tag_list]" type="text">
+		</div>
+
+		<h2>Galleria</h2>
+		<div class="string">
+			<label class="string" for="photo_gallery" />
+			<input class="string" id="photo_gallery" name="import[gallery]" type="text" />
+		</div>
+	</div>
+
+	<div class='actions'>
+		<input class="alt_btn" value="Salva" type="submit" />
+		<input onclick="window.location='/photos';return false" class="button" value="Annulla" type="submit" />
+	</div>
+</form>
 
 <% content_for :actions, partial("gallery/admin/actions") %>
 <% content_for :title, 'Importazione di massa per Foto' %>

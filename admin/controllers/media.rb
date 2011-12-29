@@ -5,7 +5,7 @@ Admin.controllers :multimedia do
   get :index do
     @photos = Photo.fields(:'file._id').all.map{|e| e['file']['_id'].to_s  }
     @media = MediaFile.where(:_id => {:$nin => @photos}).all
-    render 'admin/multimedia/index'
+    (request.xhr?)? @media.to_json : render 'admin/multimedia/index'
   end
 
   get :new do
@@ -14,14 +14,14 @@ Admin.controllers :multimedia do
 
   post :create do
     media = Media.new(params[:media])
-    render 'admin/multimedia/new'
+    (request.xhr?)? 200 : render 'admin/multimedia/new'
   end
 
   delete :destroy, :with => [:id] do
     if MediaFile.find(params[:id]).destroy
-      redirect url(:multimedia, :index)
+      (request.xhr?)? 200 : redirect url(:multimedia, :index)
     else
-      "Error deleting File!!!"
+      (request.xhr?)? 400 : "Error deleting File!!!"
     end
   end
 

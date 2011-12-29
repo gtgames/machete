@@ -51,44 +51,23 @@ Admin.controllers :photos do
   end
 
   get :import do
-    require "find"
-    begin
-      @files = Find.find(File.expand_path("~/tmp/#{Cfg[:domain]}")).map{|f|
-        f unless f.match(/\.(jpe?g|png|gif)$/i).nil?
-      }.compact
-    rescue Errno::ENOENT
-      @files = []
-    end
-
-    if @files.size == 0
-      flash[:notice] = 'Nessun file da importare'
-      redirect url(:photos, :index)
-    end
     render 'gallery/admin/import'
   end
   post :import_it do
-    Thread.new do
-      params['import']['photo'].each do |i|
-        i = i[1]
-        mf = MediaFile.new({
-          :name => ::File.basename(i["file"]),
-          :path => i["file"],
-          :content_type => Wand.wave(i["file"])
-        })
-        mf.save
-        p = Photo.new({
-          :title => i["title"],
-          :gallery => params['import']['gallery'],
-          :tags => params['import']['tag_list'].gsub(',\s', ',').split(',')
-        })
-        p.file = mf
-        p.save
-      end
-      sleep(1)
-      flash[:notice] = "Importazione terminata con successo"
-    end
+    params['import']['photo'].each do |i|
+      i = i[1]
+      mf = MediaFile.find()
+      p = Photo.new({
+        :title => i["title"],
+        :gallery => params['import']['gallery'],
+        :tags => params['import']['tag_list'].gsub(',\s', ',').split(',')
+      })
+      p.file = mf
+      p.save
 
-    flash[:notice] = "Importazione iniziata in secondo piano<br>apparir&agrave; un messaggio alla fine dell'importazione"
+      sleep(1)
+    end
+    flash[:notice] = "Importazione terminata con successo"
     redirect url(:photos, :index)
   end
 

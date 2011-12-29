@@ -21,7 +21,7 @@ Admin.controllers :base do
         :path => params['tempfile']
     })
     if file.save
-      {success:file.id.to_s, data:file, url:file.thumb()}.to_json
+      {success:file.id.to_s, data: ::File.basename(file), url:file.thumb()}.to_json
     else
       {error:file.errors}.to_json
     end
