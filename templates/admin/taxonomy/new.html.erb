@@ -1,7 +1,0 @@
-<% form_for @taxonomy, url(:taxonomy, :create), :class => "form-stacked span16" do |f| %>
-  <%= partial "admin/taxonomy/form", :locals => { :f => f } %>
-<% end %>
-
-<% content_for :actions, partial("admin/base/actions", :locals => { :p => :taxonomy }) %>
-
-<% content_for :title, 'Nuova Tassonomia' %>

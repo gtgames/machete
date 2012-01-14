@@ -1,6 +1,5 @@
 class Page
   include MongoMapper::Document
-  plugin MongoMapper::Plugins::HashParameterAttributes
 
   key :title, Translation
   key :slug, Translation

@@ -1,7 +1,0 @@
-<% form_for :link, url(:links, :update, :id => @link.id), :method => :put, :class => "form-stacked span16" do |f| %>
-  <%= partial "admin/links/form", :locals => { :f => f } %>
-<% end %>
-
-<% content_for :actions, partial("admin/base/actions", :locals => { :p => :links }) %>
-
-<% content_for :title, 'Modifica Link' %>

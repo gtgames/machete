@@ -76,10 +76,6 @@ end
 ###
 
 
-
-
-Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
-
 Cfg['apps'].each do |app, mountpoint|
   begin
     Object.const_get(app) # testing app existance

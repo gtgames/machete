@@ -1,7 +1,0 @@
-<% form_for @page, url(:pages, :create), :class => "form-stacked span16" do |f| %>
-  <%= partial "admin/pages/form", :locals => { :f => f } %>
-<% end %>
-
-<% content_for :actions, partial("admin/base/actions", :locals => { :p => :pages }) %>
-
-<% content_for :title, 'Nuova Pagina' %>

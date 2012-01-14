@@ -1,7 +1,0 @@
-<% project_modules.each do |project_module| %>
-	<% unless project_module.name == :'configurations' -%>
-	<li>
-		<%= link_to project_module.human_name, project_module.path("/"), :class => (request.path_info =~ /^#{project_module.path}/)? 'active' : '' %>
-	</li>
-	<% end -%>
-<% end %>
