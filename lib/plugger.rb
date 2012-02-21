@@ -9,7 +9,8 @@ def PluginManager plugs
         puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
         File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
 
-        if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}") and not File.directory?("#{PADRINO_ROOT}/templates/mailer/#{plugin}")
+
+        if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}")
           puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
           File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
         end
@@ -23,7 +24,7 @@ def PluginManager plugs
   end
 
 
-  
+
   Cfg['apps'].each do |app, mountpoint|
     begin
       Object.const_get(app) # testing app existance
