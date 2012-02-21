@@ -18,7 +18,7 @@ Booking.controllers do
     render 'booking/index', :layout => Cfg.layout('booking')
   end
   post :new do
-    @booking = BookRequest.new params[:booking]
+    @booking = BookRequest.new params[:book_request]
     if @booking.save
       deliver(:booking, :new, @booking)
 
