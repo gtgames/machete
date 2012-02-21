@@ -16,10 +16,10 @@ gem 'erubis'
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'builder'
 
-gem 'mongo', '>=1.4.0', :require => nil
-gem 'bson_ext', '>=1.4.0', :require => nil
+gem 'mongo', '>=1.5.2', :require => nil
+gem 'bson_ext', '>=1.5.2', :require => nil
 
-gem 'mongo_mapper', '0.9.1'
+gem 'mongo_mapper', '0.11.0'
 
 gem 'wand'
 
@@ -36,7 +36,7 @@ group :test do
   gem 'random_data'
   gem 'rr'
   gem 'riot'
-  gem 'riot-mongo_mapper', '>=0.1.0'
+  gem 'riot-mongo_mapper', :git => 'https://github.com/aliem/riot-mongo_mapper.git', :branch => 'feature/mm0.11'
   gem 'machinist_mongo', :require => 'machinist/mongo_mapper'
   gem 'rack-test', :require => "rack/test"
 end
