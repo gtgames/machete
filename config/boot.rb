@@ -19,11 +19,14 @@ Padrino.before_load do
 
   Padrino.cache = Padrino::Cache::Store::Mongo.new(
     MongoMapper.database, :size => 2, :max => 100, :collection => 'cache' )
+  
+  Dir[PADRINO_ROOT + "/plugins/**/pre-boot.rb"].each {|file| require file}
 end
 ##
 # Add here your after load hooks
 #
 Padrino.after_load do
+  Dir[PADRINO_ROOT + "/plugins/**/post-boot.rb"].each {|file| require file}
 end
 
 Padrino.load!
