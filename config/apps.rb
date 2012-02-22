@@ -54,7 +54,7 @@ end
 #
 # Machete Plugins
 # lib/plugger.rb
-PluginManager(JSON.parse(File.read(Padrino.root('config', 'config.json')))['plugins'])
+PluginManager(MACHETE_PLUGINS)
 
 Padrino.mount("Admin").to("/").host(/^(?:www\.)?admin\..*$/)
 

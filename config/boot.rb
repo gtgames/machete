@@ -7,7 +7,8 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 
-
+MACHETE_PLUGINS = JSON.parse(File.read(Padrino.root('config', 'config.json')))['plugins'] << 'lesscss'
+MACHETE_PLUGINS_RX = new RegEx("(" << MACHETE_PLUGINS.join('|') << ")", 'g')
 ##
 # Add here your before load hooks
 #
@@ -20,13 +21,17 @@ Padrino.before_load do
   Padrino.cache = Padrino::Cache::Store::Mongo.new(
     MongoMapper.database, :size => 2, :max => 100, :collection => 'cache' )
   
-  Dir[PADRINO_ROOT + "/plugins/**/pre-boot.rb"].each {|file| require file}
+  Dir[PADRINO_ROOT + "/plugins/**/pre-boot.rb"].each {|file|
+    require file if file =~ MACHETE_PLUGINS_RX
+  }
 end
 ##
 # Add here your after load hooks
 #
 Padrino.after_load do
-  Dir[PADRINO_ROOT + "/plugins/**/post-boot.rb"].each {|file| require file}
+  Dir[PADRINO_ROOT + "/plugins/**/post-boot.rb"].each {|file|
+    require file if file =~ MACHETE_PLUGINS_RX
+  }
 end
 
 Padrino.load!
