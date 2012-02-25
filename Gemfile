@@ -36,8 +36,6 @@ group :test do
   gem 'random_data'
   gem 'rr'
   gem 'riot'
-  gem 'riot-mongo_mapper', :git => 'https://github.com/aliem/riot-mongo_mapper.git', :branch => 'feature/mm0.11'
-  gem 'machinist_mongo', :require => 'machinist/mongo_mapper'
   gem 'rack-test', :require => "rack/test"
 end
 
