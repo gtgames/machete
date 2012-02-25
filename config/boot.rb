@@ -8,7 +8,7 @@ require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 
 MACHETE_PLUGINS = JSON.parse(File.read(Padrino.root('config', 'config.json')))['plugins'] << 'lesscss'
-MACHETE_PLUGINS_RX = new RegEx("(" << MACHETE_PLUGINS.join('|') << ")", 'g')
+MACHETE_PLUGINS_RX = new %r{(#{MACHETE_PLUGINS.join('|')})}
 ##
 # Add here your before load hooks
 #
