@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Browser</title>
+    <script src="http://frenzart.com/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/admin/lib/ender.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/admin/lib/media_browser.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/stylesheets/admin.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <bodyv class="files">
+    <div id="filebrowser_preview"></div>
+    <div id="filebrowser_list">
+	    <table class="zebra-striped">
+	    	<thead>
+	    		<tr>
+	    			<th>Link</th>
+	    			<th class="last"></th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    		<% @files.each do |i| -%>
+	    			<tr>
+						<td>
+							<% if i.content_type =~ /^image\/.+/ -%>
+								<a href="<%= i.url -%>">
+									<%= image_tag i.thumb(:small) %>
+								</a>
+							<% else -%>
+								<a href="<%= i.url -%>"><%= i.name -%></a></td>
+							<% end -%>
+						<td class="last">
+							<button class="btn submit" data-link="<%= i.url -%>">Inserisci</button>
+						</td>
+					</tr>
+				<% end -%>
+	    	</tbody>
+	    </table>
+	</div>
+
+    <div id="filebrowser_upload">
+      <form id="upload" action="" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+      </form>
+    </div>
+    <style type="text/css">
+      body, html { padding: 0; margin: 0}
+      #filebrowser_list {
+      	margin-bottom: 3em;
+      }
+      #filebrowser_upload {
+        padding-top: 5px;
+        height: 2.5em;
+        width: 100%;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        border-top: 1px solid #CCC;
+        background-color: rgba(40,50,40,.6);
+      }
+      #filebrowser_upload form {
+        margin-bottom: 0;
+      }
+      #submit {
+        z-index: 10;
+        position: fixed;
+        right: 3px;
+        bottom: 3px;
+      }
+    </style>
+    <script type="text/template" id="template">
+	<tr>
+		<td><a href="{{_url}}">{{name}}</a></td>
+		<td class="last">
+			<button class="btn submit" data-link="{{_url}}">Inserisci</button>
+		</td>
+	</tr>
+	</script>
+  </body>
+</html>

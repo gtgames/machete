@@ -38,3 +38,4 @@ templates/booking
 templates/events
 
 public/javascripts/admin/lib/node_modules
+templates/lesscss

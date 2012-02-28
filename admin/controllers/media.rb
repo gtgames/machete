@@ -29,10 +29,9 @@ Admin.controllers :multimedia do
     case params[:kind]
     when 'image' then
       @files = MediaFile.where(:content_type => /^image\/\w+/).all
-      render 'admin/multimedia/images', :layout => false
     when 'file' then
       @files = MediaFile.all
-      render 'admin/multimedia/files', :layout => false
     end
+    render 'admin/multimedia/files', :layout => false
   end
 end

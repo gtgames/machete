@@ -178,10 +178,12 @@
         } else {
           CKEDITOR.replace(e._, {
             startupFocus: false
-          , contentsCss: '/stylesheets/layout.css'
-          , filebrowserBrowseUrl: '/multimedia/dialog/image'
-          , filebrowserImageWindowWidth: '840'
-          , filebrowserImageWindowHeight: '600'
+          //, contentsCss: '/stylesheets/layout.css' // BROKEN!
+          , filebrowserBrowseUrl: '/multimedia/dialog/file'
+          , filebrowserImageBrowseUrl: '/multimedia/dialog/image'
+          , filebrowserUploadUrl: '/base/upload'
+          , filebrowserWindowWidth: '600'
+          , filebrowserWindowHeight: '600'
           });
         }
       });

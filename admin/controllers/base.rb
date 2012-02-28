@@ -14,16 +14,32 @@ Admin.controllers :base do
   end
 
   post :upload do
-    content_type :json
+    # http://admin.machete.dev/base/upload?CKEditor=page_text(it)&CKEditorFuncNum=71&langCode=it
     file = MediaFile.new({
         :name => params["filename"],
         :content_type => Wand.wave(params['tempfile']),
         :path => params['tempfile']
     })
-    if file.save
-      {success:file.id.to_s, data: ::File.basename(file.path), url:file.thumb()}.to_json
+    if (params['CKEditor'])
+      content_type :html
+
+      if file.save
+        "<script type=\"text/javascript\">
+          window.parent.CKEDITOR.tools.callFunction(#{params['CKEditorFuncNum']},'#{file.url}', '');
+        </script>"
+      else
+        "<script type=\"text/javascript\">
+          window.parent.CKEDITOR.tools.callFunction(#{params['CKEditorFuncNum']},null, '#{file.errors.to_json}');
+        </script>"
+      end
     else
-      {error:file.errors}.to_json
+      content_type :json
+
+      if file.save
+        {success:file.id.to_s, data: ::File.basename(file.path), url:file.thumb(), _url: file.url}.to_json
+      else
+        {error:file.errors}.to_json
+      end
     end
   end
 

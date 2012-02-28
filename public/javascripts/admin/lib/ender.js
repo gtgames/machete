@@ -1,7 +1,7 @@
 /*!
   * =============================================================
   * Ender: open module JavaScript framework (https://ender.no.de)
-  * Build: ender build wings bean bonzo domready qwery jeesh valentine
+  * Build: ender build domready qwery bonzo bean
   * =============================================================
   */
 
@@ -94,1121 +94,72 @@
 
   var module = { exports: {} }, exports = module.exports;
 
-  !(function(wings) {
-    var escapeXML, isArray, parse_re, renderRawTemplate, replaceBraces, restoreBraces, _ref;
-    wings.strict = false;
-    wings.renderTemplate = function(template, data, links) {
-      template = replaceBraces(template);
-      template = renderRawTemplate(template, data, links);
-      template = restoreBraces(template);
-      return template;
-    };
-    replaceBraces = function(template) {
-      return template.replace(/\{\{/g, '\ufe5b').replace(/\}\}/g, '\ufe5d');
-    };
-    restoreBraces = function(template) {
-      return template.replace(/\ufe5b/g, '{').replace(/\ufe5d/g, '}');
-    };
-    isArray = (_ref = Array.isArray) != null ? _ref : (function(o) {
-      return Object.prototype.toString.call(o) === '[object Array]';
-    });
-    escapeXML = function(s) {
-      return s.toString().replace(/&(?!\w+;)|["<>]/g, function(s) {
-        switch (s) {
-          case '&':
-            return '&amp';
-          case '"':
-            return '\"';
-          case '<':
-            return '&lt';
-          case '>':
-            return '&gt';
-          default:
-            return s;
-        }
-      });
-    };
-    parse_re = /\s*\{([:!])\s*([^}]*?)\s*\}([\S\s]+?)\s*\{\/\s*\2\s*\}|\{(\#)\s*[\S\s]+?\s*\#\}|\{([@&]?)\s*([^}]*?)\s*\}/mg;
-    return renderRawTemplate = function(template, data, links) {
-      return template.replace(parse_re, function(all, section_op, section_name, section_content, comment_op, tag_op, tag_name) {
-        var content, i, link, name, op, part, parts, rest, v, value, _len, _ref2;
-        op = section_op || comment_op || tag_op;
-        name = section_name || tag_name;
-        content = section_content;
-        switch (op) {
-          case ':':
-            value = data[name];
-            if (!(value != null)) {
-              if (wings.strict) {
-                throw "Invalid section: " + (JSON.stringify(data)) + ": " + name;
-              } else {
-                return "";
-              }
-            } else if (isArray(value)) {
-              parts = [];
-              for (i = 0, _len = value.length; i < _len; i++) {
-                v = value[i];
-                v['#'] = i;
-                parts.push(renderRawTemplate(content, v, links));
-              }
-              return parts.join('');
-            } else if (typeof value === 'object') {
-              return renderRawTemplate(content, value, links);
-            } else if (typeof value === 'function') {
-              return value.call(data, content);
-            } else if (value) {
-              return renderRawTemplate(content, data, links);
-            } else {
-              return "";
-            }
-            break;
-          case '!':
-          case '?!':
-            value = data[name];
-            if (!(value != null)) {
-              if (wings.strict) {
-                throw "Invalid inverted section: " + (JSON.stringify(data)) + ": " + name;
-              } else {
-                return "";
-              }
-            } else if (!value || (isArray(value) && value.length === 0)) {
-              return renderRawTemplate(content, data, links);
-            } else {
-              return "";
-            }
-            break;
-          case '#':
-            return '';
-          case '@':
-            link = links ? links[name] : null;
-            if (!(link != null)) {
-              if (wings.strict) {
-                throw "Invalid link: " + (JSON.stringify(links)) + ": " + name;
-              } else {
-                return "";
-              }
-            } else if (typeof link === 'function') {
-              link = link.call(data);
-            }
-            return renderRawTemplate(replaceBraces(link), data, links);
-          case '&':
-          case '':
-            value = data;
-            rest = name;
-            while (value && rest) {
-              _ref2 = rest.match(/^([^.]*)\.?(.*)$/), all = _ref2[0], part = _ref2[1], rest = _ref2[2];
-              value = value[part];
-            }
-            if (!(value != null)) {
-              if (wings.strict) {
-                throw "Invalid value: " + (JSON.stringify(data)) + ": " + name;
-              } else {
-                return "";
-              }
-            } else if (typeof value === 'function') {
-              value = value.call(data);
-            }
-            if (op === '&') {
-              return value;
-            } else {
-              return escapeXML(value);
-            }
-          default:
-            throw "Invalid section op: " + op;
-        }
-      });
-    };
-  })(typeof exports !== "undefined" && exports !== null ? exports : (this['wings'] = {}));
-
-  provide("wings", module.exports);
-
-  !(function($) {
-    var renderTemplate;
-    renderTemplate = require('wings').renderTemplate;
-    $.ender({
-      renderTemplate: renderTemplate
-    });
-    return $.ender({
-      render: function(data, links) {
-        return renderTemplate(this[0].innerHTML, data, links);
-      }
-    }, true);
-  })(ender);
-
-}();
-
-!function () {
-
-  var module = { exports: {} }, exports = module.exports;
-
   /*!
-    * Valentine: JavaScript's functional Sister
-    * (c) Dustin Diaz 2011
-    * https://github.com/ded/valentine
-    * License MIT
+    * domready (c) Dustin Diaz 2012 - License MIT
     */
-  
   !function (name, definition) {
     if (typeof module != 'undefined') module.exports = definition()
-    else if (typeof define == 'function') define(definition)
-    else this[name] = this['v'] = definition()
-  }('valentine', function () {
+    else if (typeof define == 'function' && typeof define.amd == 'object') define(definition)
+    else this[name] = definition()
+  }('domready', function (ready) {
   
-    var context = this
-      , old = context.v
-      , ap = []
-      , op = {}
-      , n = null
-      , slice = ap.slice
-      , nativ = 'map' in ap
-      , nativ18 = 'reduce' in ap
-      , trimReplace = /(^\s*|\s*$)/g
-      , iters = {
-      each: nativ ?
-        function (a, fn, scope) {
-          ap.forEach.call(a, fn, scope)
-        } :
-        function (a, fn, scope) {
-          for (var i = 0, l = a.length; i < l; i++) {
-            i in a && fn.call(scope, a[i], i, a)
-          }
-        }
+    var fns = [], fn, f = false
+      , doc = document
+      , testEl = doc.documentElement
+      , hack = testEl.doScroll
+      , domContentLoaded = 'DOMContentLoaded'
+      , addEventListener = 'addEventListener'
+      , onreadystatechange = 'onreadystatechange'
+      , readyState = 'readyState'
+      , loaded = /^loade|c/.test(doc[readyState])
   
-    , map: nativ ?
-        function (a, fn, scope) {
-          return ap.map.call(a, fn, scope)
-        } :
-        function (a, fn, scope) {
-          var r = [], i
-          for (i = 0, l = a.length; i < l; i++) {
-            i in a && (r[i] = fn.call(scope, a[i], i, a))
-          }
-          return r
-        }
-  
-    , some: nativ ?
-        function (a, fn, scope) {
-          return a.some(fn, scope)
-        } :
-        function (a, fn, scope) {
-          for (var i = 0, l = a.length; i < l; i++) {
-            if (i in a && fn.call(scope, a[i], i, a)) return true
-          }
-          return false
-        }
-  
-    , every: nativ ?
-        function (a, fn, scope) {
-          return a.every(fn, scope)
-        } :
-        function (a, fn, scope) {
-          for (var i = 0, l = a.length; i < l; i++) {
-            if (i in a && !fn.call(scope, a[i], i, a)) return false
-          }
-          return true
-        }
-  
-    , filter: nativ ?
-        function (a, fn, scope) {
-          return a.filter(fn, scope)
-        } :
-        function (a, fn, scope) {
-          for (var r = [], i = 0, j = 0, l = a.length; i < l; i++) {
-            if (i in a) {
-              if (!fn.call(scope, a[i], i, a)) continue;
-              r[j++] = a[i]
-            }
-          }
-          return r
-        }
-  
-    , indexOf: nativ ?
-        function (a, el, start) {
-          return a.indexOf(el, isFinite(start) ? start : 0)
-        } :
-        function (a, el, start) {
-          start = start || 0
-          for (var i = 0; i < a.length; i++) {
-            if (i in a && a[i] === el) return i
-          }
-          return -1
-        }
-  
-    , lastIndexOf: nativ ?
-        function (a, el, start) {
-          return a.lastIndexOf(el, isFinite(start) ? start : a.length)
-        } :
-        function (a, el, start) {
-          start = start || a.length
-          start = start >= a.length ? a.length :
-            start < 0 ? a.length + start : start
-          for (var i = start; i >= 0; --i) {
-            if (i in a && a[i] === el) {
-              return i
-            }
-          }
-          return -1
-        }
-  
-    , reduce: nativ18 ?
-        function (o, i, m, c) {
-          return ap.reduce.call(o, i, m, c);
-        } :
-        function (obj, iterator, memo, context) {
-          if (!obj) obj = []
-          var i = 0, l = obj.length
-          if (arguments.length < 3) {
-            do {
-              if (i in obj) {
-                memo = obj[i++]
-                break;
-              }
-              if (++i >= l) {
-                throw new TypeError('Empty array')
-              }
-            } while (1)
-          }
-          for (; i < l; i++) {
-            if (i in obj) {
-              memo = iterator.call(context, memo, obj[i], i, obj)
-            }
-          }
-          return memo
-        }
-  
-    , reduceRight: nativ18 ?
-        function (o, i, m, c) {
-          return ap.reduceRight.call(o, i, m, c)
-        } :
-        function (obj, iterator, memo, context) {
-          !obj && (obj = [])
-          var l = obj.length, i = l - 1
-          if (arguments.length < 3) {
-            do {
-              if (i in obj) {
-                memo = obj[i--]
-                break;
-              }
-              if (--i < 0) {
-                throw new TypeError('Empty array')
-              }
-            } while (1)
-          }
-          for (; i >= 0; i--) {
-            if (i in obj) {
-              memo = iterator.call(context, memo, obj[i], i, obj)
-            }
-          }
-          return memo
-        }
-  
-    , find: function (obj, iterator, context) {
-        var result
-        iters.some(obj, function (value, index, list) {
-          if (iterator.call(context, value, index, list)) {
-            result = value
-            return true
-          }
-        })
-        return result
-      }
-  
-    , reject: function (a, fn, scope) {
-        var r = []
-        for (var i = 0, j = 0, l = a.length; i < l; i++) {
-          if (i in a) {
-            if (fn.call(scope, a[i], i, a)) {
-              continue;
-            }
-            r[j++] = a[i]
-          }
-        }
-        return r
-      }
-  
-    , size: function (a) {
-        return o.toArray(a).length
-      }
-  
-    , compact: function (a) {
-        return iters.filter(a, function (value) {
-          return !!value
-        })
-      }
-  
-    , flatten: function (a) {
-        return iters.reduce(a, function (memo, value) {
-          if (is.arr(value)) {
-            return memo.concat(iters.flatten(value))
-          }
-          memo[memo.length] = value
-          return memo
-        }, [])
-      }
-  
-    , uniq: function (ar) {
-        var a = [], i, j
-        label:
-        for (i = 0; i < ar.length; i++) {
-          for (j = 0; j < a.length; j++) {
-            if (a[j] == ar[i]) {
-              continue label
-            }
-          }
-          a[a.length] = ar[i]
-        }
-        return a
-      }
-  
-    , merge: function (one, two) {
-        var i = one.length, j = 0, l
-        if (isFinite(two.length)) {
-          for (l = two.length; j < l; j++) {
-            one[i++] = two[j]
-          }
-        } else {
-          while (two[j] !== undefined) {
-            first[i++] = second[j++]
-          }
-        }
-        one.length = i
-        return one
-      }
-  
-    , inArray: function (ar, needle) {
-        return !!~iters.indexOf(ar, needle)
-      }
-  
+    function flush(f) {
+      loaded = 1
+      while (f = fns.shift()) f()
     }
   
-    var is = {
-      fun: function (f) {
-        return typeof f === 'function'
-      }
+    doc[addEventListener] && doc[addEventListener](domContentLoaded, fn = function () {
+      doc.removeEventListener(domContentLoaded, fn, f)
+      flush()
+    }, f)
   
-    , str: function (s) {
-        return typeof s === 'string'
-      }
   
-    , ele: function (el) {
-        !!(el && el.nodeType && el.nodeType == 1)
-      }
-  
-    , arr: function (ar) {
-        return ar instanceof Array
-      }
-  
-    , arrLike: function (ar) {
-        return (ar && ar.length && isFinite(ar.length))
-      }
-  
-    , num: function (n) {
-        return typeof n === 'number'
-      }
-  
-    , bool: function (b) {
-        return (b === true) || (b === false)
-      }
-  
-    , args: function (a) {
-        return !!(a && op.hasOwnProperty.call(a, 'callee'))
-      }
-  
-    , emp: function (o) {
-        var i = 0
-        return is.arr(o) ? o.length === 0 :
-          is.obj(o) ? (function () {
-            for (var k in o) {
-              i++
-              break;
-            }
-            return (i === 0)
-          }()) :
-          o === ''
-      }
-  
-    , dat: function (d) {
-        return !!(d && d.getTimezoneOffset && d.setUTCFullYear)
-      }
-  
-    , reg: function (r) {
-        return !!(r && r.test && r.exec && (r.ignoreCase || r.ignoreCase === false))
-      }
-  
-    , nan: function (n) {
-        return n !== n
-      }
-  
-    , nil: function (o) {
-        return o === n
-      }
-  
-    , und: function (o) {
-        return typeof o === 'undefined'
-      }
-  
-    , def: function (o) {
-        return typeof o !== 'undefined'
-      }
-  
-    , obj: function (o) {
-        return o instanceof Object && !is.fun(o) && !is.arr(o)
-      }
-    }
-  
-    var o = {
-      each: function (a, fn, scope) {
-        is.arrLike(a) ?
-          iters.each(a, fn, scope) : (function () {
-            for (var k in a) {
-              op.hasOwnProperty.call(a, k) && fn.call(scope, k, a[k], a)
-            }
-          }())
-      }
-  
-    , map: function (a, fn, scope) {
-        var r = [], i = 0
-        return is.arrLike(a) ?
-          iters.map(a, fn, scope) : !function () {
-            for (var k in a) {
-              op.hasOwnProperty.call(a, k) && (r[i++] = fn.call(scope, k, a[k], a))
-            }
-          }() && r
-      }
-  
-    , pluck: function (a, k) {
-        return is.arrLike(a) ?
-          iters.map(a, function (el) {
-            return el[k]
-          }) :
-          o.map(a, function (_, v) {
-            return v[k]
-          })
-      }
-  
-    , toArray: function (a) {
-        if (!a) return []
-  
-        if (is.arr(a)) return a
-  
-        if (a.toArray) return a.toArray()
-  
-        if (is.args(a)) return slice.call(a)
-  
-        return iters.map(a, function (k) {
-          return k
-        })
-      }
-  
-    , first: function (a) {
-        return a[0]
-      }
-  
-    , last: function (a) {
-        return a[a.length - 1]
-      }
-  
-    , keys: Object.keys ?
-        function (o) {
-          return Object.keys(o)
-        } :
-        function (obj) {
-          var keys = [], key
-          for (key in obj) if (op.hasOwnProperty.call(obj, key)) keys[keys.length] = key
-          return keys
-        }
-  
-    , values: function (ob) {
-        return o.map(ob, function (k, v) {
-          return v
-        })
-      }
-  
-    , extend: function () {
-        // based on jQuery deep merge
-        var options, name, src, copy, clone
-          , target = arguments[0], i = 1, length = arguments.length
-  
-        for (; i < length; i++) {
-          if ((options = arguments[i]) !== n) {
-            // Extend the base object
-            for (name in options) {
-              src = target[name]
-              copy = options[name]
-              if (target === copy) {
-                continue;
-              }
-              if (copy && (is.obj(copy))) {
-                clone = src && is.obj(src) ? src : {}
-                target[name] = o.extend(clone, copy);
-              } else if (copy !== undefined) {
-                target[name] = copy
-              }
-            }
-          }
-        }
-        return target
-      }
-  
-    , trim: String.prototype.trim ?
-        function (s) {
-          return s.trim()
-        } :
-        function (s) {
-          return s.replace(trimReplace, '')
-        }
-  
-    , bind: function (scope, fn) {
-        return function () {
-          fn.apply(scope, arguments)
-        }
-      }
-  
-    , parallel: function (fns, callback) {
-        var args = o.toArray(arguments)
-          , len = 0
-          , returns = []
-  
-        if (!is.arr(fns)) {
-          callback = args.pop()
-          fns = args
-        }
-  
-        iters.each(fns, function (el, i) {
-          el(function () {
-            var a = o.toArray(arguments)
-              , e = a.shift()
-            if (e) return callback(e)
-            returns[i] = a
-            if (fns.length == ++len) {
-              returns.unshift(n)
-              callback.apply(n, iters.flatten(returns))
-            }
-          })
-        })
-      }
-  
-    , waterfall: function (fns, callback) {
-        var args = o.toArray(arguments)
-          , index = 0
-        if (!is.arr(fns)) {
-          callback = args.pop()
-          fns = args
-        }
-        (function f() {
-          var args = o.toArray(arguments)
-          args.push(f)
-          var err = args.shift()
-          if (!err && fns.length) fns.shift().apply(n, args)
-          else {
-            args.pop()
-            args.unshift(err)
-            callback.apply(n, args)
-          }
-        }(n))
-      }
-    , queue: function (ar) {
-        return new Queue(is.arrLike(ar) ? ar : o.toArray(arguments))
-      }
-    }
-  
-    function Queue (a) {
-      this.values = a
-      this.index = 0
-    }
-  
-    Queue.prototype.next = function () {
-      this.index < this.values.length && this.values[this.index++]()
-      return this
-    }
-  
-    function v(a, scope) {
-      return new Valentine(a, scope)
-    }
-  
-    function aug(o, o2) {
-      for (var k in o2) o[k] = o2[k]
-    }
-  
-    aug(v, iters)
-    aug(v, o)
-    v.is = is
-  
-    v.v = v // vainglory
-  
-    // peoples like the object style
-    function Valentine(a, scope) {
-      this.val = a
-      this._scope = scope || n
-      this._chained = 0
-    }
-  
-    v.each(v.extend({}, iters, o), function (name, fn) {
-      Valentine.prototype[name] = function () {
-        var a = v.toArray(arguments)
-        a.unshift(this.val)
-        var ret = fn.apply(this._scope, a)
-        this.val = ret
-        return this._chained ? this : ret
+    hack && doc.attachEvent(onreadystatechange, fn = function () {
+      if (/^c/.test(doc[readyState])) {
+        doc.detachEvent(onreadystatechange, fn)
+        flush()
       }
     })
   
-    // people like chaining
-    aug(Valentine.prototype, {
-      chain: function () {
-        this._chained = 1
-        return this
-      }
-    , value: function () {
-        return this.val
-      }
-    })
-  
-  
-    v.noConflict = function () {
-      context.v = old
-      return this
-    }
-  
-    return v
+    return (ready = hack ?
+      function (fn) {
+        self != top ?
+          loaded ? fn() : fns.push(fn) :
+          function () {
+            try {
+              testEl.doScroll('left')
+            } catch (e) {
+              return setTimeout(function() { ready(fn) }, 50)
+            }
+            fn()
+          }()
+      } :
+      function (fn) {
+        loaded ? fn() : fns.push(fn)
+      })
   })
 
-  provide("valentine", module.exports);
-
-  var v = require('valentine')
-  ender.ender(v)
-  ender.ender({
-      merge: v.merge
-    , extend: v.extend
-    , each: v.each
-    , map: v.map
-    , toArray: v.toArray
-    , keys: v.keys
-    , values: v.values
-    , trim: v.trim
-    , bind: v.bind
-    , parallel: v.parallel
-    , waterfall: v.waterfall
-    , inArray: v.inArray
-    , queue: v.queue
-  })
-
-}();
-
-!function () {
-
-  var module = { exports: {} }, exports = module.exports;
-
-  /*!
-    * bean.js - copyright Jacob Thornton 2011
-    * https://github.com/fat/bean
-    * MIT License
-    * special thanks to:
-    * dean edwards: http://dean.edwards.name/
-    * dperini: https://github.com/dperini/nwevents
-    * the entire mootools team: github.com/mootools/mootools-core
-    */
-  !function (name, definition) {
-    if (typeof module != 'undefined') module.exports = definition();
-    else if (typeof define == 'function' && typeof define.amd  == 'object') define(definition);
-    else this[name] = definition();
-  }('bean', function () {
-    var win = window,
-        __uid = 1,
-        registry = {},
-        collected = {},
-        overOut = /over|out/,
-        namespace = /[^\.]*(?=\..*)\.|.*/,
-        stripName = /\..*/,
-        addEvent = 'addEventListener',
-        attachEvent = 'attachEvent',
-        removeEvent = 'removeEventListener',
-        detachEvent = 'detachEvent',
-        doc = document || {},
-        root = doc.documentElement || {},
-        W3C_MODEL = root[addEvent],
-        eventSupport = W3C_MODEL ? addEvent : attachEvent,
-  
-    isDescendant = function (parent, child) {
-      var node = child.parentNode;
-      while (node !== null) {
-        if (node == parent) {
-          return true;
-        }
-        node = node.parentNode;
-      }
-    },
-  
-    retrieveUid = function (obj, uid) {
-      return (obj.__uid = uid && (uid + '::' + __uid++) || obj.__uid || __uid++);
-    },
-  
-    retrieveEvents = function (element) {
-      var uid = retrieveUid(element);
-      return (registry[uid] = registry[uid] || {});
-    },
-  
-    listener = W3C_MODEL ? function (element, type, fn, add) {
-      element[add ? addEvent : removeEvent](type, fn, false);
-    } : function (element, type, fn, add, custom) {
-      if (custom && add && element['_on' + custom] === null) {
-        element['_on' + custom] = 0;
-      }
-      element[add ? attachEvent : detachEvent]('on' + type, fn);
-    },
-  
-    nativeHandler = function (element, fn, args) {
-      return function (event) {
-        event = fixEvent(event || ((this.ownerDocument || this.document || this).parentWindow || win).event);
-        return fn.apply(element, [event].concat(args));
-      };
-    },
-  
-    customHandler = function (element, fn, type, condition, args) {
-      return function (event) {
-        if (condition ? condition.apply(this, arguments) : W3C_MODEL ? true : event && event.propertyName == '_on' + type || !event) {
-          event = event ? fixEvent(event || ((this.ownerDocument || this.document || this).parentWindow || win).event) : null;
-          fn.apply(element, Array.prototype.slice.call(arguments, event ? 0 : 1).concat(args));
-        }
-      };
-    },
-  
-    addListener = function (element, orgType, fn, args) {
-      var type = orgType.replace(stripName, ''),
-          events = retrieveEvents(element),
-          handlers = events[type] || (events[type] = {}),
-          originalFn = fn,
-          uid = retrieveUid(fn, orgType.replace(namespace, ''));
-      if (handlers[uid]) {
-        return element;
-      }
-      var custom = customEvents[type];
-      if (custom) {
-        fn = custom.condition ? customHandler(element, fn, type, custom.condition) : fn;
-        type = custom.base || type;
-      }
-      var isNative = nativeEvents[type];
-      fn = isNative ? nativeHandler(element, fn, args) : customHandler(element, fn, type, false, args);
-      isNative = W3C_MODEL || isNative;
-      if (type == 'unload') {
-        var org = fn;
-        fn = function () {
-          removeListener(element, type, fn) && org();
-        };
-      }
-      element[eventSupport] && listener(element, isNative ? type : 'propertychange', fn, true, !isNative && type);
-      handlers[uid] = fn;
-      fn.__uid = uid;
-      fn.__originalFn = originalFn;
-      return type == 'unload' ? element : (collected[retrieveUid(element)] = element);
-    },
-  
-    removeListener = function (element, orgType, handler) {
-      var uid, names, uids, i, events = retrieveEvents(element), type = orgType.replace(stripName, '');
-      if (!events || !events[type]) {
-        return element;
-      }
-      names = orgType.replace(namespace, '');
-      uids = names ? names.split('.') : [handler.__uid];
-  
-      function destroyHandler(uid) {
-        handler = events[type][uid];
-        if (!handler) {
-          return;
-        }
-        delete events[type][uid];
-        if (element[eventSupport]) {
-          type = customEvents[type] ? customEvents[type].base : type;
-          var isNative = W3C_MODEL || nativeEvents[type];
-          listener(element, isNative ? type : 'propertychange', handler, false, !isNative && type);
-        }
-      }
-  
-      destroyHandler(names); //get combos
-      for (i = uids.length; i--; destroyHandler(uids[i])) {} //get singles
-  
-      return element;
-    },
-  
-    del = function (selector, fn, $) {
-      return function (e) {
-        var array = typeof selector == 'string' ? $(selector, this) : selector;
-        for (var target = e.target; target && target != this; target = target.parentNode) {
-          for (var i = array.length; i--;) {
-            if (array[i] == target) {
-              return fn.apply(target, arguments);
-            }
-          }
-        }
-      };
-    },
-  
-    add = function (element, events, fn, delfn, $) {
-      if (typeof events == 'object' && !fn) {
-        for (var type in events) {
-          events.hasOwnProperty(type) && add(element, type, events[type]);
-        }
-      } else {
-        var isDel = typeof fn == 'string', types = (isDel ? fn : events).split(' ');
-        fn = isDel ? del(events, delfn, $) : fn;
-        for (var i = types.length; i--;) {
-          addListener(element, types[i], fn, Array.prototype.slice.call(arguments, isDel ? 4 : 3));
-        }
-      }
-      return element;
-    },
-  
-    remove = function (element, orgEvents, fn) {
-      var k, m, type, events, i,
-          isString = typeof(orgEvents) == 'string',
-          names = isString && orgEvents.replace(namespace, ''),
-          rm = removeListener,
-          attached = retrieveEvents(element);
-      names = names && names.split('.');
-      if (isString && /\s/.test(orgEvents)) {
-        orgEvents = orgEvents.split(' ');
-        i = orgEvents.length - 1;
-        while (remove(element, orgEvents[i]) && i--) {}
-        return element;
-      }
-      events = isString ? orgEvents.replace(stripName, '') : orgEvents;
-      if (!attached || names || (isString && !attached[events])) {
-        for (k in attached) {
-          if (attached.hasOwnProperty(k)) {
-            for (i in attached[k]) {
-              for (m = names.length; m--;) {
-                attached[k].hasOwnProperty(i) && new RegExp('^' + names[m] + '::\\d*(\\..*)?$').test(i) && rm(element, [k, i].join('.'));
-              }
-            }
-          }
-        }
-        return element;
-      }
-      if (typeof fn == 'function') {
-        rm(element, events, fn);
-      } else if (names) {
-        rm(element, orgEvents);
-      } else {
-        rm = events ? rm : remove;
-        type = isString && events;
-        events = events ? (fn || attached[events] || events) : attached;
-        for (k in events) {
-          if (events.hasOwnProperty(k)) {
-            rm(element, type || k, events[k]);
-            delete events[k]; // remove unused leaf keys
-          }
-        }
-      }
-      return element;
-    },
-  
-    fire = function (element, type, args) {
-      var evt, k, i, m, types = type.split(' ');
-      for (i = types.length; i--;) {
-        type = types[i].replace(stripName, '');
-        var isNative = nativeEvents[type],
-            isNamespace = types[i].replace(namespace, ''),
-            handlers = retrieveEvents(element)[type];
-        if (isNamespace) {
-          isNamespace = isNamespace.split('.');
-          for (k = isNamespace.length; k--;) {
-            for (m in handlers) {
-              handlers.hasOwnProperty(m) && new RegExp('^' + isNamespace[k] + '::\\d*(\\..*)?$').test(m) && handlers[m].apply(element, [false].concat(args));
-            }
-          }
-        } else if (!args && element[eventSupport]) {
-          fireListener(isNative, type, element);
-        } else {
-          for (k in handlers) {
-            handlers.hasOwnProperty(k) && handlers[k].apply(element, [false].concat(args));
-          }
-        }
-      }
-      return element;
-    },
-  
-    fireListener = W3C_MODEL ? function (isNative, type, element) {
-      evt = document.createEvent(isNative ? "HTMLEvents" : "UIEvents");
-      evt[isNative ? 'initEvent' : 'initUIEvent'](type, true, true, win, 1);
-      element.dispatchEvent(evt);
-    } : function (isNative, type, element) {
-      isNative ? element.fireEvent('on' + type, document.createEventObject()) : element['_on' + type]++;
-    },
-  
-    clone = function (element, from, type) {
-      var events = retrieveEvents(from), obj, k;
-      var uid = retrieveUid(element);
-      obj = type ? events[type] : events;
-      for (k in obj) {
-        obj.hasOwnProperty(k) && (type ? add : clone)(element, type || from, type ? obj[k].__originalFn : k);
-      }
-      return element;
-    },
-  
-    fixEvent = function (e) {
-      var result = {};
-      if (!e) {
-        return result;
-      }
-      var type = e.type, target = e.target || e.srcElement;
-      result.preventDefault = fixEvent.preventDefault(e);
-      result.stopPropagation = fixEvent.stopPropagation(e);
-      result.target = target && target.nodeType == 3 ? target.parentNode : target;
-      if (~type.indexOf('key')) {
-        result.keyCode = e.which || e.keyCode;
-      } else if ((/click|mouse|menu/i).test(type)) {
-        result.rightClick = e.which == 3 || e.button == 2;
-        result.pos = { x: 0, y: 0 };
-        if (e.pageX || e.pageY) {
-          result.clientX = e.pageX;
-          result.clientY = e.pageY;
-        } else if (e.clientX || e.clientY) {
-          result.clientX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-          result.clientY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        }
-        overOut.test(type) && (result.relatedTarget = e.relatedTarget || e[(type == 'mouseover' ? 'from' : 'to') + 'Element']);
-      }
-      for (var k in e) {
-        if (!(k in result)) {
-          result[k] = e[k];
-        }
-      }
-      return result;
-    };
-  
-    fixEvent.preventDefault = function (e) {
-      return function () {
-        if (e.preventDefault) {
-          e.preventDefault();
-        }
-        else {
-          e.returnValue = false;
-        }
-      };
-    };
-  
-    fixEvent.stopPropagation = function (e) {
-      return function () {
-        if (e.stopPropagation) {
-          e.stopPropagation();
-        } else {
-          e.cancelBubble = true;
-        }
-      };
-    };
-  
-    var nativeEvents = { click: 1, dblclick: 1, mouseup: 1, mousedown: 1, contextmenu: 1, //mouse buttons
-      mousewheel: 1, DOMMouseScroll: 1, //mouse wheel
-      mouseover: 1, mouseout: 1, mousemove: 1, selectstart: 1, selectend: 1, //mouse movement
-      keydown: 1, keypress: 1, keyup: 1, //keyboard
-      orientationchange: 1, // mobile
-      touchstart: 1, touchmove: 1, touchend: 1, touchcancel: 1, // touch
-      gesturestart: 1, gesturechange: 1, gestureend: 1, // gesture
-      focus: 1, blur: 1, change: 1, reset: 1, select: 1, submit: 1, //form elements
-      load: 1, unload: 1, beforeunload: 1, resize: 1, move: 1, DOMContentLoaded: 1, readystatechange: 1, //window
-      error: 1, abort: 1, scroll: 1 }; //misc
-  
-    function check(event) {
-      var related = event.relatedTarget;
-      if (!related) {
-        return related === null;
-      }
-      return (related != this && related.prefix != 'xul' && !/document/.test(this.toString()) && !isDescendant(this, related));
-    }
-  
-    var customEvents = {
-      mouseenter: { base: 'mouseover', condition: check },
-      mouseleave: { base: 'mouseout', condition: check },
-      mousewheel: { base: /Firefox/.test(navigator.userAgent) ? 'DOMMouseScroll' : 'mousewheel' }
-    };
-  
-    var bean = { add: add, remove: remove, clone: clone, fire: fire };
-  
-    var clean = function (el) {
-      var uid = remove(el).__uid;
-      if (uid) {
-        delete collected[uid];
-        delete registry[uid];
-      }
-    };
-  
-    if (win[attachEvent]) {
-      add(win, 'unload', function () {
-        for (var k in collected) {
-          collected.hasOwnProperty(k) && clean(collected[k]);
-        }
-        win.CollectGarbage && CollectGarbage();
-      });
-    }
-  
-    bean.noConflict = function () {
-      context.bean = old;
-      return this;
-    };
-  
-    return bean;
-  });
-
-  provide("bean", module.exports);
+  provide("domready", module.exports);
 
   !function ($) {
-    var b = require('bean'),
-        integrate = function (method, type, method2) {
-          var _args = type ? [type] : [];
-          return function () {
-            for (var args, i = 0, l = this.length; i < l; i++) {
-              args = [this[i]].concat(_args, Array.prototype.slice.call(arguments, 0));
-              args.length == 4 && args.push($);
-              !arguments.length && method == 'add' && type && (method = 'fire');
-              b[method].apply(this, args);
-            }
-            return this;
-          };
-        };
-  
-    var add = integrate('add'),
-        remove = integrate('remove'),
-        fire = integrate('fire');
-  
-    var methods = {
-  
-      on: add,
-      addListener: add,
-      bind: add,
-      listen: add,
-      delegate: add,
-  
-      unbind: remove,
-      unlisten: remove,
-      removeListener: remove,
-      undelegate: remove,
-  
-      emit: fire,
-      trigger: fire,
-  
-      cloneEvents: integrate('clone'),
-  
-      hover: function (enter, leave, i) { // i for internal
-        for (i = this.length; i--;) {
-          b.add.call(this, this[i], 'mouseenter', enter);
-          b.add.call(this, this[i], 'mouseleave', leave);
-        }
-        return this;
+    var ready = require('domready')
+    $.ender({domReady: ready})
+    $.ender({
+      ready: function (f) {
+        ready(f)
+        return this
       }
-    };
-  
-    var i, shortcuts = [
-      'blur', 'change', 'click', 'dblclick', 'error', 'focus', 'focusin',
-      'focusout', 'keydown', 'keypress', 'keyup', 'load', 'mousedown',
-      'mouseenter', 'mouseleave', 'mouseout', 'mouseover', 'mouseup', 'mousemove',
-      'resize', 'scroll', 'select', 'submit', 'unload'
-    ];
-  
-    for (i = shortcuts.length; i--;) {
-      methods[shortcuts[i]] = integrate('add', shortcuts[i]);
-    }
-  
-    $.ender(methods, true);
+    }, true)
   }(ender);
 
 }();
@@ -1218,7 +169,435 @@
   var module = { exports: {} }, exports = module.exports;
 
   /*!
-    * Bonzo: DOM Utility (c) Dustin Diaz 2011
+    * Qwery - A Blazing Fast query selector engine
+    * https://github.com/ded/qwery
+    * copyright Dustin Diaz & Jacob Thornton 2011
+    * MIT License
+    */
+  
+  !function (name, definition) {
+    if (typeof module != 'undefined') module.exports = definition()
+    else if (typeof define == 'function' && typeof define.amd == 'object') define(definition)
+    else this[name] = definition()
+  }('qwery', function () {
+    var doc = document
+      , html = doc.documentElement
+      , byClass = 'getElementsByClassName'
+      , byTag = 'getElementsByTagName'
+      , qSA = 'querySelectorAll'
+      , useNativeQSA = 'useNativeQSA'
+      , tagName = 'tagName'
+      , nodeType = 'nodeType'
+      , select // main select() method, assign later
+  
+      // OOOOOOOOOOOOH HERE COME THE ESSSXXSSPRESSSIONSSSSSSSS!!!!!
+      , id = /#([\w\-]+)/
+      , clas = /\.[\w\-]+/g
+      , idOnly = /^#([\w\-]+)$/
+      , classOnly = /^\.([\w\-]+)$/
+      , tagOnly = /^([\w\-]+)$/
+      , tagAndOrClass = /^([\w]+)?\.([\w\-]+)$/
+      , splittable = /(^|,)\s*[>~+]/
+      , normalizr = /^\s+|\s*([,\s\+\~>]|$)\s*/g
+      , splitters = /[\s\>\+\~]/
+      , splittersMore = /(?![\s\w\-\/\?\&\=\:\.\(\)\!,@#%<>\{\}\$\*\^'"]*\]|[\s\w\+\-]*\))/
+      , specialChars = /([.*+?\^=!:${}()|\[\]\/\\])/g
+      , simple = /^(\*|[a-z0-9]+)?(?:([\.\#]+[\w\-\.#]+)?)/
+      , attr = /\[([\w\-]+)(?:([\|\^\$\*\~]?\=)['"]?([ \w\-\/\?\&\=\:\.\(\)\!,@#%<>\{\}\$\*\^]+)["']?)?\]/
+      , pseudo = /:([\w\-]+)(\(['"]?([^()]+)['"]?\))?/
+      , easy = new RegExp(idOnly.source + '|' + tagOnly.source + '|' + classOnly.source)
+      , dividers = new RegExp('(' + splitters.source + ')' + splittersMore.source, 'g')
+      , tokenizr = new RegExp(splitters.source + splittersMore.source)
+      , chunker = new RegExp(simple.source + '(' + attr.source + ')?' + '(' + pseudo.source + ')?')
+      , walker = {
+          ' ': function (node) {
+            return node && node !== html && node.parentNode
+          }
+        , '>': function (node, contestant) {
+            return node && node.parentNode == contestant.parentNode && node.parentNode
+          }
+        , '~': function (node) {
+            return node && node.previousSibling
+          }
+        , '+': function (node, contestant, p1, p2) {
+            if (!node) return false
+            return (p1 = previous(node)) && (p2 = previous(contestant)) && p1 == p2 && p1
+          }
+        }
+  
+    function cache() {
+      this.c = {}
+    }
+    cache.prototype = {
+      g: function (k) {
+        return this.c[k] || undefined
+      }
+    , s: function (k, v, r) {
+        v = r ? new RegExp(v) : v
+        return (this.c[k] = v)
+      }
+    }
+  
+    var classCache = new cache()
+      , cleanCache = new cache()
+      , attrCache = new cache()
+      , tokenCache = new cache()
+  
+    function classRegex(c) {
+      return classCache.g(c) || classCache.s(c, '(^|\\s+)' + c + '(\\s+|$)', 1)
+    }
+  
+    // not quite as fast as inline loops in older browsers so don't use liberally
+    function each(a, fn) {
+      var i = 0, l = a.length
+      for (; i < l; i++) fn(a[i])
+    }
+  
+    function flatten(ar) {
+      for (var r = [], i = 0, l = ar.length; i < l; ++i) arrayLike(ar[i]) ? (r = r.concat(ar[i])) : (r[r.length] = ar[i])
+      return r
+    }
+  
+    function arrayify(ar) {
+      var i = 0, l = ar.length, r = []
+      for (; i < l; i++) r[i] = ar[i]
+      return r
+    }
+  
+    function previous(n) {
+      while (n = n.previousSibling) if (n[nodeType] == 1) break;
+      return n
+    }
+  
+    function q(query) {
+      return query.match(chunker)
+    }
+  
+    // called using `this` as element and arguments from regex group results.
+    // given => div.hello[title="world"]:foo('bar')
+    // div.hello[title="world"]:foo('bar'), div, .hello, [title="world"], title, =, world, :foo('bar'), foo, ('bar'), bar]
+    function interpret(whole, tag, idsAndClasses, wholeAttribute, attribute, qualifier, value, wholePseudo, pseudo, wholePseudoVal, pseudoVal) {
+      var i, m, k, o, classes
+      if (this[nodeType] !== 1) return false
+      if (tag && tag !== '*' && this[tagName] && this[tagName].toLowerCase() !== tag) return false
+      if (idsAndClasses && (m = idsAndClasses.match(id)) && m[1] !== this.id) return false
+      if (idsAndClasses && (classes = idsAndClasses.match(clas))) {
+        for (i = classes.length; i--;) if (!classRegex(classes[i].slice(1)).test(this.className)) return false
+      }
+      if (pseudo && qwery.pseudos[pseudo] && !qwery.pseudos[pseudo](this, pseudoVal)) return false
+      if (wholeAttribute && !value) { // select is just for existance of attrib
+        o = this.attributes
+        for (k in o) {
+          if (Object.prototype.hasOwnProperty.call(o, k) && (o[k].name || k) == attribute) {
+            return this
+          }
+        }
+      }
+      if (wholeAttribute && !checkAttr(qualifier, getAttr(this, attribute) || '', value)) {
+        // select is for attrib equality
+        return false
+      }
+      return this
+    }
+  
+    function clean(s) {
+      return cleanCache.g(s) || cleanCache.s(s, s.replace(specialChars, '\\$1'))
+    }
+  
+    function checkAttr(qualify, actual, val) {
+      switch (qualify) {
+      case '=':
+        return actual == val
+      case '^=':
+        return actual.match(attrCache.g('^=' + val) || attrCache.s('^=' + val, '^' + clean(val), 1))
+      case '$=':
+        return actual.match(attrCache.g('$=' + val) || attrCache.s('$=' + val, clean(val) + '$', 1))
+      case '*=':
+        return actual.match(attrCache.g(val) || attrCache.s(val, clean(val), 1))
+      case '~=':
+        return actual.match(attrCache.g('~=' + val) || attrCache.s('~=' + val, '(?:^|\\s+)' + clean(val) + '(?:\\s+|$)', 1))
+      case '|=':
+        return actual.match(attrCache.g('|=' + val) || attrCache.s('|=' + val, '^' + clean(val) + '(-|$)', 1))
+      }
+      return 0
+    }
+  
+    // given a selector, first check for simple cases then collect all base candidate matches and filter
+    function _qwery(selector, _root) {
+      var r = [], ret = [], i, l, m, token, tag, els, intr, item, root = _root
+        , tokens = tokenCache.g(selector) || tokenCache.s(selector, selector.split(tokenizr))
+        , dividedTokens = selector.match(dividers)
+  
+      if (!tokens.length) return r
+  
+      token = (tokens = tokens.slice(0)).pop() // copy cached tokens, take the last one
+      if (tokens.length && (m = tokens[tokens.length - 1].match(idOnly))) root = byId(_root, m[1])
+      if (!root) return r
+  
+      intr = q(token)
+      // collect base candidates to filter
+      els = root !== _root && root[nodeType] !== 9 && dividedTokens && /^[+~]$/.test(dividedTokens[dividedTokens.length - 1]) ?
+        function (r) {
+          while (root = root.nextSibling) {
+            root[nodeType] == 1 && (intr[1] ? intr[1] == root[tagName].toLowerCase() : 1) && (r[r.length] = root)
+          }
+          return r
+        }([]) :
+        root[byTag](intr[1] || '*')
+      // filter elements according to the right-most part of the selector
+      for (i = 0, l = els.length; i < l; i++) {
+        if (item = interpret.apply(els[i], intr)) r[r.length] = item
+      }
+      if (!tokens.length) return r
+  
+      // filter further according to the rest of the selector (the left side)
+      each(r, function(e) { if (ancestorMatch(e, tokens, dividedTokens)) ret[ret.length] = e })
+      return ret
+    }
+  
+    // compare element to a selector
+    function is(el, selector, root) {
+      if (isNode(selector)) return el == selector
+      if (arrayLike(selector)) return !!~flatten(selector).indexOf(el) // if selector is an array, is el a member?
+  
+      var selectors = selector.split(','), tokens, dividedTokens
+      while (selector = selectors.pop()) {
+        tokens = tokenCache.g(selector) || tokenCache.s(selector, selector.split(tokenizr))
+        dividedTokens = selector.match(dividers)
+        tokens = tokens.slice(0) // copy array
+        if (interpret.apply(el, q(tokens.pop())) && (!tokens.length || ancestorMatch(el, tokens, dividedTokens, root))) {
+          return true
+        }
+      }
+      return false
+    }
+  
+    // given elements matching the right-most part of a selector, filter out any that don't match the rest
+    function ancestorMatch(el, tokens, dividedTokens, root) {
+      var cand
+      // recursively work backwards through the tokens and up the dom, covering all options
+      function crawl(e, i, p) {
+        while (p = walker[dividedTokens[i]](p, e)) {
+          if (isNode(p) && (interpret.apply(p, q(tokens[i])))) {
+            if (i) {
+              if (cand = crawl(p, i - 1, p)) return cand
+            } else return p
+          }
+        }
+      }
+      return (cand = crawl(el, tokens.length - 1, el)) && (!root || isAncestor(cand, root))
+    }
+  
+    function isNode(el, t) {
+      return el && typeof el === 'object' && (t = el[nodeType]) && (t == 1 || t == 9)
+    }
+  
+    function uniq(ar) {
+      var a = [], i, j
+      o: for (i = 0; i < ar.length; ++i) {
+        for (j = 0; j < a.length; ++j) if (a[j] == ar[i]) continue o
+        a[a.length] = ar[i]
+      }
+      return a
+    }
+  
+    function arrayLike(o) {
+      return (typeof o === 'object' && isFinite(o.length))
+    }
+  
+    function normalizeRoot(root) {
+      if (!root) return doc
+      if (typeof root == 'string') return qwery(root)[0]
+      if (!root[nodeType] && arrayLike(root)) return root[0]
+      return root
+    }
+  
+    function byId(root, id, el) {
+      // if doc, query on it, else query the parent doc or if a detached fragment rewrite the query and run on the fragment
+      return root[nodeType] === 9 ? root.getElementById(id) :
+        root.ownerDocument &&
+          (((el = root.ownerDocument.getElementById(id)) && isAncestor(el, root) && el) ||
+            (!isAncestor(root, root.ownerDocument) && select('[id="' + id + '"]', root)[0]))
+    }
+  
+    function qwery(selector, _root) {
+      var m, el, root = normalizeRoot(_root)
+  
+      // easy, fast cases that we can dispatch with simple DOM calls
+      if (!root || !selector) return []
+      if (selector === window || isNode(selector)) {
+        return !_root || (selector !== window && isNode(root) && isAncestor(selector, root)) ? [selector] : []
+      }
+      if (selector && arrayLike(selector)) return flatten(selector)
+      if (m = selector.match(easy)) {
+        if (m[1]) return (el = byId(root, m[1])) ? [el] : []
+        if (m[2]) return arrayify(root[byTag](m[2]))
+        if (hasByClass && m[3]) return arrayify(root[byClass](m[3]))
+      }
+  
+      return select(selector, root)
+    }
+  
+    // where the root is not document and a relationship selector is first we have to
+    // do some awkward adjustments to get it to work, even with qSA
+    function collectSelector(root, collector) {
+      return function(s) {
+        var oid, nid
+        if (splittable.test(s)) {
+          if (root[nodeType] !== 9) {
+           // make sure the el has an id, rewrite the query, set root to doc and run it
+           if (!(nid = oid = root.getAttribute('id'))) root.setAttribute('id', nid = '__qwerymeupscotty')
+           s = '[id="' + nid + '"]' + s // avoid byId and allow us to match context element
+           collector(root.parentNode || root, s, true)
+           oid || root.removeAttribute('id')
+          }
+          return;
+        }
+        s.length && collector(root, s, false)
+      }
+    }
+  
+    var isAncestor = 'compareDocumentPosition' in html ?
+      function (element, container) {
+        return (container.compareDocumentPosition(element) & 16) == 16
+      } : 'contains' in html ?
+      function (element, container) {
+        container = container[nodeType] === 9 || container == window ? html : container
+        return container !== element && container.contains(element)
+      } :
+      function (element, container) {
+        while (element = element.parentNode) if (element === container) return 1
+        return 0
+      }
+    , getAttr = function() {
+        // detect buggy IE src/href getAttribute() call
+        var e = doc.createElement('p')
+        return ((e.innerHTML = '<a href="#x">x</a>') && e.firstChild.getAttribute('href') != '#x') ?
+          function(e, a) {
+            return a === 'class' ? e.className : (a === 'href' || a === 'src') ?
+              e.getAttribute(a, 2) : e.getAttribute(a)
+          } :
+          function(e, a) { return e.getAttribute(a) }
+     }()
+    , hasByClass = !!doc[byClass]
+      // has native qSA support
+    , hasQSA = doc.querySelector && doc[qSA]
+      // use native qSA
+    , selectQSA = function (selector, root) {
+        var result = [], ss, e
+        try {
+          if (root[nodeType] === 9 || !splittable.test(selector)) {
+            // most work is done right here, defer to qSA
+            return arrayify(root[qSA](selector))
+          }
+          // special case where we need the services of `collectSelector()`
+          each(ss = selector.split(','), collectSelector(root, function(ctx, s) {
+            e = ctx[qSA](s)
+            if (e.length == 1) result[result.length] = e.item(0)
+            else if (e.length) result = result.concat(arrayify(e))
+          }))
+          return ss.length > 1 && result.length > 1 ? uniq(result) : result
+        } catch(ex) { }
+        return selectNonNative(selector, root)
+      }
+      // no native selector support
+    , selectNonNative = function (selector, root) {
+        var result = [], items, m, i, l, r, ss
+        selector = selector.replace(normalizr, '$1')
+        if (m = selector.match(tagAndOrClass)) {
+          r = classRegex(m[2])
+          items = root[byTag](m[1] || '*')
+          for (i = 0, l = items.length; i < l; i++) {
+            if (r.test(items[i].className)) result[result.length] = items[i]
+          }
+          return result
+        }
+        // more complex selector, get `_qwery()` to do the work for us
+        each(ss = selector.split(','), collectSelector(root, function(ctx, s, rewrite) {
+          r = _qwery(s, ctx)
+          for (i = 0, l = r.length; i < l; i++) {
+            if (ctx[nodeType] === 9 || rewrite || isAncestor(r[i], root)) result[result.length] = r[i]
+          }
+        }))
+        return ss.length > 1 && result.length > 1 ? uniq(result) : result
+      }
+    , configure = function (options) {
+        // configNativeQSA: use fully-internal selector or native qSA where present
+        if (typeof options[useNativeQSA] !== 'undefined')
+          select = !options[useNativeQSA] ? selectNonNative : hasQSA ? selectQSA : selectNonNative
+      }
+  
+    configure({ useNativeQSA: true })
+  
+    qwery.configure = configure
+    qwery.uniq = uniq
+    qwery.is = is
+    qwery.pseudos = {}
+  
+    return qwery
+  })
+  
+
+  provide("qwery", module.exports);
+
+  !function (doc, $) {
+    var q = require('qwery')
+  
+    $.pseudos = q.pseudos
+  
+    $._select = function (s, r) {
+      // detect if sibling module 'bonzo' is available at run-time
+      // rather than load-time since technically it's not a dependency and
+      // can be loaded in any order
+      // hence the lazy function re-definition
+      return ($._select = (function(b) {
+        try {
+          b = require('bonzo')
+          return function (s, r) {
+            return /^\s*</.test(s) ? b.create(s, r) : q(s, r)
+          }
+        } catch (e) { }
+        return q
+      })())(s, r)
+    }
+  
+    $.ender({
+        find: function (s) {
+          var r = [], i, l, j, k, els
+          for (i = 0, l = this.length; i < l; i++) {
+            els = q(s, this[i])
+            for (j = 0, k = els.length; j < k; j++) r.push(els[j])
+          }
+          return $(q.uniq(r))
+        }
+      , and: function (s) {
+          var plus = $(s)
+          for (var i = this.length, j = 0, l = this.length + plus.length; i < l; i++, j++) {
+            this[i] = plus[j]
+          }
+          return this
+        }
+      , is: function(s, r) {
+          var i, l
+          for (i = 0, l = this.length; i < l; i++) {
+            if (q.is(this[i], s, r)) {
+              return true
+            }
+          }
+          return false
+        }
+    }, true)
+  }(document, ender);
+  
+
+}();
+
+!function () {
+
+  var module = { exports: {} }, exports = module.exports;
+
+  /*!
+    * Bonzo: DOM Utility (c) Dustin Diaz 2012
     * https://github.com/ded/bonzo
     * License MIT
     */
@@ -1228,31 +607,34 @@
     else this[name] = definition()
   }('bonzo', function() {
     var context = this
-      , old = context.bonzo
       , win = window
       , doc = win.document
       , html = doc.documentElement
       , parentNode = 'parentNode'
       , query = null
-      , specialAttributes = /^checked|value|selected$/
-      , specialTags = /select|fieldset|table|tbody|tfoot|td|tr|colgroup/i
+      , specialAttributes = /^(checked|value|selected)$/i
+      , specialTags = /^(select|fieldset|table|tbody|tfoot|td|tr|colgroup)$/i // tags that we have trouble inserting *into*
       , table = [ '<table>', '</table>', 1 ]
       , td = [ '<table><tbody><tr>', '</tr></tbody></table>', 3 ]
       , option = [ '<select>', '</select>', 1 ]
-      , tagMap = {
-          thead: table, tbody: table, tfoot: table, colgroup: table, caption: table
+      , noscope = [ '_', '', 0, 1 ]
+      , tagMap = { // tags that we have trouble *inserting*
+            thead: table, tbody: table, tfoot: table, colgroup: table, caption: table
           , tr: [ '<table><tbody>', '</tbody></table>', 2 ]
           , th: td , td: td
           , col: [ '<table><colgroup>', '</colgroup></table>', 2 ]
           , fieldset: [ '<form>', '</form>', 1 ]
           , legend: [ '<form><fieldset>', '</fieldset></form>', 2 ]
-          , option: option
-          , optgroup: option }
-      , stateAttributes = /^checked|selected$/
+          , option: option, optgroup: option
+          , script: noscope, style: noscope, link: noscope, param: noscope, base: noscope
+        }
+      , stateAttributes = /^(checked|selected)$/
       , ie = /msie/i.test(navigator.userAgent)
-      , uidList = []
+      , hasClass, addClass, removeClass
+      , uidMap = {}
       , uuids = 0
       , digit = /^-?[\d\.]+$/
+      , dattr = /^data-(.+)$/
       , px = 'px'
       , setAttribute = 'setAttribute'
       , getAttribute = 'getAttribute'
@@ -1262,18 +644,21 @@
           e.innerHTML = '<a href="#x">x</a><table style="float:left;"></table>'
           return {
             hrefExtended: e[byTag]('a')[0][getAttribute]('href') != '#x' // IE < 8
-            , autoTbody: e[byTag]('tbody').length !== 0 // IE < 8
-            , computedStyle: doc.defaultView && doc.defaultView.getComputedStyle
-            , cssFloat: e[byTag]('table')[0].style.styleFloat ? 'styleFloat' : 'cssFloat'
-            , transform: function () {
-                var props = ['webkitTransform', 'MozTransform', 'OTransform', 'msTransform', 'Transform'], i
-                for (i = 0; i < props.length; i++) {
-                  if (props[i] in e.style) return props[i]
-                }
-              }()
+          , autoTbody: e[byTag]('tbody').length !== 0 // IE < 8
+          , computedStyle: doc.defaultView && doc.defaultView.getComputedStyle
+          , cssFloat: e[byTag]('table')[0].style.styleFloat ? 'styleFloat' : 'cssFloat'
+          , transform: function () {
+              var props = ['webkitTransform', 'MozTransform', 'OTransform', 'msTransform', 'Transform'], i
+              for (i = 0; i < props.length; i++) {
+                if (props[i] in e.style) return props[i]
+              }
+            }()
+          , classList: 'classList' in e
           }
         }()
       , trimReplace = /(^\s*|\s*$)/g
+      , whitespaceRegex = /\s+/
+      , toString = String.prototype.toString
       , unitless = { lineHeight: 1, zoom: 1, zIndex: 1, opacity: 1 }
       , trim = String.prototype.trim ?
           function (s) {
@@ -1292,17 +677,53 @@
       return ar
     }
   
+    function deepEach(ar, fn, scope) {
+      for (var i = 0, l = ar.length; i < l; i++) {
+        if (isNode(ar[i])) {
+          deepEach(ar[i].childNodes, fn, scope)
+          fn.call(scope || ar[i], ar[i], i, ar)
+        }
+      }
+      return ar
+    }
+  
     function camelize(s) {
       return s.replace(/-(.)/g, function (m, m1) {
         return m1.toUpperCase()
       })
     }
   
+    function decamelize(s) {
+      return s ? s.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() : s
+    }
+  
+    function data(el) {
+      el[getAttribute]('data-node-uid') || el[setAttribute]('data-node-uid', ++uuids)
+      uid = el[getAttribute]('data-node-uid')
+      return uidMap[uid] || (uidMap[uid] = {})
+    }
+  
+    function clearData(el) {
+      uid = el[getAttribute]('data-node-uid')
+      uid && (delete uidMap[uid])
+    }
+  
+    function dataValue(d, f) {
+      try {
+        return (d === null || d === undefined) ? undefined :
+          d === 'true' ? true :
+            d === 'false' ? false :
+              d === 'null' ? null :
+                (f = parseFloat(d)) == d ? f : d;
+      } catch(e) {}
+      return undefined
+    }
+  
     function isNode(node) {
       return node && node.nodeName && node.nodeType == 1
     }
   
-    function some(ar, fn, scope, i) {
+    function some(ar, fn, scope, i, j) {
       for (i = 0, j = ar.length; i < j; ++i) if (fn.call(scope, ar[i], i, ar)) return true
       return false
     }
@@ -1356,10 +777,22 @@
           var n = !el[parentNode] || (el[parentNode] && !el[parentNode][parentNode]) ?
             function () {
               var c = el.cloneNode(true)
+                , cloneElems
+                , elElems
+  
               // check for existence of an event cloner
               // preferably https://github.com/fat/bean
               // otherwise Bonzo won't do this for you
-              self.$ && self.cloneEvents && self.$(c).cloneEvents(el)
+              if (self.$ && self.cloneEvents) {
+                self.$(c).cloneEvents(el)
+  
+                // clone events from every child node
+                cloneElems = self.$(c).find('*')
+                elElems = self.$(el).find('*')
+  
+                for (var i = 0; i < elElems.length; i++)
+                  self.$(cloneElems[i]).cloneEvents(elElems[i])
+              }
               return c
             }() : el
           fn(t, n)
@@ -1395,23 +828,38 @@
   
     }
   
-    function hasClass(el, c) {
-      return classReg(c).test(el.className)
+    // classList support for class management
+    // altho to be fair, the api sucks because it won't accept multiple classes at once
+    // so we iterate down below
+    if (features.classList) {
+      hasClass = function (el, c) {
+        return el.classList.contains(c)
+      }
+      addClass = function (el, c) {
+        el.classList.add(c)
+      }
+      removeClass = function (el, c) {
+        el.classList.remove(c)
+      }
     }
-    function addClass(el, c) {
-      el.className = trim(el.className + ' ' + c)
+    else {
+      hasClass = function (el, c) {
+        return classReg(c).test(el.className)
+      }
+      addClass = function (el, c) {
+        el.className = trim(el.className + ' ' + c)
+      }
+      removeClass = function (el, c) {
+        el.className = trim(el.className.replace(classReg(c), ' '))
+      }
     }
-    function removeClass(el, c) {
-      el.className = trim(el.className.replace(classReg(c), ' '))
-    }
+  
   
     // this allows method calling for setting values
     // example:
-  
     // bonzo(elements).css('color', function (el) {
     //   return el.getAttribute('data-original-color')
     // })
-  
     function setter(el, v) {
       return typeof v == 'function' ? v(el) : v
     }
@@ -1425,20 +873,24 @@
             elements :
             [elements]
         this.length = elements.length
-        for (var i = 0; i < elements.length; i++) {
-          this[i] = elements[i]
-        }
+        for (var i = 0; i < elements.length; i++) this[i] = elements[i]
       }
     }
   
     Bonzo.prototype = {
   
+        // indexr method, because jQueriers want this method. Jerks
         get: function (index) {
-          return this[index]
+          return this[index] || null
         }
   
+        // itetators
       , each: function (fn, scope) {
           return each(this, fn, scope)
+        }
+  
+      , deepEach: function (fn, scope) {
+          return deepEach(this, fn, scope)
         }
   
       , map: function (fn, reject) {
@@ -1450,31 +902,26 @@
           return m
         }
   
-      , first: function () {
-          return bonzo(this[0])
-        }
-  
-      , last: function () {
-          return bonzo(this[this.length - 1])
-        }
-  
+      // text and html inserters!
       , html: function (h, text) {
           var method = text ?
             html.textContent === undefined ?
               'innerText' :
               'textContent' :
-            'innerHTML', m;
+            'innerHTML';
           function append(el) {
-            while (el.firstChild) el.removeChild(el.firstChild)
             each(normalize(h), function (node) {
               el.appendChild(node)
             })
           }
           return typeof h !== 'undefined' ?
-              this.each(function (el) {
-                !text && (m = el.tagName.match(specialTags)) ?
-                  append(el, m[0]) :
-                  (el[method] = h)
+              this.empty().each(function (el) {
+                !text && specialTags.test(el.tagName) ?
+                  append(el) :
+                  !function() {
+                    try { (el[method] = h) }
+                    catch(e) { append(el) }
+                  }();
               }) :
             this[0] ? this[0][method] : ''
         }
@@ -1483,44 +930,7 @@
           return this.html(text, 1)
         }
   
-      , addClass: function (c) {
-          return this.each(function (el) {
-            hasClass(el, setter(el, c)) || addClass(el, setter(el, c))
-          })
-        }
-  
-      , removeClass: function (c) {
-          return this.each(function (el) {
-            hasClass(el, setter(el, c)) && removeClass(el, setter(el, c))
-          })
-        }
-  
-      , hasClass: function (c) {
-          return some(this, function (el) {
-            return hasClass(el, c)
-          })
-        }
-  
-      , toggleClass: function (c, condition) {
-          return this.each(function (el) {
-            typeof condition !== 'undefined' ?
-              condition ? addClass(el, c) : removeClass(el, c) :
-              hasClass(el, c) ? removeClass(el, c) : addClass(el, c)
-          })
-        }
-  
-      , show: function (type) {
-          return this.each(function (el) {
-            el.style.display = type || ''
-          })
-        }
-  
-      , hide: function () {
-          return this.each(function (el) {
-            el.style.display = 'none'
-          })
-        }
-  
+        // more related insertion methods
       , append: function (node) {
           return this.each(function (el) {
             each(normalize(node), function (i) {
@@ -1548,29 +958,6 @@
           return insert.call(this, target, host, function (t, el) {
             t.insertBefore(el, t.firstChild)
           })
-        }
-  
-      , next: function () {
-          return this.related('nextSibling')
-        }
-  
-      , previous: function () {
-          return this.related('previousSibling')
-        }
-  
-      , related: function (method) {
-          return this.map(
-            function (el) {
-              el = el[method]
-              while (el && el.nodeType !== 1) {
-                el = el[method]
-              }
-              return el || 0
-            },
-            function (el) {
-              return el
-            }
-          )
         }
   
       , before: function (node) {
@@ -1608,11 +995,127 @@
         }
   
       , replaceWith: function(html) {
+          this.deepEach(clearData)
+  
           return this.each(function (el) {
             el.parentNode.replaceChild(bonzo.create(html)[0], el)
           })
         }
   
+        // class management
+      , addClass: function (c) {
+          c = toString.call(c).split(whitespaceRegex)
+          return this.each(function (el) {
+            // we `each` here so you can do $el.addClass('foo bar')
+            each(c, function (c) {
+              if (c && !hasClass(el, setter(el, c)))
+                addClass(el, setter(el, c))
+            })
+          })
+        }
+  
+      , removeClass: function (c) {
+          c = toString.call(c).split(whitespaceRegex)
+          return this.each(function (el) {
+            each(c, function (c) {
+              if (c && hasClass(el, setter(el, c)))
+                removeClass(el, setter(el, c))
+            })
+          })
+        }
+  
+      , hasClass: function (c) {
+          c = toString.call(c).split(whitespaceRegex)
+          return some(this, function (el) {
+            return some(c, function (c) {
+              return c && hasClass(el, c)
+            })
+          })
+        }
+  
+      , toggleClass: function (c, condition) {
+          c = toString.call(c).split(whitespaceRegex)
+          return this.each(function (el) {
+            each(c, function (c) {
+              if (c) {
+                typeof condition !== 'undefined' ?
+                  condition ? addClass(el, c) : removeClass(el, c) :
+                  hasClass(el, c) ? removeClass(el, c) : addClass(el, c)
+              }
+            })
+          })
+        }
+  
+        // display togglers
+      , show: function (type) {
+          return this.each(function (el) {
+            el.style.display = type || ''
+          })
+        }
+  
+      , hide: function () {
+          return this.each(function (el) {
+            el.style.display = 'none'
+          })
+        }
+  
+      , toggle: function (callback, type) {
+          this.each(function (el) {
+            el.style.display = (el.offsetWidth || el.offsetHeight) ? 'none' : type || ''
+          })
+          callback && callback()
+          return this
+        }
+  
+        // DOM Walkers & getters
+      , first: function () {
+          return bonzo(this.length ? this[0] : [])
+        }
+  
+      , last: function () {
+          return bonzo(this.length ? this[this.length - 1] : [])
+        }
+  
+      , next: function () {
+          return this.related('nextSibling')
+        }
+  
+      , previous: function () {
+          return this.related('previousSibling')
+        }
+  
+      , parent: function() {
+          return this.related(parentNode)
+        }
+  
+      , related: function (method) {
+          return this.map(
+            function (el) {
+              el = el[method]
+              while (el && el.nodeType !== 1) {
+                el = el[method]
+              }
+              return el || 0
+            },
+            function (el) {
+              return el
+            }
+          )
+        }
+  
+        // meh. use with care. the ones in Bean are better
+      , focus: function () {
+          this.length && this[0].focus()
+          return this
+        }
+  
+      , blur: function () {
+          return this.each(function (el) {
+            el.blur()
+          })
+        }
+  
+        // style getter setter & related methods
       , css: function (o, v, p) {
           // is this a request for just getting a style?
           if (v === undefined && typeof o == 'string') {
@@ -1660,6 +1163,12 @@
               xy(el, x, y)
             })
           }
+          if (!this[0]) return {
+              top: 0
+            , left: 0
+            , height: 0
+            , width: 0
+          }
           var el = this[0]
             , width = el.offsetWidth
             , height = el.offsetHeight
@@ -1679,6 +1188,7 @@
         }
   
       , dim: function () {
+          if (!this.length) return { height: 0, width: 0 }
           var el = this[0]
             , orig = !el.offsetWidth && !el.offsetHeight ?
                // el isn't visible, can't be measured properly, so fix that
@@ -1705,6 +1215,7 @@
           }
         }
   
+        // attributes are hard. go shopping
       , attr: function (k, v) {
           var el = this[0]
           if (typeof k != 'string' && !(k instanceof String)) {
@@ -1714,7 +1225,7 @@
             return this
           }
           return typeof v == 'undefined' ?
-            specialAttributes.test(k) ?
+            !el ? null : specialAttributes.test(k) ?
               stateAttributes.test(k) && typeof el[k] == 'string' ?
                 true : el[k] : (k == 'href' || k =='src') && features.hrefExtended ?
                   el[getAttribute](k, 2) : el[getAttribute](k) :
@@ -1723,34 +1234,44 @@
             })
         }
   
-      , val: function (s) {
-          return (typeof s == 'string') ? this.attr('value', s) : this[0].value
-        }
-  
       , removeAttr: function (k) {
           return this.each(function (el) {
             stateAttributes.test(k) ? (el[k] = false) : el.removeAttribute(k)
           })
         }
   
+      , val: function (s) {
+          return (typeof s == 'string') ?
+            this.attr('value', s) :
+            this.length ? this[0].value : null
+        }
+  
+        // use with care and knowledge. this data() method uses data attributes on the DOM nodes
+        // to do this differently costs a lot more code. c'est la vie
       , data: function (k, v) {
-          var el = this[0], uid, o
+          var el = this[0], uid, o, m
           if (typeof v === 'undefined') {
-            el[getAttribute]('data-node-uid') || el[setAttribute]('data-node-uid', ++uuids)
-            uid = el[getAttribute]('data-node-uid')
-            uidList[uid] || (uidList[uid] = {})
-            return uidList[uid][k]
+            if (!el) return null
+            o = data(el)
+            if (typeof k === 'undefined') {
+              each(el.attributes, function(a) {
+                (m = ('' + a.name).match(dattr)) && (o[camelize(m[1])] = dataValue(a.value))
+              })
+              return o
+            } else {
+              if (typeof o[k] === 'undefined')
+                o[k] = dataValue(this.attr('data-' + decamelize(k)))
+              return o[k]
+            }
           } else {
-            return this.each(function (el) {
-              el[getAttribute]('data-node-uid') || el[setAttribute]('data-node-uid', ++uuids)
-              uid = el[getAttribute]('data-node-uid')
-              o = uidList[uid] || (uidList[uid] = {})
-              o[k] = v
-            })
+            return this.each(function (el) { data(el)[k] = v })
           }
         }
   
+        // DOM detachment & related
       , remove: function () {
+          this.deepEach(clearData)
+  
           return this.each(function (el) {
             el[parentNode] && el[parentNode].removeChild(el)
           })
@@ -1758,6 +1279,8 @@
   
       , empty: function () {
           return this.each(function (el) {
+            deepEach(el.childNodes, clearData)
+  
             while (el.firstChild) {
               el.removeChild(el.firstChild)
             }
@@ -1770,6 +1293,7 @@
           })
         }
   
+        // who uses a mouse anyway? oh right.
       , scrollTop: function (y) {
           return scroll.call(this, null, y, 'y')
         }
@@ -1778,13 +1302,6 @@
           return scroll.call(this, x, null, 'x')
         }
   
-      , toggle: function(callback) {
-          this.each(function (el) {
-            el.style.display = (el.offsetWidth || el.offsetHeight) ? 'none' : 'block'
-          })
-          callback && callback()
-          return this
-        }
     }
   
     function normalize(node) {
@@ -1793,6 +1310,7 @@
   
     function scroll(x, y, type) {
       var el = this[0]
+      if (!el) return this
       if (x == null && y == null) {
         return (isBody(el) ? getWindowScroll() : { x: el.scrollLeft, y: el.scrollTop })[type]
       }
@@ -1823,12 +1341,14 @@
     }
   
     bonzo.aug = function (o, target) {
+      // for those standalone bonzo users. this love is for you.
       for (var k in o) {
         o.hasOwnProperty(k) && ((target || Bonzo.prototype)[k] = o[k])
       }
     }
   
     bonzo.create = function (node) {
+      // hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
       return typeof node == 'string' && node !== '' ?
         function () {
           var tag = /^\s*<([^\s>]+)/.exec(node)
@@ -1836,11 +1356,14 @@
             , els = []
             , p = tag ? tagMap[tag[1].toLowerCase()] : null
             , dep = p ? p[2] + 1 : 1
+            , ns = p && p[3]
             , pn = parentNode
             , tb = features.autoTbody && p && p[0] == '<table>' && !(/<tbody/i).test(node)
   
           el.innerHTML = p ? (p[0] + node + p[1]) : node
           while (dep--) el = el.firstChild
+          // for IE NoScope, we may insert cruft at the begining just to get it to work
+          if (ns && el && el.nodeType !== 1) el = el.nextSibling
           do {
             // tbody special case for IE<8, creates tbody on any empty table
             // we don't want it if we're just after a <thead>, <caption>, etc.
@@ -1894,13 +1417,8 @@
         return false
       }
   
-    bonzo.noConflict = function () {
-      context.bonzo = old
-      return this
-    }
-  
     return bonzo
-  })
+  }); // the only line we care about using a semi-colon. placed here for concatenation tools
   
 
   provide("bonzo", module.exports);
@@ -1922,28 +1440,27 @@
     }
   
     function indexOf(ar, val) {
-      for (var i = 0; i < ar.length; i++) {
-        if (ar[i] === val) return i
-      }
+      for (var i = 0; i < ar.length; i++) if (ar[i] === val) return i
       return -1
     }
   
     function uniq(ar) {
-      var a = [], i, j
-      label:
-      for (i = 0; i < ar.length; i++) {
-        for (j = 0; j < a.length; j++) {
-          if (a[j] == ar[i]) {
-            continue label
+      var r = [], i = 0, j = 0, k, item, inIt
+      for (; item = ar[i]; ++i) {
+        inIt = false
+        for (k = 0; k < r.length; ++k) {
+          if (r[k] === item) {
+            inIt = true; break
           }
         }
-        a[a.length] = ar[i]
+        if (!inIt) r[j++] = item
       }
-      return a
+      return r
     }
   
     $.ender({
       parents: function (selector, closest) {
+        if (!this.length) return this
         var collection = $(selector), j, k, p, r = []
         for (j = 0, k = this.length; j < k; j++) {
           p = this[j]
@@ -1955,45 +1472,49 @@
           }
         }
         return $(uniq(r))
-      },
+      }
   
-      closest: function (selector) {
+    , parent: function() {
+        return $(uniq(b(this).parent()))
+      }
+  
+    , closest: function (selector) {
         return this.parents(selector, true)
-      },
+      }
   
-      first: function () {
-        return $(this[0])
-      },
+    , first: function () {
+        return $(this.length ? this[0] : this)
+      }
   
-      last: function () {
-        return $(this[this.length - 1])
-      },
+    , last: function () {
+        return $(this.length ? this[this.length - 1] : [])
+      }
   
-      next: function () {
+    , next: function () {
         return $(b(this).next())
-      },
+      }
   
-      previous: function () {
+    , previous: function () {
         return $(b(this).previous())
-      },
+      }
   
-      appendTo: function (t) {
+    , appendTo: function (t) {
         return b(this.selector).appendTo(t, this)
-      },
+      }
   
-      prependTo: function (t) {
+    , prependTo: function (t) {
         return b(this.selector).prependTo(t, this)
-      },
+      }
   
-      insertAfter: function (t) {
+    , insertAfter: function (t) {
         return b(this.selector).insertAfter(t, this)
-      },
+      }
   
-      insertBefore: function (t) {
+    , insertBefore: function (t) {
         return b(this.selector).insertBefore(t, this)
-      },
+      }
   
-      siblings: function () {
+    , siblings: function () {
         var i, l, p, r = []
         for (i = 0, l = this.length; i < l; i++) {
           p = this[i]
@@ -2002,9 +1523,9 @@
           while (p = p.nextSibling) p.nodeType == 1 && r.push(p)
         }
         return $(r)
-      },
+      }
   
-      children: function () {
+    , children: function () {
         var i, el, r = []
         for (i = 0, l = this.length; i < l; i++) {
           if (!(el = b.firstChild(this[i]))) continue;
@@ -2012,98 +1533,24 @@
           while (el = el.nextSibling) el.nodeType == 1 && r.push(el)
         }
         return $(uniq(r))
-      },
+      }
   
-      height: function (v) {
-        return dimension(v, this, 'height')
-      },
+    , height: function (v) {
+        return dimension.call(this, 'height', v)
+      }
   
-      width: function (v) {
-        return dimension(v, this, 'width')
+    , width: function (v) {
+        return dimension.call(this, 'width', v)
       }
     }, true)
   
-    function dimension(v, self, which) {
-      return v ?
-        self.css(which, v) :
-        function (r) {
-          r = parseInt(self.css(which), 10);
-          return isNaN(r) ? self[0]['offset' + which.replace(/^\w/, function (m) {return m.toUpperCase()})] : r
-        }()
+    function dimension(type, v) {
+      return typeof v == 'undefined'
+        ? b(this).dim()[type]
+        : this.css(type, v)
     }
-  
   }(ender);
   
-
-}();
-
-!function () {
-
-  var module = { exports: {} }, exports = module.exports;
-
-  !function (name, definition) {
-    if (typeof define == 'function') define(definition)
-    else if (typeof module != 'undefined') module.exports = definition()
-    else this[name] = this['domReady'] = definition()
-  }('domready', function (ready) {
-  
-    var fns = [], fn, f = false
-      , doc = document
-      , testEl = doc.documentElement
-      , hack = testEl.doScroll
-      , domContentLoaded = 'DOMContentLoaded'
-      , addEventListener = 'addEventListener'
-      , onreadystatechange = 'onreadystatechange'
-      , loaded = /^loade|c/.test(doc.readyState)
-  
-    function flush(f) {
-      loaded = 1
-      while (f = fns.shift()) f()
-    }
-  
-    doc[addEventListener] && doc[addEventListener](domContentLoaded, fn = function () {
-      doc.removeEventListener(domContentLoaded, fn, f)
-      flush()
-    }, f)
-  
-  
-    hack && doc.attachEvent(onreadystatechange, (fn = function () {
-      if (/^c/.test(doc.readyState)) {
-        doc.detachEvent(onreadystatechange, fn)
-        flush()
-      }
-    }))
-  
-    return (ready = hack ?
-      function (fn) {
-        self != top ?
-          loaded ? fn() : fns.push(fn) :
-          function () {
-            try {
-              testEl.doScroll('left')
-            } catch (e) {
-              return setTimeout(function() { ready(fn) }, 50)
-            }
-            fn()
-          }()
-      } :
-      function (fn) {
-        loaded ? fn() : fns.push(fn)
-      })
-  })
-
-  provide("domready", module.exports);
-
-  !function ($) {
-    var ready = require('domready')
-    $.ender({domReady: ready})
-    $.ender({
-      ready: function (f) {
-        ready(f)
-        return this
-      }
-    }, true)
-  }(ender);
 
 }();
 
@@ -2112,344 +1559,618 @@
   var module = { exports: {} }, exports = module.exports;
 
   /*!
-    * Qwery - A Blazing Fast query selector engine
-    * https://github.com/ded/qwery
-    * copyright Dustin Diaz & Jacob Thornton 2011
+    * bean.js - copyright Jacob Thornton 2011
+    * https://github.com/fat/bean
     * MIT License
+    * special thanks to:
+    * dean edwards: http://dean.edwards.name/
+    * dperini: https://github.com/dperini/nwevents
+    * the entire mootools team: github.com/mootools/mootools-core
     */
+  !function (name, context, definition) {
+    if (typeof module !== 'undefined') module.exports = definition(name, context);
+    else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
+    else context[name] = definition(name, context);
+  }('bean', this, function (name, context) {
+    var win = window
+      , old = context[name]
+      , overOut = /over|out/
+      , namespaceRegex = /[^\.]*(?=\..*)\.|.*/
+      , nameRegex = /\..*/
+      , addEvent = 'addEventListener'
+      , attachEvent = 'attachEvent'
+      , removeEvent = 'removeEventListener'
+      , detachEvent = 'detachEvent'
+      , doc = document || {}
+      , root = doc.documentElement || {}
+      , W3C_MODEL = root[addEvent]
+      , eventSupport = W3C_MODEL ? addEvent : attachEvent
+      , slice = Array.prototype.slice
+      , mouseTypeRegex = /click|mouse(?!(.*wheel|scroll))|menu|drag|drop/i
+      , mouseWheelTypeRegex = /mouse.*(wheel|scroll)/i
+      , textTypeRegex = /^text/i
+      , touchTypeRegex = /^touch|^gesture/i
+      , ONE = { one: 1 } // singleton for quick matching making add() do one()
   
-  !function (name, definition) {
-    if (typeof module != 'undefined') module.exports = definition()
-    else if (typeof define == 'function' && typeof define.amd == 'object') define(definition)
-    else this[name] = definition()
-  }('qwery', function () {
-    var context = this
-      , doc = document
-      , old = context.qwery
-      , c, i, j, k, l, m, o, p, r, v
-      , el, node, found, classes, item, items, token
-      , html = doc.documentElement
-      , id = /#([\w\-]+)/
-      , clas = /\.[\w\-]+/g
-      , idOnly = /^#([\w\-]+$)/
-      , classOnly = /^\.([\w\-]+)$/
-      , tagOnly = /^([\w\-]+)$/
-      , tagAndOrClass = /^([\w]+)?\.([\w\-]+)$/
-      , normalizr = /\s*([\s\+\~>])\s*/g
-      , splitters = /[\s\>\+\~]/
-      , splittersMore = /(?![\s\w\-\/\?\&\=\:\.\(\)\!,@#%<>\{\}\$\*\^'"]*\]|[\s\w\+\-]*\))/
-      , specialChars = /([.*+?\^=!:${}()|\[\]\/\\])/g
-      , simple = /^([a-z0-9]+)?(?:([\.\#]+[\w\-\.#]+)?)/
-      , attr = /\[([\w\-]+)(?:([\|\^\$\*\~]?\=)['"]?([ \w\-\/\?\&\=\:\.\(\)\!,@#%<>\{\}\$\*\^]+)["']?)?\]/
-      , pseudo = /:([\w\-]+)(\(['"]?([\s\w\+\-]+)['"]?\))?/
-      , dividers = new RegExp('(' + splitters.source + ')' + splittersMore.source, 'g')
-      , tokenizr = new RegExp(splitters.source + splittersMore.source)
-      , chunker = new RegExp(simple.source + '(' + attr.source + ')?' + '(' + pseudo.source + ')?')
-      , walker = {
-        ' ': function (node) {
-          return node && node !== html && node.parentNode
+      , nativeEvents = (function (hash, events, i) {
+          for (i = 0; i < events.length; i++)
+            hash[events[i]] = 1
+          return hash
+        })({}, (
+            'click dblclick mouseup mousedown contextmenu ' +                  // mouse buttons
+            'mousewheel mousemultiwheel DOMMouseScroll ' +                     // mouse wheel
+            'mouseover mouseout mousemove selectstart selectend ' +            // mouse movement
+            'keydown keypress keyup ' +                                        // keyboard
+            'orientationchange ' +                                             // mobile
+            'focus blur change reset select submit ' +                         // form elements
+            'load unload beforeunload resize move DOMContentLoaded readystatechange ' + // window
+            'error abort scroll ' +                                            // misc
+            (W3C_MODEL ? // element.fireEvent('onXYZ'... is not forgiving if we try to fire an event
+                         // that doesn't actually exist, so make sure we only do these on newer browsers
+              'show ' +                                                          // mouse buttons
+              'input invalid ' +                                                 // form elements
+              'touchstart touchmove touchend touchcancel ' +                     // touch
+              'gesturestart gesturechange gestureend ' +                         // gesture
+              'message readystatechange pageshow pagehide popstate ' +           // window
+              'hashchange offline online ' +                                     // window
+              'afterprint beforeprint ' +                                        // printing
+              'dragstart dragenter dragover dragleave drag drop dragend ' +      // dnd
+              'loadstart progress suspend emptied stalled loadmetadata ' +       // media
+              'loadeddata canplay canplaythrough playing waiting seeking ' +     // media
+              'seeked ended durationchange timeupdate play pause ratechange ' +  // media
+              'volumechange cuechange ' +                                        // media
+              'checking noupdate downloading cached updateready obsolete ' +     // appcache
+              '' : '')
+          ).split(' ')
+        )
+  
+      , customEvents = (function () {
+          var cdp = 'compareDocumentPosition'
+          var isAncestor = cdp in root
+            ? function (element, container) {
+                return container[cdp] && (container[cdp](element) & 16) === 16
+              }
+            : 'contains' in root
+              ? function (element, container) {
+                  container = container.nodeType === 9 || container === window ? root : container
+                  return container !== element && container.contains(element)
+                }
+              : function (element, container) {
+                  while (element = element.parentNode) if (element === container) return 1
+                  return 0
+                }
+  
+          function check(event) {
+            var related = event.relatedTarget
+            if (!related) return related === null
+            return (related !== this && related.prefix !== 'xul' && !/document/.test(this.toString()) && !isAncestor(related, this))
+          }
+  
+          return {
+              mouseenter: { base: 'mouseover', condition: check }
+            , mouseleave: { base: 'mouseout', condition: check }
+            , mousewheel: { base: /Firefox/.test(navigator.userAgent) ? 'DOMMouseScroll' : 'mousewheel' }
+          }
+        })()
+  
+      , fixEvent = (function () {
+          var commonProps = 'altKey attrChange attrName bubbles cancelable ctrlKey currentTarget detail eventPhase getModifierState isTrusted metaKey relatedNode relatedTarget shiftKey srcElement target timeStamp type view which'.split(' ')
+            , mouseProps = commonProps.concat('button buttons clientX clientY dataTransfer fromElement offsetX offsetY pageX pageY screenX screenY toElement'.split(' '))
+            , mouseWheelProps = mouseProps.concat('wheelDelta wheelDeltaX wheelDeltaY wheelDeltaZ axis'.split(' ')) // 'axis' is FF specific
+            , keyProps = commonProps.concat('char charCode key keyCode keyIdentifier keyLocation'.split(' '))
+            , textProps = commonProps.concat(['data'])
+            , touchProps = commonProps.concat('touches targetTouches changedTouches scale rotation'.split(' '))
+            , preventDefault = 'preventDefault'
+            , createPreventDefault = function (event) {
+                return function () {
+                  if (event[preventDefault])
+                    event[preventDefault]()
+                  else
+                    event.returnValue = false
+                }
+              }
+            , stopPropagation = 'stopPropagation'
+            , createStopPropagation = function (event) {
+                return function () {
+                  if (event[stopPropagation])
+                    event[stopPropagation]()
+                  else
+                    event.cancelBubble = true
+                }
+              }
+            , createStop = function (synEvent) {
+                return function () {
+                  synEvent[preventDefault]()
+                  synEvent[stopPropagation]()
+                  synEvent.stopped = true
+                }
+              }
+            , copyProps = function (event, result, props) {
+                var i, p
+                for (i = props.length; i--;) {
+                  p = props[i]
+                  if (!(p in result) && p in event) result[p] = event[p]
+                }
+              }
+  
+          return function (event, isNative) {
+            var result = { originalEvent: event, isNative: isNative }
+            if (!event)
+              return result
+  
+            var props
+              , type = event.type
+              , target = event.target || event.srcElement
+  
+            result[preventDefault] = createPreventDefault(event)
+            result[stopPropagation] = createStopPropagation(event)
+            result.stop = createStop(result)
+            result.target = target && target.nodeType === 3 ? target.parentNode : target
+  
+            if (isNative) { // we only need basic augmentation on custom events, the rest is too expensive
+              if (type.indexOf('key') !== -1) {
+                props = keyProps
+                result.keyCode = event.which || event.keyCode
+              } else if (mouseTypeRegex.test(type)) {
+                props = mouseProps
+                result.rightClick = event.which === 3 || event.button === 2
+                result.pos = { x: 0, y: 0 }
+                if (event.pageX || event.pageY) {
+                  result.clientX = event.pageX
+                  result.clientY = event.pageY
+                } else if (event.clientX || event.clientY) {
+                  result.clientX = event.clientX + doc.body.scrollLeft + root.scrollLeft
+                  result.clientY = event.clientY + doc.body.scrollTop + root.scrollTop
+                }
+                if (overOut.test(type))
+                  result.relatedTarget = event.relatedTarget || event[(type === 'mouseover' ? 'from' : 'to') + 'Element']
+              } else if (touchTypeRegex.test(type)) {
+                props = touchProps
+              } else if (mouseWheelTypeRegex.test(type)) {
+                props = mouseWheelProps
+              } else if (textTypeRegex.test(type)) {
+                props = textProps
+              }
+              copyProps(event, result, props || commonProps)
+            }
+            return result
+          }
+        })()
+  
+        // if we're in old IE we can't do onpropertychange on doc or win so we use doc.documentElement for both
+      , targetElement = function (element, isNative) {
+          return !W3C_MODEL && !isNative && (element === doc || element === win) ? root : element
         }
-      , '>': function (node, contestant) {
-          return node && node.parentNode == contestant.parentNode && node.parentNode
+  
+        // we use one of these per listener, of any type
+      , RegEntry = (function () {
+          function entry(element, type, handler, original, namespaces) {
+            this.element = element
+            this.type = type
+            this.handler = handler
+            this.original = original
+            this.namespaces = namespaces
+            this.custom = customEvents[type]
+            this.isNative = nativeEvents[type] && element[eventSupport]
+            this.eventType = W3C_MODEL || this.isNative ? type : 'propertychange'
+            this.customType = !W3C_MODEL && !this.isNative && type
+            this.target = targetElement(element, this.isNative)
+            this.eventSupport = this.target[eventSupport]
+          }
+  
+          entry.prototype = {
+              // given a list of namespaces, is our entry in any of them?
+              inNamespaces: function (checkNamespaces) {
+                var i, j
+                if (!checkNamespaces)
+                  return true
+                if (!this.namespaces)
+                  return false
+                for (i = checkNamespaces.length; i--;) {
+                  for (j = this.namespaces.length; j--;) {
+                    if (checkNamespaces[i] === this.namespaces[j])
+                      return true
+                  }
+                }
+                return false
+              }
+  
+              // match by element, original fn (opt), handler fn (opt)
+            , matches: function (checkElement, checkOriginal, checkHandler) {
+                return this.element === checkElement &&
+                  (!checkOriginal || this.original === checkOriginal) &&
+                  (!checkHandler || this.handler === checkHandler)
+              }
+          }
+  
+          return entry
+        })()
+  
+      , registry = (function () {
+          // our map stores arrays by event type, just because it's better than storing
+          // everything in a single array. uses '$' as a prefix for the keys for safety
+          var map = {}
+  
+            // generic functional search of our registry for matching listeners,
+            // `fn` returns false to break out of the loop
+            , forAll = function (element, type, original, handler, fn) {
+                if (!type || type === '*') {
+                  // search the whole registry
+                  for (var t in map) {
+                    if (t.charAt(0) === '$')
+                      forAll(element, t.substr(1), original, handler, fn)
+                  }
+                } else {
+                  var i = 0, l, list = map['$' + type], all = element === '*'
+                  if (!list)
+                    return
+                  for (l = list.length; i < l; i++) {
+                    if (all || list[i].matches(element, original, handler))
+                      if (!fn(list[i], list, i, type))
+                        return
+                  }
+                }
+              }
+  
+            , has = function (element, type, original) {
+                // we're not using forAll here simply because it's a bit slower and this
+                // needs to be fast
+                var i, list = map['$' + type]
+                if (list) {
+                  for (i = list.length; i--;) {
+                    if (list[i].matches(element, original, null))
+                      return true
+                  }
+                }
+                return false
+              }
+  
+            , get = function (element, type, original) {
+                var entries = []
+                forAll(element, type, original, null, function (entry) { return entries.push(entry) })
+                return entries
+              }
+  
+            , put = function (entry) {
+                (map['$' + entry.type] || (map['$' + entry.type] = [])).push(entry)
+                return entry
+              }
+  
+            , del = function (entry) {
+                forAll(entry.element, entry.type, null, entry.handler, function (entry, list, i) {
+                  list.splice(i, 1)
+                  if (list.length === 0)
+                    delete map['$' + entry.type]
+                  return false
+                })
+              }
+  
+              // dump all entries, used for onunload
+            , entries = function () {
+                var t, entries = []
+                for (t in map) {
+                  if (t.charAt(0) === '$')
+                    entries = entries.concat(map[t])
+                }
+                return entries
+              }
+  
+          return { has: has, get: get, put: put, del: del, entries: entries }
+        })()
+  
+        // add and remove listeners to DOM elements
+      , listener = W3C_MODEL ? function (element, type, fn, add) {
+          element[add ? addEvent : removeEvent](type, fn, false)
+        } : function (element, type, fn, add, custom) {
+          if (custom && add && element['_on' + custom] === null)
+            element['_on' + custom] = 0
+          element[add ? attachEvent : detachEvent]('on' + type, fn)
         }
-      , '~': function (node) {
-          return node && node.previousSibling
+  
+      , nativeHandler = function (element, fn, args) {
+          var beanDel = fn.__beanDel
+            , handler = function (event) {
+            event = fixEvent(event || ((this.ownerDocument || this.document || this).parentWindow || win).event, true)
+            if (beanDel) // delegated event, fix the fix
+              event.currentTarget = beanDel.ft(event.target, element)
+            return fn.apply(element, [event].concat(args))
+          }
+          handler.__beanDel = beanDel
+          return handler
         }
-      , '+': function (node, contestant, p1, p2) {
-          if (!node) return false
-          p1 = previous(node)
-          p2 = previous(contestant)
-          return p1 && p2 && p1 == p2 && p1
+  
+      , customHandler = function (element, fn, type, condition, args, isNative) {
+          var beanDel = fn.__beanDel
+            , handler = function (event) {
+            var target = beanDel ? beanDel.ft(event.target, element) : this // deleated event
+            if (condition ? condition.apply(target, arguments) : W3C_MODEL ? true : event && event.propertyName === '_on' + type || !event) {
+              if (event) {
+                event = fixEvent(event || ((this.ownerDocument || this.document || this).parentWindow || win).event, isNative)
+                event.currentTarget = target
+              }
+              fn.apply(element, event && (!args || args.length === 0) ? arguments : slice.call(arguments, event ? 0 : 1).concat(args))
+            }
+          }
+          handler.__beanDel = beanDel
+          return handler
         }
-    }
-    function cache() {
-      this.c = {}
-    }
-    cache.prototype = {
-        g: function (k) {
-          return this.c[k] || undefined
-        }
-      , s: function (k, v) {
-          this.c[k] = v
-          return v
-        }
-    }
   
-    var classCache = new cache()
-      , cleanCache = new cache()
-      , attrCache = new cache()
-      , tokenCache = new cache()
-  
-    function flatten(ar) {
-      r = []
-      for (i = 0, l = ar.length; i < l; i++) {
-        if (arrayLike(ar[i])) r = r.concat(ar[i])
-        else r.push(ar[i])
-      }
-      return r
-    }
-  
-    function previous(n) {
-      while (n = n.previousSibling) if (n.nodeType == 1) break;
-      return n
-    }
-  
-    function q(query) {
-      return query.match(chunker)
-    }
-  
-    // this next method expect at most these args
-    // given => div.hello[title="world"]:foo('bar')
-  
-    // div.hello[title="world"]:foo('bar'), div, .hello, [title="world"], title, =, world, :foo('bar'), foo, ('bar'), bar]
-  
-    function interpret(whole, tag, idsAndClasses, wholeAttribute, attribute, qualifier, value, wholePseudo, pseudo, wholePseudoVal, pseudoVal) {
-      var m, c, k;
-      if (tag && this.tagName.toLowerCase() !== tag) return false
-      if (idsAndClasses && (m = idsAndClasses.match(id)) && m[1] !== this.id) return false
-      if (idsAndClasses && (classes = idsAndClasses.match(clas))) {
-        for (i = classes.length; i--;) {
-          c = classes[i].slice(1)
-          if (!(classCache.g(c) || classCache.s(c, new RegExp('(^|\\s+)' + c + '(\\s+|$)'))).test(this.className)) {
-            return false
+      , once = function (rm, element, type, fn, originalFn) {
+          // wrap the handler in a handler that does a remove as well
+          return function () {
+            rm(element, type, originalFn)
+            fn.apply(this, arguments)
           }
         }
+  
+      , removeListener = function (element, orgType, handler, namespaces) {
+          var i, l, entry
+            , type = (orgType && orgType.replace(nameRegex, ''))
+            , handlers = registry.get(element, type, handler)
+  
+          for (i = 0, l = handlers.length; i < l; i++) {
+            if (handlers[i].inNamespaces(namespaces)) {
+              if ((entry = handlers[i]).eventSupport)
+                listener(entry.target, entry.eventType, entry.handler, false, entry.type)
+              // TODO: this is problematic, we have a registry.get() and registry.del() that
+              // both do registry searches so we waste cycles doing this. Needs to be rolled into
+              // a single registry.forAll(fn) that removes while finding, but the catch is that
+              // we'll be splicing the arrays that we're iterating over. Needs extra tests to
+              // make sure we don't screw it up. @rvagg
+              registry.del(entry)
+            }
+          }
+        }
+  
+      , addListener = function (element, orgType, fn, originalFn, args) {
+          var entry
+            , type = orgType.replace(nameRegex, '')
+            , namespaces = orgType.replace(namespaceRegex, '').split('.')
+  
+          if (registry.has(element, type, fn))
+            return element // no dupe
+          if (type === 'unload')
+            fn = once(removeListener, element, type, fn, originalFn) // self clean-up
+          if (customEvents[type]) {
+            if (customEvents[type].condition)
+              fn = customHandler(element, fn, type, customEvents[type].condition, args, true)
+            type = customEvents[type].base || type
+          }
+          entry = registry.put(new RegEntry(element, type, fn, originalFn, namespaces[0] && namespaces))
+          entry.handler = entry.isNative ?
+            nativeHandler(element, entry.handler, args) :
+            customHandler(element, entry.handler, type, false, args, false)
+          if (entry.eventSupport)
+            listener(entry.target, entry.eventType, entry.handler, true, entry.customType)
+        }
+  
+      , del = function (selector, fn, $) {
+          var findTarget = function (target, root) {
+                var i, array = typeof selector === 'string' ? $(selector, root) : selector
+                for (; target && target !== root; target = target.parentNode) {
+                  for (i = array.length; i--;) {
+                    if (array[i] === target)
+                      return target
+                  }
+                }
+              }
+            , handler = function (e) {
+                var match = findTarget(e.target, this)
+                if (match)
+                  fn.apply(match, arguments)
+              }
+  
+          handler.__beanDel = {
+              ft: findTarget // attach it here for customEvents to use too
+            , selector: selector
+            , $: $
+          }
+          return handler
+        }
+  
+      , remove = function (element, typeSpec, fn) {
+          var k, m, type, namespaces, i
+            , rm = removeListener
+            , isString = typeSpec && typeof typeSpec === 'string'
+  
+          if (isString && typeSpec.indexOf(' ') > 0) {
+            // remove(el, 't1 t2 t3', fn) or remove(el, 't1 t2 t3')
+            typeSpec = typeSpec.split(' ')
+            for (i = typeSpec.length; i--;)
+              remove(element, typeSpec[i], fn)
+            return element
+          }
+          type = isString && typeSpec.replace(nameRegex, '')
+          if (type && customEvents[type])
+            type = customEvents[type].type
+          if (!typeSpec || isString) {
+            // remove(el) or remove(el, t1.ns) or remove(el, .ns) or remove(el, .ns1.ns2.ns3)
+            if (namespaces = isString && typeSpec.replace(namespaceRegex, ''))
+              namespaces = namespaces.split('.')
+            rm(element, type, fn, namespaces)
+          } else if (typeof typeSpec === 'function') {
+            // remove(el, fn)
+            rm(element, null, typeSpec)
+          } else {
+            // remove(el, { t1: fn1, t2, fn2 })
+            for (k in typeSpec) {
+              if (typeSpec.hasOwnProperty(k))
+                remove(element, k, typeSpec[k])
+            }
+          }
+          return element
+        }
+  
+      , add = function (element, events, fn, delfn, $) {
+          var type, types, i, args
+            , originalFn = fn
+            , isDel = fn && typeof fn === 'string'
+  
+          if (events && !fn && typeof events === 'object') {
+            for (type in events) {
+              if (events.hasOwnProperty(type))
+                add.apply(this, [ element, type, events[type] ])
+            }
+          } else {
+            args = arguments.length > 3 ? slice.call(arguments, 3) : []
+            types = (isDel ? fn : events).split(' ')
+            isDel && (fn = del(events, (originalFn = delfn), $)) && (args = slice.call(args, 1))
+            // special case for one()
+            this === ONE && (fn = once(remove, element, events, fn, originalFn))
+            for (i = types.length; i--;) addListener(element, types[i], fn, originalFn, args)
+          }
+          return element
+        }
+  
+      , one = function () {
+          return add.apply(ONE, arguments)
+        }
+  
+      , fireListener = W3C_MODEL ? function (isNative, type, element) {
+          var evt = doc.createEvent(isNative ? 'HTMLEvents' : 'UIEvents')
+          evt[isNative ? 'initEvent' : 'initUIEvent'](type, true, true, win, 1)
+          element.dispatchEvent(evt)
+        } : function (isNative, type, element) {
+          element = targetElement(element, isNative)
+          // if not-native then we're using onpropertychange so we just increment a custom property
+          isNative ? element.fireEvent('on' + type, doc.createEventObject()) : element['_on' + type]++
+        }
+  
+      , fire = function (element, type, args) {
+          var i, j, l, names, handlers
+            , types = type.split(' ')
+  
+          for (i = types.length; i--;) {
+            type = types[i].replace(nameRegex, '')
+            if (names = types[i].replace(namespaceRegex, ''))
+              names = names.split('.')
+            if (!names && !args && element[eventSupport]) {
+              fireListener(nativeEvents[type], type, element)
+            } else {
+              // non-native event, either because of a namespace, arguments or a non DOM element
+              // iterate over all listeners and manually 'fire'
+              handlers = registry.get(element, type)
+              args = [false].concat(args)
+              for (j = 0, l = handlers.length; j < l; j++) {
+                if (handlers[j].inNamespaces(names))
+                  handlers[j].handler.apply(element, args)
+              }
+            }
+          }
+          return element
+        }
+  
+      , clone = function (element, from, type) {
+          var i = 0
+            , handlers = registry.get(from, type)
+            , l = handlers.length
+            , args, beanDel
+  
+          for (;i < l; i++) {
+            if (handlers[i].original) {
+              beanDel = handlers[i].handler.__beanDel
+              if (beanDel) {
+                args = [ element, beanDel.selector, handlers[i].type, handlers[i].original, beanDel.$]
+              } else
+                args = [ element, handlers[i].type, handlers[i].original ]
+              add.apply(null, args)
+            }
+          }
+          return element
+        }
+  
+      , bean = {
+            add: add
+          , one: one
+          , remove: remove
+          , clone: clone
+          , fire: fire
+          , noConflict: function () {
+              context[name] = old
+              return this
+            }
+        }
+  
+    if (win[attachEvent]) {
+      // for IE, clean up on unload to avoid leaks
+      var cleanup = function () {
+        var i, entries = registry.entries()
+        for (i in entries) {
+          if (entries[i].type && entries[i].type !== 'unload')
+            remove(entries[i].element, entries[i].type)
+        }
+        win[detachEvent]('onunload', cleanup)
+        win.CollectGarbage && win.CollectGarbage()
       }
-      if (pseudo && qwery.pseudos[pseudo] && !qwery.pseudos[pseudo](this, pseudoVal)) {
-        return false
-      }
-      if (wholeAttribute && !value) {
-        o = this.attributes
-        for (k in o) {
-          if (Object.prototype.hasOwnProperty.call(o, k) && (o[k].name || k) == attribute) {
+      win[attachEvent]('onunload', cleanup)
+    }
+  
+    return bean
+  })
+  
+
+  provide("bean", module.exports);
+
+  !function ($) {
+    var b = require('bean')
+      , integrate = function (method, type, method2) {
+          var _args = type ? [type] : []
+          return function () {
+            for (var args, i = 0, l = this.length; i < l; i++) {
+              args = [this[i]].concat(_args, Array.prototype.slice.call(arguments, 0))
+              args.length == 4 && args.push($)
+              !arguments.length && method == 'add' && type && (method = 'fire')
+              b[method].apply(this, args)
+            }
             return this
           }
         }
-      }
-      if (wholeAttribute && !checkAttr(qualifier, this.getAttribute(attribute) || '', value)) {
-        return false
-      }
-      return this
-    }
+      , add = integrate('add')
+      , remove = integrate('remove')
+      , fire = integrate('fire')
   
-    function clean(s) {
-      return cleanCache.g(s) || cleanCache.s(s, s.replace(specialChars, '\\$1'))
-    }
+      , methods = {
+            on: add // NOTE: .on() is likely to change in the near future, don't rely on this as-is see https://github.com/fat/bean/issues/55
+          , addListener: add
+          , bind: add
+          , listen: add
+          , delegate: add
   
-    function checkAttr(qualify, actual, val) {
-      switch (qualify) {
-      case '=':
-        return actual == val
-      case '^=':
-        return actual.match(attrCache.g('^=' + val) || attrCache.s('^=' + val, new RegExp('^' + clean(val))))
-      case '$=':
-        return actual.match(attrCache.g('$=' + val) || attrCache.s('$=' + val, new RegExp(clean(val) + '$')))
-      case '*=':
-        return actual.match(attrCache.g(val) || attrCache.s(val, new RegExp(clean(val))))
-      case '~=':
-        return actual.match(attrCache.g('~=' + val) || attrCache.s('~=' + val, new RegExp('(?:^|\\s+)' + clean(val) + '(?:\\s+|$)')))
-      case '|=':
-        return actual.match(attrCache.g('|=' + val) || attrCache.s('|=' + val, new RegExp('^' + clean(val) + '(-|$)')))
-      }
-      return 0
-    }
+          , one: integrate('one')
   
-    function _qwery(selector) {
-      var r = [], ret = [], i, j = 0, k, l, m, p, token, tag, els, root, intr, item, children
-        , tokens = tokenCache.g(selector) || tokenCache.s(selector, selector.split(tokenizr))
-        , dividedTokens = selector.match(dividers), dividedToken
-      tokens = tokens.slice(0) // this makes a copy of the array so the cached original is not effected
+          , off: remove
+          , unbind: remove
+          , unlisten: remove
+          , removeListener: remove
+          , undelegate: remove
   
-      if (!tokens.length) return r
+          , emit: fire
+          , trigger: fire
   
-      token = tokens.pop()
-      root = tokens.length && (m = tokens[tokens.length - 1].match(idOnly)) ? doc.getElementById(m[1]) : doc
+          , cloneEvents: integrate('clone')
   
-      if (!root) return r
-  
-      intr = q(token)
-      els = dividedTokens && /^[+~]$/.test(dividedTokens[dividedTokens.length - 1]) ? function (r) {
-          while (root = root.nextSibling) {
-            root.nodeType == 1 && (intr[1] ? intr[1] == root.tagName.toLowerCase() : 1) && r.push(root)
-          }
-          return r
-        }([]) :
-        root.getElementsByTagName(intr[1] || '*')
-      for (i = 0, l = els.length; i < l; i++) if (item = interpret.apply(els[i], intr)) r[j++] = item
-      if (!tokens.length) return r
-  
-      // loop through all descendent tokens
-      for (j = 0, l = r.length, k = 0; j < l; j++) {
-        p = r[j]
-        // loop through each token backwards crawling up tree
-        for (i = tokens.length; i--;) {
-          // loop through parent nodes
-          while (p = walker[dividedTokens[i]](p, r[j])) {
-            if (found = interpret.apply(p, q(tokens[i]))) break;
-          }
-        }
-        found && (ret[k++] = r[j])
-      }
-      return ret
-    }
-  
-    function isNode(el) {
-      return (el && el.nodeType && (el.nodeType == 1 || el.nodeType == 9))
-    }
-  
-    function uniq(ar) {
-      var a = [], i, j;
-      label:
-      for (i = 0; i < ar.length; i++) {
-        for (j = 0; j < a.length; j++) {
-          if (a[j] == ar[i]) continue label;
-        }
-        a[a.length] = ar[i]
-      }
-      return a
-    }
-  
-    function arrayLike(o) {
-      return (typeof o === 'object' && isFinite(o.length))
-    }
-  
-    function normalizeRoot(root) {
-      if (!root) return doc
-      if (typeof root == 'string') return qwery(root)[0]
-      if (arrayLike(root)) return root[0]
-      return root
-    }
-  
-    function qwery(selector, _root) {
-      var root = normalizeRoot(_root)
-  
-      if (!root || !selector) return []
-      if (selector === window || isNode(selector)) {
-        return !_root || (selector !== window && isNode(root) && isAncestor(selector, root)) ? [selector] : []
-      }
-      if (selector && arrayLike(selector)) return flatten(selector)
-      if (m = selector.match(idOnly)) return (el = doc.getElementById(m[1])) ? [el] : []
-      if (m = selector.match(tagOnly)) return flatten(root.getElementsByTagName(m[1]))
-      return select(selector, root)
-    }
-  
-    var isAncestor = 'compareDocumentPosition' in html ?
-      function (element, container) {
-        return (container.compareDocumentPosition(element) & 16) == 16
-      } : 'contains' in html ?
-      function (element, container) {
-        container = container == doc || container == window ? html : container
-        return container !== element && container.contains(element)
-      } :
-      function (element, container) {
-        while (element = element.parentNode) if (element === container) return 1
-        return 0
-      },
-  
-    supportsCSS3 = function () {
-      if (!doc.querySelector || !doc.querySelectorAll) return false
-  
-      try { return (doc.querySelectorAll(':nth-of-type(1)').length) }
-      catch (e) { return false }
-    }(),
-  
-    select = supportsCSS3 ?
-      function (selector, root) {
-        return doc.getElementsByClassName && (m = selector.match(classOnly)) ?
-          flatten(root.getElementsByClassName(m[1])) :
-          flatten(root.querySelectorAll(selector))
-      } :
-      function (selector, root) {
-        selector = selector.replace(normalizr, '$1')
-        var result = [], element, collection, collections = [], i
-        if (m = selector.match(tagAndOrClass)) {
-          items = root.getElementsByTagName(m[1] || '*');
-          r = classCache.g(m[2]) || classCache.s(m[2], new RegExp('(^|\\s+)' + m[2] + '(\\s+|$)'));
-          for (i = 0, l = items.length, j = 0; i < l; i++) {
-            r.test(items[i].className) && (result[j++] = items[i]);
-          }
-          return result
-        }
-        for (i = 0, items = selector.split(','), l = items.length; i < l; i++) {
-          collections[i] = _qwery(items[i])
-        }
-        for (i = 0, l = collections.length; i < l && (collection = collections[i]); i++) {
-          var ret = collection
-          if (root !== doc) {
-            ret = []
-            for (j = 0, m = collection.length; j < m && (element = collection[j]); j++) {
-              // make sure element is a descendent of root
-              isAncestor(element, root) && ret.push(element)
+          , hover: function (enter, leave, i) { // i for internal
+              for (i = this.length; i--;) {
+                b.add.call(this, this[i], 'mouseenter', enter)
+                b.add.call(this, this[i], 'mouseleave', leave)
+              }
+              return this
             }
-          }
-          result = result.concat(ret)
         }
-        return uniq(result)
-      }
   
-    qwery.uniq = uniq
-    qwery.pseudos = {}
+      , shortcuts = [
+            'blur', 'change', 'click', 'dblclick', 'error', 'focus', 'focusin'
+          , 'focusout', 'keydown', 'keypress', 'keyup', 'load', 'mousedown'
+          , 'mouseenter', 'mouseleave', 'mouseout', 'mouseover', 'mouseup', 'mousemove'
+          , 'resize', 'scroll', 'select', 'submit', 'unload'
+        ]
   
-    qwery.noConflict = function () {
-      context.qwery = old
-      return this
+    for (var i = shortcuts.length; i--;) {
+      methods[shortcuts[i]] = integrate('add', shortcuts[i])
     }
   
-    return qwery
-  })
-
-  provide("qwery", module.exports);
-
-  !function (doc, $) {
-    var q = require('qwery')
-      , table = 'table'
-      , nodeMap = {
-            thead: table
-          , tbody: table
-          , tfoot: table
-          , tr: 'tbody'
-          , th: 'tr'
-          , td: 'tr'
-          , fieldset: 'form'
-          , option: 'select'
-        }
-    function create(node, root) {
-      var tag = /^\s*<([^\s>]+)\s*/.exec(node)[1]
-        , el = (root || doc).createElement(nodeMap[tag] || 'div'), els = []
-  
-      el.innerHTML = node
-      var nodes = el.childNodes
-      el = el.firstChild
-      el.nodeType == 1 && els.push(el)
-      while (el = el.nextSibling) (el.nodeType == 1) && els.push(el)
-      return els
-    }
-  
-    $._select = function (s, r) {
-      return /^\s*</.test(s) ? create(s, r) : q(s, r)
-    }
-  
-    $.pseudos = q.pseudos
-  
-    $.ender({
-      find: function (s) {
-        var r = [], i, l, j, k, els
-        for (i = 0, l = this.length; i < l; i++) {
-          els = q(s, this[i])
-          for (j = 0, k = els.length; j < k; j++) r.push(els[j])
-        }
-        return $(q.uniq(r))
-      }
-      , and: function (s) {
-        var plus = $(s)
-        for (var i = this.length, j = 0, l = this.length + plus.length; i < l; i++, j++) {
-          this[i] = plus[j]
-        }
-        return this
-      }
-    }, true)
-  }(document, ender);
+    $.ender(methods, true)
+  }(ender)
   
 
 }();
-
