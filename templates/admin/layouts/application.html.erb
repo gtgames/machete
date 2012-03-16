@@ -34,10 +34,17 @@
 			</ul>
 			<div class="pull-right">
 				<ul class="nav">
-					<li><%= link_to 'S', url(:configurations, :index), :class => "sym config", :title => 'Configurazione' %></li>
-					<li><%= link_to 'U', url(:accounts, :edit, :id => current_account.id), :class => "sym profile", :title => pat(:profile) %></li>
-					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>" class="sym view-site" title="View Site">K</a></li>
-					<li><%= link_to 'X', url(:sessions, :destroy), :method => :delete, :class => "sym logout", :title => pat(:logout)  %></li>
+					<li><a class="config" title="Configurazione" href="/configurations">
+						<i class="icon-cog"></i></a></li>
+					<li><a class="profile" title="Profilo" href="/accounts/edit/4e316e12fb28eff361000001">
+						<i class="icon-user"></i>
+					</a></li>
+					<li><a class="view-site" id="site_link" target="_blank" href="http://machete.dev/" title="View Site">
+						<i class="icon-share"></i>
+					</a></li>
+					<li><a class="logout" title="Esci" data-method="delete" rel="nofollow" href="/sessions/destroy">
+						<i class="icon-off"></i>
+					</a></li>
 				</ul>
 			</div>
 		</div>

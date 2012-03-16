@@ -1,43 +1,46 @@
 <table class="table table-striped">
-  <thead>
-    <tr>
-	  <th style="width:40px">&nbsp;</th>
-      <th class="sortable"><%= mat(:booking, :name) %></th>
-      <th class="sortable"><%= mat(:booking, :business_name) %></th>
-      <th class="sortable"><%= mat(:booking, :date_arrival) %></th>
-      <th class="sortable"><%= mat(:booking, :date_departure) %></th>
-      <th class="last">&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @books.each do |book| %>
-    <tr class="">
-	  <td>
-		<% if book.st == 0 %>
-			<span class="label">read</span>
-		<% elsif book.st == 1 %>
-			<span class="label important">new</span>
-		<% else %>
-			<span class="label">deleted</span>
+	<thead>
+		<tr>
+			<th style="width:40px">&nbsp;</th>
+			<th class="sortable"><%= mat(:booking, :name) %></th>
+			<th class="sortable"><%= mat(:booking, :business_name) %></th>
+			<th class="sortable"><%= mat(:booking, :date_arrival) %></th>
+			<th class="sortable"><%= mat(:booking, :date_departure) %></th>
+			<th class="last">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @books.each do |book| %>
+		<tr class="">
+			<td>
+				<% if book.st == 0 %>
+					<span class="label">read</span>
+				<% elsif book.st == 1 %>
+					<span class="label label-important">new</span>
+				<% else %>
+					<span class="label">deleted</span>
+				<% end %>
+			</td>
+			<td><%= book.name %> <%= book.surname %> </td>
+			<td><em><%= book.business_name %></em></td>
+			<td class="date"><%= book.date_arrival %></td>
+			<td class="date"><%= book.date_departure %></td>
+			<td class="last">
+				<%= link_to pat(:show), url(:booking, :show, :id => book.id), :method => :get, :class => 'btn edit' %>
+				<%= button_to pat(:delete), url(:booking, :destroy, :id => book.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+
+			</td>
+		</tr>
 		<% end %>
-	  </td>
-      <td><%= book.name %> <%= book.surname %> </td>
-      <td><em><%= book.business_name %></em></td>
-      <td class="date"><%= book.date_arrival %></td>
-      <td class="date"><%= book.date_departure %></td>
-      <td class="last">
-        <%= link_to pat(:show), url(:booking, :show, :id => book.id), :method => :get, :class => 'btn edit' %>
-        <%= button_to pat(:delete), url(:booking, :destroy, :id => book.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
+	</tbody>
 </table>
 
 
 <% content_for :actions do -%>
-  <%= link_to "Lista", url(:booking, :index) %> | 
-  <%= link_to "Cestino", url(:booking, :trash) %>
+	<div class="btn-group">
+		<a class="btn" href="/booking"><i class="icon-inbox"></i>  Lista</a>
+		<a class="btn" href="/booking/trash"><i class="icon-trash"></i>  Cestino</a>
+	</div>
 <% end -%>
 
 <% content_for :title, 'Prenotazioni' %>

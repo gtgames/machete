@@ -169,25 +169,21 @@
 // a nice Slab font
 @import "http://fonts.googleapis.com/css?family=Cutive";
 
-body {
-  margin-top: 80px;
-}
-
 a.button_to {
   cursor: pointer;
 }
 
 a.brand,
 h1, h2, h3, h4
- {
+{
   font-family: 'Cutive', Helvetica, Verdana, Arial, sans-serif;
 }
 
-.topbar {
+.navbar {
   position: relative;
   margin-bottom: 9px;
-  .sym {
-    font-size: 1.6em;
+  .pull-right a {
+    font-size: 1.8em;
     color: @white;
     &:hover {
       color: @yellow;
@@ -267,11 +263,15 @@ p#actions {
     }
   }
   td {
-    form.btn>input {
-      background: transparent;
-      border: 0;
-      margin: 0;
-      box-shadow: none;
+    form.btn {
+      &>input {
+        background: transparent;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+      padding: 4px 10px;
     }
   }
 }
