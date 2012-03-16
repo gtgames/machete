@@ -4,15 +4,16 @@
       }
     ;
 
-  function loadImage (el) {
+  function loadImage (el, fn) {
     var img = new Image()
       , src = el.attr('data-src');
     img.onload = function() {
       el.attr({
-        'src': src
-      , 'width': img.width
+        'width': img.width
       , 'height': img.height
       });
+      el[0].src = src; // sometimes using DOM directly is better (:
+      fn? fn() : null;
     }
     img.src = src;
   }
@@ -34,8 +35,9 @@
     $(window).bind('scroll', function(e){
       for (var i = 0; i < images.length; i++) {
         if (elementInViewport(images[i])) {
-          loadImage($(images[i]));
-          images.splice(i, i);
+          loadImage($(images[i]), function () {
+            images.splice(i, i);
+          });
         }
       };
     }).trigger('scroll');
