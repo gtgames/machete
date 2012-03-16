@@ -1,17 +1,28 @@
-(function(RightJS) {
-  var R = RightJS,
-  $ = RightJS.$,
-  $$ = RightJS.$$,
-  $E = RightJS.$E,
-  Xhr = RightJS.Xhr,
-  Object = RightJS.Object;
+"use strict";
+!function ($) {
 
-  var to_slug = function(str) {
-    str = str.replace(/^\s+|\s+$/g, '').toLowerCase();
+  $.ender({
+    loadcss: (function(){
+      return (!!document.createStyleSheet)
+        ? document.createStyleSheet
+        : function (path) {
+            var styles = "@import url(' " + path + " ');"
+              , newSS  = document.createElement('link')
+              ;
+            newSS.rel='stylesheet';
+            newSS.href='data:text/css,'+escape(styles);
+            document.getElementsByTagName("head")[0].appendChild(newSS);
+          }
+        ;
+    })()
+  });
+
+  String.prototype.to_slug = function() {
+    var str = this.replace(/^\s+|\s+$/g, '').toLowerCase();
 
     // remove accents, swap ñ for n, etc
-    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to = "aaaaeeeeiiiioooouuuunc------";
+    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;"
+      , to = "aaaaeeeeiiiioooouuuunc------";
     for (var i = 0, l = from.length; i < l; i++) {
       str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
@@ -19,89 +30,129 @@
     return str;
   };
 
-  $(document).onReady(function() {
-    $('site_link').set('href', 'http://' + (/(\w+)(.\w+)?$/.exec(window.location.hostname)[0]) + '/');
+  $.domReady(function () {
 
-    $$('.date').each(function(el){
-      el.html(_date(el.html()).format('YYYY-MM-DD'));
+    // Set site link to the right location
+    $('#site_link').attr('href', 'http://' + (/(\w+)(.\w+)?$/.exec(window.location.hostname)[0]) + '/');
+
+    /**
+     * Dates
+     */
+    $('.date').each(function(el){
+      el.html(moment(el.html()).format('YYYY-MM-DD'));
     });
-    $$('.date_hour').each(function(el){
+    $('.date_hour').each(function(el){
       el.html(_date(el.html()).format('YYYY-MM-DD HH:mm'));
     });
 
-    if($('advanced') !== null) {
-      $$('#advanced>div').each('toggle');
-      $$('#advanced>legend').first().on('click', function(e) {
-        $$('#advanced>div').each('toggle');
-      });
-    }
-    $$('.invalid').each(function(el) {
-      el.parent().find('label').setStyles({ color: 'red' });
-    });
+    /**
+     * Invalid attributes
+     */
+    $('.invalid').parent().find('label').each(function(el) { el.style({ color: 'red' }); });
 
-    $$('input[name*="[tag_list]"]').each(function(el){
-      el.setStyle({
-        color: el.getStyle('background-color')
-      });
-
-      Xhr.load('/base/tagblob.js', {
-        onSuccess: function(r) {
-          new Tags(el, {
-            vertical: false,
-            tags: r.responseJSON
-          });
-        }
+    /**
+     * Advanced options
+     */
+    $('#advanced').each(function(el){
+      $('#advanced>div').toggle();
+      $('#advanced>legend').bind('click', function(e) {
+        $('#advanced>div').toggle();
       });
     });
 
-    $$('input[type=file]').each(function(el) {
-      var myid = el.get('id'),
-      myname = el.get('name');
-      var input = new Element('input', {
-        type: "hidden",
-        name: myname
-      }).insertTo(el.parent());
-      var div = new Element('div', {
-        "id": myid,
-        "class": "upload_button",
-        "html": "Upload"
-      }).insertTo(el.parent());
+    /**
+     * Tags
+     */
+    $('input[name*="[tag_list]"]').each(function(el){
+      var el = $(el)
+        , tagger = ui.Tagger(el.attr('name'), el.val().split(','));
+      el.parent().append(tagger.el);
+      el.remove();
+    });
+
+    /**
+     * Uploader
+     */
+    $('input[type=file]').each(function(el) {
+      var el = $(el)
+        , myid = el.attr('id')
+        , myname = el.get('name')
+        , input = $('<input type="hidden">')
+            .appendTo(el.parent())
+        , div = $('<div>')
+            .attr({
+              "id": myid
+            , "class": "upload_button"
+            , "html": "Upload"
+            }).appentTo(el.parent());
+
       el.remove();
 
       var uploader = new qq.FileUploader({
         debug: true,
-        element: div._, //html element
+        element: div[0], //html element
         action: '/base/upload',
         onComplete: function(id, name, resp) {
           if (resp.error) {
-            var ul = new Element('ul', {
-              "class": "errors"
-            });
+            var ul = $('ul').attr("class", "errors");
+
             resp.error.each(function(el) {
-              ul.append(new Element('li', {
-                html: el
-              }));
+              ul.append($('li').html(el));
             });
             div.append(ul);
           } else {
-            input.set('value', resp.success);
+            input.val(resp.success);
           }
         }
       });
     });
 
-    $$('input[name*="[slug"]').each(function(slug) {
-      function slugify(el) {
-        slug.set('value', to_slug(el.get('value')));
-      }
-      $$('input[name="' + slug.get('name').replace(/slug/, 'title') + '"]').each(function(el) {
-        el.on({
-          change: function() { slugify(el); },
-          keyup: function() {  slugify(el); },
-          blur: function() {   slugify(el); }
+
+    $('input[name*="[slug"]').each(function(el) {
+      var el = $(el);
+      $('input[name="' + el.attr('name').replace(/slug/, 'title') + '"]')
+        .bind('keyup,blur', function(ev){
+          el.val('value', to_slug(tar.get('value')));
         });
-      });
     });
+
+
+    (function() {
+      window.CKEDITOR_BASEPATH = '/js/ckeditor/';
+      $('textarea').each(function(e) {
+        if (! $(e).parent().find('label').first().hasClass('editor')) {
+          CKEDITOR.replace(e, {
+                  toolbar : [ //'Basic'
+                      ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SpellChecker']
+                    , ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat']
+                    , ['Link', 'Unlink']
+                    , ['Bold', 'Italic', 'Underline']
+                    , ['ShowBlocks', 'Source', '-', 'Preview']
+                    , ['Maximize']
+                  ]
+          });
+        } else {
+          CKEDITOR.replace(e, {
+            startupFocus: false
+          //, contentsCss: '/stylesheets/layout.css' // BROKEN!
+          , filebrowserBrowseUrl: '/multimedia/dialog/file'
+          , filebrowserImageBrowseUrl: '/multimedia/dialog/image'
+          , filebrowserUploadUrl: '/base/upload'
+          , filebrowserWindowWidth: '600'
+          , filebrowserWindowHeight: '600'
+          });
+        }
+      });
+    })();
+
+
+  });
+
+}(window.ender);
+
+
+!(function(RightJS) {
+  if (! RightJS) return null;
 
     $$('input#event_from, input#event_to').each(function(el){
         var cal = new Calendar({
@@ -131,10 +182,13 @@
           var tpl = _.template('<tr><td><img src="<%= url %>"></td><td><%= name %><td>'+
                                '<form class="button_to trash" method="post" action="/multimedia/destroy/<%= id %>">'+
                                '<input value="delete" name="_method" type="hidden"><input value="Delete" type="submit"></form></td></tr>');
-          $$('tbody').first().append(tpl({ url: data.url,
-                                         name: data.data.name,
-                                         id: data.data._id })
-                                    );
+          $('tbody').append(
+            tpl({
+              url: data.url
+            , name: data.data.name
+            , id: data.data._id
+            })
+          );
         }
       });
     }
@@ -161,33 +215,7 @@
     })();*/
     
     // Editor
-    (function() {
-      window.CKEDITOR_BASEPATH = '/js/ckeditor/';
-      $$('textarea').each(function(e) {
-        if (! e.parent().find('label').first().hasClass('editor')) {
-          CKEDITOR.replace(e._, {
-                  toolbar : [ //'Basic'
-                      ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SpellChecker']
-                    , ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat']
-                    , ['Link', 'Unlink']
-                    , ['Bold', 'Italic', 'Underline']
-                    , ['ShowBlocks', 'Source', '-', 'Preview']
-                    , ['Maximize']
-                  ]
-          });
-        } else {
-          CKEDITOR.replace(e._, {
-            startupFocus: false
-          //, contentsCss: '/stylesheets/layout.css' // BROKEN!
-          , filebrowserBrowseUrl: '/multimedia/dialog/file'
-          , filebrowserImageBrowseUrl: '/multimedia/dialog/image'
-          , filebrowserUploadUrl: '/base/upload'
-          , filebrowserWindowWidth: '600'
-          , filebrowserWindowHeight: '600'
-          });
-        }
-      });
-    })();
+
 
     (function() {
       if (! $('hcard')) return null;
@@ -303,7 +331,4 @@
       });
     })();
 
-  });
-
-})(RightJS);
-
+})(window.RightJS);
