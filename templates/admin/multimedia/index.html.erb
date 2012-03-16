@@ -3,7 +3,7 @@
 <script type="text/javascript">
 </script>
 
-<table class="zebra-striped">
+<table class="table table-striped">
   <thead>
     <tr>
       <th class="sortable">thumb</th>
@@ -16,7 +16,7 @@
       <tr>
         <td>
           <% if m.content_type =~ /^image\/.+/ -%>
-            <%= image_tag m.thumb(:small) %>
+            <%= image_lazy m.thumb(:small), 120, 120 %>
           <% else -%>
             <%= m.url %>
           <% end -%>
