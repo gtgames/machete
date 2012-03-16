@@ -1,24 +1,193 @@
-@import "lib/bootstrap.less";
+/*!
+ * Bootstrap v2.0.1
+ *
+ * Copyright 2012 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
 
-// http://www.justbenicestudio.com/studio/websymbols/
-@import "http://frenzart.com/font/symbols/stylesheet.css";
+// Variables.less
+// Variables to customize the look and feel of Bootstrap
+// -----------------------------------------------------
 
-.sym {
-  font-family:'WebSymbolsRegular';
+
+
+// GLOBAL VALUES
+// --------------------------------------------------
+
+// Links
+@linkColor:             #08c;
+@linkColorHover:        darken(@linkColor, 15%);
+
+// Grays
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
+
+// Accent colors
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+
+// Typography
+@baseFontSize:          13px;
+@baseFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
+@baseLineHeight:        18px;
+@textColor:             @grayDark;
+
+// Buttons
+@primaryButtonBackground:    @linkColor;
+
+
+
+// COMPONENT VARIABLES
+// --------------------------------------------------
+
+// Z-index master list
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+@zindexDropdown:          1000;
+@zindexPopover:           1010;
+@zindexTooltip:           1020;
+@zindexFixedNavbar:       1030;
+@zindexModalBackdrop:     1040;
+@zindexModal:             1050;
+
+// Input placeholder text color
+@placeholderText:         @grayLight;
+
+// Hr border color
+@hrBorder:                @grayLighter;
+
+// Navbar
+@navbarHeight:                    40px;
+@navbarBackground:                @grayDarker;
+@navbarBackgroundHighlight:       @grayDark;
+@navbarLinkBackgroundHover:       transparent;
+
+@navbarText:                      @grayLight;
+@navbarLinkColor:                 @grayLight;
+@navbarLinkColorHover:            @white;
+
+// Form states and alerts
+@warningText:             #c09853;
+@warningBackground:       #fcf8e3;
+@warningBorder:           darken(spin(@warningBackground, -10), 3%);
+
+@errorText:               #b94a48;
+@errorBackground:         #f2dede;
+@errorBorder:             darken(spin(@errorBackground, -10), 3%);
+
+@successText:             #468847;
+@successBackground:       #dff0d8;
+@successBorder:           darken(spin(@successBackground, -10), 5%);
+
+@infoText:                #3a87ad;
+@infoBackground:          #d9edf7;
+@infoBorder:              darken(spin(@infoBackground, -10), 7%);
+
+
+
+// GRID
+// --------------------------------------------------
+
+// Default 940px grid
+@gridColumns:             12;
+@gridColumnWidth:         60px;
+@gridGutterWidth:         20px;
+@gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+
+// Fluid grid
+@fluidGridColumnWidth:    6.382978723%;
+@fluidGridGutterWidth:    2.127659574%;
+
+
+
+// CSS Reset
+@import "lib/reset.less";
+@import "lib/mixins.less";
+
+// Grid system and page structure
+@import "lib/scaffolding.less";
+@import "lib/grid.less";
+@import "lib/layouts.less";
+
+// Base CSS
+@import "lib/type.less";
+@import "lib/code.less";
+@import "lib/forms.less";
+@import "lib/tables.less";
+
+// Components: common
+@import "lib/dropdowns.less";
+@import "lib/wells.less";
+@import "lib/component-animations.less";
+@import "lib/close.less";
+
+// Components: Buttons & Alerts
+@import "lib/buttons.less";
+@import "lib/button-groups.less";
+@import "lib/alerts.less"; // Note: alerts share common CSS with buttons and thus have styles in buttons.less
+
+// Components: Nav
+@import "lib/navs.less";
+@import "lib/navbar.less";
+@import "lib/breadcrumbs.less";
+@import "lib/pagination.less";
+@import "lib/pager.less";
+
+// Components: Popovers
+@import "lib/modals.less";
+@import "lib/tooltip.less";
+@import "lib/popovers.less";
+
+// Components: Misc
+@import "lib/thumbnails.less";
+@import "lib/labels.less";
+@import "lib/progress-bars.less";
+@import "lib/accordion.less";
+@import "lib/carousel.less";
+@import "lib/hero-unit.less";
+
+// Utility classes
+@import "lib/utilities.less"; // Has to be last to override when necessary
+
+
+// font-awesome
+@import "http://frenzart.com/font/awesome/css/font-awesome.css";
+// a nice Slab font
+@import "http://fonts.googleapis.com/css?family=Cutive";
+
+body {
+  margin-top: 80px;
 }
-th .sym {
-  color: @orange;
-  padding-right: 12px;
-}
+
 a.button_to {
   cursor: pointer;
+}
+
+a.brand,
+h1, h2, h3, h4
+ {
+  font-family: 'Cutive', Helvetica, Verdana, Arial, sans-serif;
 }
 
 .topbar {
   position: relative;
   margin-bottom: 9px;
   .sym {
-    font-size: 1.5em;
+    font-size: 1.6em;
     color: @white;
     &:hover {
       color: @yellow;
@@ -84,11 +253,25 @@ p#actions {
   width: 450px;
 }
 
-table.zebra-striped {
+.table {
   th {
     cursor: pointer;
     &.last, &:last-child {
       width: 160px !important;
+    }
+    &.photo {
+      width: 160px !important;
+    }
+    &.tags {
+      width: 160px !important;
+    }
+  }
+  td {
+    form.btn>input {
+      background: transparent;
+      border: 0;
+      margin: 0;
+      box-shadow: none;
     }
   }
 }
@@ -176,51 +359,6 @@ table.zebra-striped {
   display:inline;
 }
 
-
-div.rui-tags ul.list {
-  li {
-    background-color: #555555 !important;
-    color: #fff;
-  }
-  input {
-    .box-shadow(0 0 0);
-  }
-}
-
-
-div.rui-rte-toolbar {
-  div.with-options {
-    ul.options {
-      z-index: 4;
-    }
-  }
-}
-
-div.rui-calendar-inline {
-  margin: 0 auto;
-}
-
-.rui-in-edit {
-  input[type=text] {
-    width: 300px !important;
-  }
-}
-
-
-div.rui-tags ul.list li{
-  div.close {
-    margin-left: .25em;
-    cursor: pointer;
-    font-family: Arial;
-    font-weight: normal;
-    opacity: 0.5;
-    position: absolute;
-    right: 0em;
-    top: 0.1em;
-  }
-}
-
-
 form {
   #advanced {
     margin-top: 1.5em;
@@ -232,7 +370,6 @@ form {
       text-shadow: 0 1px 1px lighten(#EEE, 30%);
       .border-radius(3px);
       padding: 2px 10px;
-      .before_icon('/stylesheets/lib/images/icons.png', 0px, 6* -32px, 32px, 32px);
     }
     >fieldset {
       display: none;
