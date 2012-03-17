@@ -1,0 +1,3 @@
+[submodule "vendor/uikit"]
+	path = vendor/uikit
+	url = https://github.com/aliem/uikit.git
