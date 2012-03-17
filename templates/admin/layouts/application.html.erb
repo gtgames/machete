@@ -35,7 +35,7 @@
 			<div class="pull-right">
 				<ul class="nav">
 					<li><a class="config" title="Configurazione" href="/configurations">
-						<i class="icon-cog"></i></a></li>
+						<i class="icon-cogs"></i></a></li>
 					<li><a class="profile" title="Profilo" href="/accounts/edit/4e316e12fb28eff361000001">
 						<i class="icon-user"></i>
 					</a></li>
@@ -54,15 +54,20 @@
 	<%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "alert-message #{type}") }.join %>
 
 	<section class="container-fluid" id="content">
-		<div class="well">
-			<h1 class='title'><%= yield_content :title %></h1>
-			<p id='actions'>
-				<%= yield_content :actions %>
-			</p>
-		</div>
-		<hr>
-		<div>
-			<%= yield %>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span2">
+					<ul class="nav nav-list">
+						<li class="nav-header">
+							<%= yield_content :title %>
+						</li>
+						<%= yield_content :actions %>
+					</ul>
+				</div>
+				<div class="span10">
+					<%= yield %>
+				</div>
+			</div>
 		</div>
 	</section>
 	<footer class="container-fluid"><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.9.0dev</a></p></footer>

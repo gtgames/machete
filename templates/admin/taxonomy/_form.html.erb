@@ -10,12 +10,12 @@
 <fieldset>
 	<legend>Parente</legend>
 	
-	<label><input type='radio' name="taxonomy[parent_id]" value="">Radice</label>
+	<label class="radio"><input type='radio' name="taxonomy[parent_id]" value="">Radice</label>
 	<%= partial "admin/taxonomy/parent_chooser", :locals => { :f => f, :taxons => Taxonomy.threaded } %>
 </fieldset>
 
 
-<div class='actions'>
+<div class='form-actions'>
   <%= f.submit pat(:save), :class => "btn primary" %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:taxonomy, :index)}';return false", :class => :btn %>
 </div>

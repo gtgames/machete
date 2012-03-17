@@ -36,13 +36,30 @@
     $('#site_link').attr('href', 'http://' + (/(\w+)(.\w+)?$/.exec(window.location.hostname)[0]) + '/');
 
     /**
+     * Image Modal boxes
+     */
+    $('table').delegate('a[rel="image"]', 'click', function(e){
+      e.preventDefault();
+      var img = new Image();
+      img.onload = function(){
+        var diag = ui.dialog($('<p>').append(img)[0])
+          .closable()
+          .overlay();
+        setTimeout(_.bind(diag.show, diag), 10);
+      }
+      img.src = e.currentTarget.href;
+    });
+
+    /**
      * Dates
      */
     $('.date').each(function(el){
-      el.html(moment(el.html()).format('YYYY-MM-DD'));
+      el = $(el);
+      el.html(moment(el.text()).format('YYYY-MM-DD'));
     });
     $('.date_hour').each(function(el){
-      el.html(_date(el.html()).format('YYYY-MM-DD HH:mm'));
+      el = $(el);
+      el.html(_date(el.text()).format('YYYY-MM-DD HH:mm'));
     });
 
     /**
@@ -84,7 +101,7 @@
               "id": myid
             , "class": "upload_button"
             , "html": "Upload"
-            }).appentTo(el.parent());
+            }).appendTo(el.parent());
 
       el.remove();
 
@@ -145,190 +162,156 @@
       });
     })();
 
+    /**
+     * Multimedia Uploader
+     */
 
-  });
-
-}(window.ender);
-
-
-!(function(RightJS) {
-  if (! RightJS) return null;
-
-    $$('input#event_from, input#event_to').each(function(el){
-        var cal = new Calendar({
-            format: "ISO",
-            numberOfMonths: 1,
-            timePeriod: 15,
-            showTime: true,
-            update: el
-        }).on('change', function(){
-            el.set('value', _date(this.getDate()).toISO());
-        }).setDate( _date(el.get('value')).date ).insertTo(el.parent());
-        el.set('type','hidden');
-        el.parent().set({
-          style:{
-            'text-align': 'center',
-            'width': '50%',
-            'float': 'left'
-          }
-        });
-    });
-
-    if ($('multimedia_file-uploader')) {
+    if (document.getElementById('multimedia_file-uploader')) {
       new qq.FileUploader({
         element: document.getElementById('multimedia_file-uploader'),
         action: '/base/upload',
         onComplete: function(idx, name, data){
-          var tpl = _.template('<tr><td><img src="<%= url %>"></td><td><%= name %><td>'+
-                               '<form class="button_to trash" method="post" action="/multimedia/destroy/<%= id %>">'+
-                               '<input value="delete" name="_method" type="hidden"><input value="Delete" type="submit"></form></td></tr>');
+          var tpl = _.template(
+            '<tr>'
+          +   '<td><img src="<%= url %>"></td>'
+          +   '<td><a href="<%= _url %>"><%= name %></a><td>'
+          +   '<form class="btn trash" onsubmit="return confirm(\'Sei sicuro?\')" method="post" action="/multimedia/destroy/<%= id %>">'
+          +     '<input value="delete" name="_method" type="hidden"><input value="Elimina" type="submit"></form>'
+          +   '</form>'
+          + '</tr>'
+          );
+          console.log(data)
           $('tbody').append(
             tpl({
-              url: data.url
-            , name: data.data.name
-            , id: data.data._id
+              _url: data._url
+            , url: data.url
+            , name: data.data
+            , id: data.success
             })
           );
         }
       });
     }
 
-    /*(function() {
-      if (!$$('textarea.text').length) return false;
-      var rte_opts = {
-        minimal: {
-          toolbar: ["Bold Italic Underline Strike Ttext|Cut Copy Paste|Header Code Quote|Link Image|Source|Format"],
-          tags: { Bold: 'b', Italic: 'i', Underline: 'u', Strike: 's', Quote: 'blockquote' }
-        },
-        full: {
-          toolbar: [
-            "Clear|Cut Copy Paste|Undo Redo|Bold Italic Underline Strike Ttext|Left Center Right Justify",
-            "Code Quote|Link Image|Subscript Superscript|Dotlist Numlist|Indent Outdent",
-            "Format|Fontsize|Forecolor Backcolor|Source"
-          ],
-          tags: { Bold: 'b', Italic: 'i', Underline: 'u', Strike: 's', Quote: 'blockquote' }
-        }
-      };
-      $$('textarea.text').each(function(el) {
-        new Rte(el, ( el.parent().find('label.editor').length )? rte_opts.full : rte_opts.minimal);
-      });
-    })();*/
-    
-    // Editor
+  });
 
 
-    (function() {
-      if (! $('hcard')) return null;
-      var template = _.template('<div id="<%= id %>" class="vcard">' +
-                                '  <div>' +
-                                '    <span class="given-name"><%= given_name %></span>' +
-                                '    <span class="additional-name"><%= additional_name %></span>' +
-                                '    <span class="family-name"><%= family_name %></span>' +
-                                '    <% if (photo.length) {%><img src="<%= photo %>" alt="photo of <%= given_name %> <%= additional_name %> <%= family_name %>" class="photo"/><% } %>' +
-                                '  </div>' +
-                                '  <div class="org"><%= org %></div>' +
-                                '  <div>' +
-                                '    <a class="email" href="mailto:<%= email %>"><%= email %></a>' +
-                                '    <span class="street-address"><%= street_address %><span>' +
-                                '    <span class="locality"><%= city %></span>' +
-                                '   (<span class="region"><%= region %></span>)' +
-                                '    <span class="postal-code"><%= postal_code %></span>' +
-                                '    <span class="country-name"><%= country %></span>' +
-                                '  </div>' +
-                                '  <% _.each(phone,function(tel){%> <span class="tel"><%= tel %></span> <% }); %>' +
-                                '  <div><%= note%></div>' +
-                                '</div>');
-      function fillCard(e) {
-        var params = {
-          given_name: $('givenname').get("value")||'',
-          additional_name: $('additionalname').get("value")||'',
-          family_name: $('familyname').get("value")||'',
-          org: $('org').get("value")||'',
-          email: $('email').get("value")||'',
-          street_address: $("street").get("value")||'',
-          city: $("city").get("value")||'',
-          region: $("region").get("value")||'',
-          postal_code: $("postal").get("value")||'',
-          country: $("country").get("value")||'',
-          note: $("note").get("value")||'',
-          phone: (function(){
-            var val = $("phone").get("value");
+  /**
+   * hCard editor
+   */
+
+  (function() {
+    if (! $('#hcard')) return null;
+    var template = _.template(
+      '<div id="<%= id %>" class="vcard">' +
+      '  <div>' +
+      '    <span class="given-name"><%= given_name %></span>' +
+      '    <span class="additional-name"><%= additional_name %></span>' +
+      '    <span class="family-name"><%= family_name %></span>' +
+      '    <% if (photo.length) {%><img src="<%= photo %>" alt="photo of <%= given_name %> <%= additional_name %> <%= family_name %>" class="photo"/><% } %>' +
+      '  </div>' +
+      '  <div class="org"><%= org %></div>' +
+      '  <div>' +
+      '    <a class="email" href="mailto:<%= email %>"><%= email %></a>' +
+      '    <span class="street-address"><%= street_address %><span>' +
+      '    <span class="locality"><%= city %></span>' +
+      '   (<span class="region"><%= region %></span>)' +
+      '    <span class="postal-code"><%= postal_code %></span>' +
+      '    <span class="country-name"><%= country %></span>' +
+      '  </div>' +
+      '  <% _.each(phone,function(tel){%> <span class="tel"><%= tel %></span> <% }); %>' +
+      '  <div><%= note%></div>' +
+      '</div>'
+    );
+
+    function fillCard(e) {
+      var params = {
+        given_name:     $('#givenname').val()       ||''
+      , additional_name: $('#additionalname').val() ||''
+      , family_name:    $('#familyname').val()      ||''
+      , org:            $('#org').val()             ||''
+      , email:          $('#email').val()           ||''
+      , street_address: $("#street").val()          ||''
+      , city:           $("#city").val()            ||''
+      , region:         $("#region").val()          ||''
+      , postal_code:    $("#postal").val()          ||''
+      , country:        $("#country").val()         ||''
+      , note:           $("#note").val()            ||''
+      , phone: (function(){
+            var val = $("#phone").val();
             if (!val) return '';
             return _.map(val.split(','), function(e) {
               return e.trim();
             });
-          })(),
-          photo: $("photo").get("value")||''
-        };
-        params.id = _.map([params.given_name, params.additional_name, params.family_name], function(el) {
-          if (el) return el.replace(/\s+/g, '-');
-          return null;
-        }).join('-');
+          })()
+      , photo: $("#photo").val()
+      };
+      params.id = _.map([params.given_name, params.additional_name, params.family_name], function(el) {
+        if (el) return el.replace(/\s+/g, '-');
+        return null;
+      }).join('-');
 
-        $('target').html(template(params));
-        $('hcard').set('value', template(params));
-      }
-      $$('form.card input').each(function(el) {
-        el.on('change', fillCard);
-        el.on('blur', fillCard);
-        el.on('keyup', fillCard);
-      });
-      $$('form.card').each(function(el) {
-        el.on('submit', fillCard);
-      });
-      fillCard();
-    })();
+      $('#target').html(template(params));
+      $('#hcard').val(template(params));
+console.log(params)
+    }
 
-    
-    (function() {
-      if (! $('dropbox')) return;
-      var id = 0
-        , template = _.template( ''
-          + '<tr id="<%= success %>"><td><input type="checkbox" checked></td>'
+    $('form input').bind('change blur keyup', fillCard);
+    $('form').bind('submit', fillCard);
+    fillCard();
+  })();
+
+  
+  (function() {
+    if (! $('#dropbox')) return;
+
+    var id = 0
+      , template = _.template(
+            '<tr id="<%= success %>"><td><input type="checkbox" checked></td>'
           + '<td><img src="<%= url %>"><td>'
           + '<td><%= data %></td>'
           + '<td><input name="import[photo][<%= id %>][media]" type="hidden" value="<%= success %>" />'
           + '    <button class="btn danger" type="button" data-id="<%= success %>">Delete!</button></td>'
           + '</tr>')
-        , uploader = new qq.FileUploader({
-          //  debug: true
-            allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
-          , element: $('dropbox')._
-          , action: '/base/upload'
-          , onComplete: function(id, name, resp) {
-              if (resp.error) {
-                var ul = new Element('ul', {
-                  "class": "errors"
-                });
-                resp.error.each(function(el) {
-                  ul.append(new Element('li', {
-                    html: el
-                  }));
-                });
-                div.append(ul);
-              } else {
-                id += 1;
-                console.log(resp)
-                $('__target').append(
-                  template(
-                    _.extend(resp, {
-                      id: id++
-                    })));
-              }
+      , uploader = new qq.FileUploader({
+        //  debug: true
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
+        , element: $('#dropbox')[0]
+        , action: '/base/upload'
+        , onComplete: function(id, name, resp) {
+            if (resp.error) {
+              var ul = new Element('ul', {
+                "class": "errors"
+              });
+              resp.error.each(function(el) {
+                ul.append(new Element('li', {
+                  html: el
+                }));
+              });
+              div.append(ul);
+            } else {
+              id += 1;
+              console.log(resp)
+              $('__target').append(
+                template(
+                  _.extend(resp, {
+                    id: id++
+                  })));
             }
-          });
-
-      $('__target').delegate('click', 'button.danger', function (ev) {
-        var self = this;
-        var _id = this.get('data-id');
-        var xhr = new Xhr('/multimedia/destroy/' + _id, {
-          method: 'delete'
-        , onSuccess: function() {
-            $(_id).hide();
           }
         });
-        xhr.send();
-      });
-    })();
 
-})(window.RightJS);
+    $('#__target').delegate('click', 'button.danger', function (ev) {
+      var self = this;
+      var _id = this.get('data-id');
+      var xhr = new Xhr('/multimedia/destroy/' + _id, {
+        method: 'delete'
+      , onSuccess: function() {
+          $(_id).hide();
+        }
+      });
+      xhr.send();
+    });
+  });
+
+}(window.ender);

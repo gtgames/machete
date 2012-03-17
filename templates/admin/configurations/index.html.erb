@@ -22,7 +22,7 @@
   </div>
 
   <fieldset id='advanced'>
-    <legend>Avanzate</legend>
+    <legend><i class="icon-cog"></i> Avanzate</legend>
     <div class="string">
       <label class="string" for="analytics">ID Google Analytics</label>
       <input class="string" id="analytics" name="analytics" type="text" value="<%= Cfg['analytics'] %>" />
@@ -47,14 +47,14 @@
     </div>
   </fieldset>
 
-  <div class='actions'>
+  <div class='form-actions'>
     <input class="btn primary" value="Salva" type="submit" />
     <input onclick="window.location='/';return false" class="btn" value="Annulla" type="submit" />
   </div>
 </form>
 
-<% content_for :title, 'Impostazioni Generali' %>
+<% content_for :title, 'Impostazioni' %>
 <% content_for :actions do -%>
-  <%= link_to "generali", url(:configurations, :index) %> | 
-  <%= link_to "vCard", url(:configurations, :vcard) %>
+	<li><a href="/configurations"><i class="icon-cog"></i> generali</a></li>
+	<li><a href="/configurations/vcard"><i class="icon-user"></i> vCard</a></li>
 <% end -%>

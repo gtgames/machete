@@ -26,7 +26,7 @@ uikit:
 	@cd $(DIR)/tmp/uikit && make
 	@rm -rf $(DIR)/public/javascripts/uikit
 	@cp -r $(DIR)/tmp/uikit/build $(DIR)/public/javascripts/uikit
-	@rm -rf tmp/uikit
+	@rm -rf $(DIR)/tmp/uikit
 	@echo UIKIT upgraded
 
 less:

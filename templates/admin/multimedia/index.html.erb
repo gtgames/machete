@@ -1,8 +1,3 @@
-<div id="multimedia_file-uploader"><noscript><p>Please enable JavaScript to use file uploader.</p></noscript></div>
-
-<script type="text/javascript">
-</script>
-
 <table class="table table-striped">
   <thead>
     <tr>
@@ -22,7 +17,7 @@
           <% end -%>
         </td>
         <td>
-          <%= m.name %>
+          <%= link_to m.name, m.url, :rel => (m.content_type =~ /^image\/.+/)? 'image' : 'file' %>
         </td>
         <td>
           <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
@@ -33,3 +28,9 @@
 </table>
 
 <% content_for :title, 'Multimedia' %>
+
+<% content_for :actions do %>
+	<div id="multimedia_file-uploader">
+		<noscript><p>Please enable JavaScript to use file uploader.</p></noscript>
+	</div>
+<% end %>

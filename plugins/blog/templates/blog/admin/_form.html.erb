@@ -6,7 +6,7 @@
   <%= f.input :tag_list,  :as => :string %>
 </div>
 
-<div class='actions'>
+<div class='form-actions'>
   <%= f.submit pat(:save), :class => "btn primary" %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:posts, :index)}';return false", :class => :btn %>
 </div>

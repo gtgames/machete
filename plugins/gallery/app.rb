@@ -14,7 +14,11 @@ Gallery.controllers do
 
   get :show, :map => '/:gallery' do
     @photos = Photo.where(:gallery_slug => params[:gallery]).all
-    render 'gallery/show', :layout => Cfg.layout('gallery')
+    if @photos.length == 0
+      404
+    else
+      render 'gallery/show', :layout => Cfg.layout('gallery')
+    end
   end
 
 end

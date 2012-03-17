@@ -34,8 +34,8 @@
 
 
 <% content_for :actions do -%>
-  <%= link_to "Lista", url(:messages, :index) %> | 
-  <%= link_to "Cestino", url(:messages, :trash) %>
+	<li><a href="/messages"><i class="icon-inbox"></i>  Lista</a></li>
+	<li><a href="/messages/trash"><i class="icon-trash"></i>  Cestino</a></li>
 <% end -%>
 
 <% content_for :title, 'Messaggi' %>

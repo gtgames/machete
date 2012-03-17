@@ -1,9 +1,9 @@
 <% taxons.each do |t| -%>
-  <% if t.class == Array -%>
-    <%= partial "admin/taxonomy/chooser", :locals => { :f => f, :taxons => t } %>
-  <% else -%>
-    <label><span style="margin-left: <%= 15*t.depth %>px">&nbsp;</span>
-    <input type='checkbox' name="taxonomy[]" value="<%= t.id %>" <% if tax_checked? t.id, f.object.taxonomy -%> checked <% end -%> ><%= t.title %></label>
-  <% end -%>
+	<% if t.class == Array -%>
+		<%= partial "admin/taxonomy/chooser", :locals => { :f => f, :taxons => t } %>
+	<% else -%>
+		<label style="margin-left: <%= 15*t.depth %>px" class="checkbox">
+			<input type='checkbox' name="taxonomy[]" value="<%= t.id %>" <% if tax_checked? t.id, f.object.taxonomy -%> checked <% end -%> ><%= t.title %>
+		</label>
+	<% end -%>
 <% end -%>
-
