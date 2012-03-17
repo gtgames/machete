@@ -192,73 +192,72 @@
       });
     }
 
+    /**
+     * hCard editor
+     */
+
+    (function() {
+      if (! $('#hcard')) return null;
+      var template = _.template(
+        '<div id="<%= id %>" class="vcard">' +
+        '  <div>' +
+        '    <span class="given-name"><%= given_name %></span>' +
+        '    <span class="additional-name"><%= additional_name %></span>' +
+        '    <span class="family-name"><%= family_name %></span>' +
+        '    <% if (photo.length) {%><img src="<%= photo %>" alt="photo of <%= given_name %> <%= additional_name %> <%= family_name %>" class="photo"/><% } %>' +
+        '  </div>' +
+        '  <div class="org"><%= org %></div>' +
+        '  <div>' +
+        '    <a class="email" href="mailto:<%= email %>"><%= email %></a>' +
+        '    <span class="street-address"><%= street_address %><span>' +
+        '    <span class="locality"><%= city %></span>' +
+        '   (<span class="region"><%= region %></span>)' +
+        '    <span class="postal-code"><%= postal_code %></span>' +
+        '    <span class="country-name"><%= country %></span>' +
+        '  </div>' +
+        '  <% _.each(phone,function(tel){%> <span class="tel"><%= tel %></span> <% }); %>' +
+        '  <div><%= note%></div>' +
+        '</div>'
+      );
+
+      var build = function (){
+          var params = {
+              given_name:     $('#givenname').val()       ||''
+            , additional_name: $('#additionalname').val() ||''
+            , family_name:    $('#familyname').val()      ||''
+            , org:            $('#org').val()             ||''
+            , email:          $('#email').val()           ||''
+            , street_address: $("#street").val()          ||''
+            , city:           $("#city").val()            ||''
+            , region:         $("#region").val()          ||''
+            , postal_code:    $("#postal").val()          ||''
+            , country:        $("#country").val()         ||''
+            , note:           $("#note").val()            ||''
+            , phone: (function(){
+                  var val = $("#phone").val();
+                  if (!val) return '';
+                  return _.map(val.split(','), function(e) {
+                    return e.trim();
+                  });
+                })()
+            , photo: $("#photo").val() || ''
+            };
+            params.id = _.map([params.given_name, params.additional_name, params.family_name], function(el) {
+              if (el) return el.replace(/\s+/g, '-');
+              return null;
+            }).join('-');
+
+            var hcard = template(params)
+            $('#target').append(hcard);
+            $('#hcard').val(hcard);
+          };
+      $('input[type="text"]').keyup(_.debounce(build, 500));
+      $('form').bind('submit', function(){ build(); });
+      _.defer(build);
+    })();
+
+
   });
-
-
-  /**
-   * hCard editor
-   */
-
-  (function() {
-    if (! $('#hcard')) return null;
-    var template = _.template(
-      '<div id="<%= id %>" class="vcard">' +
-      '  <div>' +
-      '    <span class="given-name"><%= given_name %></span>' +
-      '    <span class="additional-name"><%= additional_name %></span>' +
-      '    <span class="family-name"><%= family_name %></span>' +
-      '    <% if (photo.length) {%><img src="<%= photo %>" alt="photo of <%= given_name %> <%= additional_name %> <%= family_name %>" class="photo"/><% } %>' +
-      '  </div>' +
-      '  <div class="org"><%= org %></div>' +
-      '  <div>' +
-      '    <a class="email" href="mailto:<%= email %>"><%= email %></a>' +
-      '    <span class="street-address"><%= street_address %><span>' +
-      '    <span class="locality"><%= city %></span>' +
-      '   (<span class="region"><%= region %></span>)' +
-      '    <span class="postal-code"><%= postal_code %></span>' +
-      '    <span class="country-name"><%= country %></span>' +
-      '  </div>' +
-      '  <% _.each(phone,function(tel){%> <span class="tel"><%= tel %></span> <% }); %>' +
-      '  <div><%= note%></div>' +
-      '</div>'
-    );
-
-    function fillCard(e) {
-      var params = {
-        given_name:     $('#givenname').val()       ||''
-      , additional_name: $('#additionalname').val() ||''
-      , family_name:    $('#familyname').val()      ||''
-      , org:            $('#org').val()             ||''
-      , email:          $('#email').val()           ||''
-      , street_address: $("#street").val()          ||''
-      , city:           $("#city").val()            ||''
-      , region:         $("#region").val()          ||''
-      , postal_code:    $("#postal").val()          ||''
-      , country:        $("#country").val()         ||''
-      , note:           $("#note").val()            ||''
-      , phone: (function(){
-            var val = $("#phone").val();
-            if (!val) return '';
-            return _.map(val.split(','), function(e) {
-              return e.trim();
-            });
-          })()
-      , photo: $("#photo").val()
-      };
-      params.id = _.map([params.given_name, params.additional_name, params.family_name], function(el) {
-        if (el) return el.replace(/\s+/g, '-');
-        return null;
-      }).join('-');
-
-      $('#target').html(template(params));
-      $('#hcard').val(template(params));
-console.log(params)
-    }
-
-    $('form input').bind('change blur keydown keyup', fillCard);
-    $('form').bind('submit', fillCard);
-    fillCard();
-  })();
 
   
   (function() {
