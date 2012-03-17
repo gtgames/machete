@@ -18,23 +18,23 @@ upgrade:
 		git pull &&\
 		git stash apply
 
-deps: uikit
+submodule:
+	git submodule init && git submodule update
 
-uikit:
-	@echo upgrading UIKIT...
-	@git clone https://github.com/aliem/uikit.git $(DIR)/tmp/uikit/
-	@cd $(DIR)/tmp/uikit && make
-	@rm -rf $(DIR)/public/javascripts/uikit
-	@cp -r $(DIR)/tmp/uikit/build $(DIR)/public/javascripts/uikit
-	@rm -rf $(DIR)/tmp/uikit
+deps: submodule uikit
+
+uikit: submodule
+	@cd $(DIR)/vendor/uikit && make
+	@cp -r $(DIR)/vendor/uikit/build/* $(DIR)/public/javascripts/uikit
 	@echo UIKIT upgraded
+
 
 less:
 	@cd $(DIR)/public/stylesheets &&\
-		echo compile 'layout.less'\
-		lessc layout.less > layout.css\
-		echo compile 'admin.less'\
+		echo compile 'layout.less' &&\
+		lessc layout.less > layout.css &&\
+		echo compile 'admin.less'&&\
 		lessc admin.less > admin.css
 
 
-.PHONY: all, help, uikit
+.PHONY: all help uikit submodule
