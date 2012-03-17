@@ -180,7 +180,6 @@
           +   '</form>'
           + '</tr>'
           );
-          console.log(data)
           $('tbody').append(
             tpl({
               _url: data._url
@@ -256,7 +255,7 @@
 console.log(params)
     }
 
-    $('form input').bind('change blur keyup', fillCard);
+    $('form input').bind('change blur keydown keyup', fillCard);
     $('form').bind('submit', fillCard);
     fillCard();
   })();

@@ -1,4 +1,4 @@
-DOMAIN=$(shell cat config/config.json | grep -Po '"domain":.*?[^\\]",' | awk -v RS=',"' -F: '/^\"domain\"/ {print $2}' | sed -e 's/"/''/g')
+#DOMAIN=$(shell cat config/config.json | grep -Po '"domain":.*?[^\\]",' | awk -v RS=',"' -F: '/^\"domain\"/ {print $2}' | sed -e 's/"/''/g')
 DIR=$(shell pwd)
 
 

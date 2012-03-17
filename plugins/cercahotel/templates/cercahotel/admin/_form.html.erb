@@ -27,24 +27,20 @@
 
 	<% if Cfg[:domain] =~ /machete/ %>
 	<script type="text/javascript" charset="utf-8">
-		document.write([
-		  '<script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=', {
-		    'machete.dev': 'ABQIAAAAFJC5GQPX-w6DsErzUPS_TxQfQ2HpL9heYXvk166R28mJhIGcpxQKqa7lF2TfhQRP2JKHmZ13pejsoQ',
-		    'machete.it': 'ABQIAAAAFJC5GQPX-w6DsErzUPS_TxStbnZnjxb5KRvRpJSOL3Ab1clYURTwJ8j29Itl5FMjsWQRRQcYbJctYQ'
-		  }[window.location.host.match(/(\w+\.\w+)$/)[0]],
-		  '" type="text/javascript"><\/script>'
-		].join(''));
+		document.write(
+		    '<script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyB8D6-Yr9AL-DQoNqhYH6bWCB6w2RmSKhk'
+		  + '" type="text/javascript"><\/script>');
 	</script>
 	<% else %>
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;key=<%= Cfg[:gmaps] %>" type="text/javascript"></script>
 	<% end %>
 
 	<script type="text/javascript">
-		$(document).on('ready', function(){
+		$(document).ready(function(){
 			var map, center, marker, location, geocoder,
-				latitude = $("hotel_lat"),
-				longitude = $("hotel_lng"),
-				elevation = $("hotel_elevation"), ele,
+				latitude = $("#hotel_lat"),
+				longitude = $("#hotel_lng"),
+				elevation = $("#hotel_elevation"), ele,
 				lat, lng;
 
 			lat = isNaN(parseFloat(latitude.get('value')))? 42.35085 : parseFloat(latitude.get('value')) ;
@@ -66,31 +62,44 @@
 			ele = new google.maps.ElevationService();
 			geocoder = new google.maps.Geocoder();
 
+
+			var moveMarker = function(){
+				var center, fn = _.debounce(function(){
+					marker.setPosition(center);
+				}, 500);
+				return function(c) {
+					center = c;
+					fn();
+				}
+			}();
+
+
 			google.maps.event.addListener(map, 'center_changed', function(e) {
 				center = map.getCenter();
-				marker.setPosition(center);
 				
-				latitude.set('value', center.lat());
-				longitude.set('value', center.lng());
+				moveMarker(center);
+
+				latitude.val(center.lat());
+				longitude.val(center.lng());
 
 				ele.getElevationForLocations({ locations:[center] }, function(result, status){
-					if (status == "OK")	elevation.set('value', parseInt(result[0].elevation));
-					else elevation.set('value', '');
+					if (status == "OK")	elevation.val(parseInt(result[0].elevation));
+					else elevation.val('');
 				});
 			});
 			google.maps.event.addListener(marker, 'dragend', function(e) {
 				map.panTo(marker.getPosition());
 			});
 
-			$('search_address').on('keypress', function(e){
+			$('#search_address').bind('keyup', function(e){
 				var key = window.event ? window.event.keyCode : e.which;
 				if(key == 13){
-					$('search_address_a').fire('click');
+					$('#search_address_a').fire('click');
 					return false;
 				} else return e;
 			});
-			$('search_address_a').on('click', function(){
-				var address = $('search_address').get('value');
+			$('#search_address_a').bind('click', function(){
+				var address = $('#search_address').val();
 				geocoder.geocode({address: address}, function(results, status){
 					if (status == "OK")	map.panTo(results[0].geometry.location);
 				});
