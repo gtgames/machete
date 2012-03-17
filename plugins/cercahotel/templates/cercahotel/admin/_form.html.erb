@@ -91,29 +91,32 @@
 				map.panTo(marker.getPosition());
 			});
 
-			$('#search_address').bind('keyup', function(e){
-				var key = window.event ? window.event.keyCode : e.which;
-				if(key == 13){
-					$('#search_address_a').fire('click');
-					return false;
-				} else return e;
-			});
-			$('#search_address_a').bind('click', function(){
+
+			var geoFind = function(){
 				var address = $('#search_address').val();
 				geocoder.geocode({address: address}, function(results, status){
 					if (status == "OK")	map.panTo(results[0].geometry.location);
 				});
+			}
+			$('#search_address_form').bind('submit', geoFind);
+			$('#search_address_a').bind('click', geoFind);
+			$('#search_address').bind('keyup', function(e){
+				if (e.keyCode == 13)
+					geoFind();
 			});
 		});
 	</script>
 	<div id="map"></div>
 
-	<div class="input-prepend map">
-		<label class="add-on" for="search_address">Indirizzo</label>
-		<input class="xlarge" id="search_address" name="search_address" size="16" type="text">
-		<a id="search_address_a" class="btn">Search</a>
+	<div class="well">
+		<form id="search_address_form" action="javascript:function(){}">
+			<div class="input-prepend input-append map">
+				<span class="add-on">Indirizzo</span>
+				<input class="xlarge" id="search_address" name="search_address" size="16" type="text">
+				<span class="add-on"><a id="search_address_a" href="javascript:{}">Search</a></span>
+			</div>
+		</form>
 	</div>
-
 </fieldset>
 
 <div class="actions">
