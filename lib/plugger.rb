@@ -7,20 +7,30 @@ def PluginManager plugs
     begin
       unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
         puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
-        File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
-
+        
+        if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}")
+          File.symlink(
+            "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}"
+          , "#{PADRINO_ROOT}/templates/#{plugin}")
+        end
 
         if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}")
           puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
-          File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}"
+          File.symlink(
+            "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}"
+          , "#{PADRINO_ROOT}/templates/mailers/#{plugin}")
         end
       end
     rescue Errno::EEXIST
       # do nothing
     end
-    Padrino.set_load_paths("#{PADRINO_ROOT}/plugins/#{plugin}", "#{PADRINO_ROOT}/plugins/#{plugin}/models")
+    Padrino.set_load_paths(
+      "#{PADRINO_ROOT}/plugins/#{plugin}"
+    , "#{PADRINO_ROOT}/plugins/#{plugin}/models")
+
     require "#{PADRINO_ROOT}/plugins/#{plugin}/app"
-    Dir.glob("#{PADRINO_ROOT}/plugins/#{plugin}/models/*.rb").each{|r| require r.sub(/\.rb$/, '') }
+    Dir.glob("#{PADRINO_ROOT}/plugins/#{plugin}/models/*.rb").each{|r|
+      require r.sub(/\.rb$/, '') }
   end
 
 
