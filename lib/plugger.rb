@@ -6,16 +6,16 @@ def PluginManager plugs
   plugs.each do |plugin|
     begin
       unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
-        puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
-        
+
         if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}")
+          puts "Linking #{plugin} templates"
           File.symlink("#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}")
         end
 
         if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}")
-          puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
+          puts "Linking #{plugin} mailers"
           File.symlink(
-            "#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}")
+            "#{PADRINO_ROOT}/plugins/#{plugin}/templates/mailers/#{plugin}", "#{PADRINO_ROOT}/templates/mailers/#{plugin}")
         end
       end
     rescue Errno::EEXIST
