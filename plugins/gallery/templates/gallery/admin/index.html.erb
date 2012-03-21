@@ -30,4 +30,13 @@
 
 <% content_for :actions, partial("gallery/admin/actions") %>
 
+<% content_for :subnav do %>
+	<ul class="nav nav-list">
+		<li class="nav-header">Gallerie</li>
+		<% @photos.each do |g| %>
+		<li><a href="#<%= g[:gallery].to_slug %>"><%= g[:gallery] %></a></li>
+		<% end %>
+	</ul>
+<% end %>
+
 <% content_for :title, 'Foto' %>
