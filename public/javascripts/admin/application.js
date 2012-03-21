@@ -312,6 +312,57 @@
     });
   });
 
+
+  $.fn.inEdit = function (target, options) {
+    var el = $(this);
+
+    target = $(target);
+
+    el.bind("click", function(e){
+      e.preventDefault();
+      target.attr('contenteditable', 'true')
+        .focus()
+        .bind('keydown', function(e){
+          if (e.keyCode != 13) return;
+          $(this).blur();
+          e.preventDefault();
+
+          target.attr('contenteditable', false);
+          var data = options.data || {};
+          data[options.name || 'name'] = target.text();
+
+          $.ajax({
+            url:    options.url
+          , method: options.method
+          , type: 'json'
+          , data: data
+          , success: options.success || function(){}
+          , error: options.error || function(e) {console.log(e)}
+          });
+        });
+      // window.getSelection().setPosition(0);
+    });
+  }
+
+  $.domReady(function(){
+    $('a.edit.sym').each(function(el){
+      var el = $(el)
+        , target = el.parent().find('span');
+
+      el.inEdit(
+        target
+      , {
+          url:'/photos/rename'
+        , name: 'name'
+        , data: {gallery: target.text()}
+        , method:'post'
+        , success: function () { ui.notify('Photo', 'galleria rinominata').effect('slide'); }
+        , error: function () { ui.error('Photo', 'galleria rinominata').effect('slide'); }
+      });
+    });
+  });
+
+
   $.domReady(function(){
     var $win = $(window)
       , $nav = $('.subnav')
