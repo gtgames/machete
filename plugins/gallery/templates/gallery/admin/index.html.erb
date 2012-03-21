@@ -1,6 +1,6 @@
 <% @photos.each do |g| -%>
 <h2>
-	<a class="edit sym" title="edit" onclick="$('<%= g[:gallery].to_slug %>').inEdit({toggle: this, url:'<%= url(:photos, :rename, :gallery => g[:gallery]) %>', name:'name', method:'post'}); return false;"><i class="icon-edit"></i></a>
+	<a class="edit sym" title="edit"><i class="icon-edit"></i></a>
 	<span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span>
 </h2>
 <table class="table table-striped">
