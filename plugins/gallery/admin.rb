@@ -77,8 +77,9 @@ Admin.controllers :photos do
   post :rename do
     if params[:gallery]
       Photo.set({:gallery => params[:gallery]}, {:gallery => params[:name], :gallery_slug => params[:name].to_slug})
-      params[:name]
+      {name: params[:name]}.to_json
+    else
+      403
     end
-    params[:name]
   end
 end
