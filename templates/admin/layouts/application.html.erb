@@ -57,12 +57,17 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span2">
-					<ul class="nav nav-list">
-						<li class="nav-header">
-							<%= yield_content :title %>
-						</li>
-						<%= yield_content :actions %>
-					</ul>
+					<div class="subnav">
+						<ul class="nav nav-list">
+							<li class="nav-header">
+								<%= yield_content :title %>
+							</li>
+							<%= yield_content :actions %>
+						</ul>
+						<br>
+						<%= yield_content :subnav %>
+					</div>
+					<div class="placeholder">&nbsp;</div>
 				</div>
 				<div class="span10">
 					<%= yield %>
