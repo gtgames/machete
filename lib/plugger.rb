@@ -7,8 +7,9 @@ def PluginManager plugs
     begin
       unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
         puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
-        File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
-
+        if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}")
+          File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
+        end
 
         if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}")
           puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin} => #{PADRINO_ROOT}/templates/mailers/#{plugin}"
