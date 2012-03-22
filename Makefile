@@ -5,11 +5,12 @@ DIR=$(shell pwd)
 all: help
 
 help:
-	@echo make [upgrade,deps,help]
+	@echo make [upgrade] [deps] [less] [help]
 	@echo ---
 	@echo [upgrade]: upgrades machete base to last version
 	@echo [deps]: upgrades our dependencies
 	@echo 	[uikit]: copy the latest build to the public folder
+	@echo 	[kalendae]: copy the latest build to the public folder
 	@echo ---
 	@echo [less]: produce css files from the less source
 	@echo 	[watch_less]: compiles less files every 5 seconds
@@ -23,6 +24,10 @@ upgrade:
 		$(submodule_update) &&\
 		git stash apply
 
+#
+# Vendor libraries
+#
+
 submodule:
 	git submodule init && git submodule update
 
@@ -32,8 +37,19 @@ submodule_update:
 deps: submodule uikit
 
 uikit: submodule
+	@mkdir -p $(DIR)/public/javascripts/uikit
 	@cp -r $(DIR)/vendor/uikit/build/* $(DIR)/public/javascripts/uikit
 	@echo UIKIT upgraded
+
+kalendae: submodule
+	@mkdir -p $(DIR)/public/javascripts/kalendae
+	@cp -r $(DIR)/vendor/kalendae/build/* $(DIR)/public/javascripts/kalendae
+	@echo KALENDAE upgraded
+
+
+#
+# Less files
+#
 
 less:
 	@cd $(DIR)/public/stylesheets &&\
