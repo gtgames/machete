@@ -3,7 +3,15 @@ Admin.controllers :multimedia do
   layout false
 
   get :index do
-    @photos = Photo.fields(:'file._id').all.map{|e| e['file']['_id'].to_s  }
+    if defined? Photo
+      @photos = Photo.fields(:'file._id').all.map{|e|
+        if not e['file'].nil?
+          e['file']['_id'].to_s
+        end
+      }
+    else
+      @photos = []
+    end
     @media = MediaFile.where(:_id => {:$nin => @photos}).all
     (request.xhr?)? @media.to_json : render('admin/multimedia/index')
   end
@@ -21,7 +29,7 @@ Admin.controllers :multimedia do
     if MediaFile.find(params[:id]).destroy
       (request.xhr?)? 200 : redirect(url(:multimedia, :index))
     else
-      (request.xhr?)? {error: 'not found ID: ' + params[:id]} : "Error deleting File!!!"
+      (request.xhr?)? {error: 'not found ID: ' << params[:id]} : "Error deleting File!!!"
     end
   end
 
