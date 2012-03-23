@@ -23,7 +23,7 @@
 						<td>
 							<% if i.content_type =~ /^image\/.+/ -%>
 								<a href="<%= i.url -%>">
-									<%= image_lazy i.thumb(:small), 120, 120 %>
+									<%= image_lazy i.thumb('120x120'), 120, 120 %>
 								</a>
 							<% else -%>
 								<a href="<%= i.url -%>"><%= i.name -%></a></td>

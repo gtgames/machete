@@ -11,7 +11,7 @@
       <tr>
         <td>
           <% if m.content_type =~ /^image\/.+/ -%>
-            <%= image_lazy m.thumb(:small), 120, 120 %>
+            <%= image_lazy(m.thumb('100x100')) %>
           <% else -%>
             <%= m.url %>
           <% end -%>

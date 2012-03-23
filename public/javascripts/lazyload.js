@@ -1,45 +1,81 @@
+/* lazyload.js (c) Lorenzo Giuliani
+* MIT License (http://www.opensource.org/licenses/mit-license.html)
+*
+* expects a list of:
+* `<img src="blank.gif" data-src="my_image.png" width="600" height="400" class="lazy">`
+*/
+
 !function(){
-  var _has = function(obj, key) {
-        return hasOwnProperty.call(obj, key);
+  var $q = function(q, res){
+        if (document.querySelectorAll) {
+          res = document.querySelectorAll(q);
+        } else {
+          var d=document
+            , a=d.styleSheets[0] || d.createStyleSheet();
+          a.addRule(q,'f:b');
+          for(var l=d.all,b=0,c=[],f=l.length;b<f;b++)
+            l[b].currentStyle.f && c.push(l[b]);
+
+          a.removeRule(0);
+          res = c;
+        }
+        return res;
+      }
+    , addEventListener = function(evt, fn){
+        window.addEventListener
+          ? this.addEventListener(evt, fn, false)
+          : (window.attachEvent)
+            ? this.attachEvent('on' + evt, fn)
+            : this['on' + evt] = fn;
+      }
+    , _has = function(obj, key) {
+        return Object.prototype.hasOwnProperty.call(obj, key);
       }
     ;
 
   function loadImage (el, fn) {
     var img = new Image()
-      , src = el.attr('data-src');
+      , src = el.getAttribute('data-src');
     img.onload = function() {
-      el.attr({
-        'width': img.width
-      , 'height': img.height
-      });
-      el[0].src = src; // sometimes using DOM directly is better (:
+      if (!! el.parent)
+        el.parent.replaceChild(img, el)
+      else
+        el.src = src;
+
       fn? fn() : null;
     }
     img.src = src;
   }
 
   function elementInViewport(el) {
-    el = (el.hasOwnProperty(length))? el[0] : el;
     var rect = el.getBoundingClientRect()
 
     return (
-       rect.top    >= 0
-    && rect.left   >= 0
-    && rect.bottom <= window.innerHeight
-    && rect.right  <= window.innerWidth 
+       rect.top >= 0
+    && rect.left >= 0
+    && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
     )
   }
 
-  $(document).ready(function(){
-    var images = $('img.lazy');
-    $(window).bind('scroll', function(e){
-      for (var i = 0; i < images.length; i++) {
-        if (elementInViewport(images[i])) {
-          loadImage($(images[i]), function () {
-            images.splice(i, i);
-          });
+  addEventListener('load', function(){
+    var images = new Array()
+      , query = $q('img.lazy')
+      , processScroll = function(){
+          for (var i = 0; i < images.length; i++) {
+            if (elementInViewport(images[i])) {
+              loadImage(images[i], function () {
+                images.splice(i, i);
+              });
+            }
+          };
         }
-      };
-    }).trigger('scroll');
+      ;
+    // Array.prototype.slice.call is not callable under our lovely IE8
+    for (var i = 0; i < query.length; i++) {
+      images.push(query[i]);
+    };
+
+    processScroll();
+    addEventListener('scroll',processScroll);
   });
-}(window.jQuery || window.ender);
+}();
