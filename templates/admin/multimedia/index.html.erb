@@ -20,7 +20,7 @@
           <%= link_to m.name, m.url, :rel => (m.content_type =~ /^image\/.+/)? 'image' : 'file' %>
         </td>
         <td>
-          <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+          <%= delete_button pat(:delete), url(:multimedia, :destroy, :id => m.id) %>
         </td>
       </tr>
     <% end -%>
