@@ -365,7 +365,7 @@
   $.domReady(function(){
     var $win = $(window)
       , $nav = $('.subnav')
-      , navTop = $('.subnav').length && $('.subnav').offset().top
+      , navTop = $('.subnav').length && $('.subnav').offset().top - 54
       , isFixed = 0;
 
     processScroll()
@@ -387,7 +387,7 @@
 
 
   /**
-   * Edit/Delete async Buttons
+   * Delete async Buttons
    */
   $.domReady(function(){
     $('.delete_button').bind('click', function(e){
