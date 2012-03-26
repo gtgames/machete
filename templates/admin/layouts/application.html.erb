@@ -51,7 +51,7 @@
 	  </div>
 	</header>
 
-	<%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "alert-message #{type}") }.join %>
+	<%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type}") }.join %>
 
 	<section class="container-fluid" id="content">
 		<div class="container-fluid">

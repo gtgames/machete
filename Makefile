@@ -61,4 +61,12 @@ less:
 watch_less:
 	watch -i 5 make less
 
+pack_css:
+	cd $(DIR)/public/stylesheets &&\
+		sqwish admin.css -o admin.css --strict &&\
+		sqwish layout.css -o layout.css --strict
+
+pack_js:
+	cd $(DIR)/public/javascripts &&\
+		uglifyjs application.js > application.min.js
 .PHONY: all help uikit submodule
