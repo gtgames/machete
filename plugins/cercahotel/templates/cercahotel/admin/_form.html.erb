@@ -100,26 +100,25 @@
 			}
 			$('#search_address_form').bind('submit', geoFind);
 			$('#search_address_a').bind('click', geoFind);
-			$('#search_address').bind('keyup', function(e){
-				if (e.keyCode == 13)
+			$('#search_address').bind('keydown', function(e){
+				if (e.keyCode == 13) {
+					e.preventDefault();
 					geoFind();
+				}
 			});
 		});
 	</script>
 	<div id="map"></div>
 
 	<div class="well">
-		<form id="search_address_form" action="javascript:function(){}">
-			<div class="input-prepend input-append map">
-				<span class="add-on">Indirizzo</span>
+			<div id="search_address_form" class="input-prepend input-append map">
 				<input class="xlarge" id="search_address" name="search_address" size="16" type="text">
-				<span class="add-on"><a id="search_address_a" href="javascript:{}">Search</a></span>
+				<span class="add-on btn"><a id="search_address_a" href="javascript:{}">Cerca</a></span>
 			</div>
-		</form>
 	</div>
 </fieldset>
 
-<div class="actions">
+<div class="form-actions">
   <%= f.submit pat(:save), :class => "btn primary" %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:cerca_hotel, :index)}';return false", :class => :btn %>
 </div>
