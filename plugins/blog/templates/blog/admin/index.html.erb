@@ -14,8 +14,8 @@
 				<td class="date"><%= post.updated_at %></td>
 				<td><%= post.tag_list %></td>
 				<td>
-					<%= button_to pat(:edit), url(:posts, :edit, :id => post.id), :method => :get, :class => 'btn edit' %>
-					<%= button_to pat(:delete), url(:posts, :destroy, :id => post.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+					<%= edit_button pat(:edit), url(:posts, :edit, :id => post.id)%>
+					<%= delete_button pat(:delete), url(:posts, :destroy, :id => post.id) %>
 				</td>
 			</tr>
 		<% end %>

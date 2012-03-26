@@ -26,8 +26,8 @@
 			<td class="date"><%= book.date_arrival %></td>
 			<td class="date"><%= book.date_departure %></td>
 			<td class="last">
-				<%= link_to pat(:show), url(:booking, :show, :id => book.id), :method => :get, :class => 'btn edit' %>
-				<%= button_to pat(:delete), url(:booking, :destroy, :id => book.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+				<%= edit_button pat(:show), url(:booking, :show, :id => book.id) %>
+				<%= delete_button pat(:delete), url(:booking, :destroy, :id => book.id) %>
 
 			</td>
 		</tr>

@@ -12,8 +12,8 @@
       <td><%= hotel.title %></td>
       <td><%= hotel.address %></td>
       <td>
-        <%= button_to pat(:edit), url(:cerca_hotel, :edit, :id => hotel.id), :method => :get, :class => 'btn edit' %>
-        <%= button_to pat(:delete), url(:cerca_hotel, :destroy, :id => hotel.id), :method => :delete, :class => 'btn trash', :onclick => "return confirm('#{pat(:confirm)}')" %>
+        <%= edit_button pat(:edit), url(:cerca_hotel, :edit, :id => hotel.id) %>
+        <%= delete_button pat(:delete), url(:cerca_hotel, :destroy, :id => hotel.id) %>
       </td>
     </tr>
     <% end %>
