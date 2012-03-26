@@ -13,7 +13,7 @@ Admin.controllers :cerca_hotel do
   post :create do
     @hotel = Hotel.new(params[:hotel])
     if @hotel.save
-      flash[:notice] = t'created'
+      flash[:info] = t'created'
       redirect url(:cerca_hotel, :index)
     else
       render 'cercahotel/admin/new'
@@ -28,7 +28,7 @@ Admin.controllers :cerca_hotel do
   put :update, :with => :id do
     @hotel = Hotel.find(params[:id])
     if @hotel.update_attributes(params[:hotel])
-      flash[:notice] = t'updated'
+      flash[:info] = t'updated'
       redirect url(:cerca_hotel, :index)
     else
       render 'cercahotel/admin/edit'
@@ -38,9 +38,13 @@ Admin.controllers :cerca_hotel do
   delete :destroy, :with => :id do
     hotel = Hotel.find(params[:id])
     if hotel.destroy
-      flash[:notice] = t'destroy.success'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:cerca_hotel, :index))
     else
       flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:cerca_hotel, :index))
     end
     redirect url(:cerca_hotel, :index)
   end

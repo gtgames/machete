@@ -385,4 +385,34 @@
     }
   });
 
+
+  /**
+   * Edit/Delete async Buttons
+   */
+  $.domReady(function(){
+    $('.delete_button').bind('click', function(e){
+      e.preventDefault();
+      var el = $(this)
+        , url = el.attr('data-url');
+
+      ui.confirm('Rimozione oggetto', 'sei sicuro di voler continuare?')
+        .ok('Rimuovi')
+        .cancel('Annulla!')
+        .show(function(ok){
+          if (ok) {
+            $.ajax({
+                url: url
+              , method: 'delete'
+              , success: function (resp) {
+                  el.parent().parent().remove();
+                  ui.dialog('oggetto rimosso!').show().hide(3000);
+                }
+              , error: function (resp) {
+                  ui.dialog('errore durante la rimozione!').show().hide(3000);
+                }
+            });
+          }
+        });
+    });
+  });
 }(window.ender);

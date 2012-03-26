@@ -14,7 +14,7 @@ Admin.controllers :posts do
     params[:post]['photo'] = MediaFile.find(params[:post]['photo'])
     @post = Post.new(params[:post])
     if @post.save
-      flash[:notice] = t'created'
+      flash[:info] = t'created'
       redirect url(:posts, :index)
     else
       render '/blog/admin/new'
@@ -30,7 +30,7 @@ Admin.controllers :posts do
     params[:post]['photo'] = MediaFile.find(params[:post]['photo']) if !params[:post]['photo'].nil?
     @post = Post.find(params[:id])
     if @post.update_attributes(params[:post])
-      flash[:notice] = 'Post was successfully updated.'
+      flash[:info] = 'Post was successfully updated.'
       redirect url(:posts, :index)
     else
       render '/blog/admin/edit'
@@ -40,10 +40,13 @@ Admin.controllers :posts do
   delete :destroy, :with => :id do
     post = Post.find(params[:id])
     if post.destroy
-      flash[:notice] = 'Post was successfully destroyed.'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:posts, :index))
     else
-      flash[:error] = 'Impossible destroy Post!'
+      flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:posts, :index))
     end
-    redirect url(:posts, :index)
   end
 end
