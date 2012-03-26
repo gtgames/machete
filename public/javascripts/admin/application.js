@@ -65,7 +65,7 @@
     /**
      * Invalid attributes
      */
-    $('.invalid').parent().find('label').each(function(el) { el.style({ color: 'red' }); });
+    $('.invalid').parent().find('label').each(function(el) { $(el).style({ color: 'red' }); });
 
     /**
      * Advanced options
@@ -82,7 +82,7 @@
      */
     $('input[name*="[tag_list]"]').each(function(el){
       var el = $(el)
-        , tagger = ui.Tagger(el.attr('name'), el.val().split(','));
+        , tagger = ui.Tagger(el.attr('name').replace("tag_list", "tags"), el.val().split(','));
       el.parent().append(tagger.el);
       el.remove();
     });
@@ -93,8 +93,7 @@
     $('input[type=file]').each(function(el) {
       var el = $(el)
         , myid = el.attr('id')
-        , myname = el.get('name')
-        , input = $('<input type="hidden">')
+        , input = $('<input type="hidden" name="' + el.attr('name') + '">')
             .appendTo(el.parent())
         , div = $('<div>')
             .attr({
