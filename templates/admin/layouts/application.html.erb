@@ -50,9 +50,7 @@
 		</div>
 	  </div>
 	</header>
-
-	<%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type}") }.join %>
-
+	
 	<section class="container-fluid" id="content">
 		<div class="container-fluid">
 			<div class="row-fluid">
@@ -76,5 +74,11 @@
 		</div>
 	</section>
 	<footer class="container-fluid"><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.9.0dev</a></p></footer>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			<%= [:error, :warn, :info].map { |type| flash_ui(type) }.join %>
+		});
+	</script>
   </body>
 </html>
