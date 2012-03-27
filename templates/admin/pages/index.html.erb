@@ -16,8 +16,8 @@
           <% end -%>
           </td>
         <td>
-          <%= button_to pat(:edit), url(:pages, :edit, :id => page.id), :method => :get, :class => 'btn edit' %>
-          <%= button_to pat(:delete), url(:pages, :destroy, :id => page.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+          <%= edit_button pat(:edit), url(:pages, :edit, :id => page.id) %>
+          <%= delete_button pat(:delete), url(:pages, :destroy, :id => page.id) %>
         </td>
       </tr>
     <% end %>
