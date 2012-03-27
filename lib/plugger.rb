@@ -6,10 +6,9 @@ def PluginManager plugs
   plugs.each do |plugin|
     begin
       unless File.directory?( "#{PADRINO_ROOT}/templates/#{plugin}" )
-
         if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}")
-          puts "Linking #{plugin} templates"
-          File.symlink("#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}")
+          puts "Linking #{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin} => #{PADRINO_ROOT}/templates/#{plugin}"
+          File.symlink "#{PADRINO_ROOT}/plugins/#{plugin}/templates/#{plugin}", "#{PADRINO_ROOT}/templates/#{plugin}"
         end
 
         if File.directory?("#{PADRINO_ROOT}/plugins/#{plugin}/mailers/#{plugin}")
@@ -43,4 +42,4 @@ def PluginManager plugs
     end
   end unless Cfg['apps'].nil?
 end
-###
+

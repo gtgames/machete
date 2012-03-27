@@ -8,7 +8,7 @@
     <%= image_tag(f.object.file.thumb('200xx200')) %>
   <% end -%>
 
-  <%= f.input :tag_list, :as => :string %>
+  <%= f.input :tag_list,  :as => :string, :class => :tagger %>
 
   <h2>Galleria</h2>
   <% if (galleries = Photo.galleries).size > 0 -%>
@@ -21,7 +21,7 @@
   <% end -%>
 </div>
 
-<div class='actions'>
+<div class='form-actions'>
   <%= f.submit pat(:save), :class => "btn primary" %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:photos, :index)}';return false", :class => :btn %>
 </div>

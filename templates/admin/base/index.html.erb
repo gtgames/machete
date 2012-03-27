@@ -7,15 +7,24 @@
 </ul>
 
 <script type="text/javascript">
-//<![CDATA[
-$(document).on('ready', function(){
-    Xhr.load("http://analyst.machete.it/<%= Cfg[:analyst] %>",{
-        jsonp: 'callback',
-        onSuccess: function() {
-            var data = this.responseJSON;
-            $$('#stats .domain').first().html(data.domain);
-            $$('#stats .uniques').first().html(data.uniques);
-            $$('#stats .pings').first().html(data.pings);
+$.domReady(function(){
+    $.ajax({
+    	url: "http://analyst.machete.it/<%= Cfg[:analyst] %>",
+        type: 'jsonp',
+        success: function(data) {
+
+        	if (data.error) {
+        		$('#stats').text('');
+        		$('#chart').remove();
+        		return;
+        	}
+
+            $('#stats .domain')
+            	.html(data.domain);
+            $('#stats .uniques')
+            	.html(data.uniques);
+            $('#stats .pings')
+            	.html(data.pings);
 
             var url = (function(){
                 var pi = parseInt(data.pings), un = parseInt(data.uniques);
@@ -24,11 +33,10 @@ $(document).on('ready', function(){
                        "&chds=0," + tot + "&chd=t:" + pi + "," + un +
                        "&chl=Contatti|Unici&chma=5,5,5,5";
             })();
-            $('chart').set('src', url);
+            $('chart').attr('src', url);
         }
     });
 });
-//]]>
 </script>
 
 <% content_for :title, 'Dashboard' %>

@@ -17,7 +17,8 @@ Admin.controllers :messages do
 
   delete :destroy, :with => :id do
     message = Message.set({:_id => params[:id]}, {:st => -1})
-    flash[:notice] = 'Cestinato con successo.'
-    redirect url(:messages, :index)
+    flash[:info] = 'Cestinato con successo.'
+
+    (request.xhr?)? 200 : redirect(url(:messages, :index))
   end
 end

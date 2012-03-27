@@ -14,7 +14,7 @@ Admin.controllers :events do
     params[:event]['file'] = MediaFile.find(params[:event]['file']) unless params[:event]['file'].nil?
     @event = Event.new(params[:event])
     if @event.save
-      flash[:notice] = 'Event was successfully created.'
+      flash[:info] = 'Event was successfully created.'
       redirect url(:events, :edit, :id => @event.id)
     else
       render '/events/admin/new'
@@ -30,7 +30,7 @@ Admin.controllers :events do
     params[:event]['file'] = MediaFile.find(params[:event]['file']) unless params[:event]['file'].nil?
     @event = Event.find(params[:id])
     if @event.update_attributes(params[:event])
-      flash[:notice] = 'Event was successfully updated.'
+      flash[:info] = 'Event was successfully updated.'
       redirect url(:events, :edit, :id => @event.id)
     else
       render '/events/admin/edit'
@@ -40,10 +40,13 @@ Admin.controllers :events do
   delete :destroy, :with => :id do
     event = Event.find(params[:id])
     if event.destroy
-      flash[:notice] = 'Event was successfully destroyed.'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:events, :index))
     else
-      flash[:error] = 'Impossible destroy Event!'
+      flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:events, :index))
     end
-    redirect url(:events, :index)
   end
 end

@@ -1,32 +1,42 @@
 <% @photos.each do |g| -%>
-
-  <h2><span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span>
-	<a class="button_to edit sym" title="edit" onclick="$('<%= g[:gallery].to_slug %>').inEdit({toggle: this, url:'<%= url(:photos, :rename, :gallery => g[:gallery]) %>', name:'name', method:'post'}); return false;">?</a></h2>
-  <table class="zebra-striped">
-    <thead>
-      <tr>
-        <th class="sortable"><span class="sym">T</span><%= mat(:photos, :title) %></th>
-        <th class="sortable"><span class="sym">A</span><%= mat(:photos, :file) %></th>
-		<th class="sortable"><span class="sym">,</span><%= mat(:photos, :tag_list) %></th>
-        <th class="last">&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% g[:photos].each do |photo| %>
-        <tr>
-          <td class="first"><%= photo.title %></td>
-          <td><%= link_to(image_tag( photo.file.thumb('50xx50') ), photo.file.url) unless photo.file.nil? %></td>
-		  <td><%= photo.tag_list %></td>
-          <td>
-            <%= button_to pat(:edit), url(:photos, :edit, :id => photo.id), :method => :get, :class => 'btn edit' %>
-            <%= button_to pat(:delete), url(:photos, :destroy, :id => photo.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<h2>
+	<a class="edit sym" title="edit"><i class="icon-edit"></i></a>
+	<span id="<%= g[:gallery].to_slug %>"><%= g[:gallery] %></span>
+</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th class="sortable"><%= mat(:photos, :title) %></th>
+			<th class="sortable photo"><%= mat(:photos, :file) %></th>
+			<th class="sortable tags"><%= mat(:photos, :tag_list) %></th>
+			<th class="last">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% g[:photos].each do |photo| %>
+			<tr>
+				<td class="first"><%= photo.title %></td>
+				<td><%= link_to(image_lazy(photo.file.thumb('150x150'), 150, 150), photo.file.url) unless photo.file.nil? %></td>
+				<td><%= photo.tag_list %></td>
+				<td>
+					<%= edit_button pat(:edit), url(:photos, :edit, :id => photo.id) %>
+					<%= delete_button pat(:delete), url(:photos, :destroy, :id => photo.id) %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
 <% end -%>
 
 <% content_for :actions, partial("gallery/admin/actions") %>
+
+<% content_for :subnav do %>
+	<ul class="nav nav-list">
+		<li class="nav-header">Gallerie</li>
+		<% @photos.each do |g| %>
+		<li><a href="#<%= g[:gallery].to_slug %>"><%= g[:gallery] %></a></li>
+		<% end %>
+	</ul>
+<% end %>
 
 <% content_for :title, 'Foto' %>

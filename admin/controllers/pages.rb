@@ -17,7 +17,7 @@ Admin.controllers :pages do
     } unless params[:taxonomy].nil?
 
     if @page.save
-      flash[:notice] = t'created'
+      flash[:info] = t'created'
       redirect url(:pages, :index)
     else
       render 'admin/pages/new'
@@ -36,7 +36,7 @@ Admin.controllers :pages do
     } unless params[:taxonomy].nil?
 
     if @page.update_attributes(params[:page])
-      flash[:notice] = t'updated'
+      flash[:info] = t'updated'
       redirect url(:pages, :index)
     else
       render 'admin/pages/edit'
@@ -46,10 +46,13 @@ Admin.controllers :pages do
   delete :destroy, :with => :id do
     page = Page.find(params[:id])
     if page.destroy
-      flash[:notice] = t'destroy.success'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:pages, :index))
     else
       flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:pages, :index))
     end
-    redirect url(:pages, :index)
   end
 end

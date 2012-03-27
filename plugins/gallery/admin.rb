@@ -17,7 +17,7 @@ Admin.controllers :photos do
     params[:photo]['file'] = MediaFile.find(params[:photo]['file'])
     @photo = Photo.new(params[:photo])
     if @photo.save
-      flash[:notice] = 'Photo was successfully created.'
+      flash[:info] = 'Photo was successfully created.'
       redirect url(:photos, :edit, :id => @photo.id)
     else
       render 'gallery/admin/new'
@@ -33,7 +33,7 @@ Admin.controllers :photos do
     params[:photo]['file'] = MediaFile.find(params[:photo]['file']) unless params[:photo]['file'].nil?
     @photo = Photo.find(params[:id])
     if @photo.update_attributes(params[:photo])
-      flash[:notice] = 'Photo was successfully updated.'
+      flash[:info] = 'Photo was successfully updated.'
       redirect url(:photos, :index)
     else
       render 'gallery/admin/edit'
@@ -43,11 +43,14 @@ Admin.controllers :photos do
   delete :destroy, :with => :id do
     photo = Photo.find(params[:id])
     if photo.destroy
-      flash[:notice] = 'Photo was successfully destroyed.'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:photos, :index))
     else
-      flash[:error] = 'Impossible destroy Photo!'
+      flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:photos, :index))
     end
-    redirect url(:photos, :index)
   end
 
   get :import do
@@ -69,7 +72,7 @@ Admin.controllers :photos do
 
       sleep(0.5)
     end
-    flash[:notice] = "Importazione terminata con successo"
+    flash[:info] = "Importazione terminata con successo"
     redirect url(:photos, :index)
   end
 
@@ -77,8 +80,9 @@ Admin.controllers :photos do
   post :rename do
     if params[:gallery]
       Photo.set({:gallery => params[:gallery]}, {:gallery => params[:name], :gallery_slug => params[:name].to_slug})
-      params[:name]
+      {name: params[:name]}.to_json
+    else
+      403
     end
-    params[:name]
   end
 end

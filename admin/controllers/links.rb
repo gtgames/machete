@@ -21,7 +21,7 @@ Admin.controllers :links do
   post :create do
     @link = Link.new(params[:link])
     if @link.save
-      flash[:notice] = 'Link was successfully created.'
+      flash[:info] = 'Link was successfully created.'
       redirect url(:links, :index)
     else
       render 'admin/links/new'
@@ -36,7 +36,7 @@ Admin.controllers :links do
   put :update, :with => :id do
     @link = Link.find(params[:id])
     if @link.update_attributes(params[:link])
-      flash[:notice] = 'Link was successfully updated.'
+      flash[:info] = 'Link was successfully updated.'
       redirect url(:links, :index)
     else
       render 'admin/links/edit'
@@ -46,10 +46,13 @@ Admin.controllers :links do
   delete :destroy, :with => :id do
     link = Link.find(params[:id])
     if link.destroy
-      flash[:notice] = 'Link was successfully destroyed.'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:links, :index))
     else
-      flash[:error] = 'Impossible destroy Link!'
+      flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:links, :index))
     end
-    redirect url(:links, :index)
   end
 end

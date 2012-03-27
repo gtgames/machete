@@ -21,7 +21,7 @@ Admin.controller :taxonomy do
   post :create do
     @taxonomy = Taxonomy.new(params[:taxonomy])
     if @taxonomy.save
-      flash[:notice] = t 'created'
+      flash[:info] = t 'created'
       redirect url(:taxonomy, :index)
     else
       render 'admin/taxonomy/new'
@@ -36,7 +36,7 @@ Admin.controller :taxonomy do
   put :update, :with => :id do
     @taxonomy = Taxonomy.find(params[:id])
     if @taxonomy.update_attributes(params[:taxonomy])
-      flash[:notice] = t'updated'
+      flash[:info] = t'updated'
       redirect url(:taxonomy, :index)
     else
       render 'admin/taxonomy/edit'
@@ -46,11 +46,14 @@ Admin.controller :taxonomy do
   delete :destroy, :with => :id do
     taxonomy = Taxonomy.find(params[:id])
     if taxonomy.destroy
-      flash[:notice] = t'destroy.success'
+      flash[:info] = t'destroy.success'
+
+      (request.xhr?)? 200 : redirect(url(:taxonomy, :index))
     else
       flash[:error] = t'destroy.fail'
+
+      (request.xhr?)? 500 : redirect(url(:taxonomy, :index))
     end
-    redirect url(:taxonomy, :index)
   end
 
   get :tree, :provides => :js do

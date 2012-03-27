@@ -16,7 +16,8 @@ Admin.controllers :booking do
 
   delete :destroy, :with => :id do
   	book = BookRequest.set({:_id => params[:id]}, {:st => -1})
-  	flash[:notice] = 'Cestinato con successo.'
-  	redirect url(:booking, :index)
+  	flash[:info] = 'Cestinato con successo.'
+
+  	(reques.xhr?)? 200 : redirect(url(:booking, :index))
   end
 end

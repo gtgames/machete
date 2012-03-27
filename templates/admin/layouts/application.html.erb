@@ -10,58 +10,75 @@
 	<script src="http://frenzart.com/js/modernizr.js" type="text/javascript" charset="utf-8"></script>
 
 	<script src="http://frenzart.com/js/underscore.js" type="text/javascript"></script>
-	<script src="http://frenzart.com/js/underscore.date.js" type="text/javascript"></script>
-	<script type="text/javascript">_date.translate('it');</script>
+	<script src="http://frenzart.com/js/moment.js" type="text/javascript"></script>
 	<script src="http://frenzart.com/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
 
-	<script src="http://frenzart.com/js/rightjs/right.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/dialog.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/in-edit.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/calendar.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/selectable.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/lightbox.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/tabs.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/tags.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/tooltips.js" type="text/javascript" charset="utf-8"></script>
-	<script src="http://frenzart.com/js/rightjs/right/table.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/javascripts/admin/lib/ender<%= (Padrino.env == 'production')? '.min' : '' %>.js"></script>
+
 	<script src="http://frenzart.com/js/ckeditor/ckeditor.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript" src="/javascripts/lazyload.js"></script>
+
+	<link rel="stylesheet" href="/javascripts/uikit/ui.css">
+	<script type="text/javascript" src="/javascripts/uikit/ui.js"></script>
 
 	<script src="/javascripts/admin/application.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body class="admin">
-	<header class="topbar">
-	  <div class="topbar-inner">
+	<header class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
 		<div class="container-fluid">
 			<a class="brand" href="/">Machete</a>
 			<ul class="nav">
 				<%= partial "admin/layouts/navigation" %>
 			</ul>
 			<div class="pull-right">
-				<ul>
-					<li><%= link_to 'S', url(:configurations, :index), :class => "sym btn primary", :title => 'Configurazione' %></li>
-					<li><%= link_to 'U', url(:accounts, :edit, :id => current_account.id), :class => "sym btn info", :title => pat(:profile) %></li>
-					<li><a id='site_link' target="_blank" href="<%= Cfg[:domain] %>" class="sym btn success" title="View Site">K</a></li>
-					<li><%= link_to 'X', url(:sessions, :destroy), :method => :delete, :class => "sym btn danger", :title => pat(:logout)  %></li>
+				<ul class="nav">
+					<li><a class="config" title="Configurazione" href="/configurations">
+						<i class="icon-cogs"></i></a></li>
+					<li><a class="profile" title="Profilo" href="/accounts/edit/4e316e12fb28eff361000001">
+						<i class="icon-user"></i>
+					</a></li>
+					<li><a class="view-site" id="site_link" target="_blank" href="http://machete.dev/" title="View Site">
+						<i class="icon-share"></i>
+					</a></li>
+					<li><a class="logout" title="Esci" data-method="delete" rel="nofollow" href="/sessions/destroy">
+						<i class="icon-off"></i>
+					</a></li>
 				</ul>
 			</div>
 		</div>
 	  </div>
 	</header>
-
-	<%= [:error, :warning, :notice].map { |type| flash_tag(type, :class => "alert-message #{type}") }.join %>
-
+	
 	<section class="container-fluid" id="content">
-		<div class="well">
-			<h1 class='title'><%= yield_content :title %></h1>
-			<p id='actions'>
-				<%= yield_content :actions %>
-			</p>
-		</div>
-		<hr>
-		<div>
-			<%= yield %>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span2">
+					<div class="subnav">
+						<ul class="nav nav-list">
+							<li class="nav-header">
+								<%= yield_content :title %>
+							</li>
+							<%= yield_content :actions %>
+						</ul>
+						<br>
+						<%= yield_content :subnav %>
+					</div>
+					<div class="placeholder">&nbsp;</div>
+				</div>
+				<div class="span10">
+					<%= yield %>
+				</div>
+			</div>
 		</div>
 	</section>
-	<footer><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.8.13</a></p></footer>
+	<footer class="container-fluid"><p>Copyright &copy; 2011 GTGames <a href='http://machete.it'>Machete v0.9.0dev</a></p></footer>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			<%= [:error, :warn, :info].map { |type| flash_ui(type) }.join %>
+		});
+	</script>
   </body>
 </html>

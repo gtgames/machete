@@ -14,6 +14,9 @@ Admin.controllers :base do
   end
 
   post :upload do
+    puts "parms: "
+    puts params
+    puts ""
     # http://admin.machete.dev/base/upload?CKEditor=page_text(it)&CKEditorFuncNum=71&langCode=it
     file = MediaFile.new({
         :name => params["filename"],

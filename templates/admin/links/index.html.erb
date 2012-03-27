@@ -1,27 +1,24 @@
-<table class="zebra-striped"> 
-  <thead>
-    <tr>
-      <th class="sortable"><%= mat(:link, :title) %></th>
-      <th class="sortable"><%= mat(:link, :url) %></th>
-      <th class="last">&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @links.each do |link| %>
-      <tr>
-        <td><%= link.title %></td>
-        <td><%= link.url %></td>
-        <td>
-          <%= button_to pat(:edit), url(:links, :edit, :id => link.id), :method => :get, :class => 'btn edit' %>
-          <%= button_to pat(:delete), url(:links, :destroy, :id => link.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
+<table class="table table-striped"> 
+	<thead>
+		<tr>
+			<th class="sortable"><%= mat(:link, :title) %></th>
+			<th class="sortable"><%= mat(:link, :url) %></th>
+			<th class="last">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @links.each do |link| %>
+		<tr>
+			<td><%= link.title %></td>
+			<td><%= link.url %></td>
+			<td>
+				<%= edit_button pat(:edit), url(:links, :edit, :id => link.id) %>
+				<%= delete_button pat(:delete), url(:links, :destroy, :id => link.id) %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
 </table>
 
-<footer></footer>
-
 <% content_for :actions, partial("admin/base/actions", :locals => { :p => :links }) %>
-
 <% content_for :title, 'Menu' %>

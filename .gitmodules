@@ -1,0 +1,6 @@
+[submodule "vendor/uikit"]
+	path = vendor/uikit
+	url = https://github.com/aliem/uikit.git
+[submodule "vendor/kalendae"]
+	path = vendor/kalendae
+	url = https://github.com/ChiperSoft/Kalendae.git

@@ -1,5 +1,7 @@
 all:
-	ender build domready qwery bonzo bean
+	ender build bowser domready qwery bean reqwest ender-bootstrap
 
+refresh:
+	ender refresh
 
-.PHONY: all
+.PHONY: all refresh

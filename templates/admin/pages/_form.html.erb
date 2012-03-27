@@ -14,7 +14,7 @@
 </div>
 
 <fieldset id='advanced'>
-  <legend>Avanzate</legend>
+  <legend><i class="icon-cog"></i> Avanzate</legend>
   <% Cfg[:locales].each do |l| %>
     <%= f.input :"slug(#{l})", :value => "#{f.object.slug[l]}", :caption => 'Permalink', :as => :string, :class => l %>
   <%end%>
@@ -23,7 +23,7 @@
 </fieldset>
 
 
-<div class='actions'>
+<div class='form-actions'>
   <%= f.submit pat(:save), :class => "btn primary" %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:pages, :index)}';return false", :class => :btn %>
 </div>

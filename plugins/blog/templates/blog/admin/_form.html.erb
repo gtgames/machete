@@ -1,12 +1,20 @@
 <div class="module_content">
   <%= f.input :title, :as => :string %>
-  <%= f.input :photo, :as => :file %>
+  
+  <% if f.object.photo.nil? -%>
+    <%= f.input :photo, :as => :file %>
+  <% else -%>
+    <%= f.input :photo, :value => f.object.photo.id.to_s, :type => :hidden %>
+    <%= image_tag(f.object.photo.thumb('200xx200')) %>
+    <%= f.input :photo, :as => :file %>
+  <% end -%>
+
   <%= f.input :lead,  :as => :text %>
   <%= f.input :text,  :as => :text, :class => :editor %>
-  <%= f.input :tag_list,  :as => :string %>
+  <%= f.input :tag_list,  :as => :string, :class => :tagger %>
 </div>
 
-<div class='actions'>
+<div class='form-actions'>
   <%= f.submit pat(:save), :class => "btn primary" %>
   <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:posts, :index)}';return false", :class => :btn %>
 </div>

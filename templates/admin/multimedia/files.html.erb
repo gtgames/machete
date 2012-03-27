@@ -10,7 +10,7 @@
   <bodyv class="files">
     <div id="filebrowser_preview"></div>
     <div id="filebrowser_list">
-	    <table class="zebra-striped">
+	    <table class="table table-striped">
 	    	<thead>
 	    		<tr>
 	    			<th>Link</th>
@@ -23,7 +23,7 @@
 						<td>
 							<% if i.content_type =~ /^image\/.+/ -%>
 								<a href="<%= i.url -%>">
-									<%= image_tag i.thumb(:small) %>
+									<%= image_lazy i.thumb('120x120'), 120, 120 %>
 								</a>
 							<% else -%>
 								<a href="<%= i.url -%>"><%= i.name -%></a></td>
@@ -75,5 +75,6 @@
 		</td>
 	</tr>
 	</script>
+	<script type="text/javascript" src="/javascripts/lazyload.js"></script>
   </body>
 </html>

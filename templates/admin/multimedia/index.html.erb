@@ -1,9 +1,4 @@
-<div id="multimedia_file-uploader"><noscript><p>Please enable JavaScript to use file uploader.</p></noscript></div>
-
-<script type="text/javascript">
-</script>
-
-<table class="zebra-striped">
+<table class="table table-striped">
   <thead>
     <tr>
       <th class="sortable">thumb</th>
@@ -16,16 +11,16 @@
       <tr>
         <td>
           <% if m.content_type =~ /^image\/.+/ -%>
-            <%= image_tag m.thumb(:small) %>
+            <%= image_lazy(m.thumb('100x100')) %>
           <% else -%>
             <%= m.url %>
           <% end -%>
         </td>
         <td>
-          <%= m.name %>
+          <%= link_to m.name, m.url, :rel => (m.content_type =~ /^image\/.+/)? 'image' : 'file' %>
         </td>
         <td>
-          <%= button_to pat(:delete), url(:multimedia, :destroy, :id => m.id), :method => :delete, :class => 'btn trash', :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+          <%= delete_button pat(:delete), url(:multimedia, :destroy, :id => m.id) %>
         </td>
       </tr>
     <% end -%>
@@ -33,3 +28,9 @@
 </table>
 
 <% content_for :title, 'Multimedia' %>
+
+<% content_for :actions do %>
+	<div id="multimedia_file-uploader">
+		<noscript><p>Please enable JavaScript to use file uploader.</p></noscript>
+	</div>
+<% end %>
