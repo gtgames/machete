@@ -26,7 +26,7 @@ BasicApplication.helpers do
     o = {
         w: '', h: '', title: ''
     }
-    o.merge(options)
+    o = o.merge(options)
     i  = '<img class="lazy" data-src="' << thumb << '" alt="' << o[:title] << '" width="' << o[:w] << '" height="' << o[:h] << '" >'
     ii = '<img src="' << thumb << '" alt="' << o[:title] << '">'
     if href
