@@ -2,6 +2,10 @@ Gallery.helpers do
   def photos_by_gallery(gallery)
     Photo.where(:gallery_slug => gallery)
   end
+
+  def image_lazy thumb, w='100', h='100'
+    '<img src="/images/blank.gif" data-src="' << thumb << '" class="lazy" width="' << w << '" height="' << h << '">'
+  end
 end
 
 BasicApplication.helpers do
