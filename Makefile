@@ -9,11 +9,11 @@ help:
 	@echo ---
 	@echo [upgrade]: upgrades machete base to last version
 	@echo [deps]: upgrades our dependencies
-	@echo 	[uikit]: copy the latest build to the public folder
-	@echo 	[kalendae]: copy the latest build to the public folder
+	@echo [uikit]: copy the latest build to the public folder
+	@echo [kalendae]: copy the latest build to the public folder
 	@echo ---
 	@echo [less]: produce css files from the less source
-	@echo 	[watch_less]: compiles less files every 5 seconds
+	@echo [watch_less]: compiles less files every 5 seconds
 
 install: upgrade
 
@@ -21,7 +21,7 @@ upgrade:
 	git fetch &&\
 		git stash &&\
 		git pull &&\
-		$(submodule_update) &&\
+		$(MAKE) submodule &&\
 		git stash apply
 
 #
