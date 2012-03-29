@@ -14,7 +14,7 @@
   <% if (galleries = Photo.galleries).size > 0 -%>
     <%= f.select :gallery, :options => Photo.galleries %>
     <div>
-      <input type='text' id='photo_gallery_add_input'> <a id="photo_gallery_add">Aggiungi</a>
+      <input type='text' id='photo_gallery_add_input'> <a id="photo_gallery_add" href="#">Aggiungi</a>
     </div>
   <% else -%>
     <%= f.input :gallery, :as => :string, :caption => nil %>
@@ -28,14 +28,14 @@
 
 
 <script type="text/javascript">
-  $(document).on('ready',function(){
-      $('photo_gallery_add').on('click', function(e){
-        var v = $('photo_gallery_add_input').get('value');
-        if (v.length > 0){
-        $('photo_gallery').append( new Element('option', { value: v, selected: true, html: v }) );
-          $$('#photo_gallery option:selected').first().set('value', v)
-        }
-        return false;
-      });
-  });
+$(document).ready(function(){
+	$('#photo_gallery_add').bind('click', function(e){
+		var v = $('#photo_gallery_add_input').val();
+		if (v.length > 0){
+			$('#photo_gallery').append( $('<option value="' + v + '" selected >' + v + '</option>') );
+			$('#photo_gallery option:selected').first().val(v);
+		}
+		return false;
+	});
+});
 </script>
