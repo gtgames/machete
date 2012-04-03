@@ -31,17 +31,27 @@
 @white:                 #fff;
 
 // Accent colors
-@blue:                  #049cdb;
-@blueDark:              #0064cd;
-@green:                 #46a546;
-@red:                   #9d261d;
-@yellow:                #ffc40d;
-@orange:                #f89406;
-@pink:                  #c3325f;
-@purple:                #7a43b6;
+// @blue:                  #1BA7B7;
+// @blueDark:              #0064cd;
+// @green:                 #46a546;
+// @red:                   #9d261d;
+// @yellow:                #ffc40d;
+// @orange:                #f89406;
+// @pink:                  #c3325f;
+// @purple:                #7a43b6;
+
+@yellow:    #b58900;
+@orange:    #cb4b16;
+@red:       #dc322f;
+@pink:      #d33682;
+@violet:    #6c71c4;
+@blue:      #268bd2;
+@cyan:      #2aa198;
+@green:     #859900;
+
 
 // Typography
-@baseFontSize:          13px;
+@baseFontSize:          14px;
 @baseFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
 @baseLineHeight:        18px;
 @textColor:             @grayDark;
@@ -166,8 +176,7 @@
 
 // font-awesome
 @import "http://frenzart.com/font/awesome/css/font-awesome.css";
-// a nice Slab font
-@import "http://fonts.googleapis.com/css?family=Cutive";
+@import "http://fonts.googleapis.com/css?family=Kreon:400,700";
 
 #content {
   margin-top: @baseLineHeight*3 !important;
@@ -183,21 +192,21 @@ footer>p,
 .nav.nav-list,
 legend
 {
-  font-family: 'Cutive', Helvetica, Verdana, Arial, sans-serif;
+  font-family: 'Kreon', serif;
 }
 
 footer{
   margin-top: 18px;
   &>p {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 .navbar {
   position: relative;
   margin-bottom: 9px;
   .pull-right a {
-    font-size: 1.8em;
     color: @white;
+    font-size: 1.8em;
     &:hover {
       color: @yellow;
       text-shadow: 0px 0px 4px #999;
@@ -397,6 +406,7 @@ form {
 }
 
 .subnav.subnav-fixed {
+  width: 158px;
   position: fixed;
   top: 54px;
 }
