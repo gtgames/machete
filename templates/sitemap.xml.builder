@@ -6,7 +6,7 @@ xml.urlset "xmlns"=> "http://www.google.com/schemas/sitemap/0.9" do
     xml.changefreq "daily"
     xml.priority 0.9
   end
-  if Blog
+  if defined?Blog
     @posts.each do |post|
       xml.url do
         xml.loc "http://#{Cfg[:domain]}#{Blog.url(:show, :slug => post.slug)}"
