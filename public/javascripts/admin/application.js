@@ -128,7 +128,7 @@
       var el = $(el);
       $('input[name="' + el.attr('name').replace(/slug/, 'title') + '"]')
         .bind('keyup,blur', function(ev){
-          el.val('value', to_slug(tar.get('value')));
+          el.val('value', to_slug(el.get('value')));
         });
     });
 
