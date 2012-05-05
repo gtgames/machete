@@ -125,11 +125,12 @@
 
 
     $('input[name*="[slug"]').each(function(el) {
-      var el = $(el);
-      $('input[name="' + el.attr('name').replace(/slug/, 'title') + '"]')
-        .bind('keyup,blur', function(ev){
-          el.val('value', to_slug(el.get('value')));
-        });
+      var el = $(el)
+        , tar = $('input[name="' + el.attr('name').replace(/slug/, 'title') + '"]');
+
+      tar.bind('keyup,blur', function(ev){
+        el.val('value', to_slug(tar.get('value')));
+      });
     });
 
 
