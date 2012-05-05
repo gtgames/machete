@@ -128,8 +128,8 @@
       var el = $(el)
         , tar = $('input[name="' + el.attr('name').replace(/slug/, 'title') + '"]');
 
-      tar.bind('keyup,blur', function(ev){
-        el.val('value', to_slug(tar.get('value')));
+      tar.bind('keyup blur', function(ev){
+        el.val(tar.val().to_slug());
       });
     });
 
