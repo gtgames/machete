@@ -270,33 +270,35 @@
           + '<td><input name="import[photo][<%= id %>][media]" type="hidden" value="<%= success %>" />'
           + '    <button class="btn danger" type="button" data-id="<%= success %>">Delete!</button></td>'
           + '</tr>')
-      , uploader = new qq.FileUploader({
-        //  debug: true
-          allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
-        , element: $('#dropbox')[0]
-        , action: '/base/upload'
-        , onComplete: function(id, name, resp) {
-            if (resp.error) {
-              var ul = new Element('ul', {
-                "class": "errors"
-              });
-              resp.error.each(function(el) {
-                ul.append(new Element('li', {
-                  html: el
-                }));
-              });
-              div.append(ul);
-            } else {
-              id += 1;
-              console.log(resp)
-              $('__target').append(
-                template(
-                  _.extend(resp, {
-                    id: id++
-                  })));
-            }
+      ;
+
+    new qq.FileUploader({
+      //  debug: true
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
+      , element: $('#dropbox')[0]
+      , action: '/base/upload'
+      , onComplete: function(id, name, resp) {
+          if (resp.error) {
+            var ul = new Element('ul', {
+              "class": "errors"
+            });
+            _.each(resp.error, function(el) {
+              ul.append(new Element('li', {
+                html: el
+              }));
+            });
+            div.append(ul);
+          } else {
+            id += 1;
+            console.log(resp)
+            $('#__target tbody').append(
+              template(
+                _.extend(resp, {
+                  id: id++
+                })));
           }
-        });
+        }
+      });
 
     $('#__target').delegate('click', 'button.danger', function (ev) {
       var self = this;
@@ -309,7 +311,7 @@
       });
       xhr.send();
     });
-  });
+  })();
 
 
   $.fn.inEdit = function (target, options) {

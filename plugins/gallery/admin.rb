@@ -59,8 +59,6 @@ Admin.controllers :photos do
   post :import_it do
     params['import']['photo'].each do |i|
       i = i[1]
-      puts(i)
-      puts i['media']
       mf = MediaFile.find(i['media'])
       p = Photo.new({
         :title => mf.name,
