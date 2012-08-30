@@ -10,7 +10,7 @@ class Photo
   key :file, MediaFile::Embeddable
 
   def self.galleries
-    fields(:gallery).distinct(:gallery).delete_if(&:nil?)
+    fields(:gallery).order(:_id.desc).distinct(:gallery).delete_if(&:nil?).sort
   end
 
   # hooks
