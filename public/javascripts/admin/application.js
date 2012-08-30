@@ -256,12 +256,10 @@
       _.defer(build);
     })();
 
-
   });
 
-  
-  (function() {
-    if (!$('#dropbox').length) return 0;
+  $.domReady(function(){
+        if (! $('#dropbox').length) return 0;
 
     var id = 0
       , template = _.template(
@@ -291,12 +289,9 @@
             div.append(ul);
           } else {
             id += 1;
-            console.log(resp)
-            $('#__target tbody').append(
-              template(
-                _.extend(resp, {
-                  id: id++
-                })));
+            resp.id = id;
+            ui.info('File ' + resp.data + ' caricato.');
+            $('#__target').append(template(resp));
           }
         }
       });
@@ -312,7 +307,7 @@
       });
       xhr.send();
     });
-  })();
+  });
 
 
   $.fn.inEdit = function (target, options) {
