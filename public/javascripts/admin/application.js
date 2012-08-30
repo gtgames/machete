@@ -261,7 +261,7 @@
 
   
   (function() {
-    if (! $('#dropbox')) return;
+    if (!$('#dropbox').length) return 0;
 
     var id = 0
       , template = _.template(
