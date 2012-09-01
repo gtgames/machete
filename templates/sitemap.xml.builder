@@ -10,7 +10,9 @@ xml.urlset "xmlns"=> "http://www.google.com/schemas/sitemap/0.9" do
     @posts.each do |post|
       xml.url do
         xml.loc "http://#{Cfg[:domain]}#{Blog.url(:show, :slug => post.slug)}"
-        xml.lastmod post.updated_at.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+
+        xml.lastmod post.updated_at.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00") if post.updated_at
+
         xml.changefreq "daily"
         xml.priority 0.5
       end
@@ -19,7 +21,9 @@ xml.urlset "xmlns"=> "http://www.google.com/schemas/sitemap/0.9" do
   @pages.each do |page|
     xml.url do
       xml.loc "http://#{Cfg[:domain]}#{url(:pages, :show, :slug => page.slug[Cfg.locale])}"
-      xml.lastmod page.updated_at.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+
+      xml.lastmod page.updated_at.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00") if page.updated_at
+
       xml.changefreq "weekly"
       xml.priority 0.4
     end
@@ -27,7 +31,9 @@ xml.urlset "xmlns"=> "http://www.google.com/schemas/sitemap/0.9" do
   @taxonomies.each do |taxon|
     xml.url do
       xml.loc "http://#{Cfg[:domain]}/#{taxon.path[Cfg.locale]}"
-      xml.lastmod taxon.updated_at.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+
+      xml.lastmod taxon.updated_at.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00") if taxon.updated_at
+
       xml.changefreq "weekly"
       xml.priority 0.6
     end
