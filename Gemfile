@@ -39,8 +39,8 @@ group :test do
   gem 'rack-test', :require => "rack/test"
 end
 
-gem 'nokogiri'
-gem 'sanitize'
+gem 'nokogiri', '>= 1.8.5'
+gem 'sanitize', '>= 2.0.5'
 gem 'to_slug'
 
 #gem 'rack-thumb', :git => 'https://github.com/vidibus/rack-thumb.git'
