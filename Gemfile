@@ -3,7 +3,7 @@ source :rubygems
 # Project requirements
 gem 'rake'
 gem 'eventmachine'
-gem 'thin'
+gem 'thin', '>= 1.3.1'
 
 gem 'rack-fiber_pool'
 gem 'em-http-request'
@@ -36,7 +36,7 @@ group :test do
   gem 'random_data'
   gem 'rr'
   gem 'riot'
-  gem 'rack-test', :require => "rack/test"
+  gem 'rack-test', '>= 0.6.1'
 end
 
 gem 'nokogiri'
@@ -48,7 +48,7 @@ gem 'to_slug'
 
 gem 'yajl-ruby', :require => "yajl/json_gem" # MultiJson is damn bugged
 # Padrino
-gem 'sinatra', ">= 1.3.1"
+gem 'sinatra', '>= 1.3.2'
 gem 'padrino-contrib', ">= 0.1.9"
-gem 'padrino', "0.10.5"
+gem 'padrino', '0.10.5'
 
