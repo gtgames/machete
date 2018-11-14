@@ -50,5 +50,5 @@ gem 'yajl-ruby', :require => "yajl/json_gem" # MultiJson is damn bugged
 # Padrino
 gem 'sinatra', ">= 1.3.1"
 gem 'padrino-contrib', ">= 0.1.9"
-gem 'padrino', "0.10.5"
+gem 'padrino', '0.10.5'
 
